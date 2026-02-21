@@ -29,7 +29,7 @@ jobs:
         run: pnpm run lint
 
       - name: Format
-        run: pnpm run format
+        run: pnpm run fmt
 
       - name: Test
         run: pnpm run test:all

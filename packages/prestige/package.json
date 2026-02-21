@@ -36,8 +36,11 @@
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
+    "@tanstack/react-router": "^1.161.4",
+    "@tanstack/react-start": "^1.161.4",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "vite-tsconfig-paths": "^6.1.1"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",

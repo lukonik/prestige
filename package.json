@@ -19,7 +19,9 @@
     "lint:fix": "oxlint . --fix",
     "fmt": "oxfmt",
     "fmt:check": "oxfmt --check",
-    "prepare": "husky"
+    "prepare": "husky",
+    "build:all": "pnpm -p build",
+    "test:all": "pnpm -p test"
   },
   "dependencies": {},
   "devDependencies": {
@@ -30,12 +32,12 @@
   },
   "lint-staged": {
     "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
-      "pnpm run lint",
-      "pnpm run fmt:check"
+      "oxlint . --deny-warnings"
     ],
     "*.json": [
       "oxfmt"
-    ]
+    ],
+    "*": "oxfmt --no-error-on-unmatched-pattern"
   },
   "packageManager": "pnpm@10.20.0"
 }

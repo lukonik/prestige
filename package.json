@@ -1,0 +1,20 @@
+{
+  "name": "root",
+  "private": true,
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukonik/prestige.git"
+  },
+  "scripts": {
+    "dev": "pnpm run --filter @lonik/prestige dev",
+    "play": "pnpm run --filter @lonik/prestige play",
+    "build": "pnpm run --filter @lonik/prestige build",
+    "test": "pnpm run --filter @lonik/prestige test",
+    "typecheck": "pnpm run --filter @lonik/prestige typecheck"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.20.0"
+}

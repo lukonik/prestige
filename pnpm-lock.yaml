@@ -7,14 +7,13 @@ settings:
 importers:
 
   .:
-    dependencies:
-      lint-staged:
-        specifier: ^16.2.7
-        version: 16.2.7
     devDependencies:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
+      lint-staged:
+        specifier: ^16.2.7
+        version: 16.2.7
       oxfmt:
         specifier: ^0.34.0
         version: 0.34.0

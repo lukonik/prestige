@@ -7,5 +7,8 @@
     "**/Thumbs.db": true,
     "**/node_modules": true,
     "**/dist": true
-  }
+  },
+  "editor.defaultFormatter": "oxc.oxc-vscode",
+  "editor.formatOnSave": true,
+  "editor.formatOnSaveMode": "file"
 }

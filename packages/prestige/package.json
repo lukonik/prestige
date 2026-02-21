@@ -1,28 +1,28 @@
 {
   "name": "@lonik/prestige",
-  "type": "module",
   "version": "0.0.0",
   "description": "A starter for creating a React component library.",
-  "author": "Author Name <author.name@mail.com>",
-  "license": "MIT",
   "homepage": "https://github.com/author/library#readme",
+  "bugs": {
+    "url": "https://github.com/author/library/issues"
+  },
+  "license": "MIT",
+  "author": "Author Name <author.name@mail.com>",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/author/library.git"
   },
-  "bugs": {
-    "url": "https://github.com/author/library/issues"
-  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json"
   },
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "files": [
-    "dist"
-  ],
   "publishConfig": {
     "access": "public"
   },
@@ -34,13 +34,6 @@
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm publish",
     "prepublishOnly": "pnpm run build"
-  },
-  "peerDependencies": {
-    "@tanstack/react-router": "^1.161.4",
-    "@tanstack/react-start": "^1.161.4",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "vite-tsconfig-paths": "^6.1.1"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
@@ -57,5 +50,12 @@
     "vite": "^7.3.0",
     "vitest": "^4.0.16",
     "vitest-browser-react": "^2.0.2"
+  },
+  "peerDependencies": {
+    "@tanstack/react-router": "^1.161.4",
+    "@tanstack/react-start": "^1.161.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }

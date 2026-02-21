@@ -2,6 +2,9 @@
   "name": "root",
   "private": true,
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukonik/prestige.git"
@@ -11,10 +14,15 @@
     "play": "pnpm run --filter @lonik/prestige play",
     "build": "pnpm run --filter @lonik/prestige build",
     "test": "pnpm run --filter @lonik/prestige test",
-    "typecheck": "pnpm run --filter @lonik/prestige typecheck"
+    "typecheck": "pnpm run --filter @lonik/prestige typecheck",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint . --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "devDependencies": {
+    "oxfmt": "^0.34.0",
+    "oxlint": "^1.49.0"
+  },
   "packageManager": "pnpm@10.20.0"
 }

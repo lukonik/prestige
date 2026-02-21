@@ -3,4 +3,4 @@ linkWorkspacePackages: true
 preferWorkspacePackages: true
 
 packages:
-  - 'packages/*'
+  - "packages/*"

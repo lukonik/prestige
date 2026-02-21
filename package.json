@@ -2,6 +2,9 @@
   "name": "root",
   "private": true,
   "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukonik/prestige.git"
@@ -11,10 +14,30 @@
     "play": "pnpm run --filter @lonik/prestige play",
     "build": "pnpm run --filter @lonik/prestige build",
     "test": "pnpm run --filter @lonik/prestige test",
-    "typecheck": "pnpm run --filter @lonik/prestige typecheck"
+    "typecheck": "pnpm run --filter @lonik/prestige typecheck",
+    "lint": "oxlint . --deny-warnings",
+    "lint:fix": "oxlint . --fix",
+    "fmt": "oxfmt",
+    "fmt:check": "oxfmt --check",
+    "prepare": "husky",
+    "build:all": "pnpm -p build",
+    "test:all": "pnpm -p test"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "oxfmt": "^0.34.0",
+    "oxlint": "^1.49.0"
+  },
+  "lint-staged": {
+    "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
+      "oxlint . --deny-warnings"
+    ],
+    "*.json": [
+      "oxfmt"
+    ],
+    "*": "oxfmt --no-error-on-unmatched-pattern"
+  },
   "packageManager": "pnpm@10.20.0"
 }

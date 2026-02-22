@@ -1,6 +1,14 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import logger from "../../../src/vite/utils/logger";
 
+vi.mock("picocolors", () => ({
+  default: {
+    blue: (str: string) => str,
+    yellow: (str: string) => str,
+    red: (str: string) => str,
+  },
+}));
+
 describe("logger", () => {
   function createInfoSpy(level: "info" | "warn" | "error") {
     return vi.spyOn(console, level).mockImplementation(() => {});

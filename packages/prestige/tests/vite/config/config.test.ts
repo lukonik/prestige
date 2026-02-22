@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 
 // @ts-expect-error - mocked module
 import { __setMockConfig } from "unconfig";
@@ -25,6 +25,10 @@ describe("validateConfig", () => {
 });
 
 describe("loadPrestigeConfig", () => {
+  afterEach(() => {
+    __setMockConfig({});
+  });
+
   it("should throw error on invalid config", async () => {
     const mockConfig = {};
     __setMockConfig(mockConfig);
@@ -49,5 +53,15 @@ describe("loadPrestigeConfig", () => {
 
   it("should return description", async () => {
     await checkProperty({ title: "test", description: "test" }, "description");
+  });
+
+  it("should return docsDir", async () => {
+    await checkProperty({ title: "test", docsDir: "test" }, "docsDir");
+  });
+  it("should return docsDir with default value", async () => {
+    __setMockConfig({ title: "test" });
+    await expect(loadPrestigeConfig("/some/path")).resolves.toMatchObject({
+      config: { docsDir: "src/content/docs" },
+    });
   });
 });

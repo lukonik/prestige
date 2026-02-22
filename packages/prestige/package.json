@@ -37,6 +37,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
+    "fs-extra": "^11.3.3",
     "unconfig": "^7.5.0",
     "zod": "^4.3.6"
   },

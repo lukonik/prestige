@@ -9,7 +9,7 @@ test("button", async () => {
   expect(buttonElement).toBeInTheDocument();
   expect(buttonElement).toHaveTextContent("my button type: primary count: 0");
   expect(screen.container.innerHTML).toMatchInlineSnapshot(
-    `"<button class="my-button">my button<br> type: primary<br> count: 0</button>"`,
+    `"<button class="my-button" style="color: white;">my button<br> type: primary<br> count: 0</button>"`,
   );
   expect(buttonElement).toHaveClass("my-button");
 });

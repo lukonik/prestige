@@ -37,7 +37,6 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "picocolors": "^1.1.1",
     "unconfig": "^7.5.0",
     "zod": "^4.3.6"
   },
@@ -50,6 +49,8 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/browser-playwright": "^4.0.16",
     "bumpp": "^10.3.2",
+    "memfs": "^4.56.10",
+    "picocolors": "^1.1.1",
     "publint": "^0.3.17",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",

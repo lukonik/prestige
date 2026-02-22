@@ -1,2 +1,2 @@
-export { defineConfig } from "./config/define-config";
+export { defineConfig } from "./config/config";
 export { default as prestige } from "./plugin";

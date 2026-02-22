@@ -1,5 +1,5 @@
 import { type Plugin } from "vite";
-import { loadPrestigeConfig } from "./config/define-config";
+import { loadPrestigeConfig } from "./config/config";
 import logger from "./utils/logger";
 
 export default function prestige(): Plugin {

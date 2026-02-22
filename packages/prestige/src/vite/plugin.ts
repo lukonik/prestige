@@ -9,7 +9,7 @@ export function watchConfigChange(server: ViteDevServer, sources: string[]) {
 
   server.watcher.on("change", (file) => {
     if (sources.includes(file)) {
-      logger.info("✅ config file has changed, restarting");
+      logger.info("✅ config file has changed, restarti2222ng");
       server.restart();
     }
   });
@@ -28,9 +28,9 @@ export default function prestige(): Plugin {
       config = loadedConfig;
       sources = loaderSources;
       docsDir = join(resolvedConfig.root, normalizePath(config.docsDir));
+      console.log(docsDir);
     },
     async configureServer(server) {
-      logger.info("DIR UPDATE " + docsDir);
       watchConfigChange(server, sources);
     },
   };

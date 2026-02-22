@@ -30,8 +30,10 @@ export async function loadPrestigeConfig(root: string) {
 
   const validatedConfig = validateConfig(config);
   const path = join(root, normalizePath(validatedConfig.docsDir));
-  if (!pathExists(path)) {
-    throw new PrestigeError(`Docs directory not found: ${path}`);
+  console.log("PATH IS ", path);
+  console.log("PATH EXISTS: ", await pathExists(path));
+  if (!(await pathExists(path))) {
+    throw new PrestigeError(`Docs! directory not found: ${path}`);
   }
   return { config: validatedConfig, sources };
 }

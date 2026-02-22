@@ -1,13 +1,9 @@
-import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
-import { tmpdir } from "node:os";
-import { join } from "node:path";
 import { describe, expect, it } from "vitest";
+
+// @ts-expect-error - mocked module
+import { __setMockConfig } from "unconfig";
 import { defineConfig, loadPrestigeConfig, validateConfig } from "../../../src/vite/config/config";
 import { PrestigeConfig } from "../../../src/vite/config/config.types";
-
-export function readHelloWorld(path: string) {
-  return readFileSync(path, "utf-8");
-}
 
 describe("defineConfig", () => {
   it("returns same config object", () => {
@@ -29,29 +25,29 @@ describe("validateConfig", () => {
 });
 
 describe("loadPrestigeConfig", () => {
-  it("should load config from specified directory", async () => {
-    // Create a temporary directory
-    const tmpDir = mkdtempSync(join(tmpdir(), "prestige-test-"));
-    const configPath = join(tmpDir, "prestige.config.ts");
+  it("should throw error on invalid config", async () => {
+    const mockConfig = {};
+    __setMockConfig(mockConfig);
 
-    try {
-      // Write the config file to the temporary directory
-      writeFileSync(
-        configPath,
-        `
-        export default {
-          title: "Test Config"
-        }
-      `,
-      );
+    await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError();
+  });
 
-      // Load config using the temporary directory as cwd
-      const { config } = await loadPrestigeConfig(tmpDir);
+  async function checkProperty(mock: Partial<PrestigeConfig>, property: keyof PrestigeConfig) {
+    const mockConfig = {
+      ...mock,
+    };
+    __setMockConfig(mockConfig);
 
-      expect(config.title).toBe("Test Config");
-    } finally {
-      // Clean up
-      rmSync(tmpDir, { recursive: true, force: true });
-    }
+    await expect(loadPrestigeConfig("/some/path")).resolves.toMatchObject({
+      config: { [property]: mockConfig[property] },
+    });
+  }
+
+  it("should return title", async () => {
+    await checkProperty({ title: "test" }, "title");
+  });
+
+  it("should return description", async () => {
+    await checkProperty({ title: "test", description: "test" }, "description");
   });
 });

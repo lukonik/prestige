@@ -12,7 +12,7 @@ export function validateConfig(config: PrestigeConfig) {
 }
 
 export async function loadPrestigeConfig() {
-  const { config } = await loadConfig<PrestigeConfig>({
+  const { config, sources } = await loadConfig<PrestigeConfig>({
     sources: [
       {
         files: "prestige.config.ts",
@@ -20,5 +20,5 @@ export async function loadPrestigeConfig() {
     ],
   });
 
-  return validateConfig(config);
+  return { config: validateConfig(config), sources };
 }

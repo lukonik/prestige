@@ -11,14 +11,14 @@ export function validateConfig(config: PrestigeConfig) {
   return parseWithFriendlyErrors(PrestigeConfigSchema, config, "Invalid schema");
 }
 
-export async function loadPrestigeConfig(cwd = process.cwd()) {
+export async function loadPrestigeConfig(cwd?: string) {
   const { config, sources } = await loadConfig<PrestigeConfig>({
     sources: [
       {
         files: "prestige.config.ts",
       },
     ],
-    cwd,
+    ...(cwd ? { cwd } : {}),
   });
 
   return { config: validateConfig(config), sources };

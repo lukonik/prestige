@@ -16,11 +16,11 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/vite.js",
-  "module": "./dist/vite.js",
-  "types": "./dist/vite.d.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/vite.js",
+    ".": "./dist/index.js",
     "./package.json": "./package.json",
     "./vite": "./dist/vite.js"
   },
@@ -37,6 +37,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
+    "picocolors": "^1.1.1",
     "unconfig": "^7.5.0",
     "zod": "^4.3.6"
   },

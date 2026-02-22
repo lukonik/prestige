@@ -7,12 +7,11 @@ export default function prestige(): Plugin {
     name: "vite-plugin-prestige",
     async configureServer(server) {
       const { sources } = await loadPrestigeConfig();
-
       server.watcher.add(sources);
 
       server.watcher.on("change", (file) => {
         if (sources.includes(file)) {
-          logger.info("config file has changed, restarting...");
+          logger.info("✅ config file has changed, restarting");
           server.restart();
         }
       });

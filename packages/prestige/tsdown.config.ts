@@ -2,7 +2,8 @@ import { defineConfig } from "tsdown";
 
 export default defineConfig({
   entry: {
-    vite: "./src/vite",
+    index: "./src/index.ts",
+    vite: "./src/vite/index.ts",
   },
   platform: "neutral",
   // exports: true,

@@ -1,6 +1,6 @@
 import { defineConfig } from "@lonik/prestige/vite";
 
 export default defineConfig({
-  title: "TESTwwqeqwe",
-  description: "OL21231231qwe qqe qweqw 22weqeq2222222AA",
+  title: "TES qweqweqe dsadasdwqeeqe. qw. saqw qwe",
+  description: " qqe qweqw. ",
 });

@@ -11,7 +11,8 @@
   },
   "scripts": {
     "dev": "pnpm run --filter @lonik/prestige dev",
-    "demo:dev": "pnpm run --filter @lonik/prestige --filter demo --parallel dev",
+    "dev:all": "pnpm run --filter @lonik/prestige --filter demo --parallel dev",
+    "demo:dev": "pnpm run --filter demo dev",
     "play": "pnpm run --filter @lonik/prestige play",
     "build": "pnpm run --filter @lonik/prestige build",
     "test": "pnpm run --filter @lonik/prestige test",

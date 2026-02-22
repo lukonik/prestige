@@ -16,12 +16,13 @@
     "dist"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/vite.js",
+  "module": "./dist/vite.js",
+  "types": "./dist/vite.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./package.json": "./package.json"
+    ".": "./dist/vite.js",
+    "./package.json": "./package.json",
+    "./vite": "./dist/vite.js"
   },
   "publishConfig": {
     "access": "public"
@@ -34,6 +35,10 @@
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm publish",
     "prepublishOnly": "pnpm run build"
+  },
+  "dependencies": {
+    "unconfig": "^7.5.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",

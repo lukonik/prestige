@@ -4,3 +4,4 @@ preferWorkspacePackages: true
 
 packages:
   - "packages/*"
+  - "apps/*"

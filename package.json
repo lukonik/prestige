@@ -37,9 +37,6 @@
     "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
       "oxlint . --deny-warnings"
     ],
-    "*.json": [
-      "oxfmt"
-    ],
     "*": "oxfmt --no-error-on-unmatched-pattern"
   },
   "packageManager": "pnpm@10.20.0"

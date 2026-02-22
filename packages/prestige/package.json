@@ -37,19 +37,20 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
+    "fs-extra": "^11.3.3",
     "unconfig": "^7.5.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
     "@tsconfig/strictest": "^2.0.8",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/browser-playwright": "^4.0.16",
     "bumpp": "^10.3.2",
-    "memfs": "^4.56.10",
     "picocolors": "^1.1.1",
     "publint": "^0.3.17",
     "tsdown": "^0.18.1",
@@ -61,6 +62,7 @@
   "peerDependencies": {
     "@tanstack/react-router": "^1.161.4",
     "@tanstack/react-start": "^1.161.4",
+    "@vitest/coverage-v8": "^4.0.18",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "vite-tsconfig-paths": "^6.1.1"

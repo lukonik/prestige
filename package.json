@@ -16,6 +16,7 @@
     "play": "pnpm run --filter @lonik/prestige play",
     "build": "pnpm run --filter @lonik/prestige build",
     "test": "pnpm run --filter @lonik/prestige test",
+    "coverage": "pnpm run --filter @lonik/prestige test --coverage",
     "typecheck": "pnpm run --filter @lonik/prestige typecheck",
     "lint": "oxlint . --deny-warnings",
     "lint:fix": "oxlint . --fix",
@@ -35,9 +36,6 @@
   "lint-staged": {
     "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
       "oxlint . --deny-warnings"
-    ],
-    "*.json": [
-      "oxfmt"
     ],
     "*": "oxfmt --no-error-on-unmatched-pattern"
   },

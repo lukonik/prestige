@@ -2,9 +2,9 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { prestige } from "./src/vite";
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   root: "./playground",
-  plugins: [react(), prestige()],
+  plugins: [react(), mode !== "test" && prestige()],
   test: {
     root: ".",
     projects: [
@@ -36,4 +36,4 @@ export default defineConfig({
     //   headless: true,
     // },
   },
-});
+}));

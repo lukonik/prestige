@@ -21,7 +21,8 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./vite": "./dist/vite.js"
   },
   "publishConfig": {
     "access": "public"
@@ -35,6 +36,10 @@
     "release": "bumpp && pnpm publish",
     "prepublishOnly": "pnpm run build"
   },
+  "dependencies": {
+    "unconfig": "^7.5.0",
+    "zod": "^4.3.6"
+  },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
     "@tsconfig/strictest": "^2.0.8",
@@ -44,6 +49,8 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/browser-playwright": "^4.0.16",
     "bumpp": "^10.3.2",
+    "memfs": "^4.56.10",
+    "picocolors": "^1.1.1",
     "publint": "^0.3.17",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",

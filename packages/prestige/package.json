@@ -38,8 +38,12 @@
   },
   "dependencies": {
     "fs-extra": "^11.3.3",
+    "remark-frontmatter": "^5.0.0",
+    "remark-parse": "^11.0.0",
     "tinyglobby": "^0.2.15",
     "unconfig": "^7.5.0",
+    "unified": "^11.0.5",
+    "yaml": "^2.8.2",
     "zod": "^4.3.6"
   },
   "devDependencies": {

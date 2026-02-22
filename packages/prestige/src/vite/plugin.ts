@@ -1,5 +1,6 @@
 import { ViteDevServer, type Plugin } from "vite";
 import { loadPrestigeConfig } from "./config/config";
+import { PrestigeConfig } from "./config/config.types";
 import logger from "./utils/logger";
 
 export function watchConfigChange(server: ViteDevServer, sources: string[]) {
@@ -14,15 +15,20 @@ export function watchConfigChange(server: ViteDevServer, sources: string[]) {
 }
 
 export default function prestige(): Plugin {
+  let config: PrestigeConfig;
+  let sources: string[];
   return {
     name: "vite-plugin-prestige",
-    async configureServer(server) {
-      const { sources } = await loadPrestigeConfig();
-      watchConfigChange(server, sources);
-    },
-    buildStart: async () => {
-      const { config } = await loadPrestigeConfig();
+    async configResolved(resolvedConfig) {
+      const { config: loadedConfig, sources: loaderSources } = await loadPrestigeConfig(
+        resolvedConfig.root,
+      );
+      config = loadedConfig;
+      sources = loaderSources;
       console.log(config);
+    },
+    async configureServer(server) {
+      watchConfigChange(server, sources);
     },
   };
 }

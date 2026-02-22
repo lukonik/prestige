@@ -21,5 +21,9 @@ export async function loadPrestigeConfig(cwd?: string) {
     ...(cwd ? { cwd } : {}),
   });
 
+  if (!config) {
+    throw new Error("Prestige config not found");
+  }
+
   return { config: validateConfig(config), sources };
 }

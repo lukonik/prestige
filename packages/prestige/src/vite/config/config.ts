@@ -18,20 +18,17 @@ export async function loadPrestigeConfig(root: string) {
   const { config, sources } = await loadConfig<PrestigeConfigInput>({
     sources: [
       {
-        files: "prestige.config.ts",
+        files: join(root, "prestige.config.ts"),
       },
     ],
     ...(root ? { root } : {}),
   });
-
+  console.log("CONFIG ", config);
   if (!config) {
     throw new Error("Prestige config not found");
   }
-
   const validatedConfig = validateConfig(config);
   const path = join(root, normalizePath(validatedConfig.docsDir));
-  console.log("PATH IS ", path);
-  console.log("PATH EXISTS: ", await pathExists(path));
   if (!(await pathExists(path))) {
     throw new PrestigeError(`Docs! directory not found: ${path}`);
   }

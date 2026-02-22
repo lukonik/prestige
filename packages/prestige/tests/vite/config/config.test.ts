@@ -2,17 +2,44 @@ import { describe, expect, it } from "vitest";
 
 import { defineConfig, loadPrestigeConfig, validateConfig } from "../../../src/vite/config/config";
 import { PrestigeConfig } from "../../../src/vite/config/config.types";
-import { mkdir, writeFile } from "fs-extra";
+import { mkdir, outputFileSync } from "fs-extra";
 import { getTempDir } from "../test-utils";
+import { PrestigeError } from "../../../src/vite/utils/errors";
 import { DEFAULT_DOCS_DIR } from "../../../src/vite/constants";
 
-function createConfigFile() {
+function createConfigFile(props: any) {
   return `
-  export default ({
-    title: "test",
-    description: "test",
-  });
+  export default (${JSON.stringify(props)});
   `;
+}
+
+function minimalConfig() {
+  return {
+    title: "test",
+  };
+}
+
+async function createDefaultDirs(initConfig?: any, dir?: string) {
+  const prestigePath = getTempDir("prestige.config.ts");
+  await outputFileSync(
+    prestigePath,
+    createConfigFile(
+      initConfig ?? {
+        title: "dummy",
+      },
+    ),
+  );
+  await mkdir(getTempDir(dir ?? DEFAULT_DOCS_DIR), { recursive: true });
+}
+
+async function checkProperty(mock: Partial<PrestigeConfig>, property: keyof PrestigeConfig) {
+  const mockConfig = {
+    ...mock,
+  };
+  await createDefaultDirs(mock);
+  await expect(loadPrestigeConfig(getTempDir())).resolves.toMatchObject({
+    config: { [property]: mockConfig[property] },
+  });
 }
 
 describe("defineConfig", () => {
@@ -35,34 +62,41 @@ describe("validateConfig", () => {
 });
 
 describe("loadPrestigeConfig", () => {
-  it("should throw error on invalid config", async () => {
-    await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError();
+  it("should throw error if config file does not exist", async () => {
+    await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError(PrestigeError);
   });
-
-  async function checkProperty(mock: Partial<PrestigeConfig>, property: keyof PrestigeConfig) {
-    const mockConfig = {
-      ...mock,
-    };
-    await mkdir(getTempDir(), { recursive: true });
-    await mkdir(getTempDir(DEFAULT_DOCS_DIR), { recursive: true });
-    const prestigePath = getTempDir("prestige.config.ts");
-    await writeFile(prestigePath, createConfigFile());
-
-    await expect(loadPrestigeConfig(getTempDir())).resolves.toMatchObject({
-      config: { [property]: mockConfig[property] },
-    });
-  }
-
   it("should return title", async () => {
     await checkProperty({ title: "test" }, "title");
   });
 
-  it.only("should return description", async () => {
-    await checkProperty({ title: "test", description: "test" }, "description");
+  it("should return description", async () => {
+    await checkProperty({ ...minimalConfig(), description: "test22" }, "description");
   });
 
   it("should return docsDir", async () => {
     await mkdir(getTempDir("test"), { recursive: true });
-    await checkProperty({ title: "test", docsDir: "test" }, "docsDir");
+    await checkProperty({ ...minimalConfig(), docsDir: "test" }, "docsDir");
+  });
+  it("should throw error if docsDir does not exist", async () => {
+    await expect(loadPrestigeConfig("notfound/path")).rejects.toThrowError(PrestigeError);
+  });
+  it("should return source", async () => {
+    await createDefaultDirs();
+    await expect(loadPrestigeConfig(getTempDir())).resolves.toMatchObject({
+      sources: [getTempDir("prestige.config.ts")],
+    });
+  });
+  it("should return fullDocs dir", async () => {
+    const dir = "/dummy/dir";
+    await createDefaultDirs(
+      {
+        ...minimalConfig(),
+        docsDir: dir,
+      },
+      dir,
+    );
+    await expect(loadPrestigeConfig(getTempDir())).resolves.toMatchObject({
+      fullDocsDir: getTempDir(dir),
+    });
   });
 });

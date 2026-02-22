@@ -15,22 +15,22 @@ export function validateConfig(config: PrestigeConfigInput) {
 }
 
 export async function loadPrestigeConfig(root: string) {
+  const configPath = join(root, "prestige.config.ts");
+
   const { config, sources } = await loadConfig<PrestigeConfigInput>({
     sources: [
       {
-        files: join(root, "prestige.config.ts"),
+        files: configPath,
       },
     ],
-    ...(root ? { root } : {}),
   });
-  console.log("CONFIG ", config);
   if (!config) {
-    throw new Error("Prestige config not found");
+    throw new PrestigeError("Prestige config not found");
   }
   const validatedConfig = validateConfig(config);
   const path = join(root, normalizePath(validatedConfig.docsDir));
   if (!(await pathExists(path))) {
     throw new PrestigeError(`Docs! directory not found: ${path}`);
   }
-  return { config: validatedConfig, sources };
+  return { config: validatedConfig, sources, fullDocsDir: path };
 }

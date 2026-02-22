@@ -1,7 +1,8 @@
-import { ViteDevServer, type Plugin } from "vite";
+import { normalizePath, ViteDevServer, type Plugin } from "vite";
 import { loadPrestigeConfig } from "./config/config";
 import { PrestigeConfig } from "./config/config.types";
 import logger from "./utils/logger";
+import { join } from "node:path";
 
 export function watchConfigChange(server: ViteDevServer, sources: string[]) {
   server.watcher.add(sources);
@@ -16,6 +17,7 @@ export function watchConfigChange(server: ViteDevServer, sources: string[]) {
 
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
+  let docsDir: string;
   let sources: string[];
   return {
     name: "vite-plugin-prestige",
@@ -25,9 +27,10 @@ export default function prestige(): Plugin {
       );
       config = loadedConfig;
       sources = loaderSources;
-      console.log(config);
+      docsDir = join(resolvedConfig.root, normalizePath(config.docsDir));
     },
     async configureServer(server) {
+      logger.info("DIR UPDATE " + docsDir);
       watchConfigChange(server, sources);
     },
   };

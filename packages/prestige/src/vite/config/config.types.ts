@@ -10,4 +10,5 @@ export const PrestigeConfigSchema = z.object({
     .default("src/content/docs"),
 });
 
-export type PrestigeConfig = z.input<typeof PrestigeConfigSchema>;
+export type PrestigeConfigInput = z.input<typeof PrestigeConfigSchema>;
+export type PrestigeConfig = z.infer<typeof PrestigeConfigSchema>;

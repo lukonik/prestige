@@ -1,29 +1,37 @@
 import { loadConfig } from "unconfig";
-import { parseWithFriendlyErrors } from "../utils/errors";
-import { PrestigeConfig, PrestigeConfigSchema } from "./config.types";
-export function defineConfig(config: PrestigeConfig) {
+import { parseWithFriendlyErrors, PrestigeError } from "../utils/errors";
+import { PrestigeConfigInput, PrestigeConfigSchema } from "./config.types";
+import { pathExists } from "fs-extra";
+import { join } from "node:path";
+import { normalizePath } from "vite";
+export function defineConfig(config: PrestigeConfigInput) {
   // purpose of this function, is to get Typescript intelisense for config
   // we use unconfig to load the config properly
   return config;
 }
 
-export function validateConfig(config: PrestigeConfig) {
+export function validateConfig(config: PrestigeConfigInput) {
   return parseWithFriendlyErrors(PrestigeConfigSchema, config, "Invalid schema");
 }
 
-export async function loadPrestigeConfig(cwd?: string) {
-  const { config, sources } = await loadConfig<PrestigeConfig>({
+export async function loadPrestigeConfig(root: string) {
+  const { config, sources } = await loadConfig<PrestigeConfigInput>({
     sources: [
       {
         files: "prestige.config.ts",
       },
     ],
-    ...(cwd ? { cwd } : {}),
+    ...(root ? { root } : {}),
   });
 
   if (!config) {
     throw new Error("Prestige config not found");
   }
 
-  return { config: validateConfig(config), sources };
+  const validatedConfig = validateConfig(config);
+  const path = join(root, normalizePath(validatedConfig.docsDir));
+  if (!pathExists(path)) {
+    throw new PrestigeError(`Docs directory not found: ${path}`);
+  }
+  return { config: validatedConfig, sources };
 }

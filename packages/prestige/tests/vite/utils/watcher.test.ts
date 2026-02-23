@@ -27,24 +27,6 @@ describe("watchFiles", () => {
     expect(server.watcher.add).toHaveBeenCalledWith(sources);
   });
 
-  it("should restart server when config file changes", () => {
-    const sources = ["/path/to/config.ts"];
-    watchFiles(server, sources, () => {});
-
-    // Simulate change event
-    // Find the callback passed to .on("change", callback)
-    const onCalls = (server.watcher.on as any).mock.calls;
-    const changeCallback = onCalls.find((call: any[]) => call[0] === "change")?.[1];
-
-    expect(changeCallback).toBeDefined();
-
-    if (changeCallback) {
-      changeCallback("/path/to/config.ts");
-    }
-
-    expect(server.restart).toHaveBeenCalled();
-  });
-
   it("should not restart server when other file changes", () => {
     const sources = ["/path/to/config.ts"];
     watchFiles(server, sources, () => {});

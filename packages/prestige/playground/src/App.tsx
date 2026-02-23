@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-
+import sidebar from "virtual:sidebar";
 const date = new Date();
 
 export function App() {
   const [html, setHtml] = useState("");
+  console.log(JSON.stringify(sidebar));
   useEffect(() => {
     fetch("@articles/demo.md")
       .then((res) => res.json())

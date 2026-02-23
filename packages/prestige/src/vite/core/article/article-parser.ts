@@ -6,7 +6,7 @@ import rehypeStringify from "rehype-stringify";
 import remarkToc from "remark-toc";
 import rehypeShiki from "@shikijs/rehype";
 import { matter } from "vfile-matter";
-import { articleSchema } from "./article-types";
+import { ArticleSchema } from "./article-types";
 import { parseWithFriendlyErrors } from "../../utils/errors";
 
 export async function parseArticle(content: string) {
@@ -33,7 +33,7 @@ export async function parseArticle(content: string) {
   let metadata = null;
 
   if (matterResponse) {
-    metadata = parseWithFriendlyErrors(articleSchema, matterResponse, `Invalid schema of article`);
+    metadata = parseWithFriendlyErrors(ArticleSchema, matterResponse, `Invalid schema of article`);
   }
   const html = String(result);
   return { html, metadata };

@@ -8,6 +8,7 @@ import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
 import { getArticleByPath } from "./core/article/article-store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
+import { Sidebar } from "./core/article/article-types";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -16,8 +17,24 @@ export default function prestige(): Plugin {
   let docsDir: string;
   let sources: string[];
   let isDocsMatcher: Matcher;
+  let sidebar: Sidebar;
+  const virtualModuleId = "virtual:sidebar";
+  const resolvedVirtualModuleId = "\0" + virtualModuleId;
+
   return {
     name: "vite-plugin-prestige",
+    resolveId(id) {
+      if (id === virtualModuleId) {
+        return resolvedVirtualModuleId;
+      }
+      return null;
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export default  ${JSON.stringify(sidebar)}`;
+      }
+      return null;
+    },
     async configResolved(resolvedConfig) {
       const { config: loadedConfig, sources: loaderSources } = await loadPrestigeConfig(
         resolvedConfig.root,
@@ -26,6 +43,9 @@ export default function prestige(): Plugin {
       sources = loaderSources;
       docsDir = join(resolvedConfig.root, normalizePath(config.docsDir));
       isDocsMatcher = picomatch(join(docsDir, "**/*.md"));
+      if (config.sidebar) {
+        sidebar = config.sidebar;
+      }
     },
     async configureServer(server) {
       server.middlewares.use(async (req, res, next) => {

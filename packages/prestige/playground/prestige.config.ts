@@ -15,5 +15,10 @@ export default defineConfig({
       type: "link",
       slug: "/demo",
     },
+    {
+      label: "opaa22aa",
+      type: "link",
+      slug: "/demo",
+    },
   ],
 });

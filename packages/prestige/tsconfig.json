@@ -15,5 +15,5 @@
       "@lonik/prestige/ui": ["./src/ui/index.ts"]
     }
   },
-  "include": ["src", "playground", "./src/vite/client.d.ts"]
+  "include": ["src"]
 }

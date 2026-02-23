@@ -5,15 +5,15 @@ const SidebarLinkSchema = z.object({
   slug: z.string(),
 });
 
-type SidebarLink = z.infer<typeof SidebarLinkSchema>;
+export type SidebarLink = z.infer<typeof SidebarLinkSchema>;
 
-type SidebarGroup = {
+export type SidebarGroup = {
   label: string;
   items: SidebarItem[];
   collapsible?: boolean | undefined;
 };
 
-type SidebarItem = SidebarLink | SidebarGroup;
+export type SidebarItem = SidebarLink | SidebarGroup;
 
 const SidebarItemSchema: z.ZodType<SidebarItem> = z.union([
   SidebarLinkSchema,

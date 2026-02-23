@@ -5,6 +5,7 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
+import { processMarkdown } from "./utils/markdown";
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
   let docsDir: string;
@@ -22,6 +23,19 @@ export default function prestige(): Plugin {
       isDocsMatcher = picomatch(join(docsDir, "**/*.md"));
     },
     async configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!req.url) {
+          return next();
+        }
+        if (req.url.includes(".md")) {
+          const markdownPath = join(docsDir, req.url);
+          res.end(await processMarkdown(markdownPath));
+          return;
+        }
+
+        next();
+      });
+
       watchConfigChange(server, sources);
       watchMarkdownChange(server, docsDir);
     },

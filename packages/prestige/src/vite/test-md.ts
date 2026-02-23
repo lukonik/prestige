@@ -12,7 +12,7 @@ const schema = z.object({
 });
 
 async function processMarkdown() {
-  const processor = unified().use(remarkParse).use(remarkFrontmatter, ["yaml"]); // Tells remark to look for YAML blocks
+  const processor = unified().use().use(remarkFrontmatter, ["yaml"]); // Tells remark to look for YAML blocks
 
   const tree = processor.parse(fileContent);
 

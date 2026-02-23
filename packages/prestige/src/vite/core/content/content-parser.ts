@@ -6,10 +6,10 @@ import rehypeStringify from "rehype-stringify";
 import remarkToc from "remark-toc";
 import rehypeShiki from "@shikijs/rehype";
 import { matter } from "vfile-matter";
-import { ArticleSchema } from "./article-types";
+import { ArticleSchema } from "./content-types";
 import { parseWithFriendlyErrors } from "../../utils/errors";
 
-export async function parseArticle(content: string) {
+export async function parseContent(content: string) {
   // 1. Set up the processor pipeline
   const processor = unified()
     .use(remarkParse)

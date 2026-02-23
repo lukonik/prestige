@@ -5,10 +5,10 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
-import { getArticleByPath } from "./core/article/article-store";
+import { getContentByPath } from "./core/content/content-store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
-import { Sidebar } from "./core/article/article-types";
+import { Sidebar } from "./core/content/content-types";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -61,7 +61,7 @@ export default function prestige(): Plugin {
               res.end();
               return;
             }
-            const article = await getArticleByPath(markdownPath);
+            const article = await getContentByPath(markdownPath);
             if (!article) {
               res.statusCode = 404;
               res.end();

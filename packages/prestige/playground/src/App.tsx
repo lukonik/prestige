@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import sidebar from "virtual:sidebar";
+import { Sidebar } from "@lonik/prestige/ui";
 const date = new Date();
 
 export function App() {
   const [html, setHtml] = useState("");
-  console.log(JSON.stringify(sidebar));
   useEffect(() => {
     fetch("@articles/demo.md")
       .then((res) => res.json())
@@ -15,6 +14,7 @@ export function App() {
   }, []);
   return (
     <>
+      <Sidebar />
       PLAYqeqeqewqeqeqGROUND {date.getTime()}
       <div
         dangerouslySetInnerHTML={{

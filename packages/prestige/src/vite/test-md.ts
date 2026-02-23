@@ -1,7 +1,3 @@
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkFrontmatter from "remark-frontmatter";
-import { parse } from "yaml"; // To turn YAML string into an object
 import { z } from "zod";
 const fileContent = `---
 title: My Cool Post

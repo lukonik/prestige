@@ -1,26 +1,32 @@
-import { normalizePath, ViteDevServer } from "vite";
+import { ViteDevServer } from "vite";
 import logger from "./logger";
-import { join } from "node:path";
+import { join } from "pathe";
+import picomatch from "picomatch";
 
-export function watchConfigChange(server: ViteDevServer, sources: string[]) {
-  server.watcher.add(sources);
-
+export function watchFiles(
+  server: ViteDevServer,
+  files: string[] | string,
+  cb: (file: string) => void,
+) {
+  server.watcher.add(files);
+  const isMatch = picomatch(files);
   server.watcher.on("change", (file) => {
-    if (sources.includes(file)) {
-      logger.info("✅ config file has changed, restarti2222ng");
+    if (isMatch(file)) {
+      cb(file);
       server.restart();
     }
   });
 }
 
-export async function watchMarkdownChange(server: ViteDevServer, markdownDir: string) {
-  // const mdFiles = await glob(join(markdownDir, normalizePath("**/*.md")));
-  server.watcher.add(join(markdownDir, normalizePath("**/*.md")));
+export function watchConfigChange(server: ViteDevServer, sources: string[]) {
+  watchFiles(server, sources, () => {
+    logger.info("✅ config file has changed, restarti2222ng");
+    server.restart();
+  });
+}
 
-  server.watcher.on("change", (path) => {
-    if (path.includes(markdownDir) && path.includes(".md")) {
-      logger.info("🔥  config file has changed, restarti2222ng");
-      server.restart();
-    }
+export async function watchMarkdownChange(server: ViteDevServer, markdownDir: string) {
+  watchFiles(server, join(markdownDir, "**/*.md"), () => {
+    logger.info("🔥  config file has changed, restarti2222ng");
   });
 }

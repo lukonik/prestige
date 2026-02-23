@@ -3,7 +3,6 @@ import { loadPrestigeConfig } from "./config/config";
 import { PrestigeConfig } from "./config/config.types";
 import { join } from "node:path";
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
-import "./test-md";
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
   let docsDir: string;

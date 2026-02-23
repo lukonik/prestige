@@ -6,7 +6,7 @@ export default defineConfig({
     vite: "./src/vite/index.ts",
   },
   platform: "neutral",
-  // exports: true,
+  exports: true,
   dts: true,
   sourcemap: true,
   publint: true,

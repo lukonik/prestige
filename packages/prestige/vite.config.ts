@@ -2,10 +2,11 @@
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { prestige } from "./src/vite";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig(({ mode }) => ({
   root: "./playground",
-  plugins: [react(), mode !== "test" && prestige()],
+  plugins: [react(), mode !== "test" && prestige(), tailwindcss()],
   test: {
     root: ".",
     projects: [

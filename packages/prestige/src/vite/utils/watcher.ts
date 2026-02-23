@@ -13,7 +13,6 @@ export function watchFiles(
   server.watcher.on("change", (file) => {
     if (isMatch(file)) {
       cb(file);
-      server.restart();
     }
   });
 }

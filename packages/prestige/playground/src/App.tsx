@@ -5,7 +5,7 @@ const date = new Date();
 export function App() {
   const [html, setHtml] = useState("");
   useEffect(() => {
-    fetch("new.md")
+    fetch("demo.md")
       .then((res) => res.text())
       .then((res) => {
         setHtml(res);

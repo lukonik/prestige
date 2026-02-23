@@ -6,6 +6,7 @@ import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
 import { processMarkdown } from "./utils/markdown";
+import { readFile } from "fs/promises";
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
   let docsDir: string;
@@ -29,7 +30,9 @@ export default function prestige(): Plugin {
         }
         if (req.url.includes(".md")) {
           const markdownPath = join(docsDir, req.url);
-          res.end(await processMarkdown(markdownPath));
+          const file = await readFile(markdownPath, "utf-8");
+
+          res.end(await processMarkdown(file));
           return;
         }
 

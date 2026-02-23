@@ -3,21 +3,27 @@ import remarkParse from "remark-parse";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
-import { readFile } from "node:fs/promises";
+import remarkToc from "remark-toc";
+import rehypeShiki from "@shikijs/rehype";
 
-export async function processMarkdown(markdownPath: string) {
+export async function processMarkdown(content: string) {
   // 1. Set up the processor pipeline
   const processor = unified()
     .use(remarkParse)
+    .use(remarkToc)
     .use(remarkFrontmatter, ["yaml"])
-    .use(remarkRehype) // Converts Markdown AST to HTML AST
+    .use(remarkRehype)
+    .use(rehypeShiki, {
+      // or `theme` for a single theme
+      themes: {
+        light: "vitesse-dark",
+        dark: "vitesse-dark",
+      },
+    })
     .use(rehypeStringify); // Stringifies the HTML AST to a standard HTML string
 
-  // 2. Read the file
-  const file = await readFile(markdownPath);
-
   // 3. Process the file through the entire pipeline
-  const result = await processor.process(file);
+  const result = await processor.process(content);
 
   // 4. Get your final HTML
   const html = String(result);

@@ -19,13 +19,13 @@ export function watchFiles(
 
 export function watchConfigChange(server: ViteDevServer, sources: string[]) {
   watchFiles(server, sources, () => {
-    logger.info("✅ config file has changed, restarti2222ng");
+    logger.info("✅ config file has changed restaring server");
     server.restart();
   });
 }
 
 export async function watchMarkdownChange(server: ViteDevServer, markdownDir: string) {
   watchFiles(server, join(markdownDir, "**/*.md"), () => {
-    logger.info("🔥  config file has changed, restarti2222ng");
+    logger.info("🔥  article file has changed");
   });
 }

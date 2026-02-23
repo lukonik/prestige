@@ -19,5 +19,13 @@ function print(log: string, logLevel: "info" | "warning" | "error") {
 export default {
   info: (message: string) => print(message, "info"),
   warn: (message: string) => print(message, "warning"),
-  error: (message: string) => print(message, "error"),
+  error: (message: unknown) => {
+    if (message instanceof Error) {
+      console.error(message.message);
+    } else if (typeof message === "string") {
+      print(message, "error");
+    } else {
+      print(JSON.stringify(message), "error");
+    }
+  },
 };

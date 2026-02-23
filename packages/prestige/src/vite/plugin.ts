@@ -5,8 +5,8 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
-import { processMarkdown } from "./utils/markdown";
 import { readFile } from "fs/promises";
+import { parseArticle } from "./core/article/article-parser";
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
   let docsDir: string;
@@ -32,7 +32,9 @@ export default function prestige(): Plugin {
           const markdownPath = join(docsDir, req.url);
           const file = await readFile(markdownPath, "utf-8");
 
-          res.end(await processMarkdown(file));
+          res.setHeader("Content-Type", "application/json");
+          res.statusCode = 200;
+          res.end(JSON.stringify(await parseArticle(file)));
           return;
         }
 

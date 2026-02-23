@@ -6,9 +6,10 @@ export function App() {
   const [html, setHtml] = useState("");
   useEffect(() => {
     fetch("demo.md")
-      .then((res) => res.text())
+      .then((res) => res.json())
       .then((res) => {
-        setHtml(res);
+        setHtml(res.html);
+        console.log(res.metadata);
       });
   }, []);
   return (

@@ -4,9 +4,9 @@ import { defineConfig } from "vite";
 import { prestige } from "./src/vite";
 import tailwindcss from "@tailwindcss/vite";
 
-export default defineConfig(({ mode }) => ({
+export default defineConfig(({ mode: _ }) => ({
   root: "./playground",
-  plugins: [react(), mode !== "test" && prestige(), tailwindcss()],
+  plugins: [react(), prestige(), tailwindcss()],
   test: {
     root: ".",
     projects: [

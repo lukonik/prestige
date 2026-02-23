@@ -21,6 +21,7 @@
   "types": "./dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js",
+    "./ui": "./dist/ui.js",
     "./vite": "./dist/vite.js",
     "./package.json": "./package.json"
   },

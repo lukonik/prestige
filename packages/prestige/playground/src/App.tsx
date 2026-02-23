@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Sidebar } from "@lonik/prestige/ui";
 const date = new Date();
-
 export function App() {
   const [html, setHtml] = useState("");
   useEffect(() => {

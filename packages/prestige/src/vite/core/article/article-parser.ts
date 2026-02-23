@@ -26,7 +26,7 @@ export default function myUnifiedPluginHandlingYamlMatter() {
    * @returns {undefined}
    *   Nothing.
    */
-  return function (tree: any, file: any) {
+  return function (_: any, file: any) {
     matter(file, { strip: true });
   };
 }

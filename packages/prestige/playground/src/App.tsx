@@ -5,7 +5,7 @@ const date = new Date();
 export function App() {
   const [html, setHtml] = useState("");
   useEffect(() => {
-    fetch("demo.md")
+    fetch("@articles/demo.md")
       .then((res) => res.json())
       .then((res) => {
         setHtml(res.html);

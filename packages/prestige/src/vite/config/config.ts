@@ -2,8 +2,7 @@ import { loadConfig } from "unconfig";
 import { parseWithFriendlyErrors, PrestigeError } from "../utils/errors";
 import { PrestigeConfigInput, PrestigeConfigSchema } from "./config.types";
 import { pathExists } from "fs-extra";
-import { join } from "node:path";
-import { normalizePath } from "vite";
+import { join } from "pathe";
 export function defineConfig(config: PrestigeConfigInput) {
   // purpose of this function, is to get Typescript intelisense for config
   // we use unconfig to load the config properly
@@ -28,9 +27,10 @@ export async function loadPrestigeConfig(root: string) {
     throw new PrestigeError("Prestige config not found");
   }
   const validatedConfig = validateConfig(config);
-  const path = join(root, normalizePath(validatedConfig.docsDir));
-  if (!(await pathExists(path))) {
-    throw new PrestigeError(`Docs! directory not found: ${path}`);
+  const docsDirPath = join(root, validatedConfig.docsDir);
+  console.group(docsDirPath);
+  if (!(await pathExists(docsDirPath))) {
+    throw new PrestigeError(`Docs! directory not found: ${docsDirPath}`);
   }
-  return { config: validatedConfig, sources, fullDocsDir: path };
+  return { config: validatedConfig, sources, fullDocsDir: docsDirPath };
 }

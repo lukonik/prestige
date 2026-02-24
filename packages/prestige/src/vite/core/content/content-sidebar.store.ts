@@ -19,7 +19,6 @@ export class ContentSidebarStore {
   }
 
   load(id: string) {
-    console.log("OLAAAAAA ", id);
     if (id === "\0" + this._virtualId) {
       const obj = Object.fromEntries(this._sidebars);
       console.log("CAMEE ID ", obj);

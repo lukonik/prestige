@@ -8,11 +8,8 @@ import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
 import { ContentStore, getContentByPath } from "./core/content/content-store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
-import { Sidebar } from "./core/content/content-types";
-import { ContentGenerator } from "./core/content/content-generator";
-import { SidebarGenerator } from "./core/content/sidebar-generator";
-import { ContentCollection } from "./core/content/content-collection";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
+import { Sidebars } from "./core/content/content-sidebar-types";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -21,14 +18,9 @@ export default function prestige(): Plugin {
   let contentDir: string;
   let sources: string[];
   let isDocsMatcher: Matcher;
-  let sidebars: Sidebar;
-  const virtualSidebarModuleId = "virtual:sidebar";
-  const resolveVirtualModuleSidebarId = "\0" + virtualSidebarModuleId;
-  let contentGenerator: ContentGenerator;
-  let sidebarGenerator: SidebarGenerator;
-  let contentCollection: ContentCollection;
   let contentStore: ContentStore;
   let contentSidebarStore: ContentSidebarStore;
+  let sidebars: Sidebars;
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -42,16 +34,11 @@ export default function prestige(): Plugin {
         sidebars = config.sidebars;
       }
 
-      contentGenerator = new ContentGenerator(contentDir + "/docs");
-      sidebarGenerator = new SidebarGenerator("docs", contentDir);
-      contentCollection = new ContentCollection(contentDir);
       contentStore = new ContentStore(contentDir);
       contentSidebarStore = new ContentSidebarStore();
       contentSidebarStore.build(sidebars);
 
       await contentStore.build(sidebars);
-      await contentCollection.build(sidebars);
-      await sidebarGenerator.buildMap();
     },
     resolveId(id) {
       const sidebarId = contentSidebarStore.resolve(id);

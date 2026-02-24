@@ -1,1 +1,1 @@
-export { default as Sidebar } from "./components/Sidebar";
+export { prestigeRoutes } from "./routes/prestige-routes";

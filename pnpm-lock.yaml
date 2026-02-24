@@ -13,13 +13,13 @@ catalogs:
       specifier: ^0.5.1
       version: 0.5.1
     '@tanstack/react-devtools':
-      specifier: ^0.9.6
+      specifier: 0.9.6
       version: 0.9.6
     '@tanstack/react-router':
       specifier: ^1.162.4
       version: 1.162.4
     '@tanstack/react-router-devtools':
-      specifier: ^1.162.4
+      specifier: 1.162.4
       version: 1.162.4
     '@tanstack/react-router-ssr-query':
       specifier: ^1.162.4
@@ -214,6 +214,12 @@ importers:
       '@tailwindcss/vite':
         specifier: 'catalog:'
         version: 4.2.1(vite@7.3.1(@types/node@25.3.0)(jiti@2.6.1)(lightningcss@1.31.1)(tsx@4.21.0)(yaml@2.8.2))
+      '@tanstack/react-devtools':
+        specifier: 'catalog:'
+        version: 0.9.6(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(csstype@3.2.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(solid-js@1.9.11)
+      '@tanstack/react-router-devtools':
+        specifier: 'catalog:'
+        version: 1.162.4(@tanstack/react-router@1.162.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(@tanstack/router-core@1.162.2)(csstype@3.2.3)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       '@tsconfig/strictest':
         specifier: ^2.0.8
         version: 2.0.8

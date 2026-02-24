@@ -1,4 +1,8 @@
 import { z } from "zod";
+import { unified } from "unified";
+import remarkFrontmatter from "remark-frontmatter";
+import { parse } from "yaml";
+
 const fileContent = `---
 title: My Cool Post
 date: 2026-02-22
@@ -17,7 +21,7 @@ async function processMarkdown() {
   const tree = processor.parse(fileContent);
 
   // The frontmatter is now a node in the tree (usually the first child)
-  const frontmatterNode = tree.children.find((node) => node.type === "yaml");
+  const frontmatterNode = (tree as any).children.find((node: any) => node.type === "yaml");
 
   const metadata = frontmatterNode ? parse(frontmatterNode.value) : {};
   schema.parse(metadata);

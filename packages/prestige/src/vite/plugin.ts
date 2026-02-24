@@ -10,54 +10,97 @@ import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
 import { Sidebar } from "./core/content/content-types";
 import { ContentGenerator } from "./core/content/content-generator";
+import { SidebarGenerator } from "./core/content/sidebar-generator";
+import { ContentCollection } from "./core/content/content-collection";
 
 const ARTICLE_PREFIX = "@articles";
 
 export default function prestige(): Plugin {
   let config: PrestigeConfig;
-  let docsDir: string;
+  let contentDir: string;
   let sources: string[];
   let isDocsMatcher: Matcher;
-  let sidebar: Sidebar;
+  let sidebars: Sidebar;
   const virtualSidebarModuleId = "virtual:sidebar";
   const resolveVirtualModuleSidebarId = "\0" + virtualSidebarModuleId;
   let contentGenerator: ContentGenerator;
+  let sidebarGenerator: SidebarGenerator;
+  let contentCollection: ContentCollection;
   return {
     name: "vite-plugin-prestige",
+    async configResolved(resolvedConfig) {
+      const { config: loadedConfig, sources: loaderSources } =
+        await loadPrestigeConfig(resolvedConfig.root);
+      config = loadedConfig;
+      sources = loaderSources;
+      contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
+      isDocsMatcher = picomatch(join(contentDir, "**/*.md"));
+      if (config.sidebars) {
+        sidebars = config.sidebars;
+      }
+
+      contentGenerator = new ContentGenerator(contentDir + "/docs");
+      sidebarGenerator = new SidebarGenerator("docs", contentDir);
+      contentCollection = new ContentCollection(contentDir);
+      await contentCollection.build(sidebars);
+      await sidebarGenerator.buildMap();
+    },
     resolveId(id) {
-      if (id === virtualSidebarModuleId) {
-        return resolveVirtualModuleSidebarId;
+      // const contentId = contentGenerator.resolve(id);
+      // if (contentId) {
+      //   return contentId;
+      // }
+
+      // if (id === virtualSidebarModuleId) {
+      //   return resolveVirtualModuleSidebarId;
+      // }
+
+      // const sidebarGeneratorId = sidebarGenerator.resolveId(id);
+      // if (sidebarGeneratorId) {
+      //   return sidebarGeneratorId;
+      // }
+
+      const contentCollectionId = contentCollection.resolve(id);
+
+      if (contentCollectionId) {
+        return contentCollectionId;
       }
-      const contentGeneratorId = contentGenerator.resolve(id);
-      if (contentGeneratorId) {
-        return contentGeneratorId;
-      }
+
+      // const contentGeneratorId = contentGenerator.resolve(id);
+
+      // if (contentGeneratorId) {
+      //   return contentGeneratorId;
+      // }
       return null;
     },
     async load(id) {
-      if (id === resolveVirtualModuleSidebarId) {
-        return `export default  ${JSON.stringify(sidebar)}`;
-      }
-      const content = await contentGenerator.load(id);
-      if (content !== null) {
-        return content;
-      }
-      return null;
-    },
-    async configResolved(resolvedConfig) {
-      const { config: loadedConfig, sources: loaderSources } = await loadPrestigeConfig(
-        resolvedConfig.root,
-      );
-      config = loadedConfig;
-      sources = loaderSources;
-      docsDir = join(resolvedConfig.root, normalizePath(config.docsDir));
-      isDocsMatcher = picomatch(join(docsDir, "**/*.md"));
-      if (config.sidebar) {
-        sidebar = config.sidebar;
+      const contentCollectionId = contentCollection.load(id);
+
+      if (contentCollectionId) {
+        return contentCollectionId;
       }
 
-      contentGenerator = new ContentGenerator(docsDir);
+      // const contentGeneratorId = contentGenerator.resolve(id);
+      // if (contentGeneratorId) {
+      //   return contentGeneratorId;
+      // }
+
+      // const sidebarContent = sidebarGenerator.load(id);
+
+      // if (sidebarContent) {
+      //   return sidebarContent;
+      // }
+
+      // if (id === resolveVirtualModuleSidebarId) {
+      //   return `export default  ${JSON.stringify(sidebars)}`;
+      // }
+      // const content = await contentGenerator.load(id);
+      // if (content !== null) {
+      //   return content;
+      // }
+      return null;
     },
+
     async configureServer(server) {
       server.middlewares.use(async (req, res, next) => {
         if (!req.url) {
@@ -66,7 +109,7 @@ export default function prestige(): Plugin {
         if (req.url.includes(ARTICLE_PREFIX)) {
           try {
             const strippedUrl = req.url.replace(ARTICLE_PREFIX, "");
-            const markdownPath = join(docsDir, strippedUrl);
+            const markdownPath = join(contentDir, strippedUrl);
             if (!(await pathExists(markdownPath))) {
               res.statusCode = 404;
               res.end();
@@ -94,7 +137,7 @@ export default function prestige(): Plugin {
       });
 
       watchConfigChange(server, sources);
-      watchMarkdownChange(server, docsDir);
+      watchMarkdownChange(server, contentDir);
     },
     handleHotUpdate({ file, server }) {
       if (isDocsMatcher(file)) {

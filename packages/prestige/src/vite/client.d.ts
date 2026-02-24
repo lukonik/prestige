@@ -20,3 +20,11 @@ declare module "virtual:sidebar" {
 declare module "virtual:contents-map" {
   export const contents: Record<string, () => Promise<any>>;
 }
+
+declare module "virtual:sidebar-content" {
+  export const contents: Record<string, () => Promise<any>>;
+}
+
+declare module "virtual:content-collection" {
+  export const contents: string[];
+}

@@ -1,19 +1,16 @@
 import { createRoute, RootRoute } from "@tanstack/react-router";
 import { Route } from "../routes";
-import contents from "virtual:sidebar-docs";
+import collection from "virtual:content-collection";
 
 export default function (root: RootRoute<any>) {
   const contentRouter = createRoute({
     getParentRoute: () => root,
-    path: "content/$slug",
+    path: "collection/$slug",
     loader: async ({ params }) => {
       const slug = params.slug;
-      if (!contents[slug]) {
-        throw new Error("Content not found");
-      }
-      const contentRecord = contents[slug];
-      const content = await contentRecord.load();
-      return content;
+      const collectionRecord = collection.find((c: any) => c.slug === slug);
+      const content = await collectionRecord.load();
+      return content.default.map((d: any) => d.slug);
     },
     component: () => {
       const data = Route.useLoaderData();

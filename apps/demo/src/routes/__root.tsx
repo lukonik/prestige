@@ -1,7 +1,13 @@
-import { Link, HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
+import {
+  Link,
+  HeadContent,
+  Scripts,
+  createRootRoute,
+} from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { contents } from "virtual:contents-map";
+import collection from "virtual:content-collection";
 
 import Header from "../components/Header";
 
@@ -39,6 +45,14 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <Header />
+
+        <div>
+          HELLO
+          {collection.map((c: any) => (
+            <p>{c.import}</p>
+          ))}
+        </div>
+
         <div style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
           <strong>Contents:</strong>{" "}
           {Object.keys(contents).map((slug) => (

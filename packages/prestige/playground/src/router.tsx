@@ -1,10 +1,9 @@
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import contentRoute from "./ui/content-route";
-
+import collectionRoute from "./ui/collection-route";
 export function getRouter() {
   const router = createTanStackRouter({
-    routeTree: routeTree.addChildren([contentRoute(routeTree as any)]),
+    routeTree: routeTree.addChildren([collectionRoute(routeTree as any)]),
 
     scrollRestoration: true,
     defaultPreload: "intent",

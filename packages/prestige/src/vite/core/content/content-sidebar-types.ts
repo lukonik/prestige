@@ -26,6 +26,23 @@ const SidebarGroupSchema: z.ZodType<SidebarGroup> = z.object({
   collapsible: z.boolean().optional(),
 });
 
-export const SidebarSchema = z.array(SidebarItemSchema);
+export const SidebarSchema = z.object({
+  id: z
+    .string()
+    .min(1, { message: "Folder name cannot be empty" })
+    .max(50, { message: "Folder name too long" })
+    // Allows alphanumeric, hyphens, and underscores
+    .regex(/^[a-zA-Z0-9-_]+$/, {
+      message: "Only alphanumeric, hyphens, and underscores allowed",
+    })
+    .describe("The id of the sidebar, must match the folder name"),
+  items: z.array(SidebarItemSchema),
+});
 
 export type Sidebar = z.infer<typeof SidebarSchema>;
+
+export type SidebarInput = z.input<typeof SidebarSchema>;
+
+export const SidebarsSchema = z.array(SidebarSchema);
+
+export type Sidebars = z.infer<typeof SidebarsSchema>;

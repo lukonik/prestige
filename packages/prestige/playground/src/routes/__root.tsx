@@ -3,7 +3,6 @@ import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 
 import appCss from "../styles.css?url";
-import contentRoute from "../ui/content-route";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -28,8 +27,6 @@ export const Route = createRootRoute({
   }),
   shellComponent: RootDocument,
 });
-
-Route.addChildren([contentRoute(Route)]);
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (

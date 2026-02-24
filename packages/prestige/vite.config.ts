@@ -7,7 +7,16 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
 export default defineConfig(({ mode: _ }) => ({
   root: "./playground",
-  plugins: [tanstackStart(), prestige(), tailwindcss(), react()],
+  plugins: [
+    tanstackStart({
+      prerender: {
+        crawlLinks: true,
+      },
+    }),
+    prestige(),
+    tailwindcss(),
+    react(),
+  ],
   test: {
     root: ".",
     projects: [

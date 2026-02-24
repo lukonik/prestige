@@ -12,6 +12,7 @@ import { Sidebar } from "./core/content/content-types";
 import { ContentGenerator } from "./core/content/content-generator";
 import { SidebarGenerator } from "./core/content/sidebar-generator";
 import { ContentCollection } from "./core/content/content-collection";
+import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -27,6 +28,7 @@ export default function prestige(): Plugin {
   let sidebarGenerator: SidebarGenerator;
   let contentCollection: ContentCollection;
   let contentStore: ContentStore;
+  let contentSidebarStore: ContentSidebarStore;
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -44,42 +46,35 @@ export default function prestige(): Plugin {
       sidebarGenerator = new SidebarGenerator("docs", contentDir);
       contentCollection = new ContentCollection(contentDir);
       contentStore = new ContentStore(contentDir);
+      contentSidebarStore = new ContentSidebarStore();
+      contentSidebarStore.build(sidebars);
 
       await contentStore.build(sidebars);
       await contentCollection.build(sidebars);
       await sidebarGenerator.buildMap();
     },
     resolveId(id) {
+      const sidebarId = contentSidebarStore.resolve(id);
+      if (sidebarId) {
+        return sidebarId;
+      }
       const storeId = contentStore.resolve(id);
       if (storeId) {
         return storeId;
       }
+
       return null;
     },
     async load(id) {
+      const loadSidebarId = contentSidebarStore.load(id);
+      if (loadSidebarId) {
+        return loadSidebarId;
+      }
       const loadId = contentStore.load(id);
       if (loadId) {
         return loadId;
       }
 
-      // const contentGeneratorId = contentGenerator.resolve(id);
-      // if (contentGeneratorId) {
-      //   return contentGeneratorId;
-      // }
-
-      // const sidebarContent = sidebarGenerator.load(id);
-
-      // if (sidebarContent) {
-      //   return sidebarContent;
-      // }
-
-      // if (id === resolveVirtualModuleSidebarId) {
-      //   return `export default  ${JSON.stringify(sidebars)}`;
-      // }
-      // const content = await contentGenerator.load(id);
-      // if (content !== null) {
-      //   return content;
-      // }
       return null;
     },
 

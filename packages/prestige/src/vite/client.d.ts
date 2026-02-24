@@ -16,3 +16,7 @@ declare module "virtual:sidebar" {
   const data: Sidebar;
   export default data;
 }
+
+declare module "virtual:contents-map" {
+  export const contents: Record<string, () => Promise<any>>;
+}

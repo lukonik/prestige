@@ -1,9 +1,12 @@
 import { join } from "pathe";
+import { glob } from "tinyglobby";
 import { getContentByPath } from "./content-store";
 
 export class ContentGenerator {
   private virtualId = "virtual:contents";
   private resolveVirtualId = "\0" + this.virtualId;
+  private mapVirtualId = "virtual:contents-map";
+  private resolveMapVirtualId = "\0" + this.mapVirtualId;
 
   constructor(private _docsDir: string) {}
 
@@ -24,6 +27,10 @@ export class ContentGenerator {
       return this.resolveVirtualContent(id);
     }
 
+    if (id === this.mapVirtualId) {
+      return this.resolveMapVirtualId;
+    }
+
     if (id === this.virtualId) {
       return this.resolveVirtualId;
     }
@@ -31,6 +38,17 @@ export class ContentGenerator {
   }
 
   async load(id: string) {
+    if (id === this.resolveMapVirtualId) {
+      const files = await glob("**/*.md", { cwd: this._docsDir });
+      let code = "export const contents = {\n";
+      for (const file of files) {
+        const slug = file.replace(/\.md$/, "");
+        code += `  "${slug}": () => import("virtual:contents/${file}"),\n`;
+      }
+      code += "};\n";
+      return code;
+    }
+
     if (this.isResolveVirtualContent(id)) {
       const slug = id.replace(this.resolveVirtualId, "");
       const contentPath = join(this._docsDir, slug);

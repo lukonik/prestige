@@ -1,5 +1,6 @@
 import { createRoute, RootRoute } from "@tanstack/react-router";
 import { Route } from "../routes";
+import { contents } from "virtual:contents-map";
 
 export default function (root: RootRoute<any>) {
   const contentRouter = createRoute({
@@ -7,7 +8,10 @@ export default function (root: RootRoute<any>) {
     path: "content/$slug",
     loader: async ({ params }) => {
       const slug = params.slug;
-      const content = await import("virtual:contents/" + slug + ".md");
+      if (!contents[slug]) {
+        throw new Error("Content not found");
+      }
+      const content = await contents[slug]();
       return content;
     },
     component: () => {

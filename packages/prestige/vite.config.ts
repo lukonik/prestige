@@ -3,10 +3,11 @@ import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { prestige } from "./src/vite";
 import tailwindcss from "@tailwindcss/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
 export default defineConfig(({ mode: _ }) => ({
   root: "./playground",
-  plugins: [react(), prestige(), tailwindcss()],
+  plugins: [tanstackStart(), prestige(), tailwindcss(), react()],
   test: {
     root: ".",
     projects: [

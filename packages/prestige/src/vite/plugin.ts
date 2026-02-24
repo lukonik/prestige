@@ -9,6 +9,7 @@ import { getContentByPath } from "./core/content/content-store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
 import { Sidebar } from "./core/content/content-types";
+import { ContentGenerator } from "./core/content/content-generator";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -20,18 +21,26 @@ export default function prestige(): Plugin {
   let sidebar: Sidebar;
   const virtualSidebarModuleId = "virtual:sidebar";
   const resolveVirtualModuleSidebarId = "\0" + virtualSidebarModuleId;
-
+  let contentGenerator: ContentGenerator;
   return {
     name: "vite-plugin-prestige",
     resolveId(id) {
       if (id === virtualSidebarModuleId) {
         return resolveVirtualModuleSidebarId;
       }
+      const contentGeneratorId = contentGenerator.resolve(id);
+      if (contentGeneratorId) {
+        return contentGeneratorId;
+      }
       return null;
     },
-    load(id) {
+    async load(id) {
       if (id === resolveVirtualModuleSidebarId) {
         return `export default  ${JSON.stringify(sidebar)}`;
+      }
+      const content = await contentGenerator.load(id);
+      if (content !== null) {
+        return content;
       }
       return null;
     },
@@ -46,6 +55,8 @@ export default function prestige(): Plugin {
       if (config.sidebar) {
         sidebar = config.sidebar;
       }
+
+      contentGenerator = new ContentGenerator(docsDir);
     },
     async configureServer(server) {
       server.middlewares.use(async (req, res, next) => {

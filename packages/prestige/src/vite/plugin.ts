@@ -5,7 +5,7 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
-import { getContentByPath } from "./core/content/content-store";
+import { ContentStore, getContentByPath } from "./core/content/content-store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
 import { Sidebar } from "./core/content/content-types";
@@ -26,6 +26,7 @@ export default function prestige(): Plugin {
   let contentGenerator: ContentGenerator;
   let sidebarGenerator: SidebarGenerator;
   let contentCollection: ContentCollection;
+  let contentStore: ContentStore;
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -42,42 +43,24 @@ export default function prestige(): Plugin {
       contentGenerator = new ContentGenerator(contentDir + "/docs");
       sidebarGenerator = new SidebarGenerator("docs", contentDir);
       contentCollection = new ContentCollection(contentDir);
+      contentStore = new ContentStore(contentDir);
+
+      await contentStore.build(sidebars);
       await contentCollection.build(sidebars);
       await sidebarGenerator.buildMap();
     },
     resolveId(id) {
-      // const contentId = contentGenerator.resolve(id);
-      // if (contentId) {
-      //   return contentId;
-      // }
-
-      // if (id === virtualSidebarModuleId) {
-      //   return resolveVirtualModuleSidebarId;
-      // }
-
-      // const sidebarGeneratorId = sidebarGenerator.resolveId(id);
-      // if (sidebarGeneratorId) {
-      //   return sidebarGeneratorId;
-      // }
-
-      const contentCollectionId = contentCollection.resolve(id);
-
-      if (contentCollectionId) {
-        return contentCollectionId;
+      console.log("RESOLVE");
+      const storeId = contentStore.resolve(id);
+      if (storeId) {
+        return storeId;
       }
-
-      // const contentGeneratorId = contentGenerator.resolve(id);
-
-      // if (contentGeneratorId) {
-      //   return contentGeneratorId;
-      // }
       return null;
     },
     async load(id) {
-      const contentCollectionId = contentCollection.load(id);
-
-      if (contentCollectionId) {
-        return contentCollectionId;
+      const loadId = contentStore.load(id);
+      if (loadId) {
+        return loadId;
       }
 
       // const contentGeneratorId = contentGenerator.resolve(id);

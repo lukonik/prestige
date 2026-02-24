@@ -10,39 +10,7 @@ export default defineConfig({
         {
           label: "Text",
           type: "link",
-          slug: "/demo",
-        },
-
-        {
-          label: "opaaaa",
-          type: "link",
-          slug: "/demo",
-        },
-        {
-          label: "opaa22aa",
-          type: "link",
-          slug: "/demo",
-        },
-      ],
-    },
-    {
-      id: "test",
-      items: [
-        {
-          label: "Text",
-          type: "link",
-          slug: "/demo",
-        },
-
-        {
-          label: "opaaaa",
-          type: "link",
-          slug: "/demo",
-        },
-        {
-          label: "opaa22aa",
-          type: "link",
-          slug: "/demo",
+          slug: "docs/demo",
         },
       ],
     },

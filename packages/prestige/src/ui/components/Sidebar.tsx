@@ -54,6 +54,7 @@ export default function Sidebar() {
   return (
     <aside className="w-64 h-full overflow-y-auto border-r border-gray-200 dark:border-gray-800">
       <nav className="p-4">
+        <h1>wqeqw</h1>
         <ul className="space-y-1">
           {sidebar.map((item, index) => (
             <SidebarItemNode key={index} item={item} />

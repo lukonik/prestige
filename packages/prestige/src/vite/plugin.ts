@@ -18,19 +18,19 @@ export default function prestige(): Plugin {
   let sources: string[];
   let isDocsMatcher: Matcher;
   let sidebar: Sidebar;
-  const virtualModuleId = "virtual:sidebar";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
+  const virtualSidebarModuleId = "virtual:sidebar";
+  const resolveVirtualModuleSidebarId = "\0" + virtualSidebarModuleId;
 
   return {
     name: "vite-plugin-prestige",
     resolveId(id) {
-      if (id === virtualModuleId) {
-        return resolvedVirtualModuleId;
+      if (id === virtualSidebarModuleId) {
+        return resolveVirtualModuleSidebarId;
       }
       return null;
     },
     load(id) {
-      if (id === resolvedVirtualModuleId) {
+      if (id === resolveVirtualModuleSidebarId) {
         return `export default  ${JSON.stringify(sidebar)}`;
       }
       return null;

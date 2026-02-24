@@ -13,7 +13,7 @@ export function App() {
   return (
     <>
       <Sidebar />
-      PLAYqeqeqewqeqeqGROUND {date.getTime()}
+      PLAYqeqeqewqeqeqGROUND
       <div
         dangerouslySetInnerHTML={{
           __html: html,

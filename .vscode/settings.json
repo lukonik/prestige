@@ -4,9 +4,9 @@
     "**/.svn": true,
     "**/.hg": true,
     "**/.DS_Store": true,
-    "**/Thumbs.db": true
-    // "**/node_modules": true,
-    // "**/dist": true
+    "**/Thumbs.db": true,
+    "**/node_modules": true,
+    "**/dist": true
   },
   "editor.codeActionsOnSave": {
     "source.fixAll.oxc": "explicit",

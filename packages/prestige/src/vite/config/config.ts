@@ -28,7 +28,6 @@ export async function loadPrestigeConfig(root: string) {
   }
   const validatedConfig = validateConfig(config);
   const docsDirPath = join(root, validatedConfig.docsDir);
-  console.group(docsDirPath);
   if (!(await pathExists(docsDirPath))) {
     throw new PrestigeError(`Docs! directory not found: ${docsDirPath}`);
   }

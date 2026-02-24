@@ -50,7 +50,6 @@ export default function prestige(): Plugin {
       await sidebarGenerator.buildMap();
     },
     resolveId(id) {
-      console.log("RESOLVE");
       const storeId = contentStore.resolve(id);
       if (storeId) {
         return storeId;

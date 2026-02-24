@@ -13,15 +13,20 @@ export default function (root: RootRoute<any>) {
           (c: any) => c.slug === segments.join("/"),
         );
         if (content) {
-          console.log("CONTENT IS ,", content);
-          const response = await content.load();
-          console.log("RESPONSE IS" + response);
+          const { default: response } = await content.load();
+          return response;
         }
       }
     },
     component: () => {
       const data = Route.useLoaderData();
-      return <div>{JSON.stringify(data)}</div>;
+      return (
+        <div
+          dangerouslySetInnerHTML={{
+            __html: data.html,
+          }}
+        ></div>
+      );
     },
   });
   return contentRouter;

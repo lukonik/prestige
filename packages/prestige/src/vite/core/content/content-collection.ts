@@ -69,10 +69,6 @@ export class ContentCollection {
         );
       }
 
-      // const code = genExportDefault(genArrayFromRaw(records));
-      // console.log("CODE ISS ", code);
-      // return code;
-
       return genExportDefault("2");
     }
 
@@ -83,7 +79,6 @@ export class ContentCollection {
 
       if (sidebar) {
         const code = sidebar.getAll();
-        console.log("CODE ISS ", code);
         return code;
       }
 

@@ -42,8 +42,6 @@ export class ContentStore {
   }
 
   resolve(id: string) {
-    console.log("CAME HERE ", id);
-
     if (id === this._virtualIdAll) {
       return "\0" + this._virtualIdAll;
     }
@@ -66,10 +64,9 @@ export class ContentStore {
         records.push(
           genObjectFromRaw({
             slug: genString(key),
-            load: `() => ${genDynamicImport(`${this._virtualId}/${key}`)}`, // Output: () => import('virtual/my-slug')
+            load: genDynamicImport(`${this._virtualId}/${key}`), // Output: () => import('virtual/my-slug')
           }),
         );
-        console.log("OLAAA " + genDynamicImport(`${this._virtualId}/${key}`));
       }
       return genExportDefault(genArrayFromRaw(records));
     }
@@ -79,17 +76,14 @@ export class ContentStore {
       const item = this._store.get(key);
       if (item) {
         const slug = item.slug;
-        const path = join(this.contentDir, slug);
+        const path = join(this.contentDir, slug) + ".md";
         const content = await getContentByPath(path);
-        return genExportDefault("2");
+        const code = genExportDefault(JSON.stringify(content));
+        return code;
       }
     }
     return null;
   }
-}
-
-export function work() {
-  console.log("WORKS");
 }
 
 export async function getContentByPath(path: string) {

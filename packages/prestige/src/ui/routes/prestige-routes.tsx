@@ -1,5 +1,5 @@
 import { AnyRoute, createRoute, Outlet } from "@tanstack/react-router";
-import sidebars from "virtual:content-collection/sidebars";
+import sidebars from "virtual:content-collection/all";
 import contents from "virtual:content-collection/content-all";
 
 export function prestigeRoutes(root: AnyRoute) {

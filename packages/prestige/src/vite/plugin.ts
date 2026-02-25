@@ -8,7 +8,7 @@ import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
 import { ContentStore, getContentByPath } from "./core/content/content.store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
-import { ContentSidebarStore } from "./core/content/content-sidebar.store";
+import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { Sidebars } from "./core/content/content.types";
 
 const ARTICLE_PREFIX = "@articles";
@@ -19,7 +19,7 @@ export default function prestige(): Plugin {
   let sources: string[];
   let isDocsMatcher: Matcher;
   let contentStore: ContentStore;
-  let contentSidebarStore: ContentSidebarStore;
+  let contentSidebarStore: ContentCollectionStore;
   let sidebars: Sidebars = [];
   return {
     name: "vite-plugin-prestige",
@@ -33,7 +33,7 @@ export default function prestige(): Plugin {
       sidebars = config.sidebars ?? [];
 
       contentStore = new ContentStore(contentDir);
-      contentSidebarStore = new ContentSidebarStore();
+      contentSidebarStore = new ContentCollectionStore();
       contentSidebarStore.build(sidebars);
 
       await contentStore.build(sidebars);

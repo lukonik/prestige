@@ -2,7 +2,7 @@ declare module "virtual:content-collection" {
   export const contents: string[];
 }
 
-declare module "virtual:content-collection/sidebars" {
+declare module "virtual:content-collection/all" {
   export type SidebarLink = {
     label: string;
     slug: string;

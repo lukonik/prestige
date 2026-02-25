@@ -2,9 +2,9 @@ import { genObjectFromValues } from "knitwork";
 import { genExportDefault } from "../../utils/code-generation";
 import { Sidebar, Sidebars } from "./content.types";
 
-export class ContentSidebarStore {
+export class ContentCollectionStore {
   private _sidebars = new Map<string, Sidebar>();
-  private _virtualId = "virtual:content-collection/sidebars";
+  private _virtualId = "virtual:content-collection/all";
   build(sidebars: Sidebars) {
     for (const sidebar of sidebars) {
       this._sidebars.set(sidebar.id, sidebar);

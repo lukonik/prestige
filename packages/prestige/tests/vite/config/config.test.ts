@@ -16,6 +16,7 @@ function createConfigFile(props: any) {
 function minimalConfig() {
   return {
     title: "test",
+    sidebars: [],
   };
 }
 
@@ -26,6 +27,7 @@ async function createDefaultDirs(initConfig?: any, dir?: string) {
     createConfigFile(
       initConfig ?? {
         title: "dummy",
+        sidebars: [],
       },
     ),
   );
@@ -66,7 +68,7 @@ describe("loadPrestigeConfig", () => {
     await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError(PrestigeError);
   });
   it("should return title", async () => {
-    await checkProperty({ title: "test" }, "title");
+    await checkProperty({ ...minimalConfig(), title: "test" }, "title");
   });
 
   it("should return description", async () => {

@@ -20,7 +20,7 @@ export default function prestige(): Plugin {
   let isDocsMatcher: Matcher;
   let contentStore: ContentStore;
   let contentSidebarStore: ContentSidebarStore;
-  let sidebars: Sidebars;
+  let sidebars: Sidebars = [];
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -30,9 +30,7 @@ export default function prestige(): Plugin {
       sources = loaderSources;
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
       isDocsMatcher = picomatch(join(contentDir, "**/*.md"));
-      if (config.sidebars) {
-        sidebars = config.sidebars;
-      }
+      sidebars = config.sidebars ?? [];
 
       contentStore = new ContentStore(contentDir);
       contentSidebarStore = new ContentSidebarStore();

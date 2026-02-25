@@ -7,20 +7,27 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig(({ mode: _ }) => ({
-  root: "./playground",
-  plugins: [
-    Inspect(),
-    tsconfigPaths(),
-    tanstackStart({
-      prerender: {
-        crawlLinks: true,
-      },
-    }),
-    prestige(),
-    tailwindcss(),
-    react(),
-  ],
+export default defineConfig(({ mode }) => {
+  const isTest = mode === "test" || process.env.VITEST === "true";
+
+  return {
+    root: "./playground",
+    plugins: [
+      Inspect(),
+      tsconfigPaths(),
+      ...(!isTest
+        ? [
+            tanstackStart({
+              prerender: {
+                crawlLinks: true,
+              },
+            }),
+          ]
+        : []),
+      prestige(),
+      tailwindcss(),
+      react(),
+    ],
   test: {
     root: ".",
     projects: [
@@ -52,4 +59,5 @@ export default defineConfig(({ mode: _ }) => ({
     //   headless: true,
     // },
   },
-}));
+  };
+});

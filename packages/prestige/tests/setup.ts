@@ -1,6 +1,6 @@
 import { remove } from "fs-extra";
 import { afterEach, beforeEach, chai, vi } from "vitest";
-import { getTempDir } from "./vite/test-utils";
+import { getTempDir } from "../src/vite/test-utils";
 import { vol } from "memfs";
 
 chai.config.truncateThreshold = 1000;

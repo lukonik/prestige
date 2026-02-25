@@ -3,39 +3,39 @@ declare module "virtual:content-collection" {
 }
 
 declare module "virtual:content-collection/all" {
-  export type SidebarLink = {
+  export type CollectionLink = {
     label: string;
     slug: string;
   };
 
-  export type SidebarGroup = {
+  export type CollectionGroup = {
     label: string;
-    items: SidebarItem[];
+    items: CollectionItem[];
     collapsible?: boolean | undefined;
   };
 
-  export type SidebarItem = SidebarLink | SidebarGroup;
+  export type CollectionItem = CollectionLink | CollectionGroup;
 
   // Removed the array brackets `[]` at the end
-  export type Sidebar = {
+  export type Collection = {
     id: string;
-    items: SidebarItem[];
+    items: CollectionItem[];
   };
 
-  // Declared as the default export to match `import sidebars from "..."`
-  const sidebars: Record<string, Sidebar>;
-  export default sidebars;
+  // Declared as the default export to match `import Collections from "..."`
+  const Collections: Record<string, Collection>;
+  export default Collections;
 }
 
 declare module "virtual:content-collection/content-all" {
-  export type SidebarLink = {
+  export type CollectionLink = {
     label: string;
     slug: string;
     load: () => Promise<any>;
   };
 
-  // Declared as the default export to match `import sidebars from "..."`
-  const contents: Array<SidebarLink>;
+  // Declared as the default export to match `import Collections from "..."`
+  const contents: Array<CollectionLink>;
   export default contents;
 }
 
@@ -51,7 +51,7 @@ declare module "virtual:content-collection/content/*" {
       }
     | undefined;
 
-  // Declared as the default export to match `import sidebars from "..."`
+  // Declared as the default export to match `import Collections from "..."`
   const contents: Array<Content>;
   export default contents;
 }

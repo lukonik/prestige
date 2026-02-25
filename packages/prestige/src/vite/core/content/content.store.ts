@@ -11,10 +11,10 @@ import {
   genObjectFromRaw,
   genString,
 } from "knitwork";
-import { SidebarItem, SidebarLink, Sidebars } from "./content.types";
+import { CollectionItem, CollectionLink, Collections } from "./content.types";
 
 export class ContentStore {
-  private _store = new Map<string, SidebarLink>();
+  private _store = new Map<string, CollectionLink>();
   private _virtualId = "virtual:content-collection/content";
   private _virtualIdAll = "virtual:content-collection/content-all";
 
@@ -24,23 +24,23 @@ export class ContentStore {
     return id.replace(this._virtualId, "").replace("\0", "");
   }
 
-  async build(sidebars: Sidebars) {
+  async build(collections: Collections) {
     // Clear existing entries if you plan on calling this multiple times
     this._store.clear();
 
-    const processItem = (item: SidebarItem) => {
-      // Type guard: If it has a 'slug', it's a SidebarLink
+    const processItem = (item: CollectionItem) => {
+      // Type guard: If it has a 'slug', it's a CollectionLink
       if ("slug" in item) {
         this._store.set(item.slug, item);
       }
-      // Type guard: If it has 'items', it's a SidebarGroup
+      // Type guard: If it has 'items', it's a CollectionGroup
       else if ("items" in item) {
         item.items.forEach(processItem);
       }
     };
 
-    sidebars.forEach((sidebar) => {
-      sidebar.items.forEach(processItem);
+    collections.forEach((collection) => {
+      collection.items.forEach(processItem);
     });
   }
 

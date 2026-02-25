@@ -6,33 +6,33 @@ export const ContentSchema = z.object({
   lastUpdated: z.union([z.date(), z.boolean()]).optional(),
 });
 
-const SidebarLinkSchema = z.object({
+const CollectionLinkSchema = z.object({
   label: z.string(),
   slug: z.string(),
 });
 
-export type SidebarLink = z.infer<typeof SidebarLinkSchema>;
+export type CollectionLink = z.infer<typeof CollectionLinkSchema>;
 
-export type SidebarGroup = {
+export type CollectionGroup = {
   label: string;
-  items: SidebarItem[];
+  items: CollectionItem[];
   collapsible?: boolean | undefined;
 };
 
-export type SidebarItem = SidebarLink | SidebarGroup;
+export type CollectionItem = CollectionLink | CollectionGroup;
 
-const SidebarItemSchema: z.ZodType<SidebarItem> = z.union([
-  SidebarLinkSchema,
-  z.lazy(() => SidebarGroupSchema),
+const CollectionItemSchema: z.ZodType<CollectionItem> = z.union([
+  CollectionLinkSchema,
+  z.lazy(() => CollectionGroupSchema),
 ]);
 
-const SidebarGroupSchema: z.ZodType<SidebarGroup> = z.object({
+const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
   label: z.string(),
-  items: z.lazy(() => z.array(SidebarItemSchema)),
+  items: z.lazy(() => z.array(CollectionItemSchema)),
   collapsible: z.boolean().optional(),
 });
 
-export const SidebarSchema = z.object({
+export const CollectionSchema = z.object({
   id: z
     .string()
     .min(1, { message: "Folder name cannot be empty" })
@@ -41,14 +41,14 @@ export const SidebarSchema = z.object({
     .regex(/^[a-zA-Z0-9-_]+$/, {
       message: "Only alphanumeric, hyphens, and underscores allowed",
     })
-    .describe("The id of the sidebar, must match the folder name"),
-  items: z.array(SidebarItemSchema),
+    .describe("The id of the collection, must match the folder name"),
+  items: z.array(CollectionItemSchema),
 });
 
-export type Sidebar = z.infer<typeof SidebarSchema>;
+export type Collection = z.infer<typeof CollectionSchema>;
 
-export type SidebarInput = z.input<typeof SidebarSchema>;
+export type CollectionInput = z.input<typeof CollectionSchema>;
 
-export const SidebarsSchema = z.array(SidebarSchema);
+export const CollectionsSchema = z.array(CollectionSchema);
 
-export type Sidebars = z.infer<typeof SidebarsSchema>;
+export type Collections = z.infer<typeof CollectionsSchema>;

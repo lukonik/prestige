@@ -1,5 +1,5 @@
 import { AnyRoute, createRoute, Outlet } from "@tanstack/react-router";
-import sidebars from "virtual:content-collection/all";
+import collections from "virtual:content-collection/all";
 import contents from "virtual:content-collection/content-all";
 
 export function prestigeRoutes(root: AnyRoute) {
@@ -8,11 +8,11 @@ export function prestigeRoutes(root: AnyRoute) {
     path: "$slug",
     loader: async ({ params }) => {
       const slug = params.slug;
-      const sidebar = sidebars[slug];
-      if (!sidebar) {
-        throw new Error("Sidebar not found");
+      const collection = collections[slug];
+      if (!collection) {
+        throw new Error("Collection not found");
       }
-      return sidebar;
+      return collection;
     },
     component: CollectionComponent,
   });

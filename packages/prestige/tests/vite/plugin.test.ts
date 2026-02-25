@@ -34,7 +34,7 @@ describe("prestige vite plugin", () => {
 
   const setupPlugin = async (root: string, docsDir: string) => {
     (loadPrestigeConfig as any).mockResolvedValue({
-      config: { docsDir: docsDir, sidebars: [] },
+      config: { docsDir: docsDir, collections: [] },
       sources: [],
     });
 

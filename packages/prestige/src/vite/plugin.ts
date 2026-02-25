@@ -9,7 +9,7 @@ import { ContentStore, getContentByPath } from "./core/content/content.store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
-import { Sidebars } from "./core/content/content.types";
+import { Collections } from "./core/content/content.types";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -19,8 +19,8 @@ export default function prestige(): Plugin {
   let sources: string[];
   let isDocsMatcher: Matcher;
   let contentStore: ContentStore;
-  let contentSidebarStore: ContentCollectionStore;
-  let sidebars: Sidebars = [];
+  let contentCollectionStore: ContentCollectionStore;
+  let collections: Collections = [];
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -30,18 +30,18 @@ export default function prestige(): Plugin {
       sources = loaderSources;
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
       isDocsMatcher = picomatch(join(contentDir, "**/*.md"));
-      sidebars = config.sidebars ?? [];
+      collections = config.collections ?? [];
 
       contentStore = new ContentStore(contentDir);
-      contentSidebarStore = new ContentCollectionStore();
-      contentSidebarStore.build(sidebars);
+      contentCollectionStore = new ContentCollectionStore();
+      contentCollectionStore.build(collections);
 
-      await contentStore.build(sidebars);
+      await contentStore.build(collections);
     },
     resolveId(id) {
-      const sidebarId = contentSidebarStore.resolve(id);
-      if (sidebarId) {
-        return sidebarId;
+      const collectionId = contentCollectionStore.resolve(id);
+      if (collectionId) {
+        return collectionId;
       }
       const storeId = contentStore.resolve(id);
       if (storeId) {
@@ -51,9 +51,9 @@ export default function prestige(): Plugin {
       return null;
     },
     async load(id) {
-      const loadSidebarId = contentSidebarStore.load(id);
-      if (loadSidebarId) {
-        return loadSidebarId;
+      const loadCollectionId = contentCollectionStore.load(id);
+      if (loadCollectionId) {
+        return loadCollectionId;
       }
       const loadId = contentStore.load(id);
       if (loadId) {

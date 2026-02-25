@@ -1,13 +1,13 @@
 import { genObjectFromValues } from "knitwork";
 import { genExportDefault } from "../../utils/code-generation";
-import { Sidebar, Sidebars } from "./content.types";
+import { Collection, Collections } from "./content.types";
 
 export class ContentCollectionStore {
-  private _sidebars = new Map<string, Sidebar>();
+  private _collections = new Map<string, Collection>();
   private _virtualId = "virtual:content-collection/all";
-  build(sidebars: Sidebars) {
-    for (const sidebar of sidebars) {
-      this._sidebars.set(sidebar.id, sidebar);
+  build(collections: Collections) {
+    for (const collection of collections) {
+      this._collections.set(collection.id, collection);
     }
   }
 
@@ -20,7 +20,7 @@ export class ContentCollectionStore {
 
   load(id: string) {
     if (id === "\0" + this._virtualId) {
-      const obj = Object.fromEntries(this._sidebars);
+      const obj = Object.fromEntries(this._collections);
       return genExportDefault(genObjectFromValues(obj));
     }
     return null;

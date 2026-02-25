@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DEFAULT_DOCS_DIR } from "../constants";
-import { SidebarsSchema } from "../core/content/content.types";
+import { CollectionsSchema } from "../core/content/content.types";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("The title of your website"),
@@ -15,7 +15,7 @@ export const PrestigeConfigSchema = z.object({
       "The directory of your docs, relative to root, defaults to src/content/docs",
     )
     .default(DEFAULT_DOCS_DIR),
-  sidebars: SidebarsSchema,
+  collections: CollectionsSchema,
 });
 
 export type PrestigeConfigInput = z.input<typeof PrestigeConfigSchema>;

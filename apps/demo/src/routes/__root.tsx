@@ -1,9 +1,4 @@
-import {
-  Link,
-  HeadContent,
-  Scripts,
-  createRootRoute,
-} from "@tanstack/react-router";
+import { Link, HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { contents } from "virtual:contents-map";

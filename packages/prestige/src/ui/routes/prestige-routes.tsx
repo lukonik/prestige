@@ -38,9 +38,7 @@ export function prestigeRoutes(root: AnyRoute) {
       const anyParams = params as Record<string, string | undefined>;
 
       // Reconstruct the full path (e.g., "docs/demo")
-      const fullPath = [anyParams["slug"], anyParams["_splat"]]
-        .filter(Boolean)
-        .join("/");
+      const fullPath = [anyParams["slug"], anyParams["_splat"]].filter(Boolean).join("/");
 
       if (fullPath) {
         const content = contents.find((c: any) => c.slug === fullPath);

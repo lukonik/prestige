@@ -24,8 +24,9 @@ export default function prestige(): Plugin {
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
-      const { config: loadedConfig, sources: loaderSources } =
-        await loadPrestigeConfig(resolvedConfig.root);
+      const { config: loadedConfig, sources: loaderSources } = await loadPrestigeConfig(
+        resolvedConfig.root,
+      );
       config = loadedConfig;
       sources = loaderSources;
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));

@@ -1,8 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  genExportDefault,
-  genExportUndefined,
-} from "../../../src/vite/utils/code-generation";
+import { genExportDefault, genExportUndefined } from "../../../src/vite/utils/code-generation";
 
 describe("codeGeneration", () => {
   describe("genExportDefault", () => {

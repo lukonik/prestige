@@ -15,5 +15,5 @@ export default defineConfig({
     profile: "esm-only",
   },
   skipNodeModulesBundle: true,
-  external: ["picocolors", "node:path", "fs-extra", "node:fs/promises"],
+  external: ["picocolors", "node:path", "fs-extra", "node:fs/promises", "virtual:content-collection/all", "virtual:content-collection/content-all"],
 });

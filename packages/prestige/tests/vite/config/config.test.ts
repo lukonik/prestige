@@ -1,10 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import {
-  defineConfig,
-  loadPrestigeConfig,
-  validateConfig,
-} from "../../../src/vite/config/config";
+import { defineConfig, loadPrestigeConfig, validateConfig } from "../../../src/vite/config/config";
 import { PrestigeConfig } from "../../../src/vite/config/config.types";
 import { mkdir, outputFileSync } from "fs-extra";
 import { getTempDir } from "../test-utils";
@@ -38,10 +34,7 @@ async function createDefaultDirs(initConfig?: any, dir?: string) {
   await mkdir(getTempDir(dir ?? DEFAULT_DOCS_DIR), { recursive: true });
 }
 
-async function checkProperty(
-  mock: Partial<PrestigeConfig>,
-  property: keyof PrestigeConfig,
-) {
+async function checkProperty(mock: Partial<PrestigeConfig>, property: keyof PrestigeConfig) {
   const mockConfig = {
     ...mock,
   };
@@ -72,19 +65,14 @@ describe("validateConfig", () => {
 
 describe("loadPrestigeConfig", () => {
   it("should throw error if config file does not exist", async () => {
-    await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError(
-      PrestigeError,
-    );
+    await expect(loadPrestigeConfig("/some/path")).rejects.toThrowError(PrestigeError);
   });
   it("should return title", async () => {
     await checkProperty({ ...minimalConfig(), title: "test" }, "title");
   });
 
   it("should return description", async () => {
-    await checkProperty(
-      { ...minimalConfig(), description: "test22" },
-      "description",
-    );
+    await checkProperty({ ...minimalConfig(), description: "test22" }, "description");
   });
 
   it("should return docsDir", async () => {
@@ -92,9 +80,7 @@ describe("loadPrestigeConfig", () => {
     await checkProperty({ ...minimalConfig(), docsDir: "test" }, "docsDir");
   });
   it("should throw error if docsDir does not exist", async () => {
-    await expect(loadPrestigeConfig("notfound/path")).rejects.toThrowError(
-      PrestigeError,
-    );
+    await expect(loadPrestigeConfig("notfound/path")).rejects.toThrowError(PrestigeError);
   });
   it("should return source", async () => {
     await createDefaultDirs();

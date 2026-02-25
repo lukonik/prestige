@@ -1,16 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
 import { join } from "pathe";
-import {
-  genExportDefault,
-  genExportUndefined,
-} from "../../utils/code-generation";
-import {
-  genArrayFromRaw,
-  genDynamicImport,
-  genObjectFromRaw,
-  genString,
-} from "knitwork";
+import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
+import { genArrayFromRaw, genDynamicImport, genObjectFromRaw, genString } from "knitwork";
 import { CollectionItem, CollectionLink, Collections } from "./content.types";
 
 export class ContentStore {
@@ -101,7 +93,7 @@ export async function getContentByPath(path: string) {
     const file = await readFile(path, "utf-8");
     const article = parseContent(file);
     return article;
-  } catch (err) {
+  } catch {
     return;
   }
 }

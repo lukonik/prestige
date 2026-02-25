@@ -1,6 +1,6 @@
 import { genObjectFromValues } from "knitwork";
 import { genExportDefault } from "../../utils/code-generation";
-import { Sidebar, Sidebars } from "./content-sidebar-types";
+import { Sidebar, Sidebars } from "./content.types";
 
 export class ContentSidebarStore {
   private _sidebars = new Map<string, Sidebar>();

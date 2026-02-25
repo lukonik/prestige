@@ -6,8 +6,8 @@ import rehypeStringify from "rehype-stringify";
 import remarkToc from "remark-toc";
 import rehypeShiki from "@shikijs/rehype";
 import { matter } from "vfile-matter";
-import { ArticleSchema } from "./content-types";
 import { parseWithFriendlyErrors } from "../../utils/errors";
+import { ContentSchema } from "./content.types";
 
 export async function parseContent(content: string) {
   // 1. Set up the processor pipeline
@@ -34,7 +34,7 @@ export async function parseContent(content: string) {
 
   if (matterResponse) {
     metadata = parseWithFriendlyErrors(
-      ArticleSchema,
+      ContentSchema,
       matterResponse,
       `Invalid schema of article`,
     );
@@ -67,7 +67,7 @@ export async function parseMetadata(content: string) {
 
   if (matterResponse) {
     metadata = parseWithFriendlyErrors(
-      ArticleSchema,
+      ContentSchema,
       matterResponse,
       `Invalid schema of article`,
     );

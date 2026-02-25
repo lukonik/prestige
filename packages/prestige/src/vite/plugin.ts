@@ -5,11 +5,11 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
-import { ContentStore, getContentByPath } from "./core/content/content-store";
+import { ContentStore, getContentByPath } from "./core/content/content.store";
 import logger from "./utils/logger";
 import { pathExists } from "fs-extra";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
-import { Sidebars } from "./core/content/content-sidebar-types";
+import { Sidebars } from "./core/content/content.types";
 
 const ARTICLE_PREFIX = "@articles";
 

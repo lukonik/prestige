@@ -1,4 +1,10 @@
-import z from "zod";
+import { z } from "zod";
+
+export const ContentSchema = z.object({
+  title: z.string().describe("The title of the article"),
+  describe: z.string().optional().describe("The description of the article"),
+  lastUpdated: z.union([z.date(), z.boolean()]).optional(),
+});
 
 const SidebarLinkSchema = z.object({
   label: z.string(),

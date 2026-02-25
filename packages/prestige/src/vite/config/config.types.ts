@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { DEFAULT_DOCS_DIR } from "../constants";
-import { SidebarsSchema } from "../core/content/content-sidebar-types";
+import { SidebarsSchema } from "../core/content/content.types";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("The title of your website"),

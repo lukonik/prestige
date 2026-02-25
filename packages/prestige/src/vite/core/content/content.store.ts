@@ -1,6 +1,5 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
-import { SidebarItem, SidebarLink, Sidebars } from "./content-sidebar-types";
 import { join } from "pathe";
 import { genExportDefault } from "../../utils/code-generation";
 import {
@@ -9,6 +8,7 @@ import {
   genObjectFromRaw,
   genString,
 } from "knitwork";
+import { SidebarItem, SidebarLink, Sidebars } from "./content.types";
 
 export class ContentStore {
   private _store = new Map<string, SidebarLink>();

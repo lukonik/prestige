@@ -1,4 +1,4 @@
-import { AnyRoute, createRoute, Link, Outlet } from "@tanstack/react-router";
+import { AnyRoute, createRoute, Outlet } from "@tanstack/react-router";
 import sidebars from "virtual:content-collection/sidebars";
 import contents from "virtual:content-collection/content-all";
 
@@ -22,9 +22,9 @@ export function prestigeRoutes(root: AnyRoute) {
     return (
       <div>
         {JSON.stringify(data.items)}
-        {data.items.map((i: any) => (
+        {/* {data.items.map((i: any) => (
           <Link to={i.slug}>{i.slug}</Link>
-        ))}
+        ))} */}
         <Outlet />
       </div>
     );

@@ -38,3 +38,20 @@ declare module "virtual:content-collection/content-all" {
   const contents: Array<SidebarLink>;
   export default contents;
 }
+
+declare module "virtual:content-collection/content/*" {
+  export type Content =
+    | {
+        html: string;
+        metadata: {
+          title: string;
+          describe?: string | undefined;
+          lastUpdated?: boolean | Date | undefined;
+        } | null;
+      }
+    | undefined;
+
+  // Declared as the default export to match `import sidebars from "..."`
+  const contents: Array<Content>;
+  export default contents;
+}

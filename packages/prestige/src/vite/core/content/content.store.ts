@@ -1,7 +1,10 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
 import { join } from "pathe";
-import { genExportDefault } from "../../utils/code-generation";
+import {
+  genExportDefault,
+  genExportUndefined,
+} from "../../utils/code-generation";
 import {
   genArrayFromRaw,
   genDynamicImport,
@@ -74,14 +77,21 @@ export class ContentStore {
     if (id.includes(this._virtualId)) {
       const key = this.getKey(id).slice(1);
       const item = this._store.get(key);
-      if (item) {
-        const slug = item.slug;
-        const path = join(this.contentDir, slug) + ".md";
-        const content = await getContentByPath(path);
-        const code = genExportDefault(JSON.stringify(content));
-        return code;
+
+      if (!item) {
+        return null;
       }
+
+      const slug = item.slug;
+      const path = join(this.contentDir, slug) + ".md";
+      const content = await getContentByPath(path);
+      if (!content) {
+        return genExportUndefined();
+      }
+      const code = genExportDefault(JSON.stringify(content));
+      return code;
     }
+
     return null;
   }
 }
@@ -92,7 +102,6 @@ export async function getContentByPath(path: string) {
     const article = parseContent(file);
     return article;
   } catch (err) {
-    console.log(err);
     return;
   }
 }

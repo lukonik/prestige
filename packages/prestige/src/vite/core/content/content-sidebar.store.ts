@@ -21,7 +21,6 @@ export class ContentSidebarStore {
   load(id: string) {
     if (id === "\0" + this._virtualId) {
       const obj = Object.fromEntries(this._sidebars);
-      console.log("CAMEE ID ", obj);
       return genExportDefault(genObjectFromValues(obj));
     }
     return null;

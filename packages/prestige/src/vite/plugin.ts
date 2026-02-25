@@ -34,7 +34,7 @@ export default function prestige(): Plugin {
 
       contentStore = new ContentStore(contentDir);
       contentCollectionStore = new ContentCollectionStore();
-      contentCollectionStore.build(collections);
+      contentCollectionStore.init(collections);
 
       await contentStore.build(collections);
     },

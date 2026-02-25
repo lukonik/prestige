@@ -1,11 +1,12 @@
 import { genObjectFromValues } from "knitwork";
 import { genExportDefault } from "../../utils/code-generation";
 import { Collection, Collections } from "./content.types";
+import { PrestigeError } from "../../utils/errors";
 
 export class ContentCollectionStore {
   private _collections = new Map<string, Collection>();
   private _virtualId = "virtual:content-collection/all";
-  build(collections: Collections) {
+  init(collections: Collections) {
     for (const collection of collections) {
       this._collections.set(collection.id, collection);
     }
@@ -20,6 +21,11 @@ export class ContentCollectionStore {
 
   load(id: string) {
     if (id === "\0" + this._virtualId) {
+      if (this._collections.size === 0) {
+        throw new PrestigeError(
+          `No collections found, add one in prestige plugin config`,
+        );
+      }
       const obj = Object.fromEntries(this._collections);
       return genExportDefault(genObjectFromValues(obj));
     }

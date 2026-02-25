@@ -13,6 +13,7 @@ import {
   SidebarLink,
 } from "./content.types";
 import logger from "../../utils/logger";
+import { basename } from "node:path";
 
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
@@ -55,9 +56,7 @@ export class ContentSidebarStore {
     }
 
     if (group.autogenerate?.directory) {
-      const generatedItems = await this.autogenerateSidebar(
-        group.autogenerate.directory,
-      );
+      const generatedItems = await this.autogenerateSidebar(group.autogenerate.directory);
       items.push(...generatedItems);
     }
 
@@ -89,7 +88,7 @@ export class ContentSidebarStore {
           items.push(await this.resolveSidebarLink(slug));
         }
       }
-    } catch (e) {
+    } catch {
       logger.warn(`Failed to autogenerate sidebar for directory: ${directory}`);
     }
 
@@ -121,31 +120,18 @@ export class ContentSidebarStore {
     if (typeof item === "string" || "slug" in item) {
       const slug = typeof item === "string" ? item : item.slug;
 
-      try {
-        const filePath = join(this.contentDir, `${slug}.md`);
-        const fileContent = await readFile(filePath, "utf-8");
-        const metadata = await parseMetadata(fileContent);
-        if (metadata && metadata.label) {
-          return metadata.label;
-        }
-      } catch {
-        logger.warn(
-          `No label found for ${slug}, setting empty label '', provide one`,
-        );
-        return "";
-        // Fallback if file read/parse fails
+      const filePath = join(this.contentDir, `${slug}.md`);
+      const fileContent = await readFile(filePath, "utf-8");
+      const metadata = await parseMetadata(fileContent);
+      if (metadata && metadata.label) {
+        return metadata.label;
       }
 
-      // Fallback to markdown file name from the slug
-      const parts = slug.split("/");
-      return parts[parts.length - 1] ?? "";
+      return basename(slug);
     }
 
     // is a group
-    if (
-      typeof item !== "string" &&
-      ("items" in item || "autogenerate" in item)
-    ) {
+    if (typeof item !== "string" && ("items" in item || "autogenerate" in item)) {
       return item.label;
     }
 

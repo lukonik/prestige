@@ -4,19 +4,33 @@ export const ContentSchema = z.object({
   title: z.string().describe("The title of the article"),
   describe: z.string().optional().describe("The description of the article"),
   lastUpdated: z.union([z.date(), z.boolean()]).optional(),
+  label: z.string().optional().describe("The label of the content"),
 });
 
-const CollectionLinkSchema = z.object({
+const CollectionLinkSchema = z.union([
+  z.object({
+    label: z.string(),
+    slug: z.string(),
+  }),
+  z.string(),
+]);
+
+const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
   label: z.string(),
-  slug: z.string(),
+  items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
+  collapsible: z.boolean().optional(),
+  autogenerate: z.object({
+    directory: z.string(),
+  }).optional(),
 });
 
 export type CollectionLink = z.infer<typeof CollectionLinkSchema>;
 
 export type CollectionGroup = {
   label: string;
-  items: CollectionItem[];
+  items?: CollectionItem[];
   collapsible?: boolean | undefined;
+  autogenerate?: { directory: string };
 };
 
 export type CollectionItem = CollectionLink | CollectionGroup;
@@ -25,12 +39,6 @@ const CollectionItemSchema: z.ZodType<CollectionItem> = z.union([
   CollectionLinkSchema,
   z.lazy(() => CollectionGroupSchema),
 ]);
-
-const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
-  label: z.string(),
-  items: z.lazy(() => z.array(CollectionItemSchema)),
-  collapsible: z.boolean().optional(),
-});
 
 export const CollectionSchema = z.object({
   id: z
@@ -52,3 +60,19 @@ export type CollectionInput = z.input<typeof CollectionSchema>;
 export const CollectionsSchema = z.array(CollectionSchema);
 
 export type Collections = z.infer<typeof CollectionsSchema>;
+
+export interface SidebarLink {
+  slug: string;
+  label: string;
+}
+
+export interface SidebarGroup {
+  label: string;
+  items: SidebarItem[];
+}
+
+export type SidebarItem = SidebarLink | SidebarGroup;
+
+export interface Sidebar {
+  items: SidebarItem[];
+}

@@ -1,8 +1,16 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
 import { join } from "pathe";
-import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
-import { genArrayFromRaw, genDynamicImport, genObjectFromRaw, genString } from "knitwork";
+import {
+  genExportDefault,
+  genExportUndefined,
+} from "../../utils/code-generation";
+import {
+  genArrayFromRaw,
+  genDynamicImport,
+  genObjectFromRaw,
+  genString,
+} from "knitwork";
 import { CollectionItem, CollectionLink, Collections } from "./content.types";
 
 export class ContentStore {
@@ -22,7 +30,12 @@ export class ContentStore {
 
     const processItem = (item: CollectionItem) => {
       // Type guard: If it has a 'slug', it's a CollectionLink
-      if ("slug" in item) {
+      if (typeof item === "string") {
+        this._store.set(item, {
+          label: item,
+          slug: item,
+        });
+      } else if ("slug" in item) {
         this._store.set(item.slug, item);
       }
       // Type guard: If it has 'items', it's a CollectionGroup
@@ -74,7 +87,7 @@ export class ContentStore {
         return null;
       }
 
-      const slug = item.slug;
+      const slug = typeof item === "string" ? item : item.slug;
       const path = join(this.contentDir, slug) + ".md";
       const content = await getContentByPath(path);
       if (!content) {

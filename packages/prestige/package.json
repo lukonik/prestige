@@ -72,6 +72,7 @@
     "@vitejs/plugin-react": "^5.1.2",
     "@vitest/browser-playwright": "^4.0.16",
     "bumpp": "^10.3.2",
+    "memfs": "^4.56.10",
     "picocolors": "^1.1.1",
     "publint": "^0.3.17",
     "tailwindcss": "catalog:",

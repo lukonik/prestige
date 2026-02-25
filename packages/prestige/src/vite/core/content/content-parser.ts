@@ -33,7 +33,11 @@ export async function parseContent(content: string) {
   let metadata = null;
 
   if (matterResponse) {
-    metadata = parseWithFriendlyErrors(ContentSchema, matterResponse, `Invalid schema of article`);
+    metadata = parseWithFriendlyErrors(
+      ContentSchema,
+      matterResponse,
+      `Invalid schema of article`,
+    );
   }
   const html = String(result);
   return { html, metadata };
@@ -62,7 +66,11 @@ export async function parseMetadata(content: string) {
   let metadata = null;
 
   if (matterResponse) {
-    metadata = parseWithFriendlyErrors(ContentSchema, matterResponse, `Invalid schema of article`);
+    metadata = parseWithFriendlyErrors(
+      ContentSchema,
+      matterResponse,
+      `Invalid schema of article`,
+    );
   }
   return metadata;
 }

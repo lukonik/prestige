@@ -30,6 +30,11 @@ export default defineConfig(({ mode }) => {
     ],
     test: {
       root: ".",
+      server: {
+        deps: {
+          inline: "fs-extra",
+        },
+      },
       projects: [
         {
           // add "extends: true" to inherit the options from the root config

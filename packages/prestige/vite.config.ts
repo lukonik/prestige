@@ -4,10 +4,14 @@ import { defineConfig } from "vite";
 import { prestige } from "./src/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import Inspect from "vite-plugin-inspect";
+import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ mode: _ }) => ({
   root: "./playground",
   plugins: [
+    Inspect(),
+    tsconfigPaths(),
     tanstackStart({
       prerender: {
         crawlLinks: true,

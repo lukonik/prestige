@@ -9,7 +9,9 @@ describe("ContentCollectionStore", () => {
   describe("resolve", () => {
     it("returns virtualId on known id", () => {
       const store = createStore();
-      expect(store.resolve("virtual:prestige/all")).toBe("\0virtual:prestige/all");
+      expect(store.resolve("virtual:prestige/collection-all")).toBe(
+        "\0virtual:prestige/collection-all",
+      );
     });
     it("returns null on unknown id", () => {
       const store = createStore();
@@ -23,7 +25,7 @@ describe("ContentCollectionStore", () => {
     });
     it("returns empty object on empty collection", () => {
       const store = createStore();
-      expect(() => store.load("\0virtual:prestige/all")).toThrowError(
+      expect(() => store.load("\0virtual:prestige/collection-all")).toThrowError(
         /No collections found, add one in prestige plugin config/,
       );
     });
@@ -48,7 +50,7 @@ describe("ContentCollectionStore", () => {
         ],
       };
       store.init([collection]);
-      const result = store.load("\0virtual:prestige/all");
+      const result = store.load("\0virtual:prestige/collection-all");
       const expectedString = `export default {
   docs: {
     id: "docs",

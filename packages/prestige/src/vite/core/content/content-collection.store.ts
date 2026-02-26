@@ -5,7 +5,7 @@ import { PrestigeError } from "../../utils/errors";
 
 export class ContentCollectionStore {
   private _collections = new Map<string, Collection>();
-  private _virtualId = "virtual:prestige/all";
+  private _virtualId = "virtual:prestige/collection-all";
   init(collections: Collections) {
     for (const collection of collections) {
       this._collections.set(collection.id, collection);

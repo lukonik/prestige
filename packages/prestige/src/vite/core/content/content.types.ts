@@ -15,25 +15,27 @@ const CollectionLinkSchema = z.union([
   z.string(),
 ]);
 
-const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
-  label: z.string(),
-  items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
-  collapsible: z.boolean().optional(),
-  autogenerate: z.object({
-    directory: z.string(),
-  }).optional(),
-});
-
 export type CollectionLink = z.infer<typeof CollectionLinkSchema>;
 
 export type CollectionGroup = {
   label: string;
-  items?: CollectionItem[];
+  items?: CollectionItem[] | undefined;
   collapsible?: boolean | undefined;
-  autogenerate?: { directory: string };
+  autogenerate?: { directory: string } | undefined;
 };
 
 export type CollectionItem = CollectionLink | CollectionGroup;
+
+const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
+  label: z.string(),
+  items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
+  collapsible: z.boolean().optional(),
+  autogenerate: z
+    .object({
+      directory: z.string(),
+    })
+    .optional(),
+});
 
 const CollectionItemSchema: z.ZodType<CollectionItem> = z.union([
   CollectionLinkSchema,
@@ -69,6 +71,7 @@ export interface SidebarLink {
 export interface SidebarGroup {
   label: string;
   items: SidebarItem[];
+  collapsible?: boolean | undefined;
 }
 
 export type SidebarItem = SidebarLink | SidebarGroup;

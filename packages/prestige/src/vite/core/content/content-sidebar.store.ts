@@ -51,12 +51,15 @@ export class ContentSidebarStore {
     const label = await this.resolveLabel(group);
     const items: SidebarItem[] = [];
 
+    if (group.items?.length && group.autogenerate) {
+      console.warn(`${group.label} has both items and autogenerate. Only items will be used.`);
+    }
+
     if (group.items) {
       for (const childItem of group.items) {
         items.push(await this.processItem(childItem));
       }
     }
-
     if (group.autogenerate?.directory) {
       const generatedItems = await this.autogenerateSidebar(group.autogenerate.directory);
       items.push(...generatedItems);
@@ -64,6 +67,7 @@ export class ContentSidebarStore {
 
     return {
       label,
+      collapsible: group.collapsible,
       items,
     };
   }

@@ -3,6 +3,7 @@ import { DirectoryJSON, vol } from "memfs";
 import { ContentSidebarStore } from "./content-sidebar.store";
 import { parseMetadata } from "./content-parser";
 import logger from "../../utils/logger";
+import { CollectionItem } from "./content.types";
 
 vi.mock("./content-parser");
 
@@ -183,6 +184,80 @@ describe("ContentSidebarStore", () => {
           ],
         },
       ]);
+    });
+  });
+
+  describe("resolveSidebarGroup", () => {
+    it("returns label in response", async () => {
+      const response = await createStore().resolveSidebarGroup({
+        label: "Test Label",
+      });
+      expect(response).toEqual({
+        label: "Test Label",
+        items: [],
+      });
+    });
+    it("returns collapsible in response", async () => {
+      const response = await createStore().resolveSidebarGroup({
+        label: "Test Label",
+        collapsible: true,
+      });
+      expect(response).toEqual({
+        label: "Test Label",
+        items: [],
+        collapsible: true,
+      });
+    });
+    it("returns items as empty array even if collection doesn't have one", async () => {
+      const response = await createStore().resolveSidebarGroup({} as any);
+      expect(response).toEqual({
+        label: "",
+        collapsible: undefined,
+        items: [],
+      });
+    });
+    it("returns items similar to collection items", async () => {
+      const items: CollectionItem[] = [
+        {
+          label: "docs",
+          items: [
+            {
+              label: "info",
+              slug: "docs/info",
+            },
+          ],
+        },
+        {
+          label: "api",
+          items: [
+            {
+              label: "index",
+              slug: "api/index",
+            },
+          ],
+        },
+        { label: "llm", slug: "llm" },
+      ];
+      const response = await createStore().resolveSidebarGroup({
+        label: "DOCS",
+        items: items,
+      });
+      expect(response.items).toEqual(items);
+    });
+    it("log warning if items and autogenerate are both declare", async () => {
+      await createStore().resolveSidebarGroup({
+        label: "DOCS",
+        items: [
+          {
+            label: "docs",
+            slug: "docs/info",
+          },
+        ],
+        autogenerate: { directory: "docs" },
+      });
+      expect(logger.warn).toHaveBeenCalledWith(
+        "DOCS has both items and autogenerate. Only items will be used.",
+      );
     });
   });
 });

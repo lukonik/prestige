@@ -20,7 +20,7 @@ export function prestigeRoutes(root: AnyRoute) {
       <div>
         {JSON.stringify(data)}
         {data?.items.map((i: any) => (
-          <Link key={i.slug} to={i.slug}>
+          <Link key={i.slug} to={"/" + i.slug}>
             {i.slug}
           </Link>
         ))}

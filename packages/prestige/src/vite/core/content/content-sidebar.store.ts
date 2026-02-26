@@ -52,7 +52,7 @@ export class ContentSidebarStore {
     const items: SidebarItem[] = [];
 
     if (group.items?.length && group.autogenerate) {
-      console.warn(`${group.label} has both items and autogenerate. Only items will be used.`);
+      logger.warn(`${group.label} has both items and autogenerate. Only items will be used.`);
     }
 
     if (group.items) {

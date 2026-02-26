@@ -113,13 +113,13 @@ describe("ContentSidebarStore", () => {
       await createStore().autogenerateSidebar("/docs/info");
       expect(logger.warn).toHaveBeenCalledWith("Directory doesn't exist: /docs/info");
     });
-    it("returns link array if the directory is flat and only contains files", () => {
+    it("returns link array if the directory is flat and only contains files", async () => {
       const json = {
         "./docs/info.md": "# This is info page",
         "./docs/about.md": "# This is about page",
       };
       const store = createDirWithStore(json);
-      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+      await expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "about", slug: "docs/about" },
         { label: "info", slug: "docs/info" },
       ]);
@@ -129,8 +129,8 @@ describe("ContentSidebarStore", () => {
       vol.mkdirSync("/app/src/components", { recursive: true });
 
       const store = createStore("/app");
-      expect(store.autogenerateSidebar("docs")).resolves.toEqual([]);
-      expect(store.autogenerateSidebar("src/components")).resolves.toEqual([]);
+      await expect(store.autogenerateSidebar("docs")).resolves.toEqual([]);
+      await expect(store.autogenerateSidebar("src/components")).resolves.toEqual([]);
     });
     it("returns group array if the directory is nested and contains files", async () => {
       const json = {
@@ -138,7 +138,7 @@ describe("ContentSidebarStore", () => {
         "./docs/partial/about.md": "# This is about page",
       };
       const store = createDirWithStore(json);
-      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+      await expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
         {
           label: "partial",
@@ -153,7 +153,7 @@ describe("ContentSidebarStore", () => {
         "./docs/installation.md": "# Installation step",
       };
       const store = createDirWithStore(json);
-      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+      await expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "installation", slug: "docs/installation" },
         { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
         {
@@ -162,7 +162,7 @@ describe("ContentSidebarStore", () => {
         },
       ]);
     });
-    it("returns sorted array", () => {
+    it("returns sorted array", async () => {
       const json = {
         "./docs/main/info.md": "# This is info page",
         "./docs/main/about.md": "# this is about page",
@@ -170,7 +170,7 @@ describe("ContentSidebarStore", () => {
         "./docs/abc.md": "#this is abc file",
       };
       const store = createDirWithStore(json);
-      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+      await expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "abc", slug: "docs/abc" },
         {
           label: "before",

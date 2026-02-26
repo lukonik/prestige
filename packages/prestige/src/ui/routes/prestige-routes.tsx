@@ -8,8 +8,11 @@ export function prestigeRoutes(root: AnyRoute) {
     loader: async ({ params }) => {
       const slug = params.slug;
       const sidebar = sidebars[slug];
-      const result = await sidebar?.load();
-      return result;
+      if (sidebar) {
+        const result = await sidebar();
+        return result;
+      }
+      return null;
     },
     component: CollectionComponent,
   });

@@ -2,16 +2,20 @@ declare module "virtual:content-collection" {
   export const contents: string[];
 }
 
-// private _virtualId = "virtual:content-collection/content/";
-// private _virtualIdAll = "virtual:content-collection/content-all";
-
 declare module "virtual:content-collection/content-all" {
-  export interface ContentImport {
-    slug: string;
-    load: () => Promise<Sidebar>;
-  }
-  const contents: Record<string, Content>;
-  export default contents;
+  export type Content =
+    | {
+        html: string;
+        metadata: {
+          title: string;
+          describe?: string | undefined;
+          lastUpdated?: boolean | Date | undefined;
+        } | null;
+      }
+    | undefined;
+  const content: Content;
+
+  export default content;
 }
 
 declare module "virtual:content-collection/sidebar-all" {
@@ -34,11 +38,7 @@ declare module "virtual:content-collection/sidebar-all" {
     items: CollectionItem[];
   };
 
-  export interface SidebarImport {
-    slug: string;
-    load: () => Promise<Sidebar>;
-  }
-  const sidebars: Record<string, SidebarImport>;
+  const sidebars: Record<string, () => Promise<Sidebar>>;
   export default sidebars;
 }
 

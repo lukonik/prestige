@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
 import { Sidebar, SidebarItem, SidebarLink } from "./content.types";
-import { genDynamicImport, genObjectFromRaw, genObjectFromValues, genString } from "knitwork";
+import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 import { join } from "node:path";
 
@@ -43,11 +43,8 @@ export class ContentStore {
     if (id.includes("\0" + this._virtualIdAll)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genObjectFromRaw({
-          slug: genString(key),
-          load: genDynamicImport(`virtual:content-collection/content/${key}`, {
-            interopDefault: true,
-          }),
+        records[key] = genDynamicImport(`virtual:content-collection/content/${key}`, {
+          interopDefault: true,
         });
       }
       return genExportDefault(genObjectFromRaw(records));

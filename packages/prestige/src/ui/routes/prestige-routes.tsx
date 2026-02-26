@@ -1,7 +1,6 @@
 import { AnyRoute, createRoute, Link, Outlet } from "@tanstack/react-router";
 import contents from "virtual:content-collection/content-all";
 import sidebars from "virtual:content-collection/sidebar-all";
-
 export function prestigeRoutes(root: AnyRoute) {
   const collectionRouter = createRoute({
     getParentRoute: () => root,
@@ -9,7 +8,7 @@ export function prestigeRoutes(root: AnyRoute) {
     loader: async ({ params }) => {
       const slug = params.slug;
       const sidebar = sidebars[slug];
-      const result = await sidebar.load();
+      const result = await sidebar?.load();
       return result;
     },
     component: CollectionComponent,

@@ -26,7 +26,8 @@ declare module "virtual:content-collection/sidebar-all" {
     slug: string;
     load: () => Promise<Sidebar>;
   }
-  export default Record<string, SidebarImport>;
+  const sidebars: Record<string, SidebarImport>;
+  export default sidebars;
 }
 
 declare module "virtual:content-collection/sidebar/*" {
@@ -49,7 +50,8 @@ declare module "virtual:content-collection/sidebar/*" {
     items: CollectionItem[];
   };
 
-  export default Sidebar;
+  const sidebar: Sidebar;
+  export default sidebar;
 }
 
 declare module "virtual:content-collection/all" {

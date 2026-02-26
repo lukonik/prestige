@@ -331,4 +331,39 @@ describe("ContentSidebarStore", () => {
       });
     });
   });
+
+  describe("processCollection", () => {
+    it("returns empty items array if collection has no items", async () => {
+      const store = createStore();
+      const result = await store.processCollection({ id: "test", items: [] });
+      expect(result).toEqual({ items: [] });
+    });
+
+    it("processes all items in the collection", async () => {
+      const store = createStore();
+      const processItemSpy = vi
+        .spyOn(store, "processItem")
+        .mockImplementation(async (item: any) => ({
+          label: `Processed ${item}`,
+          slug: `slug-${item}`,
+        }));
+
+      const collection = {
+        id: "test",
+        items: ["item1", "item2"],
+      };
+
+      const result = await store.processCollection(collection as any);
+
+      expect(processItemSpy).toHaveBeenCalledTimes(2);
+      expect(processItemSpy).toHaveBeenNthCalledWith(1, "item1");
+      expect(processItemSpy).toHaveBeenNthCalledWith(2, "item2");
+      expect(result).toEqual({
+        items: [
+          { label: "Processed item1", slug: "slug-item1" },
+          { label: "Processed item2", slug: "slug-item2" },
+        ],
+      });
+    });
+  });
 });

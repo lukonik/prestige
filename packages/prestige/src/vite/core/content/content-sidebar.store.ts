@@ -28,7 +28,7 @@ export class ContentSidebarStore {
       this._store.set(collection.id, sidebar);
     }
   }
-
+  /** @visibleForTesting */
   async processCollection(collection: Collection): Promise<Sidebar> {
     const items: SidebarItem[] = [];
     for (const item of collection.items) {

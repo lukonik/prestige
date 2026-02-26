@@ -332,6 +332,35 @@ describe("ContentSidebarStore", () => {
     });
   });
 
+  describe("init", () => {
+    it("processes all collections and sets them in the store", async () => {
+      const store = createStore();
+      const processCollectionSpy = vi
+        .spyOn(store, "processCollection")
+        .mockImplementation(async (collection: any) => ({
+          items: [{ label: `Processed ${collection.id}`, slug: `slug-${collection.id}` }],
+        }));
+
+      const collections = [
+        { id: "col1", items: [] },
+        { id: "col2", items: [] },
+      ];
+
+      await store.init(collections as any);
+
+      expect(processCollectionSpy).toHaveBeenCalledTimes(2);
+      expect(processCollectionSpy).toHaveBeenNthCalledWith(1, collections[0]);
+      expect(processCollectionSpy).toHaveBeenNthCalledWith(2, collections[1]);
+
+      expect((store as any)._store.get("col1")).toEqual({
+        items: [{ label: "Processed col1", slug: "slug-col1" }],
+      });
+      expect((store as any)._store.get("col2")).toEqual({
+        items: [{ label: "Processed col2", slug: "slug-col2" }],
+      });
+    });
+  });
+
   describe("processCollection", () => {
     it("returns empty items array if collection has no items", async () => {
       const store = createStore();

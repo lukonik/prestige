@@ -59,8 +59,7 @@ export class ContentSidebarStore {
       for (const childItem of group.items) {
         items.push(await this.processItem(childItem));
       }
-    }
-    if (group.autogenerate?.directory) {
+    } else if (group.autogenerate?.directory) {
       const generatedItems = await this.autogenerateSidebar(group.autogenerate.directory);
       items.push(...generatedItems);
     }

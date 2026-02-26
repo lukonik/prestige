@@ -283,4 +283,52 @@ describe("ContentSidebarStore", () => {
       expect(autogenerateSpy).not.toHaveBeenCalled();
     });
   });
+
+  describe("processItem", () => {
+    function createStoreWithMockedProcessItem(mockReturnValue: any, processValue: any) {
+      const store = createStore();
+      const resolveSidebarLinkSpy = vi
+        .spyOn(store, "resolveSidebarLink")
+        .mockResolvedValueOnce(mockReturnValue);
+      const resolveSidebarGroupSpy = vi
+        .spyOn(store, "resolveSidebarGroup")
+        .mockResolvedValueOnce(mockReturnValue);
+
+      expect(store.processItem(processValue)).resolves.toEqual(mockReturnValue);
+      return [resolveSidebarLinkSpy, resolveSidebarGroupSpy];
+    }
+    it("calls resolveSidebarLink when string is passed", () => {
+      const [resolveSidebarLinkSpy] = createStoreWithMockedProcessItem(
+        {
+          label: "mocked-label",
+          slug: "mocked-slug",
+        },
+        "docs/info",
+      );
+      expect(resolveSidebarLinkSpy).toHaveBeenCalledWith("docs/info");
+    });
+    it("calls resolveSidebarLink when link object is passed", () => {
+      const [resolveSidebarLinkSpy] = createStoreWithMockedProcessItem(
+        {
+          label: "mocked-label",
+          slug: "mocked-slug",
+        },
+        { label: "mocked-label", slug: "mocked-slug" },
+      );
+      expect(resolveSidebarLinkSpy).toHaveBeenCalledWith({
+        label: "mocked-label",
+        slug: "mocked-slug",
+      });
+    });
+    it("calls resolveSidebarGroup when group object is passed", () => {
+      const [_, resolveSidebarGroupSpy] = createStoreWithMockedProcessItem(
+        { label: "mocked-label", items: [] },
+        { label: "mocked-label", items: [] },
+      );
+      expect(resolveSidebarGroupSpy).toHaveBeenCalledWith({
+        label: "mocked-label",
+        items: [],
+      });
+    });
+  });
 });

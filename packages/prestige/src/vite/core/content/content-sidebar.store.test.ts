@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { vol } from "memfs";
 import { ContentSidebarStore } from "./content-sidebar.store";
 import { parseMetadata } from "./content-parser";
+import logger from "../../utils/logger";
 
 vi.mock("./content-parser");
 
@@ -81,6 +82,42 @@ describe("ContentSidebarStore", () => {
     it("returns empty for everything else", () => {
       const store = createStore();
       expect(store.resolveSlug({} as any)).toBe("");
+    });
+  });
+  describe("resolveSidebarLink", () => {
+    it("calls resolveLabel and resolveSlug internally", async () => {
+      // resolveLabel and resolveSlug are properly tested above,
+      // so checking their call is enough here.
+      const store = createStore();
+      const resolveLabelSpy = vi.spyOn(store, "resolveLabel").mockResolvedValueOnce("mocked-label");
+      const resolveSlugSpy = vi.spyOn(store, "resolveSlug").mockReturnValueOnce("mocked-slug");
+
+      const result = await store.resolveSidebarLink("docs/info");
+
+      expect(resolveLabelSpy).toHaveBeenCalledWith("docs/info");
+      expect(resolveSlugSpy).toHaveBeenCalledWith("docs/info");
+      expect(result).toEqual({ label: "mocked-label", slug: "mocked-slug" });
+    });
+  });
+  describe("autogenerateSidebar", async () => {
+    it("returns empty array if dir doesn't exist", async () => {
+      await expect(createStore().autogenerateSidebar("/docs/info")).resolves.toEqual([]);
+    });
+    it("logs warning if dir doesn't exist", async () => {
+      await createStore().autogenerateSidebar("/docs/info");
+      expect(logger.warn).toHaveBeenCalledWith("Directory doesn't exist: /docs/info");
+    });
+    it("returns link array if the directory is flat and only contains files", () => {
+      const json = {
+        "./docs/info.md": "# This is info page",
+        "./docs/about.md": "# This is about page",
+      };
+      vol.fromJSON(json, "/app");
+      const store = createStore("/app");
+      return expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+        { label: "info", slug: "info" },
+        { label: "about", slug: "about" },
+      ]);
     });
   });
 });

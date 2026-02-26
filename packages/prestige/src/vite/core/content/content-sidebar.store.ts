@@ -12,11 +12,13 @@ import {
   SidebarItem,
   SidebarLink,
 } from "./content.types";
+import { basename, parse } from "node:path";
+import { pathExists } from "fs-extra";
 import logger from "../../utils/logger";
-import { basename } from "node:path";
 
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
+  private _fileExtRegex = /\.mdx?$/i;
 
   constructor(private contentDir: string) {}
 
@@ -71,44 +73,38 @@ export class ContentSidebarStore {
     const items: SidebarItem[] = [];
     const dirPath = join(this.contentDir, directory);
 
-    try {
-      const dirents = await readdir(dirPath, { withFileTypes: true });
-      dirents.sort((a, b) => a.name.localeCompare(b.name));
-
-      for (const dirent of dirents) {
-        if (dirent.isDirectory()) {
-          const subDir = join(directory, dirent.name);
-          const group: CollectionGroup = {
-            label: dirent.name,
-            autogenerate: { directory: subDir },
-          };
-          items.push(await this.resolveSidebarGroup(group));
-        } else if (dirent.isFile() && dirent.name.endsWith(".md")) {
-          const slug = join(directory, dirent.name.replace(/\.md$/, ""));
-          items.push(await this.resolveSidebarLink(slug));
-        }
-      }
-    } catch {
-      logger.warn(`Failed to autogenerate sidebar for directory: ${directory}`);
+    if (!(await pathExists(dirPath))) {
+      logger.warn(`Directory doesn't exist: ${directory}`);
+      return [];
     }
 
+    const dirents = await readdir(dirPath, { withFileTypes: true });
+    dirents.sort((a, b) => a.name.localeCompare(b.name));
+    for (const dirent of dirents) {
+      if (dirent.isDirectory()) {
+        const subDir = join(directory, dirent.name);
+        const group: CollectionGroup = {
+          label: dirent.name,
+          autogenerate: { directory: subDir },
+        };
+        items.push(await this.resolveSidebarGroup(group));
+      } else if (dirent.isFile() && this._fileExtRegex.test(dirent.name)) {
+        const fullPath = join(directory, dirent.name);
+        const slug = parse(fullPath).name;
+        items.push(await this.resolveSidebarLink(slug));
+      }
+    }
     return items;
   }
 
   /** @visibleForTesting */
   async resolveSidebarLink(item: CollectionLink): Promise<SidebarLink> {
     const label = await this.resolveLabel(item);
-    if (typeof item === "string") {
-      return {
-        slug: this.resolveSlug(item),
-        label,
-      };
-    } else {
-      return {
-        slug: this.resolveSlug(item),
-        label,
-      };
-    }
+    const slug = this.resolveSlug(item);
+    return {
+      label,
+      slug,
+    };
   }
 
   /** @visibleForTesting */

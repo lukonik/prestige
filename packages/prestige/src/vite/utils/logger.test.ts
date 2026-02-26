@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
 import logger from "../../../src/vite/utils/logger";
 
+vi.unmock("../../../src/vite/utils/logger");
+
 vi.mock("picocolors", () => ({
   default: {
     blue: (str: string) => str,

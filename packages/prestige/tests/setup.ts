@@ -28,6 +28,14 @@ vi.mock("graceful-fs", async () => {
   return { ...memfs.fs, default: memfs.fs };
 });
 
+vi.mock("../src/vite/utils/logger", () => ({
+  default: {
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
 beforeEach(() => {
   // reset the state of in-memory fs
   vol.reset();

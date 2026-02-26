@@ -7,8 +7,8 @@ import { join } from "node:path";
 
 export class ContentStore {
   private _store = new Map<string, SidebarLink>();
-  private _virtualId = "virtual:content-collection/content/";
-  private _virtualIdAll = "virtual:content-collection/content-all";
+  private _virtualId = "virtual:prestige/content/";
+  private _virtualIdAll = "virtual:prestige/content-all";
 
   constructor(private contentDir: string) {}
 
@@ -43,7 +43,7 @@ export class ContentStore {
     if (id.includes("\0" + this._virtualIdAll)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImport(`virtual:content-collection/content/${key}`, {
+        records[key] = genDynamicImport(`virtual:prestige/content/${key}`, {
           interopDefault: true,
         });
       }

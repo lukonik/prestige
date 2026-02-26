@@ -1,6 +1,6 @@
 import { AnyRoute, createRoute, Link, Outlet } from "@tanstack/react-router";
-import contents from "virtual:content-collection/content-all";
-import sidebars from "virtual:content-collection/sidebar-all";
+import contents from "virtual:prestige/content-all";
+import sidebars from "virtual:prestige/sidebar-all";
 export function prestigeRoutes(root: AnyRoute) {
   const collectionRouter = createRoute({
     getParentRoute: () => root,

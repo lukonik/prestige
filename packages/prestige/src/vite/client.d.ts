@@ -1,8 +1,8 @@
-declare module "virtual:content-collection" {
+declare module "virtual:prestige" {
   export const contents: string[];
 }
 
-declare module "virtual:content-collection/content-all" {
+declare module "virtual:prestige/content-all" {
   export type Content =
     | {
         html: string;
@@ -18,7 +18,7 @@ declare module "virtual:content-collection/content-all" {
   export default contents;
 }
 
-declare module "virtual:content-collection/sidebar-all" {
+declare module "virtual:prestige/sidebar-all" {
   export type SidebarLink = {
     label: string;
     slug: string;
@@ -42,7 +42,7 @@ declare module "virtual:content-collection/sidebar-all" {
   export default sidebars;
 }
 
-declare module "virtual:content-collection/sidebar/*" {
+declare module "virtual:prestige/sidebar/*" {
   export type SidebarLink = {
     label: string;
     slug: string;
@@ -66,7 +66,7 @@ declare module "virtual:content-collection/sidebar/*" {
   export default sidebar;
 }
 
-declare module "virtual:content-collection/all" {
+declare module "virtual:prestige/all" {
   export type CollectionLink = {
     label: string;
     slug: string;
@@ -91,7 +91,7 @@ declare module "virtual:content-collection/all" {
   export default Collections;
 }
 
-declare module "virtual:content-collection/content-all" {
+declare module "virtual:prestige/content-all" {
   export type CollectionLink = {
     label: string;
     slug: string;
@@ -103,7 +103,7 @@ declare module "virtual:content-collection/content-all" {
   export default contents;
 }
 
-declare module "virtual:content-collection/content/*" {
+declare module "virtual:prestige/content/*" {
   export type Content =
     | {
         html: string;

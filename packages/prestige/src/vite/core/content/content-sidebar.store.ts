@@ -21,8 +21,8 @@ import { genExportDefault, genExportUndefined } from "../../utils/code-generatio
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
   private _fileExtRegex = /\.mdx?$/i;
-  private _virtualId = "virtual:content-collection/sidebar/";
-  private _virtualAllId = "virtual:content-collection/sidebar-all";
+  private _virtualId = "virtual:prestige/sidebar/";
+  private _virtualAllId = "virtual:prestige/sidebar-all";
 
   constructor(private contentDir: string) {}
 
@@ -40,7 +40,7 @@ export class ContentSidebarStore {
     if (id.includes("\0" + this._virtualAllId)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImport(`virtual:content-collection/sidebar/${key}`, {
+        records[key] = genDynamicImport(`virtual:prestige/sidebar/${key}`, {
           interopDefault: true,
         });
       }

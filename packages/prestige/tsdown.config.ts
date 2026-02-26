@@ -19,7 +19,7 @@ export default defineConfig({
     "picocolors",
     "node:path",
     "node:fs/promises",
-    "virtual:content-collection/all",
-    "virtual:content-collection/content-all",
+    "virtual:prestige/all",
+    "virtual:prestige/content-all",
   ],
 });

@@ -405,8 +405,8 @@ describe("ContentSidebarStore", () => {
   describe("resolve", () => {
     it("returns virtualId on known id", () => {
       const store = createStore();
-      expect(store.resolve("virtual:content-collection/sidebar/docs")).toBe(
-        "\0virtual:content-collection/sidebar/docs",
+      expect(store.resolve("virtual:prestige/sidebar/docs")).toBe(
+        "\0virtual:prestige/sidebar/docs",
       );
     });
     it("returns null on unknown id", () => {
@@ -421,13 +421,11 @@ describe("ContentSidebarStore", () => {
     });
     it("returns undefined export if there was no id suffix", () => {
       const store = createStore();
-      expect(store.load("\0" + "virtual:content-collection/sidebar/")).toBe(genExportUndefined());
+      expect(store.load("\0" + "virtual:prestige/sidebar/")).toBe(genExportUndefined());
     });
     it("returns undefined export if there was no sidebar", () => {
       const store = createStore();
-      expect(store.load("\0" + "virtual:content-collection/sidebar/docs")).toBe(
-        genExportUndefined(),
-      );
+      expect(store.load("\0" + "virtual:prestige/sidebar/docs")).toBe(genExportUndefined());
     });
     it("returns sidebar on correct key", async () => {
       const store = createStore();
@@ -442,7 +440,7 @@ describe("ContentSidebarStore", () => {
           ],
         },
       ]);
-      expect(store.load("\0" + "virtual:content-collection/sidebar/app")).toMatchInlineSnapshot(`
+      expect(store.load("\0" + "virtual:prestige/sidebar/app")).toMatchInlineSnapshot(`
         "export default {
           items: [
             {

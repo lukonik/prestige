@@ -1,7 +1,7 @@
 import { HeadContent, Link, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import collections from "virtual:content-collection/all";
+import collections from "virtual:prestige/all";
 
 import appCss from "../styles.css?url";
 

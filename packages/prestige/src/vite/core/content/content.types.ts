@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const ContentSchema = z.object({
-  title: z.string().describe("The title of the article"),
+  title: z.string().optional().describe("The title of the article"),
   describe: z.string().optional().describe("The description of the article"),
   lastUpdated: z.union([z.date(), z.boolean()]).optional(),
   label: z.string().optional().describe("The label of the content"),
@@ -65,19 +65,19 @@ export const CollectionsSchema = z.array(CollectionSchema);
 
 export type Collections = z.infer<typeof CollectionsSchema>;
 
-export interface SidebarLink {
+export interface SidebarLinkType {
   slug: string;
   label: string;
 }
 
-export interface SidebarGroup {
+export interface SidebarGroupType {
   label: string;
-  items: SidebarItem[];
+  items: SidebarItemType[];
   collapsible?: boolean | undefined;
 }
 
-export type SidebarItem = SidebarLink | SidebarGroup;
+export type SidebarItemType = SidebarLinkType | SidebarGroupType;
 
-export interface Sidebar {
-  items: SidebarItem[];
+export interface SidebarType {
+  items: SidebarItemType[];
 }

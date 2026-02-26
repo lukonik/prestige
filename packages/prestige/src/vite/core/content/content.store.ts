@@ -1,25 +1,25 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
-import { Sidebar, SidebarItem, SidebarLink } from "./content.types";
+import { SidebarType, SidebarItemType, SidebarLinkType } from "./content.types";
 import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 import { join } from "node:path";
 
 export class ContentStore {
-  private _store = new Map<string, SidebarLink>();
+  private _store = new Map<string, SidebarLinkType>();
   private _virtualId = "virtual:prestige/content/";
   private _virtualIdAll = "virtual:prestige/content-all";
 
   constructor(private contentDir: string) {}
 
-  async init(sidebars: Map<string, Sidebar>) {
+  async init(sidebars: Map<string, SidebarType>) {
     const sidebarsArray = sidebars.values();
     for (const sidebar of sidebarsArray) {
       this._extractLinks(sidebar.items);
     }
   }
 
-  private _extractLinks(items: SidebarItem[]) {
+  private _extractLinks(items: SidebarItemType[]) {
     for (const item of items) {
       if ("slug" in item) {
         this._store.set(item.slug, item);

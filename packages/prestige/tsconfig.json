@@ -12,7 +12,8 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "paths": {
-      "@lonik/prestige/ui": ["./src/ui/index.ts"]
+      "@lonik/prestige/ui": ["./src/ui/index.ts"],
+      "@lonik/prestige/vite": ["./src/vite/index.ts"]
     }
   },
   "include": ["src", "playground"]

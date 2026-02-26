@@ -1,6 +1,8 @@
-import { AnyRoute, createRoute, Link, Outlet } from "@tanstack/react-router";
+import { AnyRoute, createRoute, Outlet } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
 import sidebars from "virtual:prestige/sidebar-all";
+import { SidebarType } from "../../vite/core/content/content.types";
+import Sidebar from "../components/sidebar/sidebar";
 export function prestigeRoutes(root: AnyRoute) {
   const collectionRouter = createRoute({
     getParentRoute: () => root,
@@ -18,16 +20,13 @@ export function prestigeRoutes(root: AnyRoute) {
   });
 
   function CollectionComponent() {
-    const data = collectionRouter.useLoaderData();
+    const data: SidebarType | null = collectionRouter.useLoaderData();
     return (
-      <div>
-        {JSON.stringify(data)}
-        {data?.items.map((i: any) => (
-          <Link key={i.slug} to={"/" + i.slug}>
-            {i.slug}
-          </Link>
-        ))}
-        <Outlet />
+      <div className="flex gap-4">
+        {data && <Sidebar sidebar={data} />}
+        <div className="flex-1">
+          <Outlet />
+        </div>
       </div>
     );
   }

@@ -8,7 +8,12 @@ export default defineConfig({
       id: "docs",
       items: [
         {
-          label: "Text",
+          label: "Introduction",
+          type: "link",
+          slug: "docs/introduction",
+        },
+        {
+          label: "Demo",
           type: "link",
           slug: "docs/demo",
         },

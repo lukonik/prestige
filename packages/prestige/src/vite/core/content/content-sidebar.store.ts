@@ -7,10 +7,10 @@ import {
   CollectionItem,
   CollectionLink,
   Collections,
-  Sidebar,
-  SidebarGroup,
-  SidebarItem,
-  SidebarLink,
+  SidebarType,
+  SidebarGroupType,
+  SidebarItemType,
+  SidebarLinkType,
 } from "./content.types";
 import { basename } from "node:path";
 import logger from "../../utils/logger";
@@ -19,7 +19,7 @@ import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwor
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 
 export class ContentSidebarStore {
-  private _store = new Map<string, Sidebar>();
+  private _store = new Map<string, SidebarType>();
   private _fileExtRegex = /\.mdx?$/i;
   private _virtualId = "virtual:prestige/sidebar/";
   private _virtualAllId = "virtual:prestige/sidebar-all";
@@ -71,8 +71,8 @@ export class ContentSidebarStore {
     return this._store;
   }
   /** @visibleForTesting */
-  async processCollection(collection: Collection): Promise<Sidebar> {
-    const items: SidebarItem[] = [];
+  async processCollection(collection: Collection): Promise<SidebarType> {
+    const items: SidebarItemType[] = [];
     for (const item of collection.items) {
       items.push(await this.processItem(item));
     }
@@ -80,7 +80,7 @@ export class ContentSidebarStore {
   }
 
   /** @visibleForTesting */
-  async processItem(item: CollectionItem): Promise<SidebarItem> {
+  async processItem(item: CollectionItem): Promise<SidebarItemType> {
     if (typeof item === "string" || "slug" in item) {
       return this.resolveSidebarLink(item as CollectionLink);
     } else {
@@ -89,9 +89,9 @@ export class ContentSidebarStore {
   }
 
   /** @visibleForTesting */
-  async resolveSidebarGroup(group: CollectionGroup): Promise<SidebarGroup> {
+  async resolveSidebarGroup(group: CollectionGroup): Promise<SidebarGroupType> {
     const label = await this.resolveLabel(group);
-    const items: SidebarItem[] = [];
+    const items: SidebarItemType[] = [];
 
     if (group.items?.length && group.autogenerate) {
       logger.warn(`${group.label} has both items and autogenerate. Only items will be used.`);
@@ -114,8 +114,8 @@ export class ContentSidebarStore {
   }
 
   /** @visibleForTesting */
-  async autogenerateSidebar(directory: string): Promise<SidebarItem[]> {
-    const items: SidebarItem[] = [];
+  async autogenerateSidebar(directory: string): Promise<SidebarItemType[]> {
+    const items: SidebarItemType[] = [];
     const dirPath = join(this.contentDir, directory);
     if (!(await pathExists(dirPath))) {
       logger.warn(`Directory doesn't exist: ${directory}`);
@@ -142,7 +142,7 @@ export class ContentSidebarStore {
   }
 
   /** @visibleForTesting */
-  async resolveSidebarLink(item: CollectionLink): Promise<SidebarLink> {
+  async resolveSidebarLink(item: CollectionLink): Promise<SidebarLinkType> {
     const label = await this.resolveLabel(item);
     const slug = this.resolveSlug(item);
     return {

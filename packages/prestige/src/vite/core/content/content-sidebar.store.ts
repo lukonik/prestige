@@ -12,9 +12,9 @@ import {
   SidebarItem,
   SidebarLink,
 } from "./content.types";
-import { basename, parse } from "node:path";
-import { pathExists } from "fs-extra";
+import { basename } from "node:path";
 import logger from "../../utils/logger";
+import { pathExists } from "../../utils/file-utils";
 
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
@@ -72,7 +72,6 @@ export class ContentSidebarStore {
   async autogenerateSidebar(directory: string): Promise<SidebarItem[]> {
     const items: SidebarItem[] = [];
     const dirPath = join(this.contentDir, directory);
-
     if (!(await pathExists(dirPath))) {
       logger.warn(`Directory doesn't exist: ${directory}`);
       return [];
@@ -90,7 +89,7 @@ export class ContentSidebarStore {
         items.push(await this.resolveSidebarGroup(group));
       } else if (dirent.isFile() && this._fileExtRegex.test(dirent.name)) {
         const fullPath = join(directory, dirent.name);
-        const slug = parse(fullPath).name;
+        const slug = fullPath.replace(this._fileExtRegex, "");
         items.push(await this.resolveSidebarLink(slug));
       }
     }

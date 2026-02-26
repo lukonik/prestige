@@ -115,8 +115,8 @@ describe("ContentSidebarStore", () => {
       vol.fromJSON(json, "/app");
       const store = createStore("/app");
       return expect(store.autogenerateSidebar("docs")).resolves.toEqual([
-        { label: "info", slug: "info" },
-        { label: "about", slug: "about" },
+        { label: "about", slug: "docs/about" },
+        { label: "info", slug: "docs/info" },
       ]);
     });
   });

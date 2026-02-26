@@ -7,9 +7,9 @@ import picomatch, { type Matcher } from "picomatch";
 import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
 import { ContentStore, getContentByPath } from "./core/content/content.store";
 import logger from "./utils/logger";
-import { pathExists } from "fs-extra";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { Collections } from "./core/content/content.types";
+import { pathExists } from "./utils/file-utils";
 
 const ARTICLE_PREFIX = "@articles";
 

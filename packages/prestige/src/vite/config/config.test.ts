@@ -2,10 +2,11 @@ import { describe, expect, it } from "vitest";
 
 import { defineConfig, loadPrestigeConfig, validateConfig } from "../../../src/vite/config/config";
 import { PrestigeConfig } from "../../../src/vite/config/config.types";
-import { mkdir, outputFileSync } from "fs-extra";
 import { getTempDir } from "../test-utils";
 import { PrestigeError } from "../../../src/vite/utils/errors";
 import { DEFAULT_DOCS_DIR } from "../../../src/vite/constants";
+import { outputFile } from "../utils/file-utils";
+import { mkdir } from "node:fs/promises";
 
 function createConfigFile(props: any) {
   return `
@@ -22,7 +23,7 @@ function minimalConfig() {
 
 async function createDefaultDirs(initConfig?: any, dir?: string) {
   const prestigePath = getTempDir("prestige.config.ts");
-  await outputFileSync(
+  await outputFile(
     prestigePath,
     createConfigFile(
       initConfig ?? {

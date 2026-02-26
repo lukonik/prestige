@@ -1,6 +1,4 @@
-import { remove } from "fs-extra";
-import { afterEach, beforeEach, chai, vi } from "vitest";
-import { getTempDir } from "../src/vite/test-utils";
+import { beforeEach, chai, vi } from "vitest";
 import { vol } from "memfs";
 
 chai.config.truncateThreshold = 1000;
@@ -23,10 +21,6 @@ vi.mock("fs/promises", async () => {
   const memfs = await import("memfs");
   return { ...memfs.fs.promises, default: memfs.fs.promises };
 });
-vi.mock("graceful-fs", async () => {
-  const memfs = await import("memfs");
-  return { ...memfs.fs, default: memfs.fs };
-});
 
 vi.mock("../src/vite/utils/logger", () => ({
   default: {
@@ -39,8 +33,4 @@ vi.mock("../src/vite/utils/logger", () => ({
 beforeEach(() => {
   // reset the state of in-memory fs
   vol.reset();
-});
-
-afterEach(async () => {
-  await remove(getTempDir());
 });

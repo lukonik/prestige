@@ -1,8 +1,8 @@
 import { loadConfig } from "unconfig";
 import { parseWithFriendlyErrors, PrestigeError } from "../utils/errors";
 import { PrestigeConfigInput, PrestigeConfigSchema } from "./config.types";
-import { pathExists } from "fs-extra";
 import { join } from "pathe";
+import { pathExists } from "../utils/file-utils";
 export function defineConfig(config: PrestigeConfigInput) {
   // purpose of this function, is to get Typescript intelisense for config
   // we use unconfig to load the config properly

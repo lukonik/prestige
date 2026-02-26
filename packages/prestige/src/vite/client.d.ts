@@ -3,9 +3,28 @@ declare module "virtual:content-collection" {
 }
 
 declare module "virtual:content-collection/sidebar-all" {
+  export type SidebarLink = {
+    label: string;
+    slug: string;
+  };
+
+  export type SidebarGroup = {
+    label: string;
+    items: SidebarItem[];
+    collapsible?: boolean | undefined;
+  };
+
+  export type SidebarItem = SidebarLink | SidebarGroup;
+
+  // Removed the array brackets `[]` at the end
+  export type Sidebar = {
+    id: string;
+    items: CollectionItem[];
+  };
+
   export interface SidebarImport {
     slug: string;
-    load: () => Promise<any>;
+    load: () => Promise<Sidebar>;
   }
   export default Record<string, SidebarImport>;
 }

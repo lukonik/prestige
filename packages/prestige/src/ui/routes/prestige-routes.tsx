@@ -10,8 +10,7 @@ export function prestigeRoutes(root: AnyRoute) {
       const slug = params.slug;
       const sidebar = sidebars[slug];
       const result = await sidebar.load();
-      console.log("RESULT SI ", result);
-      return {};
+      return result;
     },
     component: CollectionComponent,
   });
@@ -20,7 +19,6 @@ export function prestigeRoutes(root: AnyRoute) {
     const data = collectionRouter.useLoaderData();
     return (
       <div>
-        {JSON.stringify(data.items)}
         {data.items.map((i: any) => (
           <Link to={i.slug}>{i.slug}</Link>
         ))}

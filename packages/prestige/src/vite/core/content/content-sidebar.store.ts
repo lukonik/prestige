@@ -42,7 +42,9 @@ export class ContentSidebarStore {
       for (const [key] of this._store.entries()) {
         records[key] = genObjectFromRaw({
           slug: genString(key),
-          load: genDynamicImport(`virtual:content-collection/sidebar/${key}`),
+          load: genDynamicImport(`virtual:content-collection/sidebar/${key}`, {
+            interopDefault: true,
+          }),
         });
       }
       return genExportDefault(genObjectFromRaw(records));

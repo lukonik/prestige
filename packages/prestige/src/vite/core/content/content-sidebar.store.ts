@@ -15,7 +15,7 @@ import {
 import { basename } from "node:path";
 import logger from "../../utils/logger";
 import { pathExists } from "../../utils/file-utils";
-import { genObjectFromValues } from "knitwork";
+import { genDynamicImport, genObjectFromRaw, genObjectFromValues, genString } from "knitwork";
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 
 export class ContentSidebarStore {
@@ -38,20 +38,14 @@ export class ContentSidebarStore {
 
   load(id: string) {
     if (id.includes("\0" + this._virtualAllId)) {
-      const records: Record<
-        string,
-        {
-          slug: string;
-          load: any;
-        }
-      > = {};
+      const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = {
-          slug: key,
-          load: () => import(`"virtual:content-collection/sidebar/${key}"`),
-        };
+        records[key] = genObjectFromRaw({
+          slug: genString(key),
+          load: genDynamicImport(`virtual:content-collection/sidebar/${key}`),
+        });
       }
-      return genExportDefault(genObjectFromValues(records));
+      return genExportDefault(genObjectFromRaw(records));
     }
 
     if (id.includes("\0" + this._virtualId)) {

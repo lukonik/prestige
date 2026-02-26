@@ -114,9 +114,73 @@ describe("ContentSidebarStore", () => {
       };
       vol.fromJSON(json, "/app");
       const store = createStore("/app");
-      return expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "about", slug: "docs/about" },
         { label: "info", slug: "docs/info" },
+      ]);
+    });
+    it("returns empty array with empty items if the directory is nested but no files in it", async () => {
+      vol.mkdirSync("/app/docs", { recursive: true });
+      vol.mkdirSync("/app/src/components", { recursive: true });
+
+      const store = createStore("/app");
+      expect(store.autogenerateSidebar("docs")).resolves.toEqual([]);
+      expect(store.autogenerateSidebar("src/components")).resolves.toEqual([]);
+    });
+    it("returns group array if the directory is nested and contains files", async () => {
+      const json = {
+        "./docs/main/info.md": "# This is info page",
+        "./docs/partial/about.md": "# This is about page",
+      };
+      vol.fromJSON(json, "/app");
+      const store = createStore("/app");
+      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+        { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
+        {
+          label: "partial",
+          items: [{ label: "about", slug: "docs/partial/about" }],
+        },
+      ]);
+    });
+    it("returns mixed array if the directory is nested and contains files", async () => {
+      const json = {
+        "./docs/main/info.md": "# This is info page",
+        "./docs/partial/about.md": "# This is about page",
+        "./docs/installation.md": "# Installation step",
+      };
+      vol.fromJSON(json, "/app");
+      const store = createStore("/app");
+      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+        { label: "installation", slug: "docs/installation" },
+        { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
+        {
+          label: "partial",
+          items: [{ label: "about", slug: "docs/partial/about" }],
+        },
+      ]);
+    });
+    it("returns sorted array", () => {
+      const json = {
+        "./docs/main/info.md": "# This is info page",
+        "./docs/main/about.md": "# this is about page",
+        "./docs/before/stats.md": "# This is stats page",
+        "./docs/abc.md": "#this is abc file",
+      };
+      vol.fromJSON(json, "/app");
+      const store = createStore("/app");
+      expect(store.autogenerateSidebar("docs")).resolves.toEqual([
+        { label: "abc", slug: "docs/abc" },
+        {
+          label: "before",
+          items: [{ label: "stats", slug: "docs/before/stats" }],
+        },
+        {
+          label: "main",
+          items: [
+            { label: "about", slug: "docs/main/about" },
+            { label: "info", slug: "docs/main/info" },
+          ],
+        },
       ]);
     });
   });

@@ -1,12 +1,9 @@
 import { describe, expect, it, vi } from "vitest";
 import { vol } from "memfs";
-import { ContentSidebarStore } from "../../../../src/vite/core/content/content-sidebar.store";
-import { parseMetadata } from "../../../../src/vite/core/content/content-parser";
+import { ContentSidebarStore } from "./content-sidebar.store";
+import { parseMetadata } from "./content-parser";
 
-vi.mock("../../../../src/vite/core/content/content-parser", () => ({
-  parseMetadata: vi.fn().mockResolvedValue(null),
-  parseContent: vi.fn().mockResolvedValue({ html: "", metadata: null }),
-}));
+vi.mock("./content-parser");
 
 function createStore(contentDir?: string) {
   return new ContentSidebarStore(contentDir ?? "");
@@ -70,6 +67,20 @@ describe("ContentSidebarStore", () => {
       const store = createStore("/app");
       const label = await store.resolveLabel("docs/meta-info");
       expect(label).toBe("meta-info");
+    });
+  });
+  describe("resolveSlug", () => {
+    it("returns slug if it is string", () => {
+      const store = createStore();
+      expect(store.resolveSlug("docs/info")).toBe("docs/info");
+    });
+    it("returns slug if it is link", () => {
+      const store = createStore();
+      expect(store.resolveSlug({ slug: "docs/info", label: "info" })).toBe("docs/info");
+    });
+    it("returns empty for everything else", () => {
+      const store = createStore();
+      expect(store.resolveSlug({} as any)).toBe("");
     });
   });
 });

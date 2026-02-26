@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { ContentCollectionStore } from "../../../../src/vite/core/content/content-collection.store";
+import { ContentCollectionStore } from "./content-collection.store";
 
 function createStore() {
   return new ContentCollectionStore();

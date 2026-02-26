@@ -100,12 +100,12 @@ export class ContentSidebarStore {
     const label = await this.resolveLabel(item);
     if (typeof item === "string") {
       return {
-        slug: item,
+        slug: this.resolveSlug(item),
         label,
       };
     } else {
       return {
-        slug: item.slug,
+        slug: this.resolveSlug(item),
         label,
       };
     }
@@ -118,7 +118,7 @@ export class ContentSidebarStore {
     }
 
     if (typeof item === "string" || "slug" in item) {
-      const slug = typeof item === "string" ? item : item.slug;
+      const slug = this.resolveSlug(item);
 
       const filePath = join(this.contentDir, `${slug}.md`);
       const fileContent = await readFile(filePath, "utf-8");
@@ -136,5 +136,17 @@ export class ContentSidebarStore {
     }
 
     return "";
+  }
+
+  /** @visibleForTesting */
+  resolveSlug(item: CollectionItem) {
+    if (typeof item === "string") {
+      return item;
+    } else {
+      if ("slug" in item) {
+        return item.slug;
+      }
+      return "";
+    }
   }
 }

@@ -4,6 +4,7 @@ import { ContentSidebarStore } from "./content-sidebar.store";
 import { parseMetadata } from "./content-parser";
 import logger from "../../utils/logger";
 import { CollectionItem } from "./content.types";
+import { genExportUndefined } from "../../utils/code-generation";
 
 vi.mock("./content-parser");
 
@@ -338,7 +339,12 @@ describe("ContentSidebarStore", () => {
       const processCollectionSpy = vi
         .spyOn(store, "processCollection")
         .mockImplementation(async (collection: any) => ({
-          items: [{ label: `Processed ${collection.id}`, slug: `slug-${collection.id}` }],
+          items: [
+            {
+              label: `Processed ${collection.id}`,
+              slug: `slug-${collection.id}`,
+            },
+          ],
         }));
 
       const collections = [
@@ -393,6 +399,29 @@ describe("ContentSidebarStore", () => {
           { label: "Processed item2", slug: "slug-item2" },
         ],
       });
+    });
+  });
+
+  describe("resolve", () => {
+    it("returns virtualId on known id", () => {
+      const store = createStore();
+      expect(store.resolve("virtual:content-collection/sidebar/docs")).toBe(
+        "\0virtual:content-collection/sidebar/docs",
+      );
+    });
+    it("returns null on unknown id", () => {
+      const store = createStore();
+      expect(store.resolve("unknown")).toBe(null);
+    });
+  });
+  describe("load", () => {
+    it("returns null for unknown id", () => {
+      const store = createStore();
+      expect(store.load("unknown")).toBe(null);
+    });
+    it.only("returns undefined export if there was no id suffix", () => {
+      const store = createStore();
+      expect(store.load("\0" + "virtual:content-collection/sidebar")).toBe(genExportUndefined());
     });
   });
 });

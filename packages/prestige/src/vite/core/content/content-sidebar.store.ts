@@ -15,12 +15,39 @@ import {
 import { basename } from "node:path";
 import logger from "../../utils/logger";
 import { pathExists } from "../../utils/file-utils";
+import { genObjectFromValues } from "knitwork";
+import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
   private _fileExtRegex = /\.mdx?$/i;
+  private _virtualId = "virtual:content-collection/sidebar/";
 
   constructor(private contentDir: string) {}
+
+  resolve(id: string) {
+    if (id.includes(this._virtualId)) {
+      return "\0" + id;
+    }
+    return null;
+  }
+
+  load(id: string) {
+    if (id.includes("\0" + this._virtualId)) {
+      const parts = this._virtualId.split("/");
+      const result = parts[parts.length - 1];
+      if (!result) {
+        return genExportUndefined();
+      }
+      const collection = this._store.get(result);
+      if (!collection) {
+        return genExportUndefined();
+      }
+      return genExportDefault(genObjectFromValues(collection));
+    }
+
+    return null;
+  }
 
   async init(collections: Collections) {
     for (const collection of collections) {

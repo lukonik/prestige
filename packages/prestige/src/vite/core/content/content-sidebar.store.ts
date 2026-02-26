@@ -34,16 +34,16 @@ export class ContentSidebarStore {
 
   load(id: string) {
     if (id.includes("\0" + this._virtualId)) {
-      const parts = this._virtualId.split("/");
+      const parts = id.split("/");
       const result = parts[parts.length - 1];
       if (!result) {
         return genExportUndefined();
       }
-      const collection = this._store.get(result);
-      if (!collection) {
+      const sidebar = this._store.get(result);
+      if (!sidebar) {
         return genExportUndefined();
       }
-      return genExportDefault(genObjectFromValues(collection));
+      return genExportDefault(genObjectFromValues(sidebar));
     }
 
     return null;

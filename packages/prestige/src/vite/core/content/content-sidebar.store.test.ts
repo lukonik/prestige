@@ -286,7 +286,7 @@ describe("ContentSidebarStore", () => {
   });
 
   describe("processItem", () => {
-    function createStoreWithMockedProcessItem(mockReturnValue: any, processValue: any) {
+    async function createStoreWithMockedProcessItem(mockReturnValue: any, processValue: any) {
       const store = createStore();
       const resolveSidebarLinkSpy = vi
         .spyOn(store, "resolveSidebarLink")
@@ -295,11 +295,11 @@ describe("ContentSidebarStore", () => {
         .spyOn(store, "resolveSidebarGroup")
         .mockResolvedValueOnce(mockReturnValue);
 
-      expect(store.processItem(processValue)).resolves.toEqual(mockReturnValue);
+      await expect(store.processItem(processValue)).resolves.toEqual(mockReturnValue);
       return [resolveSidebarLinkSpy, resolveSidebarGroupSpy];
     }
-    it("calls resolveSidebarLink when string is passed", () => {
-      const [resolveSidebarLinkSpy] = createStoreWithMockedProcessItem(
+    it("calls resolveSidebarLink when string is passed", async () => {
+      const [resolveSidebarLinkSpy] = await createStoreWithMockedProcessItem(
         {
           label: "mocked-label",
           slug: "mocked-slug",
@@ -308,8 +308,8 @@ describe("ContentSidebarStore", () => {
       );
       expect(resolveSidebarLinkSpy).toHaveBeenCalledWith("docs/info");
     });
-    it("calls resolveSidebarLink when link object is passed", () => {
-      const [resolveSidebarLinkSpy] = createStoreWithMockedProcessItem(
+    it("calls resolveSidebarLink when link object is passed", async () => {
+      const [resolveSidebarLinkSpy] = await createStoreWithMockedProcessItem(
         {
           label: "mocked-label",
           slug: "mocked-slug",
@@ -321,8 +321,8 @@ describe("ContentSidebarStore", () => {
         slug: "mocked-slug",
       });
     });
-    it("calls resolveSidebarGroup when group object is passed", () => {
-      const [_, resolveSidebarGroupSpy] = createStoreWithMockedProcessItem(
+    it("calls resolveSidebarGroup when group object is passed", async () => {
+      const [_, resolveSidebarGroupSpy] = await createStoreWithMockedProcessItem(
         { label: "mocked-label", items: [] },
         { label: "mocked-label", items: [] },
       );
@@ -419,9 +419,39 @@ describe("ContentSidebarStore", () => {
       const store = createStore();
       expect(store.load("unknown")).toBe(null);
     });
-    it.only("returns undefined export if there was no id suffix", () => {
+    it("returns undefined export if there was no id suffix", () => {
       const store = createStore();
-      expect(store.load("\0" + "virtual:content-collection/sidebar")).toBe(genExportUndefined());
+      expect(store.load("\0" + "virtual:content-collection/sidebar/")).toBe(genExportUndefined());
+    });
+    it("returns undefined export if there was no sidebar", () => {
+      const store = createStore();
+      expect(store.load("\0" + "virtual:content-collection/sidebar/docs")).toBe(
+        genExportUndefined(),
+      );
+    });
+    it("returns sidebar on correct key", async () => {
+      const store = createStore();
+      await store.init([
+        {
+          id: "app",
+          items: [
+            {
+              label: "docs",
+              slug: "docs/info",
+            },
+          ],
+        },
+      ]);
+      expect(store.load("\0" + "virtual:content-collection/sidebar/app")).toMatchInlineSnapshot(`
+        "export default {
+          items: [
+            {
+              label: "docs",
+              slug: "docs/info"
+            }
+          ]
+        };"
+      `);
     });
   });
 });

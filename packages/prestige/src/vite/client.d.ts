@@ -2,6 +2,37 @@ declare module "virtual:content-collection" {
   export const contents: string[];
 }
 
+declare module "virtual:content-collection/sidebar-all" {
+  export interface SidebarImport {
+    slug: string;
+    load: () => Promise<any>;
+  }
+  export default Record<string, SidebarImport>;
+}
+
+declare module "virtual:content-collection/sidebar/*" {
+  export type SidebarLink = {
+    label: string;
+    slug: string;
+  };
+
+  export type SidebarGroup = {
+    label: string;
+    items: SidebarItem[];
+    collapsible?: boolean | undefined;
+  };
+
+  export type SidebarItem = SidebarLink | SidebarGroup;
+
+  // Removed the array brackets `[]` at the end
+  export type Sidebar = {
+    id: string;
+    items: CollectionItem[];
+  };
+
+  export default Sidebar;
+}
+
 declare module "virtual:content-collection/all" {
   export type CollectionLink = {
     label: string;

@@ -10,6 +10,7 @@ import logger from "./utils/logger";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { Collections } from "./core/content/content.types";
 import { pathExists } from "./utils/file-utils";
+import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 
 const ARTICLE_PREFIX = "@articles";
 
@@ -21,6 +22,7 @@ export default function prestige(): Plugin {
   let contentStore: ContentStore;
   let contentCollectionStore: ContentCollectionStore;
   let collections: Collections = [];
+  let contentSidebarStore: ContentSidebarStore;
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
@@ -37,9 +39,16 @@ export default function prestige(): Plugin {
       contentCollectionStore = new ContentCollectionStore();
       contentCollectionStore.init(collections);
 
+      contentSidebarStore = new ContentSidebarStore(contentDir);
+      contentSidebarStore.init(collections);
+
       await contentStore.build(collections);
     },
     resolveId(id) {
+      const sidebarId = contentSidebarStore.resolve(id);
+      if (sidebarId) {
+        return sidebarId;
+      }
       const collectionId = contentCollectionStore.resolve(id);
       if (collectionId) {
         return collectionId;
@@ -52,6 +61,10 @@ export default function prestige(): Plugin {
       return null;
     },
     async load(id) {
+      const sidebarId = contentSidebarStore.load(id);
+      if (sidebarId) {
+        return sidebarId;
+      }
       const loadCollectionId = contentCollectionStore.load(id);
       if (loadCollectionId) {
         return loadCollectionId;

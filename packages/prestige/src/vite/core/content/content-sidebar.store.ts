@@ -22,6 +22,7 @@ export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
   private _fileExtRegex = /\.mdx?$/i;
   private _virtualId = "virtual:content-collection/sidebar/";
+  private _virtualAllId = "virtual:content-collection/sidebar-all";
 
   constructor(private contentDir: string) {}
 
@@ -29,10 +30,30 @@ export class ContentSidebarStore {
     if (id.includes(this._virtualId)) {
       return "\0" + id;
     }
+    if (id.includes(this._virtualAllId)) {
+      return "\0" + this._virtualAllId;
+    }
     return null;
   }
 
   load(id: string) {
+    if (id.includes("\0" + this._virtualAllId)) {
+      const records: Record<
+        string,
+        {
+          slug: string;
+          load: any;
+        }
+      > = {};
+      for (const [key] of this._store.entries()) {
+        records[key] = {
+          slug: key,
+          load: () => import(`"virtual:content-collection/sidebar/${key}"`),
+        };
+      }
+      return genExportDefault(genObjectFromValues(records));
+    }
+
     if (id.includes("\0" + this._virtualId)) {
       const parts = id.split("/");
       const result = parts[parts.length - 1];

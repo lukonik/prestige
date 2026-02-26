@@ -1,7 +1,7 @@
 import { HeadContent, Link, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import collections from "virtual:content-collection/all";
+import collections from "virtual:prestige/collection-all";
 
 import appCss from "../styles.css?url";
 
@@ -38,7 +38,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <div className="border-b border-gray-200  p-4 text-xl font-medium">
           {Object.values(collections).map((c) => (
-            <Link to={c.id}>{c.id}</Link>
+            <Link key={c.id} to={c.id}>
+              {c.id}
+            </Link>
           ))}
         </div>
         <div style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>

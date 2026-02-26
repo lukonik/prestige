@@ -7,6 +7,8 @@ export const ContentSchema = z.object({
   label: z.string().optional().describe("The label of the content"),
 });
 
+export type Content = z.infer<typeof ContentSchema>;
+
 const CollectionLinkSchema = z.union([
   z.object({
     label: z.string(),

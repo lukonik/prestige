@@ -15,14 +15,14 @@ import {
 import { basename } from "node:path";
 import logger from "../../utils/logger";
 import { pathExists } from "../../utils/file-utils";
-import { genDynamicImport, genObjectFromRaw, genObjectFromValues, genString } from "knitwork";
+import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 
 export class ContentSidebarStore {
   private _store = new Map<string, Sidebar>();
   private _fileExtRegex = /\.mdx?$/i;
-  private _virtualId = "virtual:content-collection/sidebar/";
-  private _virtualAllId = "virtual:content-collection/sidebar-all";
+  private _virtualId = "virtual:prestige/sidebar/";
+  private _virtualAllId = "virtual:prestige/sidebar-all";
 
   constructor(private contentDir: string) {}
 
@@ -40,11 +40,8 @@ export class ContentSidebarStore {
     if (id.includes("\0" + this._virtualAllId)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genObjectFromRaw({
-          slug: genString(key),
-          load: genDynamicImport(`virtual:content-collection/sidebar/${key}`, {
-            interopDefault: true,
-          }),
+        records[key] = genDynamicImport(`virtual:prestige/sidebar/${key}`, {
+          interopDefault: true,
         });
       }
       return genExportDefault(genObjectFromRaw(records));
@@ -71,6 +68,7 @@ export class ContentSidebarStore {
       const sidebar = await this.processCollection(collection);
       this._store.set(collection.id, sidebar);
     }
+    return this._store;
   }
   /** @visibleForTesting */
   async processCollection(collection: Collection): Promise<Sidebar> {

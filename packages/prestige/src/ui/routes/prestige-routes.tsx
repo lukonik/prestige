@@ -1,6 +1,6 @@
 import { AnyRoute, createRoute, Link, Outlet } from "@tanstack/react-router";
-import contents from "virtual:content-collection/content-all";
-import sidebars from "virtual:content-collection/sidebar-all";
+import contents from "virtual:prestige/content-all";
+import sidebars from "virtual:prestige/sidebar-all";
 export function prestigeRoutes(root: AnyRoute) {
   const collectionRouter = createRoute({
     getParentRoute: () => root,
@@ -8,8 +8,11 @@ export function prestigeRoutes(root: AnyRoute) {
     loader: async ({ params }) => {
       const slug = params.slug;
       const sidebar = sidebars[slug];
-      const result = await sidebar?.load();
-      return result;
+      if (sidebar) {
+        const result = await sidebar();
+        return result;
+      }
+      return null;
     },
     component: CollectionComponent,
   });
@@ -18,8 +21,11 @@ export function prestigeRoutes(root: AnyRoute) {
     const data = collectionRouter.useLoaderData();
     return (
       <div>
-        {data.items.map((i: any) => (
-          <Link to={i.slug}>{i.slug}</Link>
+        {JSON.stringify(data)}
+        {data?.items.map((i: any) => (
+          <Link key={i.slug} to={"/" + i.slug}>
+            {i.slug}
+          </Link>
         ))}
         <Outlet />
       </div>
@@ -35,19 +41,18 @@ export function prestigeRoutes(root: AnyRoute) {
 
       // Reconstruct the full path (e.g., "docs/demo")
       const fullPath = [anyParams["slug"], anyParams["_splat"]].filter(Boolean).join("/");
-
       if (fullPath) {
-        const content = contents.find((c: any) => c.slug === fullPath);
+        const content = contents[fullPath];
         if (content) {
-          const { default: response } = await content.load();
+          const response = await content();
           return response;
         }
       }
+      return null;
     },
     component: () => {
       // Use the local contentRouter instance instead of the global Route
       const data = contentRouter.useLoaderData() as any;
-
       if (!data) return <div>Content not found</div>;
 
       return (
@@ -60,7 +65,7 @@ export function prestigeRoutes(root: AnyRoute) {
     },
   });
 
-  // collectionRouter.addChildren([contentRouter]);
+  collectionRouter.addChildren([contentRouter]);
   root.addChildren([collectionRouter]);
 
   return root;

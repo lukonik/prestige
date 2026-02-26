@@ -38,7 +38,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <body>
         <div className="border-b border-gray-200  p-4 text-xl font-medium">
           {Object.values(collections).map((c) => (
-            <Link to={c.id}>{c.id}</Link>
+            <Link key={c.id} to={c.id}>
+              {c.id}
+            </Link>
           ))}
         </div>
         <div style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>

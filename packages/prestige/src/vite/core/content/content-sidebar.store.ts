@@ -71,6 +71,7 @@ export class ContentSidebarStore {
       const sidebar = await this.processCollection(collection);
       this._store.set(collection.id, sidebar);
     }
+    return this._store;
   }
   /** @visibleForTesting */
   async processCollection(collection: Collection): Promise<Sidebar> {

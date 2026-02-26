@@ -2,6 +2,18 @@ declare module "virtual:content-collection" {
   export const contents: string[];
 }
 
+// private _virtualId = "virtual:content-collection/content/";
+// private _virtualIdAll = "virtual:content-collection/content-all";
+
+declare module "virtual:content-collection/content-all" {
+  export interface ContentImport {
+    slug: string;
+    load: () => Promise<Sidebar>;
+  }
+  const contents: Record<string, Content>;
+  export default contents;
+}
+
 declare module "virtual:content-collection/sidebar-all" {
   export type SidebarLink = {
     label: string;

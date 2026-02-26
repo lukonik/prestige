@@ -40,9 +40,9 @@ export default function prestige(): Plugin {
       contentCollectionStore.init(collections);
 
       contentSidebarStore = new ContentSidebarStore(contentDir);
-      contentSidebarStore.init(collections);
+      const sidebars = await contentSidebarStore.init(collections);
 
-      await contentStore.build(collections);
+      await contentStore.init(sidebars);
     },
     resolveId(id) {
       const sidebarId = contentSidebarStore.resolve(id);

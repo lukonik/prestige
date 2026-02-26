@@ -1,100 +1,66 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
-import { join } from "pathe";
-import {
-  genExportDefault,
-  genExportUndefined,
-} from "../../utils/code-generation";
-import {
-  genArrayFromRaw,
-  genDynamicImport,
-  genObjectFromRaw,
-  genString,
-} from "knitwork";
-import { CollectionItem, CollectionLink, Collections } from "./content.types";
+import { Sidebar, SidebarItem, SidebarLink } from "./content.types";
+import { genDynamicImport, genObjectFromRaw, genObjectFromValues, genString } from "knitwork";
+import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
+import { join } from "node:path";
 
 export class ContentStore {
-  private _store = new Map<string, CollectionLink>();
-  private _virtualId = "virtual:content-collection/content";
+  private _store = new Map<string, SidebarLink>();
+  private _virtualId = "virtual:content-collection/content/";
   private _virtualIdAll = "virtual:content-collection/content-all";
 
   constructor(private contentDir: string) {}
 
-  private getKey(id: string) {
-    return id.replace(this._virtualId, "").replace("\0", "");
+  async init(sidebars: Map<string, Sidebar>) {
+    const sidebarsArray = sidebars.values();
+    for (const sidebar of sidebarsArray) {
+      this._extractLinks(sidebar.items);
+    }
   }
 
-  async build(collections: Collections) {
-    // Clear existing entries if you plan on calling this multiple times
-    this._store.clear();
-
-    const processItem = (item: CollectionItem) => {
-      // Type guard: If it has a 'slug', it's a CollectionLink
-      if (typeof item === "string") {
-        this._store.set(item, {
-          label: item,
-          slug: item,
-        });
-      } else if ("slug" in item) {
+  private _extractLinks(items: SidebarItem[]) {
+    for (const item of items) {
+      if ("slug" in item) {
         this._store.set(item.slug, item);
+      } else if ("items" in item) {
+        this._extractLinks(item.items);
       }
-      // Type guard: If it has 'items', it's a CollectionGroup
-      else if ("items" in item) {
-        item.items.forEach(processItem);
-      }
-    };
-
-    collections.forEach((collection) => {
-      collection.items.forEach(processItem);
-    });
+    }
   }
 
-  resolve(id: string) {
+  async resolve(id: string) {
     if (id === this._virtualIdAll) {
       return "\0" + this._virtualIdAll;
     }
-    if (id.includes(this._virtualId)) {
-      const key = this.getKey(id).slice(1);
-      const item = this._store.get(key);
-
-      if (item) {
-        return `\0${this._virtualId}/${key}`;
-      }
+    if (id.startsWith(this._virtualId)) {
+      return "\0" + id;
     }
     return null;
   }
 
   async load(id: string) {
-    // this is for all content
-    if (id === "\0" + this._virtualIdAll) {
-      const records = [];
+    if (id.includes("\0" + this._virtualIdAll)) {
+      const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records.push(
-          genObjectFromRaw({
-            slug: genString(key),
-            load: genDynamicImport(`${this._virtualId}/${key}`), // Output: () => import('virtual/my-slug')
+        records[key] = genObjectFromRaw({
+          slug: genString(key),
+          load: genDynamicImport(`virtual:content-collection/content/${key}`, {
+            interopDefault: true,
           }),
-        );
+        });
       }
-      return genExportDefault(genArrayFromRaw(records));
+      return genExportDefault(genObjectFromRaw(records));
     }
 
-    if (id.includes(this._virtualId)) {
-      const key = this.getKey(id).slice(1);
-      const item = this._store.get(key);
-
-      if (!item) {
-        return null;
-      }
-
-      const slug = typeof item === "string" ? item : item.slug;
-      const path = join(this.contentDir, slug) + ".md";
-      const content = await getContentByPath(path);
+    if (id.includes("\0" + this._virtualId)) {
+      const pathPart = id.replace("\0" + this._virtualId, "");
+      const fullPath = join(this.contentDir, pathPart) + ".md";
+      const content = await getContentByPath(fullPath);
       if (!content) {
         return genExportUndefined();
       }
-      const code = genExportDefault(JSON.stringify(content));
-      return code;
+      return genExportDefault(genObjectFromValues(content));
     }
 
     return null;

@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { vol } from "memfs";
+import { DirectoryJSON, vol } from "memfs";
 import { ContentSidebarStore } from "./content-sidebar.store";
 import { parseMetadata } from "./content-parser";
 import logger from "../../utils/logger";
@@ -100,6 +100,11 @@ describe("ContentSidebarStore", () => {
     });
   });
   describe("autogenerateSidebar", async () => {
+    function createDirWithStore(json: DirectoryJSON) {
+      vol.fromJSON(json, "/app");
+      const store = createStore("/app");
+      return store;
+    }
     it("returns empty array if dir doesn't exist", async () => {
       await expect(createStore().autogenerateSidebar("/docs/info")).resolves.toEqual([]);
     });
@@ -112,8 +117,7 @@ describe("ContentSidebarStore", () => {
         "./docs/info.md": "# This is info page",
         "./docs/about.md": "# This is about page",
       };
-      vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createDirWithStore(json);
       expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "about", slug: "docs/about" },
         { label: "info", slug: "docs/info" },
@@ -132,8 +136,7 @@ describe("ContentSidebarStore", () => {
         "./docs/main/info.md": "# This is info page",
         "./docs/partial/about.md": "# This is about page",
       };
-      vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createDirWithStore(json);
       expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
         {
@@ -148,8 +151,7 @@ describe("ContentSidebarStore", () => {
         "./docs/partial/about.md": "# This is about page",
         "./docs/installation.md": "# Installation step",
       };
-      vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createDirWithStore(json);
       expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "installation", slug: "docs/installation" },
         { label: "main", items: [{ label: "info", slug: "docs/main/info" }] },
@@ -166,8 +168,7 @@ describe("ContentSidebarStore", () => {
         "./docs/before/stats.md": "# This is stats page",
         "./docs/abc.md": "#this is abc file",
       };
-      vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createDirWithStore(json);
       expect(store.autogenerateSidebar("docs")).resolves.toEqual([
         { label: "abc", slug: "docs/abc" },
         {

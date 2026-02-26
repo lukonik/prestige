@@ -44,10 +44,11 @@ export function prestigeRoutes(root: AnyRoute) {
       if (fullPath) {
         const content = contents[fullPath];
         if (content) {
-          const response = await content.load();
+          const response = await content();
           return response;
         }
       }
+      return null;
     },
     component: () => {
       // Use the local contentRouter instance instead of the global Route

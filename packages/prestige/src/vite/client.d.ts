@@ -13,9 +13,9 @@ declare module "virtual:content-collection/content-all" {
         } | null;
       }
     | undefined;
-  const content: Content;
+  export const contents: Record<string, () => Promise<Content>>;
 
-  export default content;
+  export default contents;
 }
 
 declare module "virtual:content-collection/sidebar-all" {

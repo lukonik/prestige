@@ -43,9 +43,6 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             </Link>
           ))}
         </div>
-        <div style={{ padding: "1rem", borderBottom: "1px solid #ccc" }}>
-          <strong>Contents:</strong>{" "}
-        </div>
         {children}
         <TanStackDevtools
           config={{

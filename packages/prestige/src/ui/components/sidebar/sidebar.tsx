@@ -27,7 +27,11 @@ function SidebarGroup({ group }: { group: SidebarGroupType }) {
 
 function SidebarLink({ link }: { link: SidebarLinkType }) {
   const slug = `/${link.slug}`;
-  return <Link to={slug}>{link.label}</Link>;
+  return (
+    <div>
+      <Link to={slug}>{link.label}</Link>
+    </div>
+  );
 }
 
 export default function Sidebar({ sidebar }: SidebarProps) {

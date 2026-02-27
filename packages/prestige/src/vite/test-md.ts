@@ -25,7 +25,6 @@ async function processMarkdown() {
 
   const metadata = frontmatterNode ? parse(frontmatterNode.value) : {};
   schema.parse(metadata);
-  console.log("Extracted Metadata:", metadata);
 }
 
 processMarkdown();

@@ -1,13 +1,16 @@
 import { z } from "zod";
 
 export const ContentSchema = z.object({
-  title: z.string().optional().describe("The title of the article"),
-  describe: z.string().optional().describe("The description of the article"),
-  lastUpdated: z.union([z.date(), z.boolean()]).optional(),
-  label: z.string().optional().describe("The label of the content"),
+  metadata: z.object({
+    title: z.string().optional().describe("The title of the article"),
+    describe: z.string().optional().describe("The description of the article"),
+    lastUpdated: z.union([z.date(), z.boolean()]).optional(),
+    label: z.string().optional().describe("The label of the content"),
+  }),
+  html: z.string().describe("The html of the content"),
 });
 
-export type Content = z.infer<typeof ContentSchema>;
+export type ContentType = z.infer<typeof ContentSchema>;
 
 const CollectionLinkSchema = z.union([
   z.object({
@@ -55,9 +58,15 @@ export const CollectionSchema = z.object({
     })
     .describe("The id of the collection, must match the folder name"),
   items: z.array(CollectionItemSchema),
+  label: z.string().optional().describe("The label of the collection"),
 });
 
 export type Collection = z.infer<typeof CollectionSchema>;
+
+export type CollectionNavigation = {
+  id: string;
+  label: string;
+};
 
 export type CollectionInput = z.input<typeof CollectionSchema>;
 

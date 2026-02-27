@@ -1,9 +1,9 @@
-import { HeadContent, Link, Scripts, createRootRoute } from "@tanstack/react-router";
+import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/react-router-devtools";
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import collections from "virtual:prestige/collection-all";
 
 import appCss from "../styles.css?url";
+import { Header } from "@lonik/prestige/ui";
 
 export const Route = createRootRoute({
   head: () => ({
@@ -36,13 +36,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <div className="border-b border-gray-200  p-4 text-xl font-medium">
-          {Object.values(collections).map((c) => (
-            <Link key={c.id} to={c.id}>
-              {c.id}
-            </Link>
-          ))}
-        </div>
+        <Header />
         {children}
         <TanStackDevtools
           config={{

@@ -15,7 +15,7 @@ declare module "virtual:prestige/sidebar-all" {
 }
 
 declare module "virtual:prestige/collection-all" {
-  import { Collection } from "./core/content/content.types";
-  const Collections: Record<string, Collection>;
-  export default Collections;
+  import { CollectionNavigation } from "./core/content/content.types";
+  const collections: Array<CollectionNavigation>;
+  export default collections;
 }

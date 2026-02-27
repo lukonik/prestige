@@ -1,14 +1,17 @@
-import { genObjectFromValues } from "knitwork";
+import { genArrayFromRaw, genObjectFromValues } from "knitwork";
 import { genExportDefault } from "../../utils/code-generation";
-import { Collection, Collections } from "./content.types";
+import { CollectionNavigation, Collections } from "./content.types";
 import { PrestigeError } from "../../utils/errors";
 
 export class ContentCollectionStore {
-  private _collections = new Map<string, Collection>();
+  private _collections = new Array<CollectionNavigation>();
   private _virtualId = "virtual:prestige/collection-all";
   init(collections: Collections) {
     for (const collection of collections) {
-      this._collections.set(collection.id, collection);
+      this._collections.push({
+        id: collection.id,
+        label: collection.label ?? collection.id,
+      });
     }
   }
 
@@ -21,11 +24,12 @@ export class ContentCollectionStore {
 
   load(id: string) {
     if (id === "\0" + this._virtualId) {
-      if (this._collections.size === 0) {
+      if (this._collections.length === 0) {
         throw new PrestigeError(`No collections found, add one in prestige plugin config`);
       }
-      const obj = Object.fromEntries(this._collections);
-      return genExportDefault(genObjectFromValues(obj));
+      return genExportDefault(
+        genArrayFromRaw(this._collections.map((c) => genObjectFromValues(c))),
+      );
     }
     return null;
   }

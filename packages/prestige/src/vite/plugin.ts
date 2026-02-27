@@ -36,11 +36,12 @@ export default function prestige(): Plugin {
       collections = config.collections ?? [];
 
       contentStore = new ContentStore(contentDir);
-      contentCollectionStore = new ContentCollectionStore();
-      contentCollectionStore.init(collections);
 
       contentSidebarStore = new ContentSidebarStore(contentDir);
       const sidebars = await contentSidebarStore.init(collections);
+
+      contentCollectionStore = new ContentCollectionStore();
+      contentCollectionStore.init(collections, sidebars);
 
       await contentStore.init(sidebars);
     },

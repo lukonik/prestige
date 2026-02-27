@@ -29,7 +29,7 @@ describe("ContentCollectionStore", () => {
         /No collections found, add one in prestige plugin config/,
       );
     });
-    it("returns object with collections", () => {
+    it("returns array with collections", () => {
       const store = createStore();
       const collection = {
         id: "docs",
@@ -49,29 +49,31 @@ describe("ContentCollectionStore", () => {
           },
         ],
       };
-      store.init([collection]);
-      const result = store.load("\0virtual:prestige/collection-all");
-      const expectedString = `export default {
-  docs: {
-    id: "docs",
-    items: [
-      {
-        label: "Get Started",
-        items: [
+
+      const sidebars = new Map([
+        [
+          "docs",
           {
-            label: "Introduction",
-            slug: "docs/get-started/introduction"
-          }
-        ]
-      },
-      {
-        label: "Theory",
-        slug: "docs/theory"
-      }
-    ]
-  }
-};`;
-      expect(result).toContain(expectedString);
+            items: [
+              {
+                label: "Get Started",
+                items: [
+                  {
+                    label: "Introduction",
+                    slug: "docs/get-started/introduction",
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      ]);
+
+      store.init([collection] as any, sidebars as any);
+      const result = store.load("\0virtual:prestige/collection-all");
+      expect(result).toContain('id: "docs"');
+      expect(result).toContain('label: "docs"');
+      expect(result).toContain('defaultLink: "docs/get-started/introduction"');
     });
   });
 });

@@ -59,6 +59,7 @@ export const CollectionSchema = z.object({
     .describe("The id of the collection, must match the folder name"),
   items: z.array(CollectionItemSchema),
   label: z.string().optional().describe("The label of the collection"),
+  defaultLink: z.string().optional().describe("The default link of the collection"),
 });
 
 export type Collection = z.infer<typeof CollectionSchema>;
@@ -66,6 +67,7 @@ export type Collection = z.infer<typeof CollectionSchema>;
 export type CollectionNavigation = {
   id: string;
   label: string;
+  defaultLink?: string;
 };
 
 export type CollectionInput = z.input<typeof CollectionSchema>;

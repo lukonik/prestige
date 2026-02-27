@@ -1,16 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import prestige from "../../src/vite/plugin";
-import { loadPrestigeConfig } from "../../src/vite/config/config";
+import { resolvePrestigeConfig } from "../../src/vite/config/config";
 import { Plugin } from "vite";
 
 // Mock the config loader
 vi.mock("../../src/vite/config/config", () => ({
-  loadPrestigeConfig: vi.fn(),
+  resolvePrestigeConfig: vi.fn(),
 }));
 
 // Mock watchers to avoid side effects if configureServer is called (though we might not call it)
 vi.mock("../../src/vite/utils/watcher", () => ({
-  watchConfigChange: vi.fn(),
   watchMarkdownChange: vi.fn(),
 }));
 
@@ -33,9 +32,8 @@ describe("prestige vite plugin", () => {
   });
 
   const setupPlugin = async (root: string, docsDir: string) => {
-    (loadPrestigeConfig as any).mockResolvedValue({
+    (resolvePrestigeConfig as any).mockResolvedValue({
       config: { docsDir: docsDir, collections: [] },
-      sources: [],
     });
 
     if (plugin.configResolved) {

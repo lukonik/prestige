@@ -27,7 +27,34 @@ export default defineConfig(({ mode }) => {
             }),
           ]
         : []),
-      prestige(),
+      prestige({
+        title: "Title",
+        description: " ee qweqwqeqeq  qweqw. ",
+        docsDir: isTest ? "playground/src/content/docs" : undefined,
+        collections: [
+          {
+            id: "docs",
+            items: [
+              {
+                label: "Text",
+                type: "link",
+                slug: "docs/demo",
+              },
+            ],
+          },
+          {
+            id: "api",
+            label: "API",
+            items: [
+              {
+                label: "Prestige",
+                type: "link",
+                slug: "api/prestige",
+              },
+            ],
+          },
+        ],
+      }),
       tailwindcss(),
       react(),
     ],

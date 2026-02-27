@@ -17,7 +17,32 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     viteReact(),
-    prestige() as any,
+    prestige({
+      title: "Title",
+      description: " ee qweqwqeqeq  qweqw. ",
+      collections: [
+        {
+          id: "docs",
+          items: [
+            {
+              label: "Text",
+              type: "link",
+              slug: "/demo",
+            },
+            {
+              label: "opaaaa",
+              type: "link",
+              slug: "/demo",
+            },
+            {
+              label: "opaa22aa",
+              type: "link",
+              slug: "/demo",
+            },
+          ],
+        },
+      ],
+    }) as any,
   ],
 });
 

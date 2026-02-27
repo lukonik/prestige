@@ -8,14 +8,20 @@ export default defineConfig({
       id: "docs",
       items: [
         {
-          label: "Introduction",
-          type: "link",
-          slug: "docs/introduction",
-        },
-        {
-          label: "Demo",
+          label: "Text",
           type: "link",
           slug: "docs/demo",
+        },
+      ],
+    },
+    {
+      id: "api",
+      label: "API",
+      items: [
+        {
+          label: "Prestige",
+          type: "link",
+          slug: "api/prestige",
         },
       ],
     },

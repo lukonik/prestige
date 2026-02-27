@@ -6,8 +6,6 @@ import rehypeStringify from "rehype-stringify";
 import remarkToc from "remark-toc";
 import rehypeShiki from "@shikijs/rehype";
 import { matter } from "vfile-matter";
-import { parseWithFriendlyErrors } from "../../utils/errors";
-import { ContentSchema } from "./content.types";
 
 export async function parseContent(content: string) {
   // 1. Set up the processor pipeline
@@ -30,15 +28,15 @@ export async function parseContent(content: string) {
 
   const matterResponse: any = result.data["matter"];
 
-  let metadata = null;
+  let metadata = matterResponse;
 
-  if (matterResponse) {
-    metadata = parseWithFriendlyErrors(
-      ContentSchema,
-      matterResponse,
-      `Invalid schema of article`,
-    );
-  }
+  // if (matterResponse) {
+  //   metadata = parseWithFriendlyErrors(
+  //     ContentSchema,
+  //     matterResponse,
+  //     `Invalid schema of article`,
+  //   );
+  // }
   const html = String(result);
   return { html, metadata };
 }
@@ -63,14 +61,14 @@ export async function parseMetadata(content: string) {
 
   const matterResponse: any = result.data["matter"];
 
-  let metadata = null;
+  let metadata = matterResponse;
 
-  if (matterResponse) {
-    metadata = parseWithFriendlyErrors(
-      ContentSchema,
-      matterResponse,
-      `Invalid schema of article`,
-    );
-  }
+  // if (matterResponse) {
+  //   metadata = parseWithFriendlyErrors(
+  //     ContentSchema,
+  //     matterResponse,
+  //     `Invalid schema of article`,
+  //   );
+  // }
   return metadata;
 }

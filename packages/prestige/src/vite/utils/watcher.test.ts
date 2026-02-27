@@ -1,11 +1,7 @@
 import { ViteDevServer } from "vite";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { join } from "pathe";
-import {
-  watchConfigChange,
-  watchFiles,
-  watchMarkdownChange,
-} from "../../../src/vite/utils/watcher";
+import { watchFiles, watchMarkdownChange } from "../../../src/vite/utils/watcher";
 
 describe("watchFiles", () => {
   let server: ViteDevServer;
@@ -58,26 +54,6 @@ describe("watchFiles", () => {
     }
 
     expect(callback).toHaveBeenCalledWith("/path/to/config.ts");
-  });
-});
-
-describe("watchConfigChange", () => {
-  let server: ViteDevServer;
-
-  beforeEach(() => {
-    server = {
-      watcher: {
-        add: vi.fn(),
-        on: vi.fn(),
-      },
-      restart: vi.fn(),
-    } as unknown as ViteDevServer;
-  });
-
-  it("should add sources to watcher", () => {
-    const sources = ["/path/to/config.ts"];
-    watchConfigChange(server, sources);
-    expect(server.watcher.add).toHaveBeenCalledWith(sources);
   });
 });
 

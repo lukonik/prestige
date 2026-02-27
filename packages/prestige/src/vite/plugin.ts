@@ -1,10 +1,10 @@
 import { normalizePath, type Plugin } from "vite";
-import { loadPrestigeConfig } from "./config/config";
-import { PrestigeConfig } from "./config/config.types";
+import { resolvePrestigeConfig } from "./config/config";
+import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
-import { watchConfigChange, watchMarkdownChange } from "./utils/watcher";
+import { watchMarkdownChange } from "./utils/watcher";
 import { ContentStore, getContentByPath } from "./core/content/content.store";
 import logger from "./utils/logger";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
@@ -14,10 +14,9 @@ import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 
 const ARTICLE_PREFIX = "@articles";
 
-export default function prestige(): Plugin {
+export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
-  let sources: string[];
   let isDocsMatcher: Matcher;
   let contentStore: ContentStore;
   let contentCollectionStore: ContentCollectionStore;
@@ -26,11 +25,11 @@ export default function prestige(): Plugin {
   return {
     name: "vite-plugin-prestige",
     async configResolved(resolvedConfig) {
-      const { config: loadedConfig, sources: loaderSources } = await loadPrestigeConfig(
+      const { config: loadedConfig } = await resolvePrestigeConfig(
+        inlineConfig,
         resolvedConfig.root,
       );
       config = loadedConfig;
-      sources = loaderSources;
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
       isDocsMatcher = picomatch(join(contentDir, "**/*.md"));
       collections = config.collections ?? [];
@@ -113,7 +112,6 @@ export default function prestige(): Plugin {
         next();
       });
 
-      watchConfigChange(server, sources);
       watchMarkdownChange(server, contentDir);
     },
     handleHotUpdate({ file, server }) {

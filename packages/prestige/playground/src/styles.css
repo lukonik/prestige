@@ -32,6 +32,12 @@
 
   --color-primary: var(--color-primary-600);
   --color-on-primary: var(--color-white);
+
+  --color-surface-container: var(--color-white);
+  /** Spacings **/
+  --spacing-header: 64px;
+  --height-main: calc(100vh - var(--spacing-header));
+  --width-sidebar: 300px;
 }
 
 @layer utilities {

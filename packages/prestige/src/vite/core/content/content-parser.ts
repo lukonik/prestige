@@ -6,8 +6,9 @@ import rehypeStringify from "rehype-stringify";
 import remarkToc from "remark-toc";
 import rehypeShiki from "@shikijs/rehype";
 import { matter } from "vfile-matter";
+import { Compatible } from "vfile";
 
-export async function parseContent(content: string) {
+export async function parseContent(content: Compatible) {
   // 1. Set up the processor pipeline
   const processor = unified()
     .use(remarkParse)
@@ -26,19 +27,8 @@ export async function parseContent(content: string) {
 
   const result = await processor.process(content);
 
-  const matterResponse: any = result.data["matter"];
-
-  let metadata = matterResponse;
-
-  // if (matterResponse) {
-  //   metadata = parseWithFriendlyErrors(
-  //     ContentSchema,
-  //     matterResponse,
-  //     `Invalid schema of article`,
-  //   );
-  // }
   const html = String(result);
-  return { html, metadata };
+  return html;
 }
 
 export async function parseMetadata(content: string) {

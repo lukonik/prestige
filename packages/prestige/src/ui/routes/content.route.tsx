@@ -19,7 +19,6 @@ export default function createContentRoute(root: AnyRoute) {
       }
 
       const response = await content();
-      console.log("RESPONSE ", response);
       if (!response) {
         throw notFound();
       }

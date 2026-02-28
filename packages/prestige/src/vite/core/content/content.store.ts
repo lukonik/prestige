@@ -4,13 +4,52 @@ import { SidebarType, SidebarItemType, SidebarLinkType } from "./content.types";
 import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
 import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 import { join } from "node:path";
+import { glob } from "tinyglobby";
+import { parse, relative } from "pathe";
+import { matter } from "vfile-matter";
+import { read } from "to-vfile";
+import { VFile } from "vfile";
+
+function getSlugByPath(path: string, contentDir: string) {
+  // 1. Get the relative path: "zz/zz/myFile.json"
+  const relativePath = relative(contentDir, path);
+
+  // 2. Parse the path to separate the extension
+  const pathInfo = parse(relativePath);
+
+  const result = join(pathInfo.dir, pathInfo.name);
+
+  return result;
+}
+
+async function processFile(path: string, contentDir: string) {
+  const vFile = await read(path);
+  matter(vFile, { strip: true });
+
+  const slug = await getSlugByPath(path, contentDir);
+
+  return {
+    slug,
+    vFile,
+  };
+}
 
 export class ContentStore {
   private _store = new Map<string, SidebarLinkType>();
+  private _files = new Map<string, VFile>();
   private _virtualId = "virtual:prestige/content/";
   private _virtualIdAll = "virtual:prestige/content-all";
 
   constructor(private contentDir: string) {}
+
+  async process() {
+    const paths = await glob(`${this.contentDir}/**/*.{md,mdx}`);
+    for (const path of paths) {
+      const { slug, vFile } = await processFile(path, this.contentDir);
+
+      this._files.set(slug, vFile);
+    }
+  }
 
   async init(sidebars: Map<string, SidebarType>) {
     const sidebarsArray = sidebars.values();
@@ -52,12 +91,23 @@ export class ContentStore {
 
     if (id.includes("\0" + this._virtualId)) {
       const pathPart = id.replace("\0" + this._virtualId, "");
+      const file = this._files.get(pathPart);
+      if (!file) {
+        return genExportUndefined();
+      }
+      if (file) {
+        const content = await parseContent(file);
+        if (!content) {
+          return genExportUndefined();
+        }
+      }
+
       const fullPath = join(this.contentDir, pathPart) + ".md";
       const content = await getContentByPath(fullPath);
       if (!content) {
         return genExportUndefined();
       }
-      return genExportDefault(genObjectFromValues(content));
+      return genExportDefault(genObjectFromValues({ html: content }));
     }
 
     return null;

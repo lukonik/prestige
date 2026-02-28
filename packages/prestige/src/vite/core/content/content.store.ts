@@ -110,23 +110,28 @@ export class ContentStore {
       if (!file) {
         return genExportUndefined();
       }
-      if (file.extname === ".mdx") {
-        const content = await parseMDXContent(file.toString());
-        return genExportDefault(genObjectFromValues({ html: content }));
-      }
-      if (file) {
-        const content = await parseContent(file);
-        if (!content) {
-          return genExportUndefined();
-        }
-      }
 
-      const fullPath = join(this.contentDir, pathPart) + ".md";
-      const content = await getContentByPath(fullPath);
+      const content = await parseMDXContent(file.toString());
       if (!content) {
         return genExportUndefined();
       }
       return genExportDefault(genObjectFromValues({ html: content }));
+
+      // if (file.extname === ".mdx") {
+      // }
+      // if (file) {
+      //   const content = await parseContent(file);
+      //   if (!content) {
+      //     return genExportUndefined();
+      //   }
+      // }
+
+      // const fullPath = join(this.contentDir, pathPart) + ".md";
+      // const content = await getContentByPath(fullPath);
+      // if (!content) {
+      //   return genExportUndefined();
+      // }
+      // return genExportDefault(genObjectFromValues({ html: content }));
     }
 
     return null;

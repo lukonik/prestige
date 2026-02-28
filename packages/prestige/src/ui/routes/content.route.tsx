@@ -29,8 +29,8 @@ export default function createContentRoute(root: AnyRoute) {
 
   function ContentComponent() {
     const data: ContentType = contentRouter.useLoaderData();
-
-    return <div className="prose prose-lg" dangerouslySetInnerHTML={{ __html: data.html }}></div>;
+    console.log(data);
+    return <div className="prose prose-lg">{data["html"]}</div>;
   }
 
   return contentRouter;

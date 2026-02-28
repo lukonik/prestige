@@ -9,6 +9,21 @@ import { parse, relative } from "pathe";
 import { matter } from "vfile-matter";
 import { read } from "to-vfile";
 import { VFile } from "vfile";
+import { compile } from "@mdx-js/mdx";
+import remarkFrontmatter from "remark-frontmatter";
+import remarkMdxFrontmatter from "remark-mdx-frontmatter";
+
+export async function parseMDXContent(content: string) {
+  // This compiles the string into executable JavaScript code
+  const code = await compile(content, {
+    outputFormat: "function-body",
+    remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
+    // You can still use your rehype plugins here!
+    rehypePlugins: [],
+  });
+
+  return String(code);
+}
 
 function getSlugByPath(path: string, contentDir: string) {
   // 1. Get the relative path: "zz/zz/myFile.json"
@@ -94,6 +109,10 @@ export class ContentStore {
       const file = this._files.get(pathPart);
       if (!file) {
         return genExportUndefined();
+      }
+      if (file.extname === ".mdx") {
+        const content = await parseMDXContent(file.toString());
+        return genExportDefault(genObjectFromValues({ html: content }));
       }
       if (file) {
         const content = await parseContent(file);

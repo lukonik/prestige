@@ -30,7 +30,7 @@ export default function createContentRoute(root: AnyRoute) {
   function ContentComponent() {
     const data: ContentType = contentRouter.useLoaderData();
 
-    return <div>{JSON.stringify(data)}</div>;
+    return <div className="prose prose-lg" dangerouslySetInnerHTML={{ __html: data.html }}></div>;
   }
 
   return contentRouter;

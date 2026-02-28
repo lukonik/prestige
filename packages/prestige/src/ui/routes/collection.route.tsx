@@ -33,7 +33,7 @@ export default function createCollectionRoute(root: AnyRoute) {
       return (
         <div className="flex gap-4">
           {data && <Sidebar sidebar={data} />}
-          <div className="flex-1">
+          <div className="flex-1 pt-10 container mx-auto">
             <Outlet />
           </div>
         </div>

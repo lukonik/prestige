@@ -36,9 +36,30 @@ export default defineConfig(({ mode }) => {
             id: "docs",
             items: [
               {
-                label: "Text",
-                type: "link",
-                slug: "docs/demo",
+                label: "first",
+                items: [
+                  {
+                    label: "demo",
+                    slug: "docs/first/demo",
+                  },
+                  {
+                    label: "introduction",
+                    slug: "docs/first/introduction",
+                  },
+                ],
+              },
+              {
+                label: "second",
+                items: [
+                  {
+                    label: "demo",
+                    slug: "docs/second/demo",
+                  },
+                  {
+                    label: "introduction",
+                    slug: "docs/second/introduction",
+                  },
+                ],
               },
             ],
           },

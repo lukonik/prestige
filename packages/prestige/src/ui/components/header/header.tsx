@@ -9,7 +9,11 @@ export default function Header() {
         {collections
           .filter((collection) => collection.defaultLink)
           .map((collection) => (
-            <Link key={collection.id} to={`/${collection.defaultLink}`}>
+            <Link
+              key={collection.id}
+              to={`/${collection.defaultLink}`}
+              activeProps={{ className: "font-semibold" }}
+            >
               {collection.label}
             </Link>
           ))}

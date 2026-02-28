@@ -1,2 +1,71 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @source "../../src";
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  /* Default primary color. Indigo is closest to Starlight’s defaults. */
+  --color-primary-50: var(--color-indigo-50);
+  --color-primary-100: var(--color-indigo-100);
+  --color-primary-200: var(--color-indigo-200);
+  --color-primary-300: var(--color-indigo-300);
+  --color-primary-400: var(--color-indigo-400);
+  --color-primary-500: var(--color-indigo-500);
+  --color-primary-600: var(--color-indigo-600);
+  --color-primary-700: var(--color-indigo-700);
+  --color-primary-800: var(--color-indigo-800);
+  --color-primary-900: var(--color-indigo-900);
+  --color-primary-950: var(--color-indigo-950);
+  /* Default default scale. Zinc is closest to Starlight’s defaults. */
+  --color-default-50: var(--color-zinc-50);
+  --color-default-100: var(--color-zinc-100);
+  --color-default-200: var(--color-zinc-200);
+  --color-default-300: var(--color-zinc-300);
+  --color-default-400: var(--color-zinc-400);
+  --color-default-500: var(--color-zinc-500);
+  --color-default-600: var(--color-zinc-600);
+  --color-default-700: var(--color-zinc-700);
+  --color-default-800: var(--color-zinc-800);
+  --color-default-900: var(--color-zinc-900);
+  --color-default-950: var(--color-zinc-950);
+
+  --color-primary: var(--color-primary-600);
+  --color-on-primary: var(--color-white);
+}
+
+@layer utilities {
+  /* Wire up Starlight theme to use Tailwind config. */
+  :root {
+    /* Use Tailwind-configured font families. */
+    --sl-font: var(--font-sans);
+    --sl-font-mono: var(--font-mono);
+    /* Dark mode Starlight theme variables. */
+    --sl-color-white: var(--color-white);
+    --sl-color-default-1: var(--color-default-200);
+    --sl-color-default-2: var(--color-default-300);
+    --sl-color-default-3: var(--color-default-400);
+    --sl-color-default-4: var(--color-default-600);
+    --sl-color-default-5: var(--color-default-700);
+    --sl-color-default-6: var(--color-default-800);
+    --sl-color-black: var(--color-default-900);
+    --sl-color-primary-low: var(--color-primary-950, var(--color-primary-900, #1e1b4b));
+    --sl-color-primary: var(--color-primary-600, #4f46e5);
+    --sl-color-primary-high: var(--color-primary-200, #c7d2fe);
+    /* Light mode Starlight theme variables. */
+    &[data-theme="light"] {
+      --sl-color-white: var(--color-default-900);
+      --sl-color-default-1: var(--color-default-800);
+      --sl-color-default-2: var(--color-default-700);
+      --sl-color-default-3: var(--color-default-500);
+      --sl-color-default-4: var(--color-default-400);
+      --sl-color-default-5: var(--color-default-300);
+      --sl-color-default-6: var(--color-default-200);
+      --sl-color-default-7: var(--color-default-100);
+      --sl-color-black: var(--color-white);
+      --sl-color-primary-low: var(--color-primary-200, #c7d2fe);
+      --sl-color-primary: var(--color-primary-600, #4f46e5);
+      --sl-color-primary-high: var(--color-primary-900, #312e81);
+    }
+  }
+}

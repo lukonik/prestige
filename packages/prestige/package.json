@@ -41,7 +41,10 @@
   },
   "dependencies": {
     "@shikijs/rehype": "^3.22.0",
+    "clsx": "^2.1.1",
     "knitwork": "^1.3.0",
+    "lucide-react": "^0.545.0",
+    "matter": "^0.2.0",
     "pathe": "^2.0.3",
     "picomatch": "^4.0.3",
     "rehype-stringify": "^10.0.1",
@@ -50,7 +53,9 @@
     "remark-rehype": "^11.1.2",
     "remark-toc": "^9.0.0",
     "tinyglobby": "^0.2.15",
+    "to-vfile": "^8.0.0",
     "unified": "^11.0.5",
+    "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vite-plugin-inspect": "^11.3.3",
     "yaml": "^2.8.2",
@@ -58,6 +63,7 @@
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",
+    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-router-devtools": "catalog:",

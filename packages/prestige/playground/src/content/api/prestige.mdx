@@ -1,0 +1,27 @@
+import { Chart, WarningBox } from "./components";
+
+# Hello World
+
+This is a regular paragraph written in **Markdown**. You can still use all the standard syntax you love:
+
+- Easy list items
+- [Links to websites](https://google.com)
+- `inline code snippets`
+
+---
+
+## Now for the "X" in MDX
+
+Since this is MDX, I can drop a custom React component right in the middle of this sentence:
+
+<WarningBox type="info">
+  **Pro-tip:** You can pass Markdown content as children to your components!
+</WarningBox>
+
+### Data Visualization
+
+Below is a dynamic chart component fueled by a simple array.
+
+<Chart data={[10, 22, 45, 12, 88]} color="rebeccapurple" />
+
+> "MDX makes it easy to maintain a design system while writing long-form content."

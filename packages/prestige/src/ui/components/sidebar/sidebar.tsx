@@ -17,7 +17,7 @@ function SidebarGroup({ group }: { group: SidebarGroupType }) {
   return (
     <div className="">
       <button
-        className="flex items-center justify-between w-full"
+        className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span className="font-medium mb-1">{group.label}</span>

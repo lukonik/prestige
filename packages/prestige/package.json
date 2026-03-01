@@ -47,6 +47,7 @@
     "knitwork": "^1.3.0",
     "lucide-react": "^0.545.0",
     "matter": "^0.2.0",
+    "nitro": "3.0.1-alpha.2",
     "pathe": "^2.0.3",
     "picomatch": "^4.0.3",
     "rehype-stringify": "^10.0.1",

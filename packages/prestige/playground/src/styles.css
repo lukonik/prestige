@@ -33,6 +33,8 @@
   --color-primary: var(--color-primary-600);
   --color-on-primary: var(--color-white);
 
+  --color-default: var(--color-default-300);
+
   --color-surface-container: var(--color-white);
   /** Spacings **/
   --spacing-header: 64px;

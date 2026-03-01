@@ -2,6 +2,7 @@ import { AnyRoute, createRoute, notFound, Outlet } from "@tanstack/react-router"
 import sidebars from "virtual:prestige/sidebar-all";
 import Sidebar from "../components/sidebar/sidebar";
 import { SidebarType } from "../../vite/core/content/content.types";
+import ContentNavigations from "../components/content-navigations/content-navigations";
 
 export default function createCollectionRoute(root: AnyRoute) {
   const collectionRoutes: AnyRoute[] = [];
@@ -33,8 +34,9 @@ export default function createCollectionRoute(root: AnyRoute) {
       return (
         <div className="flex gap-4">
           {data && <Sidebar sidebar={data} />}
-          <div className="flex-1 pt-10 container mx-auto">
+          <div className="flex-1 py-10 container mx-auto">
             <Outlet />
+            <ContentNavigations prev={null} next={null} />
           </div>
         </div>
       );

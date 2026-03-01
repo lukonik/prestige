@@ -15,7 +15,7 @@ export interface SidebarProps {
 function SidebarGroup({ group }: { group: SidebarGroupType }) {
   const [open, setIsOpen] = useState(true);
   return (
-    <div className="">
+    <div className="mt-4">
       <button
         className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -43,9 +43,8 @@ function SidebarLink({ link }: { link: SidebarLinkType }) {
   return (
     <div>
       <Link
-        preload={true}
         activeProps={{ className: "bg-primary text-on-primary" }}
-        className="w-full inline-block rounded-sm py-1 px-2"
+        className="w-full inline-block rounded-sm py-1 px-2 font-light"
         to={slug}
       >
         {link.label}

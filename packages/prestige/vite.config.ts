@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
             tanstackStart({
               prerender: {
                 enabled: false,
+                // crawlLinks: true,
               },
               spa: {
                 enabled: true,

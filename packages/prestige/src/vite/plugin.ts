@@ -35,6 +35,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       collections = config.collections ?? [];
 
       contentStore = new ContentStore(contentDir);
+      await contentStore.process();
 
       contentSidebarStore = new ContentSidebarStore(contentDir);
       const sidebars = await contentSidebarStore.init(collections);

@@ -1,27 +1,18 @@
 import { AnyRoute, createRoute, notFound, Outlet } from "@tanstack/react-router";
 import sidebars from "virtual:prestige/sidebar-all";
 import Sidebar from "../components/sidebar/sidebar";
-import { SidebarType } from "../../vite/core/content/content.types";
 
 export default function createCollectionRoute(root: AnyRoute) {
   const collectionRoutes: AnyRoute[] = [];
   for (const slug in sidebars) {
     const collectionRouter = createRoute({
       getParentRoute: () => root,
-      beforeLoad: async ({ routeId }) => {
-        const sidebar = sidebars[routeId];
-        if (sidebar) {
-          const result = await sidebar();
-          return result;
-        }
-      },
       path: `/${slug}`,
-      loader: async ({ route }) => {
-        const slug = route.path.replace("/", "");
+      loader: async () => {
         const sidebar = sidebars[slug];
         if (sidebar) {
           const result = await sidebar();
-          return result;
+          return { sidebar: result };
         }
         throw notFound();
       },
@@ -29,11 +20,12 @@ export default function createCollectionRoute(root: AnyRoute) {
     });
     collectionRoutes.push(collectionRouter);
     function CollectionComponent() {
-      const data = collectionRouter.useLoaderData() as SidebarType;
+      const { sidebar } = collectionRouter.useLoaderData();
+
       return (
         <div className="flex gap-4">
-          {data && <Sidebar sidebar={data} />}
-          <div className="flex-1">
+          {sidebar && <Sidebar sidebar={sidebar} />}
+          <div className="flex-1 py-10 container max-w-[100ch] ml-80">
             <Outlet />
           </div>
         </div>

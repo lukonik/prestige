@@ -6,6 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
+import mdx from "@mdx-js/rollup";
 
 export default defineConfig(({ mode }) => {
   const isTest = mode === "test" || process.env.VITEST === "true";
@@ -36,9 +37,30 @@ export default defineConfig(({ mode }) => {
             id: "docs",
             items: [
               {
-                label: "Text",
-                type: "link",
-                slug: "docs/demo",
+                label: "first",
+                items: [
+                  {
+                    label: "demo",
+                    slug: "docs/first/demo",
+                  },
+                  {
+                    label: "introduction",
+                    slug: "docs/first/introduction",
+                  },
+                ],
+              },
+              {
+                label: "second",
+                items: [
+                  {
+                    label: "demo",
+                    slug: "docs/second/demo",
+                  },
+                  {
+                    label: "introduction",
+                    slug: "docs/second/introduction",
+                  },
+                ],
               },
             ],
           },
@@ -55,6 +77,7 @@ export default defineConfig(({ mode }) => {
           },
         ],
       }),
+      mdx(),
       tailwindcss(),
       react(),
     ],

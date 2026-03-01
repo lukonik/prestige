@@ -1,7 +1,6 @@
 import { describe, expect, it } from "vitest";
 
 import { resolvePrestigeConfig, validateConfig } from "../../../src/vite/config/config";
-import { getTempDir } from "../test-utils";
 import { PrestigeError } from "../../../src/vite/utils/errors";
 import { DEFAULT_DOCS_DIR } from "../../../src/vite/constants";
 import { mkdir } from "node:fs/promises";
@@ -11,6 +10,10 @@ function minimalConfig() {
     title: "test",
     collections: [],
   };
+}
+
+function getTempDir(path?: string, options?: any) {
+  return path + options;
 }
 
 async function createDefaultDirs(dir?: string) {

@@ -25,7 +25,7 @@ export default function createCollectionRoute(root: AnyRoute) {
       return (
         <div className="flex gap-4">
           {sidebar && <Sidebar sidebar={sidebar} />}
-          <div className="flex-1 py-10 container max-w-[75ch] ml-80">
+          <div className="flex-1 py-10 container max-w-[100ch] ml-80">
             <Outlet />
           </div>
         </div>

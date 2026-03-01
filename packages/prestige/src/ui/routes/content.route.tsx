@@ -4,6 +4,7 @@ import * as runtime from "react/jsx-runtime";
 import { run } from "@mdx-js/mdx";
 import { lazy, Suspense, useMemo } from "react";
 import ContentNavigations from "../components/content-navigations/content-navigations";
+import { TableOfContents } from "../components/table-of-contents/table-of-contents";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
@@ -21,6 +22,7 @@ export default function createContentRoute(root: AnyRoute) {
       // ONLY return serializable data (strings, numbers, objects)
       return {
         code: response.html,
+        toc: response.toc || [],
         prev: response.prev,
         next: response.next,
         metadata: response.metadata || {}, // If you have frontmatter
@@ -30,7 +32,7 @@ export default function createContentRoute(root: AnyRoute) {
   });
 
   function ContentComponent() {
-    const { code, prev, next } = contentRouter.useLoaderData();
+    const { code, toc, prev, next } = contentRouter.useLoaderData();
     const Content = useMemo(() => {
       return lazy(
         () =>
@@ -42,14 +44,17 @@ export default function createContentRoute(root: AnyRoute) {
     }, [code]);
 
     return (
-      <>
-        <article className="prose prose-lg  max-w-none">
-          <Suspense fallback={null}>
-            <Content />
-          </Suspense>
-        </article>
-        <ContentNavigations prev={prev} next={next} />
-      </>
+      <div className="flex xl:gap-10 items-start">
+        <div className="flex-1 min-w-0">
+          <article className="prose prose-lg max-w-none wrap-break-word">
+            <Suspense fallback={null}>
+              <Content />
+            </Suspense>
+          </article>
+          <ContentNavigations prev={prev} next={next} />
+        </div>
+        <TableOfContents toc={toc} />
+      </div>
     );
   }
 

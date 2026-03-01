@@ -14,15 +14,54 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkMdxFrontmatter from "remark-mdx-frontmatter";
 
 export async function parseMDXContent(content: string) {
+  let toc: { depth: number; text: string; id: string }[] = [];
+
+  function rehypeExtractTocAndAddIds() {
+    return (tree: any) => {
+      let idCounter = 0;
+      const visit = (node: any) => {
+        if (node.type === "element" && /^h[1-6]$/.test(node.tagName)) {
+          const text = node.children
+            .filter((c: any) => c.type === "text")
+            .map((c: any) => c.value)
+            .join("");
+
+          const id =
+            text
+              .toLowerCase()
+              .replace(/[^a-z0-9]+/g, "-")
+              .replace(/(^-|-$)/g, "") || `heading-${idCounter++}`;
+
+          node.properties = node.properties || {};
+          node.properties.id = id;
+          node.properties.className = node.properties.className
+            ? `${node.properties.className} scroll-mt-24`
+            : "scroll-mt-24";
+
+          toc.push({
+            depth: parseInt(node.tagName.charAt(1), 10),
+            text,
+            id,
+          });
+        }
+        if (node.children) {
+          node.children.forEach(visit);
+        }
+      };
+
+      visit(tree);
+    };
+  }
+
   // This compiles the string into executable JavaScript code
   const code = await compile(content, {
     outputFormat: "function-body",
     remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter],
     // You can still use your rehype plugins here!
-    rehypePlugins: [],
+    rehypePlugins: [rehypeExtractTocAndAddIds],
   });
 
-  return String(code);
+  return { code: String(code), toc };
 }
 
 function getSlugByPath(path: string, contentDir: string) {
@@ -97,16 +136,6 @@ export class ContentStore {
     return links;
   }
 
-  private _extractLinks(items: SidebarItemType[]) {
-    for (const item of items) {
-      if ("slug" in item) {
-        this._store.set(item.slug, item);
-      } else if ("items" in item) {
-        this._extractLinks(item.items);
-      }
-    }
-  }
-
   async resolve(id: string) {
     if (id === this._virtualIdAll) {
       return "\0" + this._virtualIdAll;
@@ -135,13 +164,14 @@ export class ContentStore {
         return genExportUndefined();
       }
 
-      const content = await parseMDXContent(file.toString());
+      const { code: content, toc } = await parseMDXContent(file.toString());
       if (!content) {
         return genExportUndefined();
       }
       return genExportDefault(
         genObjectFromValues({
           html: content,
+          toc,
           prev: file.data["prev"] || null,
           next: file.data["next"] || null,
         }),

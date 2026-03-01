@@ -28,7 +28,6 @@ function SidebarGroup({ group }: { group: SidebarGroupType }) {
           {group.items.map((item) => {
             if (typeof item === "string" || "slug" in item) {
               const key = typeof item === "string" ? item : item.slug;
-
               return <SidebarLink key={key} link={item} />;
             }
             return <SidebarGroup key={item.label} group={item} />;
@@ -44,6 +43,7 @@ function SidebarLink({ link }: { link: SidebarLinkType }) {
   return (
     <div>
       <Link
+        preload={true}
         activeProps={{ className: "bg-primary text-on-primary" }}
         className="w-full inline-block rounded-sm py-1 px-2"
         to={slug}

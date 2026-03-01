@@ -2,7 +2,7 @@ import { AnyRoute, createRoute, notFound } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
 import * as runtime from "react/jsx-runtime";
 import { run } from "@mdx-js/mdx";
-import { use, useMemo } from "react";
+import { lazy, Suspense, useMemo } from "react";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
@@ -30,21 +30,21 @@ export default function createContentRoute(root: AnyRoute) {
   function ContentComponent() {
     const { code } = contentRouter.useLoaderData();
 
-    // 1. Memoize the Promise so it doesn't re-run on every render
-    const contentPromise = useMemo(() => {
-      return run(code, {
-        ...runtime,
-        baseUrl: import.meta.url,
-      });
+    const Content = useMemo(() => {
+      return lazy(
+        () =>
+          run(code, {
+            ...runtime,
+            baseUrl: import.meta.url,
+          }) as any,
+      );
     }, [code]);
-
-    // 2. 'use' unwraps the promise.
-    // This requires a <Suspense> boundary higher up in your tree.
-    const { default: Content } = use(contentPromise);
 
     return (
       <article className="prose prose-lg mx-auto">
-        <Content />
+        <Suspense fallback={null}>
+          <Content />
+        </Suspense>
       </article>
     );
   }

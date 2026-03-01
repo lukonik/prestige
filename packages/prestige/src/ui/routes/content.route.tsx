@@ -41,7 +41,7 @@ export default function createContentRoute(root: AnyRoute) {
     }, [code]);
 
     return (
-      <article className="prose prose-lg mx-auto max-w-none">
+      <article className="prose prose-lg  max-w-none">
         <Suspense fallback={null}>
           <Content />
         </Suspense>

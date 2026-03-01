@@ -23,10 +23,12 @@ function ContentNavigation({
         isNext ? "justify-end" : "justify-start",
       )}
     >
-      <div className="flex items-center">
+      <div className={clsx("flex items-center gap-2", isNext && "flex-row-reverse")}>
         {isNext ? <ArrowRight /> : <ArrowLeft />}
-        <div>{label}</div>
-        <div>{navigation.label}</div>
+        <div className={clsx("flex flex-col", isNext && "items-end")}>
+          <span className="font-light text-sm">{label}</span>
+          <span className="text-2xl">{navigation.label}</span>
+        </div>
       </div>
     </Link>
   );
@@ -40,7 +42,7 @@ export default function ContentNavigations({
   next: NavigationLink | null;
 }) {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 mt-20 ">
       {prev && <ContentNavigation navigation={prev} />}
       {next && <ContentNavigation navigation={next} isNext />}
     </div>

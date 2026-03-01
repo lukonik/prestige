@@ -3,6 +3,7 @@ import contents from "virtual:prestige/content-all";
 import * as runtime from "react/jsx-runtime";
 import { run } from "@mdx-js/mdx";
 import { lazy, Suspense, useMemo } from "react";
+import ContentNavigations from "../components/content-navigations/content-navigations";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
@@ -17,10 +18,11 @@ export default function createContentRoute(root: AnyRoute) {
 
       const response = await contentFetcher();
       if (!response) throw notFound();
-
       // ONLY return serializable data (strings, numbers, objects)
       return {
         code: response.html,
+        prev: response.prev,
+        next: response.next,
         metadata: response.metadata || {}, // If you have frontmatter
       };
     },
@@ -28,8 +30,7 @@ export default function createContentRoute(root: AnyRoute) {
   });
 
   function ContentComponent() {
-    const { code } = contentRouter.useLoaderData();
-
+    const { code, prev, next } = contentRouter.useLoaderData();
     const Content = useMemo(() => {
       return lazy(
         () =>
@@ -41,11 +42,14 @@ export default function createContentRoute(root: AnyRoute) {
     }, [code]);
 
     return (
-      <article className="prose prose-lg  max-w-none">
-        <Suspense fallback={null}>
-          <Content />
-        </Suspense>
-      </article>
+      <>
+        <article className="prose prose-lg  max-w-none">
+          <Suspense fallback={null}>
+            <Content />
+          </Suspense>
+        </article>
+        <ContentNavigations prev={prev} next={next} />
+      </>
     );
   }
 

@@ -69,8 +69,32 @@ export class ContentStore {
   async init(sidebars: Map<string, SidebarType>) {
     const sidebarsArray = sidebars.values();
     for (const sidebar of sidebarsArray) {
-      this._extractLinks(sidebar.items);
+      const links = this._flattenLinks(sidebar.items);
+      for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        if (link) {
+          this._store.set(link.slug, link);
+          const file = this._files.get(link.slug);
+          if (file) {
+            file.data = file.data || {};
+            if (i > 0) file.data["prev"] = links[i - 1];
+            if (i < links.length - 1) file.data["next"] = links[i + 1];
+          }
+        }
+      }
     }
+  }
+
+  private _flattenLinks(items: SidebarItemType[]): SidebarLinkType[] {
+    const links: SidebarLinkType[] = [];
+    for (const item of items) {
+      if ("slug" in item) {
+        links.push(item);
+      } else if ("items" in item) {
+        links.push(...this._flattenLinks(item.items));
+      }
+    }
+    return links;
   }
 
   private _extractLinks(items: SidebarItemType[]) {
@@ -115,7 +139,13 @@ export class ContentStore {
       if (!content) {
         return genExportUndefined();
       }
-      return genExportDefault(genObjectFromValues({ html: content }));
+      return genExportDefault(
+        genObjectFromValues({
+          html: content,
+          prev: file.data["prev"] || null,
+          next: file.data["next"] || null,
+        }),
+      );
 
       // if (file.extname === ".mdx") {
       // }

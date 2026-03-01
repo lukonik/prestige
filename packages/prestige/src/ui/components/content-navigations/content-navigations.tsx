@@ -17,7 +17,7 @@ function ContentNavigation({
   const label = isNext ? "Next" : "Previous";
   return (
     <Link
-      to={navigation.slug}
+      to={"/" + navigation.slug}
       className={clsx(
         " flex-1 h-20 shadow-md border border-default rounded-md cursor-pointer hover:border-gray-400 flex items-center px-4",
         isNext ? "justify-end" : "justify-start",

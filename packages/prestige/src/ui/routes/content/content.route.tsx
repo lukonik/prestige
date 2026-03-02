@@ -4,7 +4,10 @@ import * as runtime from "react/jsx-runtime";
 import { run } from "@mdx-js/mdx";
 import { lazy, Suspense, useMemo } from "react";
 import ContentNavigations from "../../components/content-navigations/content-navigations";
-import { TableOfContents } from "../../components/table-of-contents/table-of-contents";
+import {
+  WebTableOfContent,
+  MobileTableOfContent,
+} from "../../components/table-of-contents/table-of-contents";
 import ContentNotFound from "../../components/content-not-found";
 
 export default function createContentRoute(root: AnyRoute) {
@@ -48,6 +51,7 @@ export default function createContentRoute(root: AnyRoute) {
     return (
       <div className="flex xl:gap-10 items-start">
         <div className="flex-1 min-w-0">
+          <MobileTableOfContent toc={toc} />
           <article className="prose prose-lg max-w-none wrap-break-word">
             <Suspense fallback={null}>
               <Content />
@@ -55,7 +59,7 @@ export default function createContentRoute(root: AnyRoute) {
           </article>
           <ContentNavigations prev={prev} next={next} />
         </div>
-        <TableOfContents toc={toc} />
+        <WebTableOfContent toc={toc} />
       </div>
     );
   }

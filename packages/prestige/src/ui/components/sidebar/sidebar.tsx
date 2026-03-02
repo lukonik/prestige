@@ -10,7 +10,7 @@ import { useState } from "react";
 
 export interface SidebarProps {
   sidebar: SidebarType;
-  onLinkClick?: () => void;
+  onLinkClick?: (() => void) | undefined;
 }
 
 function SidebarGroup({
@@ -18,7 +18,7 @@ function SidebarGroup({
   onLinkClick,
 }: {
   group: SidebarGroupType;
-  onLinkClick?: () => void;
+  onLinkClick?: (() => void) | undefined;
 }) {
   const [open, setIsOpen] = useState(true);
   return (
@@ -45,7 +45,13 @@ function SidebarGroup({
   );
 }
 
-function SidebarLink({ link, onLinkClick }: { link: SidebarLinkType; onLinkClick?: () => void }) {
+function SidebarLink({
+  link,
+  onLinkClick,
+}: {
+  link: SidebarLinkType;
+  onLinkClick?: (() => void) | undefined;
+}) {
   const slug = `/${link.slug}`;
   return (
     <div>

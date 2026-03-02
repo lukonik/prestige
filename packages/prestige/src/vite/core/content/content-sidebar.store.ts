@@ -21,6 +21,7 @@ import {
   genExportDefault,
   genExportUndefined,
 } from "../../utils/code-generation";
+import { PrestigeError } from "../../utils/errors";
 
 export class ContentSidebarStore {
   private _store = new Map<string, SidebarType>();
@@ -147,6 +148,19 @@ export class ContentSidebarStore {
   async resolveSidebarLink(item: CollectionLink): Promise<SidebarLinkType> {
     const label = await this.resolveLabel(item);
     const slug = this.resolveSlug(item);
+
+    if (slug.startsWith("/") || slug.endsWith("/")) {
+      throw new PrestigeError(
+        `The slug ${slug} cannot start or end with a slash. Remove it and try again.`,
+      );
+    }
+
+    if (!slug) {
+      throw new PrestigeError(
+        `The slug cannot be empty. Remove it and try again. link label is ${label}`,
+      );
+    }
+
     return {
       label,
       slug,

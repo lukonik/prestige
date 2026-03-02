@@ -1,11 +1,19 @@
+import { useState } from "react";
 import { SidebarType } from "../../../../vite/core/content/content.types";
 import Sidebar from "../../../components/sidebar/sidebar";
+import { Menu, X } from "lucide-react";
 
 function SidebarOverlay({ sidebar }: { sidebar: SidebarType }) {
+  const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className="fixed left-0 overflow-auto top-[calc(var(--spacing-header)+2rem)] w-full h-[calc(100vh-var(--spacing-header)-2rem)] bg-surface-container">
-      <Sidebar sidebar={sidebar} />
-    </div>
+    <>
+      <button onClick={() => setIsOpen((prev) => !prev)}>{isOpen ? <X /> : <Menu />}</button>
+      {isOpen && (
+        <div className="fixed left-0 overflow-auto top-[calc(var(--spacing-header)+2rem)] w-full h-[calc(100vh-var(--spacing-header)-2rem)] bg-surface-container">
+          <Sidebar onLinkClick={() => setIsOpen(false)} sidebar={sidebar} />
+        </div>
+      )}
+    </>
   );
 }
 

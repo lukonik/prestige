@@ -27,7 +27,7 @@ export default function createCollectionRoute(root: AnyRoute) {
         <div>
           <MobileHeader sidebar={sidebar} />
           <div className="flex gap-4">
-            {sidebar && <Sidebar sidebar={sidebar} />}
+            <div className="hidden lg:block">{sidebar && <Sidebar sidebar={sidebar} />}</div>
             <div className="flex-1 py-15 container  max-w-[100ch] px-4 lg:ml-80">
               <Outlet />
             </div>

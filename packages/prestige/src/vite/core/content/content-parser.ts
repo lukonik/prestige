@@ -30,35 +30,3 @@ export async function parseContent(content: Compatible) {
   const html = String(result);
   return html;
 }
-
-export async function parseMetadata(content: string) {
-  // 1. Set up the processor pipeline
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkToc)
-    .use(remarkFrontmatter, ["yaml"])
-    .use(() => (_: any, file: any) => matter(file, { strip: true }))
-    .use(remarkRehype)
-    .use(rehypeShiki, {
-      // or `theme` for a single theme
-      themes: {
-        light: "vitesse-dark",
-        dark: "vitesse-dark",
-      },
-    })
-    .use(rehypeStringify); // Stringifies the HTML AST to a standard HTML string
-  const result = await processor.process(content);
-
-  const matterResponse: any = result.data["matter"];
-
-  let metadata = matterResponse;
-
-  // if (matterResponse) {
-  //   metadata = parseWithFriendlyErrors(
-  //     ContentSchema,
-  //     matterResponse,
-  //     `Invalid schema of article`,
-  //   );
-  // }
-  return metadata;
-}

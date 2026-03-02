@@ -4,15 +4,10 @@ import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 
-import { watchMarkdownChange } from "./utils/watcher";
-import { ContentStore, getContentByPath } from "./core/content/content.store";
-import logger from "./utils/logger";
+import { ContentStore } from "./core/content/content.store";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { Collections } from "./core/content/content.types";
-import { pathExists } from "./utils/file-utils";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
-
-const ARTICLE_PREFIX = "@articles";
 
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
@@ -37,7 +32,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       contentStore = new ContentStore(contentDir);
       await contentStore.process();
 
-      contentSidebarStore = new ContentSidebarStore(contentDir);
+      contentSidebarStore = new ContentSidebarStore(contentDir, contentStore);
       const sidebars = await contentSidebarStore.init(collections);
 
       contentCollectionStore = new ContentCollectionStore();
@@ -78,43 +73,6 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       return null;
     },
 
-    async configureServer(server) {
-      server.middlewares.use(async (req, res, next) => {
-        if (!req.url) {
-          return next();
-        }
-        if (req.url.includes(ARTICLE_PREFIX)) {
-          try {
-            const strippedUrl = req.url.replace(ARTICLE_PREFIX, "");
-            const markdownPath = join(contentDir, strippedUrl);
-            if (!(await pathExists(markdownPath))) {
-              res.statusCode = 404;
-              res.end();
-              return;
-            }
-            const article = await getContentByPath(markdownPath);
-            if (!article) {
-              res.statusCode = 404;
-              res.end();
-              return;
-            }
-            res.setHeader("Content-Type", "application/json");
-            res.statusCode = 200;
-            res.end(JSON.stringify(article));
-            return;
-          } catch (err) {
-            logger.error(err);
-            res.statusCode = 500;
-            res.end();
-            return;
-          }
-        }
-
-        next();
-      });
-
-      watchMarkdownChange(server, contentDir);
-    },
     async hotUpdate({ file, timestamp }) {
       if (isDocsMatcher(file)) {
         const invalidatedModules = new Set<EnvironmentModuleNode>();
@@ -133,17 +91,5 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         }
       }
     },
-    // async handleHotUpdate({ file, server }) {
-    //   if (isDocsMatcher(file)) {
-    //     await contentStore.invalidate(file);
-    //     const virtualModuleIds = contentStore.getVirtualModuleIdsForFile(file);
-    //     for (const id of virtualModuleIds) {
-    //       const module = server.moduleGraph.getModuleById(id);
-    //       if (module) {
-    //         server.moduleGraph.invalidateModule(module);
-    //       }
-    //     }
-    //   }
-    // },
   };
 }

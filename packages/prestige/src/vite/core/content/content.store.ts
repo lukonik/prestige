@@ -1,6 +1,4 @@
-import { readFile } from "node:fs/promises";
-import { parseContent } from "./content-parser";
-import { SidebarType, SidebarItemType, SidebarLinkType } from "./content.types";
+import { SidebarType, SidebarItemType, SidebarLinkType, ContentMatter } from "./content.types";
 import { genObjectFromRaw, genObjectFromValues } from "knitwork";
 import {
   genDynamicImportWithDefault,
@@ -85,16 +83,16 @@ async function processFile(path: string, contentDir: string) {
   matter(vFile, { strip: true });
 
   const slug = await getSlugByPath(path, contentDir);
-
   return {
     slug,
     vFile,
   };
 }
+type LocalVFile = VFile & { data: ContentMatter };
 
 export class ContentStore {
   private _store = new Map<string, SidebarLinkType>();
-  private _files = new Map<string, VFile>();
+  private _files = new Map<string, LocalVFile>();
   private _virtualId = "virtual:prestige/content/";
   private _virtualIdAll = "virtual:prestige/content-all";
 
@@ -104,7 +102,6 @@ export class ContentStore {
     const paths = await glob(`${this.contentDir}/**/*.{md,mdx}`);
     for (const path of paths) {
       const { slug, vFile } = await processFile(path, this.contentDir);
-
       this._files.set(slug, vFile);
     }
   }
@@ -116,6 +113,14 @@ export class ContentStore {
       vFile.data = { ...existingFile.data };
     }
     this._files.set(slug, vFile);
+  }
+
+  getFileBySlug(slug: string): undefined | VFile {
+    return this._files.get(slug);
+  }
+
+  getMatter(file: VFile) {
+    return file.data["matter"] as ContentMatter;
   }
 
   getVirtualModuleIdsForFile(path: string) {
@@ -192,34 +197,8 @@ export class ContentStore {
           next: file.data["next"] || null,
         }),
       );
-
-      // if (file.extname === ".mdx") {
-      // }
-      // if (file) {
-      //   const content = await parseContent(file);
-      //   if (!content) {
-      //     return genExportUndefined();
-      //   }
-      // }
-
-      // const fullPath = join(this.contentDir, pathPart) + ".md";
-      // const content = await getContentByPath(fullPath);
-      // if (!content) {
-      //   return genExportUndefined();
-      // }
-      // return genExportDefault(genObjectFromValues({ html: content }));
     }
 
     return null;
-  }
-}
-
-export async function getContentByPath(path: string) {
-  try {
-    const file = await readFile(path, "utf-8");
-    const article = parseContent(file);
-    return article;
-  } catch {
-    return;
   }
 }

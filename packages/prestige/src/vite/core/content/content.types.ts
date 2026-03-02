@@ -1,12 +1,16 @@
 import { z } from "zod";
 
+export const ContentMatterSchema = z.object({
+  title: z.string().optional().describe("The title of the article"),
+  describe: z.string().optional().describe("The description of the article"),
+  lastUpdated: z.union([z.date(), z.boolean()]).optional(),
+  label: z.string().optional().describe("The label of the content"),
+});
+
+export type ContentMatter = z.infer<typeof ContentMatterSchema>;
+
 export const ContentSchema = z.object({
-  metadata: z.object({
-    title: z.string().optional().describe("The title of the article"),
-    describe: z.string().optional().describe("The description of the article"),
-    lastUpdated: z.union([z.date(), z.boolean()]).optional(),
-    label: z.string().optional().describe("The label of the content"),
-  }),
+  matter: ContentMatterSchema,
   html: z.string().describe("The html of the content"),
 });
 
@@ -31,7 +35,7 @@ export type CollectionGroup = {
 
 export type CollectionItem = CollectionLink | CollectionGroup;
 
-const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
+const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> = z.object({
   label: z.string(),
   items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
   collapsible: z.boolean().optional(),
@@ -42,7 +46,7 @@ const CollectionGroupSchema: z.ZodType<CollectionGroup> = z.object({
     .optional(),
 });
 
-const CollectionItemSchema: z.ZodType<CollectionItem> = z.union([
+const CollectionItemSchema: z.ZodType<CollectionItem, CollectionItem> = z.union([
   CollectionLinkSchema,
   z.lazy(() => CollectionGroupSchema),
 ]);

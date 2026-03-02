@@ -19,7 +19,7 @@ function ContentNavigation({
     <Link
       to={"/" + navigation.slug}
       className={clsx(
-        " flex-1 h-20 shadow-md border border-default rounded-md cursor-pointer hover:border-gray-400 flex items-center px-4",
+        " flex-1 h-20 mb-4 shadow-md border border-default rounded-md cursor-pointer hover:border-gray-400 flex items-center px-4",
         isNext ? "justify-end" : "justify-start",
       )}
     >
@@ -42,7 +42,7 @@ export default function ContentNavigations({
   next: NavigationLink | null;
 }) {
   return (
-    <div className="flex items-center gap-2 mt-20 ">
+    <div className="lg:flex flex-row  items-center gap-2 mt-20 ">
       {prev && <ContentNavigation navigation={prev} />}
       {next && <ContentNavigation navigation={next} isNext />}
     </div>

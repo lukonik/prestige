@@ -55,7 +55,7 @@ function SidebarLink({ link }: { link: SidebarLinkType }) {
 
 export default function Sidebar({ sidebar }: SidebarProps) {
   return (
-    <div className="w-sidebar border-r border-gray-300 p-4 h-main sticky top-header">
+    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header">
       {sidebar.items.map((item) => {
         if (typeof item === "string" || "slug" in item) {
           const key = typeof item === "string" ? item : item.slug;

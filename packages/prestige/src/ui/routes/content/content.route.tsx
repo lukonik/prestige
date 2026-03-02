@@ -3,9 +3,9 @@ import contents from "virtual:prestige/content-all";
 import * as runtime from "react/jsx-runtime";
 import { run } from "@mdx-js/mdx";
 import { lazy, Suspense, useMemo } from "react";
-import ContentNavigations from "../components/content-navigations/content-navigations";
-import { TableOfContents } from "../components/table-of-contents/table-of-contents";
-import ContentNotFound from "../components/content-not-found";
+import ContentNavigations from "../../components/content-navigations/content-navigations";
+import { TableOfContents } from "../../components/table-of-contents/table-of-contents";
+import ContentNotFound from "../../components/content-not-found";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({

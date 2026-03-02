@@ -1,6 +1,6 @@
 import { AnyRoute } from "@tanstack/react-router";
-import createCollectionRoute from "./collection.route";
-import createContentRoute from "./content.route";
+import createCollectionRoute from "./collection/collection.route";
+import createContentRoute from "./content/content.route";
 export function prestigeRoutes(root: AnyRoute) {
   const childrenRoutes = root.children || [];
   const collectionRoutes = createCollectionRoute(root);

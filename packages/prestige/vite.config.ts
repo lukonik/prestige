@@ -7,6 +7,7 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
 import mdx from "@mdx-js/rollup";
+import { nitro } from "nitro/vite";
 
 export default defineConfig(({ mode }) => {
   const isTest = mode === "test" || process.env.VITEST === "true";
@@ -20,12 +21,12 @@ export default defineConfig(({ mode }) => {
         ? [
             tanstackStart({
               prerender: {
-                enabled: false,
-              },
-              spa: {
                 enabled: true,
+                crawlLinks: true,
               },
             }),
+            // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
+            nitro({ preset: "bun", renderer: false }),
           ]
         : []),
       prestige({
@@ -36,29 +37,29 @@ export default defineConfig(({ mode }) => {
           {
             id: "docs",
             items: [
+              { label: "Introduction", slug: "docs/introduction" },
+              { label: "Installation", slug: "docs/installation" },
+              { label: "Typescript", slug: "docs/typescript" },
               {
-                label: "first",
-                items: [
-                  {
-                    label: "demo",
-                    slug: "docs/first/demo",
-                  },
-                  {
-                    label: "introduction",
-                    slug: "docs/first/introduction",
-                  },
-                ],
+                label: "Image",
+                slug: "docs/image/component",
               },
+              { label: "Vite Plugin", slug: "docs/vite-plugin" },
               {
-                label: "second",
+                label: "Loaders",
                 items: [
+                  // { label: "Overview", slug: "docs/image/loaders/overview" },
+                  // { label: "Cloudflare", slug: "docs/loaders/cloudflare" },
+                  // { label: "Cloudinary", slug: "docs/loaders/cloudinary" },
+                  // { label: "Contentful", slug: "docs/loaders/contentful" },
+                  // { label: "Imgproxy", slug: "docs/loaders/imgproxy" },
+                  // { label: "Kontent", slug: "docs/loaders/kontent" },
+                  // { label: "Netlify", slug: "docs/loaders/netlify" },
+                  // { label: "Wordpress", slug: "docs/loaders/wordpress" },
+
                   {
-                    label: "demo",
-                    slug: "docs/second/demo",
-                  },
-                  {
-                    label: "introduction",
-                    slug: "docs/second/introduction",
+                    label: "Custom Loader",
+                    slug: "docs/image/loaders/custom-loader",
                   },
                 ],
               },
@@ -70,7 +71,7 @@ export default defineConfig(({ mode }) => {
             items: [
               {
                 label: "Prestige",
-                type: "link",
+                type: "slug",
                 slug: "api/prestige",
               },
             ],

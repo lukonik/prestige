@@ -1,8 +1,12 @@
 import { readFile } from "node:fs/promises";
 import { parseContent } from "./content-parser";
 import { SidebarType, SidebarItemType, SidebarLinkType } from "./content.types";
-import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
-import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
+import { genObjectFromRaw, genObjectFromValues } from "knitwork";
+import {
+  genDynamicImportWithDefault,
+  genExportDefault,
+  genExportUndefined,
+} from "../../utils/code-generation";
 import { join } from "node:path";
 import { glob } from "tinyglobby";
 import { parse, relative } from "pathe";
@@ -150,9 +154,7 @@ export class ContentStore {
     if (id.includes("\0" + this._virtualIdAll)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImport(`virtual:prestige/content/${key}`, {
-          interopDefault: true,
-        });
+        records[key] = genDynamicImportWithDefault(`virtual:prestige/content/${key}`);
       }
       return genExportDefault(genObjectFromRaw(records));
     }

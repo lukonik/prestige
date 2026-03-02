@@ -15,7 +15,7 @@ export interface SidebarProps {
 function SidebarGroup({ group }: { group: SidebarGroupType }) {
   const [open, setIsOpen] = useState(true);
   return (
-    <div className="">
+    <div className="mt-4">
       <button
         className="flex items-center justify-between w-full cursor-pointer"
         onClick={() => setIsOpen((prev) => !prev)}
@@ -28,7 +28,6 @@ function SidebarGroup({ group }: { group: SidebarGroupType }) {
           {group.items.map((item) => {
             if (typeof item === "string" || "slug" in item) {
               const key = typeof item === "string" ? item : item.slug;
-
               return <SidebarLink key={key} link={item} />;
             }
             return <SidebarGroup key={item.label} group={item} />;
@@ -45,7 +44,7 @@ function SidebarLink({ link }: { link: SidebarLinkType }) {
     <div>
       <Link
         activeProps={{ className: "bg-primary text-on-primary" }}
-        className="w-full inline-block rounded-sm py-1 px-2"
+        className="w-full inline-block rounded-sm py-1 px-2 font-light"
         to={slug}
       >
         {link.label}

@@ -15,8 +15,12 @@ import {
 import { basename } from "node:path";
 import logger from "../../utils/logger";
 import { pathExists } from "../../utils/file-utils";
-import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
-import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
+import { genObjectFromRaw, genObjectFromValues } from "knitwork";
+import {
+  genDynamicImportWithDefault,
+  genExportDefault,
+  genExportUndefined,
+} from "../../utils/code-generation";
 
 export class ContentSidebarStore {
   private _store = new Map<string, SidebarType>();
@@ -40,9 +44,7 @@ export class ContentSidebarStore {
     if (id.includes("\0" + this._virtualAllId)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImport(`virtual:prestige/sidebar/${key}`, {
-          interopDefault: true,
-        });
+        records[key] = genDynamicImportWithDefault(`virtual:prestige/sidebar/${key}`);
       }
       return genExportDefault(genObjectFromRaw(records));
     }

@@ -73,6 +73,6 @@ describe("watchMarkdownChange", () => {
   it("should add markdown files to watcher", async () => {
     const dir = "/path/to/docs";
     await watchMarkdownChange(server, dir);
-    expect(server.watcher.add).toHaveBeenCalledWith(join(dir, "**/*.md"));
+    expect(server.watcher.add).toHaveBeenCalledWith(join(dir, "**/*.{md,mdx}"));
   });
 });

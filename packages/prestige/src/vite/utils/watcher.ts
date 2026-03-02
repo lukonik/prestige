@@ -18,7 +18,7 @@ export function watchFiles(
 }
 
 export async function watchMarkdownChange(server: ViteDevServer, markdownDir: string) {
-  watchFiles(server, join(markdownDir, "**/*.md"), () => {
+  watchFiles(server, join(markdownDir, "**/*.{md,mdx}"), () => {
     logger.info("🔥  article file has changed");
   });
 }

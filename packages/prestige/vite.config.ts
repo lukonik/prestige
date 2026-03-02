@@ -37,8 +37,14 @@ export default defineConfig(({ mode }) => {
           {
             id: "docs",
             items: [
-              { label: "Introduction", slug: "docs/introduction" },
-              { label: "Installation", slug: "docs/installation" },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Installation",
+                slug: "docs/installation",
+              },
               { label: "Typescript", slug: "docs/typescript" },
               {
                 label: "Image",
@@ -71,7 +77,6 @@ export default defineConfig(({ mode }) => {
             items: [
               {
                 label: "Prestige",
-                type: "slug",
                 slug: "api/prestige",
               },
             ],

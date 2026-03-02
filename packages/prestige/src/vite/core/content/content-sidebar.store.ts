@@ -1,6 +1,5 @@
-import { readFile, readdir } from "node:fs/promises";
+import { readdir } from "node:fs/promises";
 import { join } from "pathe";
-import { parseMetadata } from "./content-parser";
 import {
   Collection,
   CollectionGroup,
@@ -21,6 +20,8 @@ import {
   genExportDefault,
   genExportUndefined,
 } from "../../utils/code-generation";
+import { PrestigeError } from "../../utils/errors";
+import { ContentStore } from "./content.store";
 
 export class ContentSidebarStore {
   private _store = new Map<string, SidebarType>();
@@ -28,7 +29,10 @@ export class ContentSidebarStore {
   private _virtualId = "virtual:prestige/sidebar/";
   private _virtualAllId = "virtual:prestige/sidebar-all";
 
-  constructor(private contentDir: string) {}
+  constructor(
+    private contentDir: string,
+    private contentStore: ContentStore,
+  ) {}
 
   resolve(id: string) {
     if (id.includes(this._virtualId)) {
@@ -147,6 +151,19 @@ export class ContentSidebarStore {
   async resolveSidebarLink(item: CollectionLink): Promise<SidebarLinkType> {
     const label = await this.resolveLabel(item);
     const slug = this.resolveSlug(item);
+
+    if (slug.startsWith("/") || slug.endsWith("/")) {
+      throw new PrestigeError(
+        `The slug ${slug} cannot start or end with a slash. Remove it and try again.`,
+      );
+    }
+
+    if (!slug) {
+      throw new PrestigeError(
+        `The slug cannot be empty. Remove it and try again. link label is ${label}`,
+      );
+    }
+
     return {
       label,
       slug,
@@ -162,11 +179,15 @@ export class ContentSidebarStore {
     if (typeof item === "string" || "slug" in item) {
       const slug = this.resolveSlug(item);
 
-      const filePath = join(this.contentDir, `${slug}.md`);
-      const fileContent = await readFile(filePath, "utf-8");
-      const metadata = await parseMetadata(fileContent);
-      if (metadata && metadata.label) {
-        return metadata.label;
+      const file = this.contentStore.getFileBySlug(slug);
+      if (!file) {
+        throw new PrestigeError(
+          `markdown file not found with slug: ${slug} add one in content folder or update config`,
+        );
+      }
+      const matter = this.contentStore.getMatter(file);
+      if (matter.label) {
+        return matter.label;
       }
 
       return basename(slug);

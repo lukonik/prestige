@@ -1,4 +1,4 @@
-import { normalizePath, type Plugin } from "vite";
+import { EnvironmentModuleNode, normalizePath, type Plugin } from "vite";
 import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 import { join } from "pathe";
@@ -31,7 +31,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       );
       config = loadedConfig;
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
-      isDocsMatcher = picomatch(join(contentDir, "**/*.md"));
+      isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
 
       contentStore = new ContentStore(contentDir);
@@ -115,13 +115,35 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
 
       watchMarkdownChange(server, contentDir);
     },
-    handleHotUpdate({ file, server }) {
+    async hotUpdate({ file, timestamp }) {
       if (isDocsMatcher(file)) {
-        server.ws.send({
-          type: "full-reload",
-          path: "*",
-        });
+        const invalidatedModules = new Set<EnvironmentModuleNode>();
+        await contentStore.invalidate(file);
+        const virtualModuleIds = contentStore.getVirtualModuleIdsForFile(file);
+        for (const id of virtualModuleIds) {
+          const module = this.environment.moduleGraph.getModuleById(id);
+          if (module) {
+            this.environment.moduleGraph.invalidateModule(
+              module,
+              invalidatedModules,
+              timestamp,
+              true,
+            );
+          }
+        }
       }
     },
+    // async handleHotUpdate({ file, server }) {
+    //   if (isDocsMatcher(file)) {
+    //     await contentStore.invalidate(file);
+    //     const virtualModuleIds = contentStore.getVirtualModuleIdsForFile(file);
+    //     for (const id of virtualModuleIds) {
+    //       const module = server.moduleGraph.getModuleById(id);
+    //       if (module) {
+    //         server.moduleGraph.invalidateModule(module);
+    //       }
+    //     }
+    //   }
+    // },
   };
 }

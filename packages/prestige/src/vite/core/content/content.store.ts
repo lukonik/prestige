@@ -109,6 +109,20 @@ export class ContentStore {
     }
   }
 
+  async invalidate(path: string) {
+    const { slug, vFile } = await processFile(path, this.contentDir);
+    const existingFile = this._files.get(slug);
+    if (existingFile && existingFile.data) {
+      vFile.data = { ...existingFile.data };
+    }
+    this._files.set(slug, vFile);
+  }
+
+  getVirtualModuleIdsForFile(path: string) {
+    const slug = getSlugByPath(path, this.contentDir);
+    return ["\0" + this._virtualId + slug, "\0" + this._virtualIdAll];
+  }
+
   async init(sidebars: Map<string, SidebarType>) {
     const sidebarsArray = sidebars.values();
     for (const sidebar of sidebarsArray) {

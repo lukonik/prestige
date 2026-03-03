@@ -24,6 +24,9 @@ export default defineConfig(({ mode }) => {
                 enabled: true,
                 crawlLinks: true,
               },
+              spa: {
+                enabled: true,
+              },
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
             nitro({ preset: "bun", renderer: false }),
@@ -36,6 +39,7 @@ export default defineConfig(({ mode }) => {
         collections: [
           {
             id: "docs",
+            defaultLink: "docs/introduction",
             items: [
               {
                 label: "Introduction",

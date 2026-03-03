@@ -23,6 +23,21 @@ import {
 import { PrestigeError } from "../../utils/errors";
 import { ContentStore } from "./content.store";
 
+function resolveDefaultLink(items: SidebarItemType[], defaultLink?: string): string | undefined {
+  if (defaultLink) {
+    return defaultLink;
+  }
+  for (const item of items) {
+    if ("slug" in item) {
+      return item.slug;
+    } else if ("items" in item && item.items.length > 0) {
+      const link = resolveDefaultLink(item.items);
+      if (link) return link;
+    }
+  }
+  return undefined;
+}
+
 export class ContentSidebarStore {
   private _store = new Map<string, SidebarType>();
   private _fileExtRegex = /\.mdx?$/i;
@@ -82,7 +97,16 @@ export class ContentSidebarStore {
     for (const item of collection.items) {
       items.push(await this.processItem(item));
     }
-    return { items };
+    const defaultLink = resolveDefaultLink(items, collection.defaultLink);
+    if (!defaultLink) {
+      throw new PrestigeError(
+        `No default link found in collection, it means there are no links in the collection. Please define one in ${collection.id}`,
+      );
+    }
+    return {
+      items,
+      defaultLink: defaultLink,
+    };
   }
 
   /** @visibleForTesting */

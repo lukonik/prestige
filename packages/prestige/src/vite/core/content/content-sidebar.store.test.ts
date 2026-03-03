@@ -7,15 +7,15 @@ import { genExportUndefined } from "../../utils/code-generation";
 
 vi.mock("./content-parser");
 
-function createStore(contentDir?: string) {
-  return new ContentSidebarStore(contentDir ?? "", null as any);
+function createStore(contentDir?: string, customMockStore?: any) {
+  const mockContentStore = customMockStore ?? {
+    getFileBySlug: vi.fn().mockReturnValue({}),
+    getMatter: vi.fn().mockReturnValue({}),
+  };
+  return new ContentSidebarStore(contentDir ?? "", mockContentStore as any);
 }
 
-function parseMetadata() {
-  return Promise.resolve(null);
-}
-
-describe.skip("ContentSidebarStore", () => {
+describe("ContentSidebarStore", () => {
   describe("resolveLabel", () => {
     it("returns label if it is defined", async () => {
       const store = createStore();
@@ -43,34 +43,41 @@ describe.skip("ContentSidebarStore", () => {
       expect(label).toBe("Test Label");
     });
     it("returns label if it doesn't have label and is string", async () => {
-      vi.mocked(parseMetadata).mockResolvedValueOnce(null);
+      const mockContentStore = {
+        getFileBySlug: vi.fn().mockReturnValue({}),
+        getMatter: vi.fn().mockReturnValue({}),
+      };
       const json = {
         "./docs/info.md": "# This is info page",
       };
       vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createStore("/app", mockContentStore);
       const label = await store.resolveLabel("docs/info");
       expect(label).toBe("info");
     });
     it("returns label if it doesn't have label but have label in metadata", async () => {
-      vi.mocked(parseMetadata).mockResolvedValueOnce({
-        label: "Metadata Label",
-      } as any);
+      const mockContentStore = {
+        getFileBySlug: vi.fn().mockReturnValue({}),
+        getMatter: vi.fn().mockReturnValue({ label: "Metadata Label" }),
+      };
       const json = {
         "./docs/meta-info.md": "---\nlabel: Metadata Label\n---\n# This is info page",
       };
       vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createStore("/app", mockContentStore);
       const label = await store.resolveLabel("docs/meta-info");
       expect(label).toBe("Metadata Label");
     });
     it("returns file name if it reads from metadata but there is no label", async () => {
-      vi.mocked(parseMetadata).mockResolvedValueOnce({} as any);
+      const mockContentStore = {
+        getFileBySlug: vi.fn().mockReturnValue({}),
+        getMatter: vi.fn().mockReturnValue({}),
+      };
       const json = {
         "./docs/meta-info.md": "---\nlabel: Metadata Label\n---\n# This is info page",
       };
       vol.fromJSON(json, "/app");
-      const store = createStore("/app");
+      const store = createStore("/app", mockContentStore);
       const label = await store.resolveLabel("docs/meta-info");
       expect(label).toBe("meta-info");
     });
@@ -348,6 +355,7 @@ describe.skip("ContentSidebarStore", () => {
               slug: `slug-${collection.id}`,
             },
           ],
+          defaultLink: "",
         }));
 
       const collections = [
@@ -363,9 +371,11 @@ describe.skip("ContentSidebarStore", () => {
 
       expect((store as any)._store.get("col1")).toEqual({
         items: [{ label: "Processed col1", slug: "slug-col1" }],
+        defaultLink: "",
       });
       expect((store as any)._store.get("col2")).toEqual({
         items: [{ label: "Processed col2", slug: "slug-col2" }],
+        defaultLink: "",
       });
     });
   });
@@ -373,8 +383,9 @@ describe.skip("ContentSidebarStore", () => {
   describe("processCollection", () => {
     it("returns empty items array if collection has no items", async () => {
       const store = createStore();
-      const result = await store.processCollection({ id: "test", items: [] });
-      expect(result).toEqual({ items: [] });
+      await expect(store.processCollection({ id: "test", items: [] })).rejects.toThrowError(
+        /No default link found in collection/,
+      );
     });
 
     it("processes all items in the collection", async () => {
@@ -401,6 +412,7 @@ describe.skip("ContentSidebarStore", () => {
           { label: "Processed item1", slug: "slug-item1" },
           { label: "Processed item2", slug: "slug-item2" },
         ],
+        defaultLink: "slug-item1",
       });
     });
   });
@@ -450,7 +462,8 @@ describe.skip("ContentSidebarStore", () => {
               label: "docs",
               slug: "docs/info"
             }
-          ]
+          ],
+          defaultLink: "docs/info"
         };"
       `);
     });

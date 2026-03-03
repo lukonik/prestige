@@ -11,8 +11,11 @@ export default function Header() {
           .map((collection) => (
             <Link
               key={collection.id}
-              to={`/${collection.defaultLink}`}
-              activeProps={{ className: "font-semibold" }}
+              to={`/${collection.id}`}
+              className="border-b-transparent border-b-2"
+              activeProps={{
+                style: { borderBottomColor: "var(--color-primary)" }, // style object is used to overide border transparent
+              }}
             >
               {collection.label}
             </Link>

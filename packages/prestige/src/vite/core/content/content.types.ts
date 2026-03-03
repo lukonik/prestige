@@ -95,4 +95,5 @@ export type SidebarItemType = SidebarLinkType | SidebarGroupType;
 
 export interface SidebarType {
   items: SidebarItemType[];
+  defaultLink: string;
 }

@@ -1,4 +1,4 @@
-import { AnyRoute, createRoute, notFound, Outlet } from "@tanstack/react-router";
+import { AnyRoute, createRoute, notFound, Outlet, redirect } from "@tanstack/react-router";
 import sidebars from "virtual:prestige/sidebar-all";
 import Sidebar from "../../components/sidebar/sidebar";
 import MobileSidebar from "./mobile-sidebar";
@@ -9,10 +9,19 @@ export default function createCollectionRoute(root: AnyRoute) {
     const collectionRouter = createRoute({
       getParentRoute: () => root,
       path: `/${slug}`,
-      loader: async () => {
+      loader: async ({ location }) => {
         const sidebar = sidebars[slug];
         if (sidebar) {
           const result = await sidebar();
+          const defaultLink = result.defaultLink;
+          if (location.pathname === "/" + slug) {
+            if (defaultLink) {
+              throw redirect({
+                to: "/" + defaultLink,
+              });
+            }
+          }
+
           return { sidebar: result };
         }
         throw notFound();

@@ -9,28 +9,33 @@ export default function createCollectionRoute(root: AnyRoute) {
     const collectionRouter = createRoute({
       getParentRoute: () => root,
       path: `/${slug}`,
-      loader: async ({ location }) => {
-        const sidebar = sidebars[slug];
-        if (sidebar) {
-          const result = await sidebar();
-          const defaultLink = result.defaultLink;
-          if (location.pathname === "/" + slug) {
-            if (defaultLink) {
-              throw redirect({
-                to: "/" + defaultLink,
-              });
-            }
-          }
+      beforeLoad: async ({ location }) => {
+        const loader = sidebars[slug];
 
-          return { sidebar: result };
+        if (!loader) {
+          throw notFound();
         }
-        throw notFound();
+
+        const sidebar = await loader();
+
+        if (!sidebar) {
+          throw notFound();
+        }
+
+        if (location.pathname === "/" + slug) {
+          if (sidebar.defaultLink) {
+            throw redirect({
+              to: "/" + sidebar.defaultLink,
+            });
+          }
+        }
+        return { sidebar };
       },
       component: CollectionComponent,
     });
     collectionRoutes.push(collectionRouter);
     function CollectionComponent() {
-      const { sidebar } = collectionRouter.useLoaderData();
+      const { sidebar } = collectionRouter.useRouteContext();
 
       return (
         <div>

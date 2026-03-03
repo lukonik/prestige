@@ -13,6 +13,7 @@ export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
     getParentRoute: () => root,
     path: "$",
+
     loader: async ({ params, route }) => {
       const parentSlug = route.parentRoute.path;
       const slug = [parentSlug, params["_splat"]].filter(Boolean).join("/");

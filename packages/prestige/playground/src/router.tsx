@@ -5,7 +5,7 @@ import { NotFound, prestigeRoutes } from "@lonik/prestige/ui";
 export function getRouter() {
   const router = createTanStackRouter({
     // 2. Only add the parent (which now holds the children) to the root tree
-    routeTree: prestigeRoutes(routeTree),
+    routeTree: prestigeRoutes(routeTree).withHome().build(),
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,

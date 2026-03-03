@@ -1,22 +1,45 @@
 import { AnyRoute } from "@tanstack/react-router";
 import createCollectionRoute from "./collection/collection.route";
 import createContentRoute from "./content/content.route";
-export function prestigeRoutes(root: AnyRoute) {
-  const childrenRoutes = root.children || [];
-  const collectionRoutes = createCollectionRoute(root);
+import createHomeRoute from "./home/home.route";
 
-  for (const collectionRoute of collectionRoutes) {
-    const contentRoute = createContentRoute(collectionRoute);
-    collectionRoute.addChildren([contentRoute]);
+class PrestigeRoute {
+  private _childrenRoutes: AnyRoute[];
+  private _buildRoutes: AnyRoute[] = [];
+
+  constructor(private root: AnyRoute) {
+    this._childrenRoutes = root.children;
   }
 
-  const allProposed = [...childrenRoutes, ...collectionRoutes];
+  withHome() {
+    this._buildRoutes.push(createHomeRoute(this.root));
+    return this;
+  }
 
-  // Filter out duplicates by checking the path
-  const uniqueChildren = allProposed.filter(
-    (route, index, self) => index === self.findIndex((r) => r.options.path === route.options.path),
-  );
+  private buildContentRoutes() {
+    const collectionRoutes = createCollectionRoute(this.root);
 
-  root.addChildren(uniqueChildren);
-  return root;
+    for (const collectionRoute of collectionRoutes) {
+      const contentRoute = createContentRoute(collectionRoute);
+      collectionRoute.addChildren([contentRoute]);
+    }
+
+    this._buildRoutes.push(...collectionRoutes);
+  }
+
+  build() {
+    this.buildContentRoutes();
+    const allProposed = [...this._childrenRoutes, ...this._buildRoutes];
+    const uniqueChildren = allProposed.filter(
+      (route, index, self) =>
+        index === self.findIndex((r) => (r.options as any).path === (route.options as any).path),
+    );
+
+    this.root.addChildren(uniqueChildren);
+    return this.root;
+  }
+}
+
+export function prestigeRoutes(root: AnyRoute) {
+  return new PrestigeRoute(root);
 }

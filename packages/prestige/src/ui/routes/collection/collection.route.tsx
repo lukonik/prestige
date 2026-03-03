@@ -1,7 +1,7 @@
 import { AnyRoute, createRoute, notFound, Outlet } from "@tanstack/react-router";
 import sidebars from "virtual:prestige/sidebar-all";
 import Sidebar from "../../components/sidebar/sidebar";
-import MobileHeader from "./mobile/mobile-header";
+import MobileSidebar from "./mobile-sidebar";
 
 export default function createCollectionRoute(root: AnyRoute) {
   const collectionRoutes: AnyRoute[] = [];
@@ -25,10 +25,10 @@ export default function createCollectionRoute(root: AnyRoute) {
 
       return (
         <div>
-          <MobileHeader sidebar={sidebar} />
+          <MobileSidebar sidebar={sidebar} />
           <div className="flex gap-4">
             <div className="hidden lg:block">{sidebar && <Sidebar sidebar={sidebar} />}</div>
-            <div className="flex-1 py-15 container  max-w-[100ch] px-4 lg:ml-80">
+            <div className="flex-1 pt-10 pb-20 lg:py-15 container  max-w-[100ch] px-4 lg:ml-80">
               <Outlet />
             </div>
           </div>

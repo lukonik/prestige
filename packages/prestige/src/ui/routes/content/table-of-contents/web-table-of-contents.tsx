@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { TocItem, useTableOfContents } from "./table-of-contents/use-table-of-contents";
+import { TocItem, useTableOfContents } from "./use-table-of-contents";
 
 export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
   const { activeId, handleLinkClick } = useTableOfContents(toc);
@@ -9,7 +9,7 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
   }
 
   return (
-    <nav className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto w-64 shrink-0 hidden xl:block">
+    <nav className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto w-64 shrink-0 hidden lg:block">
       <h3 className="text-sm font-semibold text-slate-900 mb-4 dark:text-slate-100">
         On this page
       </h3>

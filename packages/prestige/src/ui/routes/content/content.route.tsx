@@ -6,8 +6,8 @@ import { lazy, Suspense, useMemo } from "react";
 import ContentNavigations from "../../components/content-navigations/content-navigations";
 
 import ContentNotFound from "../../components/content-not-found";
-import { MobileTableOfContent } from "./mobile-table-of-contents";
-import { WebTableOfContent } from "./web-table-of-contents";
+import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
+import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({

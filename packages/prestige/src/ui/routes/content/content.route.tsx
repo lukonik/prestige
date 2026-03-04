@@ -1,22 +1,19 @@
 import { AnyRoute, createRoute, notFound } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
-import * as runtime from "react/jsx-runtime";
-import { run } from "@mdx-js/mdx";
-import { lazy, Suspense, useMemo } from "react";
 import ContentNavigations from "../../components/content-navigations/content-navigations";
 
 import ContentNotFound from "../../components/content-not-found";
 import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
+import ContentMarkdown from "./content-markdown";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
     getParentRoute: () => root,
     path: "$",
 
-    loader: async ({ params, route }) => {
-      const parentSlug = route.parentRoute.path;
-      const slug = [parentSlug, params["_splat"]].filter(Boolean).join("/");
+    loader: async ({ params }) => {
+      const slug = [params["slug"], params["_splat"]].filter(Boolean).join("/");
 
       const contentFetcher = contents[slug];
       if (!contentFetcher) throw notFound();
@@ -38,24 +35,13 @@ export default function createContentRoute(root: AnyRoute) {
 
   function ContentComponent() {
     const { code, toc, prev, next } = contentRouter.useLoaderData();
-    const Content = useMemo(() => {
-      return lazy(
-        () =>
-          run(code, {
-            ...runtime,
-            baseUrl: import.meta.url,
-          }) as any,
-      );
-    }, [code]);
 
     return (
       <div className="flex xl:gap-10 items-start">
         <div className="flex-1 min-w-0">
           <MobileTableOfContent toc={toc} />
           <article className="prose prose-lg max-w-none wrap-break-word">
-            <Suspense fallback={null}>
-              <Content />
-            </Suspense>
+            <ContentMarkdown code={code} />
           </article>
           <ContentNavigations prev={prev} next={next} />
         </div>

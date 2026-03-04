@@ -1,9 +1,10 @@
 import clsx from "clsx";
-import { TocItem, useTableOfContents } from "./use-table-of-contents";
+import { useTableOfContents } from "./use-table-of-contents";
+import { TocItem } from "remark-flexible-toc";
 
 export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
   const { activeId, handleLinkClick } = useTableOfContents(toc);
-
+  console.log(toc);
   if (toc.length === 0) {
     return null;
   }
@@ -15,18 +16,18 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
       </h3>
       <ul className="space-y-2 text-sm">
         {toc.map((item) => (
-          <li key={item.id} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
+          <li key={item.value} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
             <a
-              href={`#${item.id}`}
+              href={`${item.href}`}
               className={clsx(
                 "block hover:text-slate-900 dark:hover:text-slate-100 transition-colors duration-200 line-clamp-2",
-                activeId === item.id
+                activeId === item.href
                   ? "text-blue-600 font-medium dark:text-blue-400"
                   : "text-slate-500 dark:text-slate-400",
               )}
-              onClick={(e) => handleLinkClick(e, item.id)}
+              onClick={(e) => handleLinkClick(e, item.href)}
             >
-              {item.text}
+              {item.value}
             </a>
           </li>
         ))}

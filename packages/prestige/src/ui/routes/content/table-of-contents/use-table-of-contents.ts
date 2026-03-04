@@ -1,10 +1,5 @@
 import { useEffect, useState } from "react";
-
-export type TocItem = {
-  depth: number;
-  text: string;
-  id: string;
-};
+import { TocItem } from "remark-flexible-toc";
 
 export function useTableOfContents(toc: TocItem[]) {
   const [activeId, setActiveId] = useState<string>("");
@@ -14,7 +9,7 @@ export function useTableOfContents(toc: TocItem[]) {
 
     const handleScroll = () => {
       const headingElements = toc
-        .map((item) => document.getElementById(item.id))
+        .map((item) => document.getElementById(item.href))
         .filter((el): el is HTMLElement => el !== null);
 
       // Add a slight offset to account for sticky headers or top padding

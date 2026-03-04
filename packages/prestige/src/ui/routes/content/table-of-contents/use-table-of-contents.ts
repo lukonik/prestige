@@ -9,7 +9,10 @@ export function useTableOfContents(toc: TocItem[]) {
 
     const handleScroll = () => {
       const headingElements = toc
-        .map((item) => document.getElementById(item.href))
+        .map((item) => {
+          const id = item.href.startsWith("#") ? item.href.slice(1) : item.href;
+          return document.getElementById(id);
+        })
         .filter((el): el is HTMLElement => el !== null);
 
       // Add a slight offset to account for sticky headers or top padding
@@ -29,7 +32,7 @@ export function useTableOfContents(toc: TocItem[]) {
         currentActiveId = headingElements[0].id;
       }
 
-      setActiveId(currentActiveId);
+      setActiveId(currentActiveId ? `#${currentActiveId}` : "");
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -39,13 +42,14 @@ export function useTableOfContents(toc: TocItem[]) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [toc]);
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    const id = href.startsWith("#") ? href.slice(1) : href;
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
       // Update URL hash without jumping
-      window.history.pushState(null, "", `#${id}`);
+      window.history.pushState(null, "", href.startsWith("#") ? href : `#${href}`);
     }
   };
 

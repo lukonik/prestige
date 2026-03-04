@@ -1,7 +1,8 @@
 import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { TocItem, useTableOfContents } from "./use-table-of-contents";
+import { TocItem } from "remark-flexible-toc";
+import { useTableOfContents } from "./use-table-of-contents";
 
 export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -26,21 +27,21 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
         <div className="bg-white  px-4 py-3 border-t border-default-200 ">
           <ul className="space-y-2 text-sm">
             {toc.map((item) => (
-              <li key={item.id} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
+              <li key={item.href} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
                 <a
-                  href={`#${item.id}`}
+                  href={`${item.href.startsWith("#") ? item.href : `#${item.href}`}`}
                   className={clsx(
                     "block hover:text-default-900 dark:hover:text-default-100 transition-colors duration-200 line-clamp-2",
-                    selectedId === item.id
+                    selectedId === item.href
                       ? "text-blue-600 font-medium dark:text-blue-400"
                       : "text-default-500 dark:text-default-400",
                   )}
                   onClick={(e) => {
-                    handleLinkClick(e, item.id);
-                    setSelectedId(item.id);
+                    handleLinkClick(e, item.href);
+                    setSelectedId(item.href);
                   }}
                 >
-                  {item.text}
+                  {item.value}
                 </a>
               </li>
             ))}

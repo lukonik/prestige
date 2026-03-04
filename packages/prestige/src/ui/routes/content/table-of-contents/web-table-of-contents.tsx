@@ -4,7 +4,6 @@ import { TocItem } from "remark-flexible-toc";
 
 export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
   const { activeId, handleLinkClick } = useTableOfContents(toc);
-  console.log(toc);
   if (toc.length === 0) {
     return null;
   }
@@ -16,7 +15,7 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
       </h3>
       <ul className="space-y-2 text-sm">
         {toc.map((item) => (
-          <li key={item.value} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
+          <li key={item.href} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
             <a
               href={`${item.href}`}
               className={clsx(

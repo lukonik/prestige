@@ -12,6 +12,7 @@ import { matter } from "vfile-matter";
 import { read } from "to-vfile";
 import { VFile } from "vfile";
 import { compileMarkdown } from "../../content/content-compiler";
+import { PrestigeConfig } from "../../config/config.types";
 
 function getSlugByPath(path: string, contentDir: string) {
   // 1. Get the relative path: "zz/zz/myFile.json"
@@ -116,7 +117,7 @@ export class ContentStore {
     return null;
   }
 
-  async load(id: string) {
+  async load(id: string, options?: Pick<PrestigeConfig, "markdown">) {
     if (id.includes("\0" + this._virtualIdAll)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
@@ -132,7 +133,7 @@ export class ContentStore {
         return genExportUndefined();
       }
 
-      const { code: content, toc } = await compileMarkdown(file.toString());
+      const { code: content, toc } = await compileMarkdown(file.toString(), options?.markdown);
       if (!content) {
         return genExportUndefined();
       }

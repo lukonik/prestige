@@ -1,8 +1,13 @@
 import { compile } from "@mdx-js/mdx";
 import { Compatible } from "vfile";
-import rehypeShiki from "@shikijs/rehype";
+import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
+import { PluggableList } from "unified";
+import { PrestigeConfig } from "../config/config.types";
 
-export async function compileMarkdown(content: Readonly<Compatible>) {
+export async function compileMarkdown(
+  content: Readonly<Compatible>,
+  options?: PrestigeConfig["markdown"],
+) {
   let toc: { depth: number; text: string; id: string }[] = [];
 
   function rehypeExtractTocAndAddIds() {
@@ -41,21 +46,27 @@ export async function compileMarkdown(content: Readonly<Compatible>) {
       visit(tree);
     };
   }
+
+  const shikiOptions: RehypeShikiOptions = {
+    themes: {
+      light: "vitesse-light",
+      dark: "vitesse-dark",
+    },
+    ...options?.shikiOptions,
+  };
+
+  const rehypePlugins: PluggableList = [
+    ...(options?.rehypePlugins ?? []),
+    rehypeExtractTocAndAddIds,
+    [rehypeShiki, shikiOptions],
+  ];
+
+  const remarkPlugins: PluggableList = [...(options?.remarkPlugins ?? [])];
+
   const code = await compile(content, {
     outputFormat: "function-body",
-    rehypePlugins: [
-      [
-        rehypeExtractTocAndAddIds,
-        rehypeShiki,
-        {
-          // or `theme` for a single theme
-          themes: {
-            light: "vitesse-light",
-            dark: "vitesse-dark",
-          },
-        },
-      ],
-    ],
+    rehypePlugins,
+    remarkPlugins,
   });
   return { code: String(code), toc };
 }

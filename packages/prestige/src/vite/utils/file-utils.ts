@@ -1,4 +1,4 @@
-import { stat, mkdir, writeFile } from "fs/promises";
+import { stat, mkdir, writeFile } from "node:fs/promises";
 import { dirname } from "pathe";
 
 export async function pathExists(path: string) {

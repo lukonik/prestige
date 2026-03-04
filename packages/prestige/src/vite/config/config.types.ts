@@ -4,7 +4,6 @@ import { CollectionsSchema } from "../core/content/content.types";
 import { RehypeShikiOptions } from "@shikijs/rehype";
 import { PluggableList } from "unified";
 import { FlexibleTocOptions } from "remark-flexible-toc";
-import type { Options as RehypeSlugOptions } from "rehype-slug";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("The title of your website"),
@@ -27,7 +26,12 @@ export const PrestigeConfigSchema = z.object({
         .custom<FlexibleTocOptions>()
         .optional()
         .describe("Options for remark-flexible-toc"),
-      rehypeSlug: z.custom<RehypeSlugOptions>().optional().describe("Options for rehype-slug"),
+      rehypeSlug: z
+        .custom<{
+          prefix?: string;
+        }>()
+        .optional()
+        .describe("Options for rehype-slug"),
     })
     .optional()
     .describe("Markdown options, configure how markdown is parsed"),

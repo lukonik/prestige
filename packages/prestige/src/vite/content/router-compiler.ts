@@ -1,8 +1,11 @@
 import { mkdir, writeFile } from "node:fs/promises";
-import { SidebarLinkType } from "../core/content/content.types";
 import { join } from "node:path";
+import { SidebarLinkType } from "../core/content/content.types";
 import { rmSafe } from "../utils/file-utils";
-export async function compileRoutes(linksMap: Map<string, SidebarLinkType[]>, routesDir: string) {
+export async function compileRoutes(
+  linksMap: Map<string, SidebarLinkType[]>,
+  routesDir: string,
+) {
   const prestigePath = "(prestige)";
   const prestigeFullPath = join(routesDir, prestigePath);
 
@@ -29,19 +32,10 @@ function createLayoutRoute(id: string) {
   
             import { createFileRoute,Outlet } from '@tanstack/react-router'
             import sidebar from "virtual:prestige/sidebar/${id}"
-            import {CollectionComponent,collectionLoader} from "@lonik/prestige/ui"
+            import {CollectionRoute} from "@lonik/prestige/ui"
             
-            export const Route = createFileRoute('/(prestige)/${id}')({
-              component: RouteComponent,
-              loader:({location})=>collectionLoader(location,sidebar,"${id}")
-            })
+            export const Route = createFileRoute('/(prestige)/${id}')(CollectionRoute(sidebar,"${id}"))
             
-            function RouteComponent() {
-              return <>
-              <CollectionComponent sidebar={sidebar} />
-              <Outlet/>
-              </> 
-            }
             
   `;
   return code;

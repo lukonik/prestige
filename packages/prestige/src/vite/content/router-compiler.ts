@@ -44,26 +44,13 @@ function createLayoutRoute(id: string) {
 function createContentRoute(slug: string) {
   const code = `
 import { createFileRoute } from "@tanstack/react-router";
-import Content, * as rest from "virtual:prestige/content/${slug}";
-import { ContentComponent } from "@lonik/prestige/ui";
+import * as contentData from "virtual:prestige/content/${slug}";
+import { ContentRoute } from "@lonik/prestige/ui";
 
 
-          export const Route = createFileRoute('/${slug}')({
-              component: RouteComponent,
-            })
+          export const Route = createFileRoute('/${slug}')(ContentRoute(contentData))
           
         
-         
-    
-    function RouteComponent() {
-      return (
-        <ContentComponent {...rest}>
-          <Content />
-        </ContentComponent>
-      );
-    }
-    
-         
         
   `;
 

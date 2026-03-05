@@ -1,8 +1,3 @@
-import {
-  genDynamicImport,
-  genObjectFromRaw,
-  genObjectFromValues,
-} from "knitwork";
 import { join } from "node:path";
 import { pathToFileURL } from "node:url";
 import { parse, relative } from "pathe";
@@ -10,23 +5,10 @@ import { glob } from "tinyglobby";
 import { read } from "to-vfile";
 import { VFile } from "vfile";
 import { matter } from "vfile-matter";
-import { PrestigeConfig } from "../../config/config.types";
 import { compileMarkdown } from "../../content/content-compiler";
-import {
-  genDynamicImportWithDefault,
-  genExportDefault,
-  genExportUndefined,
-} from "../../utils/code-generation";
-import {
-  ContentMatter,
-  SidebarItemType,
-  SidebarLinkType,
-  SidebarType,
-} from "./content.types";
+import { ContentMatter, SidebarLinkType } from "./content.types";
 
-import {
-  compileFrontmatter
-} from "../../content/content-compiler";
+import { compileFrontmatter } from "../../content/content-compiler";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
 
@@ -35,7 +17,10 @@ export function resolveSiblings(
   slug: string,
   linksMap: Map<string, SidebarLinkType[]>,
 ) {
-  const links = linksMap.get(base) as SidebarLinkType[];
+  const links = linksMap.get(base);
+  if (!links?.length) {
+    return { prev: undefined, next: undefined };
+  }
   const linkIndex = links.findIndex((link) => link.slug === slug);
 
   let prev: SidebarLinkType | undefined;
@@ -65,6 +50,7 @@ export async function resolveContent(
 ) {
   const slug = id.replace(CONTENT_VIRTUAL_ID, "").replace("\0", "");
   const base = slug.split("/")[0] as string;
+
   const { prev, next } = resolveSiblings(base, slug, linksMap);
   const { toc, code, frontmatter } = await resolveMarkdown(slug, contentDir);
   let resolvedCode = code;
@@ -155,109 +141,5 @@ export class ContentStore {
   getVirtualModuleIdsForFile(path: string) {
     const slug = getSlugByPath(path, this.contentDir);
     return ["\0" + this._virtualId + slug, "\0" + this._virtualIdAll];
-  }
-
-  async init(sidebars: Map<string, SidebarType>) {
-    const sidebarsArray = sidebars.values();
-    for (const sidebar of sidebarsArray) {
-      const links = this._flattenLinks(sidebar.items);
-      for (let i = 0; i < links.length; i++) {
-        const link = links[i];
-        if (link) {
-          this._store.set(link.slug, link);
-          const file = this._files.get(link.slug);
-          if (file) {
-            file.data = file.data || {};
-            if (i > 0) file.data["prev"] = links[i - 1];
-            if (i < links.length - 1) file.data["next"] = links[i + 1];
-          }
-        }
-      }
-    }
-  }
-
-  private _flattenLinks(items: SidebarItemType[]): SidebarLinkType[] {
-    const links: SidebarLinkType[] = [];
-    for (const item of items) {
-      if ("slug" in item) {
-        links.push(item);
-      } else if ("items" in item) {
-        links.push(...this._flattenLinks(item.items));
-      }
-    }
-    return links;
-  }
-
-  async resolve(id: string) {
-    if (id === this._virtualIdAll) {
-      return "\0" + this._virtualIdAll;
-    }
-    if (id.startsWith(this._virtualId)) {
-      return "\0" + id;
-    }
-    if (id.startsWith(this._virtualHeadId)) {
-      return "\0" + id;
-    }
-    return null;
-  }
-
-  async load(id: string, options?: Pick<PrestigeConfig, "markdown">) {
-    if (id.includes("\0" + this._virtualIdAll)) {
-      const records: Record<
-        string,
-        {
-          content: string;
-          head: string;
-        }
-      > = {};
-      for (const [key] of this._store.entries()) {
-        records[key] = {
-          content: genDynamicImport(`virtual:prestige/content/${key}`),
-          head: genDynamicImportWithDefault(
-            `virtual:prestige/content-head/${key}`,
-          ),
-        };
-      }
-      return genExportDefault(genObjectFromRaw(records));
-    }
-    if (id.includes("\0" + this._virtualHeadId)) {
-      const pathPart = id.replace("\0" + this._virtualHeadId, "");
-      const file = this._files.get(pathPart);
-      if (!file) {
-        return genExportUndefined();
-      }
-      const matter = file.data["matter"];
-      if (!matter) {
-        return genExportUndefined();
-      }
-      return genExportDefault(genObjectFromValues(matter));
-    }
-
-    if (id.includes("\0" + this._virtualId)) {
-      const pathPart = id.replace("\0" + this._virtualId, "");
-      const file = this._files.get(pathPart);
-      if (!file) {
-        return genExportUndefined();
-      }
-
-      const { code, toc } = await compileMarkdown(
-        file.toString(),
-        pathToFileURL(file.path).href,
-        options?.markdown,
-      );
-      if (!code) {
-        return genExportUndefined();
-      }
-
-      let rseolvedCode = code;
-
-      rseolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
-      rseolvedCode += `\n export const prev = ${JSON.stringify(file.data["prev"])}\n`;
-      rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
-
-      return rseolvedCode;
-    }
-
-    return null;
   }
 }

@@ -1,13 +1,13 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import sidebar from "virtual:prestige/sidebar/api";
-import { CollectionComponent } from "@lonik/prestige/ui";
+import { CollectionComponent, collectionLoader } from "@lonik/prestige/ui";
 
 export const Route = createFileRoute("/(prestige)/api")({
   component: RouteComponent,
+  loader: ({ location }) => collectionLoader(location, sidebar, "api"),
 });
 
 function RouteComponent() {
-  console.log(sidebar);
   return (
     <>
       <CollectionComponent sidebar={sidebar} />

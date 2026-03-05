@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet, ParsedLocation, redirect } from "@tanstack/react-router";
 import { SidebarType } from "../../vite/core/content/content.types";
 import MobileSidebar from "../routes/collection/mobile-sidebar";
 import Sidebar from "../components/sidebar/sidebar";
@@ -15,4 +15,14 @@ export function CollectionComponent({ sidebar }: { sidebar: SidebarType }) {
       </div>
     </div>
   );
+}
+
+export function collectionLoader(location: ParsedLocation, sidebar: SidebarType, id: string) {
+  if (id === location.pathname.slice(1)) {
+    if (sidebar.defaultLink) {
+      throw redirect({
+        to: "/" + sidebar.defaultLink,
+      });
+    }
+  }
 }

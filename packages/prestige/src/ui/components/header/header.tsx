@@ -6,20 +6,18 @@ export default function Header() {
     <header className="flex border-b border-gray-200 h-header sticky top-0 bg-surface-container items-center px-4">
       <div className="flex gap-2">
         <Link to={"/"}>Home</Link>
-        {collections
-          .filter((collection) => collection.defaultLink)
-          .map((collection) => (
-            <Link
-              key={collection.id}
-              to={`/${collection.id}`}
-              className="border-b-transparent border-b-2"
-              activeProps={{
-                style: { borderBottomColor: "var(--color-primary)" }, // style object is used to overide border transparent
-              }}
-            >
-              {collection.label}
-            </Link>
-          ))}
+        {collections.map((collection) => (
+          <Link
+            key={collection.id}
+            to={`/${collection.id}` as any}
+            className="border-b-transparent border-b-2"
+            activeProps={{
+              style: { borderBottomColor: "var(--color-primary)" }, // style object is used to overide border transparent
+            }}
+          >
+            {collection.label}
+          </Link>
+        ))}
       </div>
     </header>
   );

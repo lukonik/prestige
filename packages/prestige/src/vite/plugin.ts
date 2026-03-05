@@ -5,7 +5,10 @@ import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { compileRoutes } from "./content/router-compiler";
-import { ContentCollectionStore } from "./core/content/content-collection.store";
+import {
+  COLLECTION_VIRTUAL_ID,
+  resolveCollectionNavigations,
+} from "./core/content/content-collection.store";
 import { resolveContentLinks } from "./core/content/content-links";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 import {
@@ -18,11 +21,10 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
-  let contentCollectionStore: ContentCollectionStore;
   let collections: Collections = [];
   let contentSidebarStore: ContentSidebarStore;
   let linksMap: Map<string, SidebarLinkType[]>;
-
+  let collectionNavigations: string;
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
@@ -39,8 +41,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       contentSidebarStore = new ContentSidebarStore(contentDir);
       const sidebars = await contentSidebarStore.init(collections);
 
-      contentCollectionStore = new ContentCollectionStore();
-      contentCollectionStore.init(collections, sidebars);
+      collectionNavigations = resolveCollectionNavigations(collections);
 
       const routesDir = join(resolvedConfig.root, "src", "routes");
       linksMap = resolveContentLinks(sidebars);
@@ -51,14 +52,13 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       if (id.includes(CONTENT_VIRTUAL_ID)) {
         return "\0" + id;
       }
+      if (id.includes(COLLECTION_VIRTUAL_ID)) {
+        return "\0" + id;
+      }
 
       const sidebarId = contentSidebarStore.resolve(id);
       if (sidebarId) {
         return sidebarId;
-      }
-      const collectionId = contentCollectionStore.resolve(id);
-      if (collectionId) {
-        return collectionId;
       }
 
       return null;
@@ -67,14 +67,13 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       if (id.includes(CONTENT_VIRTUAL_ID)) {
         return await resolveContent(id, linksMap, contentDir);
       }
+      if (id.includes(COLLECTION_VIRTUAL_ID)) {
+        return collectionNavigations;
+      }
 
       const sidebarId = contentSidebarStore.load(id);
       if (sidebarId) {
         return sidebarId;
-      }
-      const loadCollectionId = contentCollectionStore.load(id);
-      if (loadCollectionId) {
-        return loadCollectionId;
       }
 
       return null;

@@ -24,6 +24,8 @@ import {
   SidebarType,
 } from "./content.types";
 
+export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
+
 function resolveDefaultLink(
   items: SidebarItemType[],
   defaultLink?: string,
@@ -42,208 +44,186 @@ function resolveDefaultLink(
   return undefined;
 }
 
-export class ContentSidebarStore {
-  private _store = new Map<string, SidebarType>();
-  private _fileExtRegex = /\.mdx?$/i;
-  private _virtualId = "virtual:prestige/sidebar/";
-  private _virtualAllId = "virtual:prestige/sidebar-all";
+export async function resolveSidebars(
+  collections: Collections,
+  contentDir: string,
+) {
+  const store = new Map<string, SidebarType>();
 
-  constructor(private contentDir: string) {}
+  for (const collection of collections) {
+    const sidebar = await processCollection(collection, contentDir);
+    store.set(collection.id, sidebar);
+  }
+  return store;
+}
 
-  resolve(id: string) {
-    if (id.includes(this._virtualId)) {
-      return "\0" + id;
-    }
-    if (id.includes(this._virtualAllId)) {
-      return "\0" + this._virtualAllId;
-    }
-    return null;
+/** @visibleForTesting */
+async function processCollection(
+  collection: Collection,
+  contentDir: string,
+): Promise<SidebarType> {
+  const items: SidebarItemType[] = [];
+  for (const item of collection.items) {
+    items.push(await processItem(item, contentDir));
+  }
+  const defaultLink = resolveDefaultLink(items, collection.defaultLink);
+  if (!defaultLink) {
+    throw new PrestigeError(
+      `No default link found in collection, it means there are no links in the collection. Please define one in ${collection.id}`,
+    );
+  }
+  return {
+    items,
+    defaultLink: defaultLink,
+  };
+}
+
+/** @visibleForTesting */
+async function processItem(
+  item: CollectionItem,
+  contentDir: string,
+): Promise<SidebarItemType> {
+  if (typeof item === "string" || "slug" in item) {
+    return resolveSidebarLink(item as CollectionLink, contentDir);
+  } else {
+    return resolveSidebarGroup(item as CollectionGroup, contentDir);
+  }
+}
+
+/** @visibleForTesting */
+async function resolveSidebarGroup(
+  group: CollectionGroup,
+  contentDir: string,
+): Promise<SidebarGroupType> {
+  const label = await resolveLabel(group, contentDir);
+  const items: SidebarItemType[] = [];
+
+  if (group.items?.length && group.autogenerate) {
+    logger.warn(
+      `${group.label} has both items and autogenerate. Only items will be used.`,
+    );
   }
 
-  load(id: string) {
-    if (id.includes("\0" + this._virtualAllId)) {
-      const records: Record<string, string> = {};
-      for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImportWithDefault(
-          `virtual:prestige/sidebar/${key}`,
-        );
-      }
-      return genExportDefault(genObjectFromRaw(records));
+  if (group.items) {
+    for (const childItem of group.items) {
+      items.push(await processItem(childItem, contentDir));
     }
-
-    if (id.includes("\0" + this._virtualId)) {
-      const parts = id.split("/");
-      const result = parts[parts.length - 1];
-      if (!result) {
-        return genExportUndefined();
-      }
-      const sidebar = this._store.get(result);
-      if (!sidebar) {
-        return genExportUndefined();
-      }
-      return genExportDefault(genObjectFromValues(sidebar));
-    }
-
-    return null;
+  } else if (group.autogenerate?.directory) {
+    const generatedItems = await autogenerateSidebar(
+      group.autogenerate.directory,
+      contentDir,
+    );
+    items.push(...generatedItems);
   }
 
-  async init(collections: Collections) {
-    for (const collection of collections) {
-      const sidebar = await this.processCollection(collection);
-      this._store.set(collection.id, sidebar);
-    }
-    return this._store;
+  return {
+    label,
+    collapsible: group.collapsible,
+    items,
+  };
+}
+
+/** @visibleForTesting */
+async function resolveSidebarLink(
+  item: CollectionLink,
+  contentDir: string,
+): Promise<SidebarLinkType> {
+  const label = await resolveLabel(item, contentDir);
+  const slug = resolveSlug(item);
+
+  if (slug.startsWith("/") || slug.endsWith("/")) {
+    throw new PrestigeError(
+      `The slug ${slug} cannot start or end with a slash. Remove it and try again.`,
+    );
   }
-  /** @visibleForTesting */
-  async processCollection(collection: Collection): Promise<SidebarType> {
-    const items: SidebarItemType[] = [];
-    for (const item of collection.items) {
-      items.push(await this.processItem(item));
+
+  if (!slug) {
+    throw new PrestigeError(
+      `The slug cannot be empty. Remove it and try again. link label is ${label}`,
+    );
+  }
+
+  return {
+    label,
+    slug,
+  };
+}
+
+/** @visibleForTesting */
+async function autogenerateSidebar(
+  directory: string,
+  contentDir: string,
+): Promise<SidebarItemType[]> {
+  const fileExtRegex = /\.mdx?$/i;
+
+  const items: SidebarItemType[] = [];
+  const dirPath = join(contentDir, directory);
+  if (!(await pathExists(dirPath))) {
+    logger.warn(`Directory doesn't exist: ${directory}`);
+    return [];
+  }
+
+  const dirents = await readdir(dirPath, { withFileTypes: true });
+  dirents.sort((a, b) => a.name.localeCompare(b.name));
+  for (const dirent of dirents) {
+    if (dirent.isDirectory()) {
+      const subDir = join(directory, dirent.name);
+      const group: CollectionGroup = {
+        label: dirent.name,
+        autogenerate: { directory: subDir },
+      };
+      items.push(await resolveSidebarGroup(group, contentDir));
+    } else if (dirent.isFile() && fileExtRegex.test(dirent.name)) {
+      const fullPath = join(directory, dirent.name);
+      const slug = fullPath.replace(fileExtRegex, "");
+      items.push(await resolveSidebarLink(slug, contentDir));
     }
-    const defaultLink = resolveDefaultLink(items, collection.defaultLink);
-    if (!defaultLink) {
+  }
+  return items;
+}
+
+/** @visibleForTesting */
+async function resolveLabel(
+  item: CollectionItem,
+  contentDir: string,
+): Promise<string> {
+  if (typeof item !== "string" && "label" in item && item.label) {
+    return item.label;
+  }
+
+  if (typeof item === "string" || "slug" in item) {
+    const slug = resolveSlug(item);
+
+    const file = await getFileBySlug(slug, contentDir);
+    if (!file) {
       throw new PrestigeError(
-        `No default link found in collection, it means there are no links in the collection. Please define one in ${collection.id}`,
+        `markdown file not found with slug: ${slug} add one in content folder or update config`,
       );
     }
-    return {
-      items,
-      defaultLink: defaultLink,
-    };
+    const data = (await compileFrontmatter(file)) as any;
+    if (data?.["frontmatter"]?.label) {
+      return data?.["frontmatter"]?.label;
+    }
+
+    return basename(slug);
   }
 
-  /** @visibleForTesting */
-  async processItem(item: CollectionItem): Promise<SidebarItemType> {
-    if (typeof item === "string" || "slug" in item) {
-      return this.resolveSidebarLink(item as CollectionLink);
-    } else {
-      return this.resolveSidebarGroup(item as CollectionGroup);
-    }
+  // is a group
+  if (typeof item !== "string" && ("items" in item || "autogenerate" in item)) {
+    return item.label;
   }
 
-  /** @visibleForTesting */
-  async resolveSidebarGroup(group: CollectionGroup): Promise<SidebarGroupType> {
-    const label = await this.resolveLabel(group);
-    const items: SidebarItemType[] = [];
+  return "";
+}
 
-    if (group.items?.length && group.autogenerate) {
-      logger.warn(
-        `${group.label} has both items and autogenerate. Only items will be used.`,
-      );
+/** @visibleForTesting */
+function resolveSlug(item: CollectionItem) {
+  if (typeof item === "string") {
+    return item;
+  } else {
+    if ("slug" in item) {
+      return item.slug;
     }
-
-    if (group.items) {
-      for (const childItem of group.items) {
-        items.push(await this.processItem(childItem));
-      }
-    } else if (group.autogenerate?.directory) {
-      const generatedItems = await this.autogenerateSidebar(
-        group.autogenerate.directory,
-      );
-      items.push(...generatedItems);
-    }
-
-    return {
-      label,
-      collapsible: group.collapsible,
-      items,
-    };
-  }
-
-  /** @visibleForTesting */
-  async autogenerateSidebar(directory: string): Promise<SidebarItemType[]> {
-    const items: SidebarItemType[] = [];
-    const dirPath = join(this.contentDir, directory);
-    if (!(await pathExists(dirPath))) {
-      logger.warn(`Directory doesn't exist: ${directory}`);
-      return [];
-    }
-
-    const dirents = await readdir(dirPath, { withFileTypes: true });
-    dirents.sort((a, b) => a.name.localeCompare(b.name));
-    for (const dirent of dirents) {
-      if (dirent.isDirectory()) {
-        const subDir = join(directory, dirent.name);
-        const group: CollectionGroup = {
-          label: dirent.name,
-          autogenerate: { directory: subDir },
-        };
-        items.push(await this.resolveSidebarGroup(group));
-      } else if (dirent.isFile() && this._fileExtRegex.test(dirent.name)) {
-        const fullPath = join(directory, dirent.name);
-        const slug = fullPath.replace(this._fileExtRegex, "");
-        items.push(await this.resolveSidebarLink(slug));
-      }
-    }
-    return items;
-  }
-
-  /** @visibleForTesting */
-  async resolveSidebarLink(item: CollectionLink): Promise<SidebarLinkType> {
-    const label = await this.resolveLabel(item);
-    const slug = this.resolveSlug(item);
-
-    if (slug.startsWith("/") || slug.endsWith("/")) {
-      throw new PrestigeError(
-        `The slug ${slug} cannot start or end with a slash. Remove it and try again.`,
-      );
-    }
-
-    if (!slug) {
-      throw new PrestigeError(
-        `The slug cannot be empty. Remove it and try again. link label is ${label}`,
-      );
-    }
-
-    return {
-      label,
-      slug,
-    };
-  }
-
-  /** @visibleForTesting */
-  async resolveLabel(item: CollectionItem): Promise<string> {
-    if (typeof item !== "string" && "label" in item && item.label) {
-      return item.label;
-    }
-
-    if (typeof item === "string" || "slug" in item) {
-      const slug = this.resolveSlug(item);
-
-      const file = await getFileBySlug(slug, this.contentDir);
-      if (!file) {
-        throw new PrestigeError(
-          `markdown file not found with slug: ${slug} add one in content folder or update config`,
-        );
-      }
-      const data = (await compileFrontmatter(file)) as any;
-      if (data?.["frontmatter"]?.label) {
-        return data?.["frontmatter"]?.label;
-      }
-
-      return basename(slug);
-    }
-
-    // is a group
-    if (
-      typeof item !== "string" &&
-      ("items" in item || "autogenerate" in item)
-    ) {
-      return item.label;
-    }
-
     return "";
-  }
-
-  /** @visibleForTesting */
-  resolveSlug(item: CollectionItem) {
-    if (typeof item === "string") {
-      return item;
-    } else {
-      if ("slug" in item) {
-        return item.slug;
-      }
-      return "";
-    }
   }
 }

@@ -10,21 +10,30 @@ import {
   resolveCollectionNavigations,
 } from "./core/content/content-collection.store";
 import { resolveContentLinks } from "./core/content/content-links";
-import { ContentSidebarStore } from "./core/content/content-sidebar.store";
+import {
+  resolveSidebars,
+  SIDEBAR_VIRTUAL_ID,
+} from "./core/content/content-sidebar.store";
 import {
   CONTENT_VIRTUAL_ID,
   resolveContent,
 } from "./core/content/content.store";
-import { Collections, SidebarLinkType } from "./core/content/content.types";
+import {
+  Collections,
+  SidebarLinkType,
+  SidebarType,
+} from "./core/content/content.types";
+import { genExportDefault, genExportUndefined } from "./utils/code-generation";
+import { genObjectFromValues, genString } from "knitwork";
 
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
   let collections: Collections = [];
-  let contentSidebarStore: ContentSidebarStore;
   let linksMap: Map<string, SidebarLinkType[]>;
   let collectionNavigations: string;
+  let sidebarsMap: Map<string, SidebarType>;
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
@@ -37,15 +46,12 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
-
-      contentSidebarStore = new ContentSidebarStore(contentDir);
-      const sidebars = await contentSidebarStore.init(collections);
+      sidebarsMap = await resolveSidebars(collections, contentDir);
 
       collectionNavigations = resolveCollectionNavigations(collections);
 
       const routesDir = join(resolvedConfig.root, "src", "routes");
-      linksMap = resolveContentLinks(sidebars);
-
+      linksMap = resolveContentLinks(sidebarsMap);
       await compileRoutes(linksMap, routesDir);
     },
     resolveId(id) {
@@ -56,9 +62,8 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         return "\0" + id;
       }
 
-      const sidebarId = contentSidebarStore.resolve(id);
-      if (sidebarId) {
-        return sidebarId;
+      if (id.includes(SIDEBAR_VIRTUAL_ID)) {
+        return "\0" + id;
       }
 
       return null;
@@ -71,9 +76,13 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         return collectionNavigations;
       }
 
-      const sidebarId = contentSidebarStore.load(id);
-      if (sidebarId) {
-        return sidebarId;
+      if (id.includes(SIDEBAR_VIRTUAL_ID)) {
+        const sidebarId = id.replace(SIDEBAR_VIRTUAL_ID, "").replace("\0", "");
+        const sidebar = sidebarsMap.get(sidebarId);
+        if (!sidebar) {
+          return genExportUndefined();
+        }
+        return genExportDefault(genObjectFromValues(sidebar));
       }
 
       return null;

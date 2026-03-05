@@ -9,27 +9,268 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as prestigeDocsRouteImport } from './routes/(prestige)/docs'
+import { Route as prestigeApiRouteImport } from './routes/(prestige)/api'
+import { Route as prestigeDocsVitePluginRouteImport } from './routes/(prestige)/docs.vite-plugin'
+import { Route as prestigeDocsTypescriptRouteImport } from './routes/(prestige)/docs.typescript'
+import { Route as prestigeDocsIntroductionRouteImport } from './routes/(prestige)/docs.introduction'
+import { Route as prestigeDocsInstallationRouteImport } from './routes/(prestige)/docs.installation'
+import { Route as prestigeApiPrestigeRouteImport } from './routes/(prestige)/api.prestige'
+import { Route as prestigeDocsImageLoadersCustomLoaderRouteImport } from './routes/(prestige)/docs.image.loaders.custom-loader'
 
-export interface FileRoutesByFullPath {}
-export interface FileRoutesByTo {}
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const prestigeDocsRoute = prestigeDocsRouteImport.update({
+  id: '/(prestige)/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const prestigeApiRoute = prestigeApiRouteImport.update({
+  id: '/(prestige)/api',
+  path: '/api',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const prestigeDocsVitePluginRoute = prestigeDocsVitePluginRouteImport.update({
+  id: '/vite-plugin',
+  path: '/vite-plugin',
+  getParentRoute: () => prestigeDocsRoute,
+} as any)
+const prestigeDocsTypescriptRoute = prestigeDocsTypescriptRouteImport.update({
+  id: '/typescript',
+  path: '/typescript',
+  getParentRoute: () => prestigeDocsRoute,
+} as any)
+const prestigeDocsIntroductionRoute =
+  prestigeDocsIntroductionRouteImport.update({
+    id: '/introduction',
+    path: '/introduction',
+    getParentRoute: () => prestigeDocsRoute,
+  } as any)
+const prestigeDocsInstallationRoute =
+  prestigeDocsInstallationRouteImport.update({
+    id: '/installation',
+    path: '/installation',
+    getParentRoute: () => prestigeDocsRoute,
+  } as any)
+const prestigeApiPrestigeRoute = prestigeApiPrestigeRouteImport.update({
+  id: '/prestige',
+  path: '/prestige',
+  getParentRoute: () => prestigeApiRoute,
+} as any)
+const prestigeDocsImageLoadersCustomLoaderRoute =
+  prestigeDocsImageLoadersCustomLoaderRouteImport.update({
+    id: '/image/loaders/custom-loader',
+    path: '/image/loaders/custom-loader',
+    getParentRoute: () => prestigeDocsRoute,
+  } as any)
+
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/api': typeof prestigeApiRouteWithChildren
+  '/docs': typeof prestigeDocsRouteWithChildren
+  '/api/prestige': typeof prestigeApiPrestigeRoute
+  '/docs/installation': typeof prestigeDocsInstallationRoute
+  '/docs/introduction': typeof prestigeDocsIntroductionRoute
+  '/docs/typescript': typeof prestigeDocsTypescriptRoute
+  '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
+}
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/api': typeof prestigeApiRouteWithChildren
+  '/docs': typeof prestigeDocsRouteWithChildren
+  '/api/prestige': typeof prestigeApiPrestigeRoute
+  '/docs/installation': typeof prestigeDocsInstallationRoute
+  '/docs/introduction': typeof prestigeDocsIntroductionRoute
+  '/docs/typescript': typeof prestigeDocsTypescriptRoute
+  '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
+}
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/about': typeof AboutRoute
+  '/(prestige)/api': typeof prestigeApiRouteWithChildren
+  '/(prestige)/docs': typeof prestigeDocsRouteWithChildren
+  '/(prestige)/api/prestige': typeof prestigeApiPrestigeRoute
+  '/(prestige)/docs/installation': typeof prestigeDocsInstallationRoute
+  '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionRoute
+  '/(prestige)/docs/typescript': typeof prestigeDocsTypescriptRoute
+  '/(prestige)/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/(prestige)/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: never
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/api'
+    | '/docs'
+    | '/api/prestige'
+    | '/docs/installation'
+    | '/docs/introduction'
+    | '/docs/typescript'
+    | '/docs/vite-plugin'
+    | '/docs/image/loaders/custom-loader'
   fileRoutesByTo: FileRoutesByTo
-  to: never
-  id: '__root__'
+  to:
+    | '/'
+    | '/about'
+    | '/api'
+    | '/docs'
+    | '/api/prestige'
+    | '/docs/installation'
+    | '/docs/introduction'
+    | '/docs/typescript'
+    | '/docs/vite-plugin'
+    | '/docs/image/loaders/custom-loader'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/(prestige)/api'
+    | '/(prestige)/docs'
+    | '/(prestige)/api/prestige'
+    | '/(prestige)/docs/installation'
+    | '/(prestige)/docs/introduction'
+    | '/(prestige)/docs/typescript'
+    | '/(prestige)/docs/vite-plugin'
+    | '/(prestige)/docs/image/loaders/custom-loader'
   fileRoutesById: FileRoutesById
 }
-export interface RootRouteChildren {}
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {}
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  AboutRoute: typeof AboutRoute
+  prestigeApiRoute: typeof prestigeApiRouteWithChildren
+  prestigeDocsRoute: typeof prestigeDocsRouteWithChildren
 }
 
-const rootRouteChildren: RootRouteChildren = {}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(prestige)/docs': {
+      id: '/(prestige)/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof prestigeDocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(prestige)/api': {
+      id: '/(prestige)/api'
+      path: '/api'
+      fullPath: '/api'
+      preLoaderRoute: typeof prestigeApiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(prestige)/docs/vite-plugin': {
+      id: '/(prestige)/docs/vite-plugin'
+      path: '/vite-plugin'
+      fullPath: '/docs/vite-plugin'
+      preLoaderRoute: typeof prestigeDocsVitePluginRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
+    '/(prestige)/docs/typescript': {
+      id: '/(prestige)/docs/typescript'
+      path: '/typescript'
+      fullPath: '/docs/typescript'
+      preLoaderRoute: typeof prestigeDocsTypescriptRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
+    '/(prestige)/docs/introduction': {
+      id: '/(prestige)/docs/introduction'
+      path: '/introduction'
+      fullPath: '/docs/introduction'
+      preLoaderRoute: typeof prestigeDocsIntroductionRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
+    '/(prestige)/docs/installation': {
+      id: '/(prestige)/docs/installation'
+      path: '/installation'
+      fullPath: '/docs/installation'
+      preLoaderRoute: typeof prestigeDocsInstallationRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
+    '/(prestige)/api/prestige': {
+      id: '/(prestige)/api/prestige'
+      path: '/prestige'
+      fullPath: '/api/prestige'
+      preLoaderRoute: typeof prestigeApiPrestigeRouteImport
+      parentRoute: typeof prestigeApiRoute
+    }
+    '/(prestige)/docs/image/loaders/custom-loader': {
+      id: '/(prestige)/docs/image/loaders/custom-loader'
+      path: '/image/loaders/custom-loader'
+      fullPath: '/docs/image/loaders/custom-loader'
+      preLoaderRoute: typeof prestigeDocsImageLoadersCustomLoaderRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
+  }
+}
+
+interface prestigeApiRouteChildren {
+  prestigeApiPrestigeRoute: typeof prestigeApiPrestigeRoute
+}
+
+const prestigeApiRouteChildren: prestigeApiRouteChildren = {
+  prestigeApiPrestigeRoute: prestigeApiPrestigeRoute,
+}
+
+const prestigeApiRouteWithChildren = prestigeApiRoute._addFileChildren(
+  prestigeApiRouteChildren,
+)
+
+interface prestigeDocsRouteChildren {
+  prestigeDocsInstallationRoute: typeof prestigeDocsInstallationRoute
+  prestigeDocsIntroductionRoute: typeof prestigeDocsIntroductionRoute
+  prestigeDocsTypescriptRoute: typeof prestigeDocsTypescriptRoute
+  prestigeDocsVitePluginRoute: typeof prestigeDocsVitePluginRoute
+  prestigeDocsImageLoadersCustomLoaderRoute: typeof prestigeDocsImageLoadersCustomLoaderRoute
+}
+
+const prestigeDocsRouteChildren: prestigeDocsRouteChildren = {
+  prestigeDocsInstallationRoute: prestigeDocsInstallationRoute,
+  prestigeDocsIntroductionRoute: prestigeDocsIntroductionRoute,
+  prestigeDocsTypescriptRoute: prestigeDocsTypescriptRoute,
+  prestigeDocsVitePluginRoute: prestigeDocsVitePluginRoute,
+  prestigeDocsImageLoadersCustomLoaderRoute:
+    prestigeDocsImageLoadersCustomLoaderRoute,
+}
+
+const prestigeDocsRouteWithChildren = prestigeDocsRoute._addFileChildren(
+  prestigeDocsRouteChildren,
+)
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  AboutRoute: AboutRoute,
+  prestigeApiRoute: prestigeApiRouteWithChildren,
+  prestigeDocsRoute: prestigeDocsRouteWithChildren,
+}
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()

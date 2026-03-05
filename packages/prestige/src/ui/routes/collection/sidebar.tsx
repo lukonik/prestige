@@ -1,12 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import clsx from "clsx";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 import {
   SidebarGroupType,
   SidebarLinkType,
   SidebarType,
 } from "../../../vite/core/content/content.types";
-import { ChevronDown } from "lucide-react";
-import clsx from "clsx";
-import { useState } from "react";
 
 export interface SidebarProps {
   sidebar: SidebarType;

@@ -8,6 +8,8 @@ import { ContentStore } from "./core/content/content.store";
 import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { Collections } from "./core/content/content.types";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
+import { compileRoutes } from "./content/router-compiler";
+import { resolveContentLinks } from "./core/content/content-links";
 
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
@@ -39,6 +41,11 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       contentCollectionStore.init(collections, sidebars);
 
       await contentStore.init(sidebars);
+
+      const routesDir = join(resolvedConfig.root, "src", "routes");
+      const linksMap = resolveContentLinks(sidebars);
+
+      await compileRoutes(linksMap, routesDir);
     },
     resolveId(id) {
       const sidebarId = contentSidebarStore.resolve(id);

@@ -177,12 +177,8 @@ export class ContentStore {
       let rseolvedCode = code;
 
       rseolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
-      if (file.data["prev"]) {
-        rseolvedCode += `\n export const prev = ${JSON.stringify(file.data["prev"])}\n`;
-      }
-      if (file.data["next"]) {
-        rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
-      }
+      rseolvedCode += `\n export const prev = ${JSON.stringify(file.data["prev"])}\n`;
+      rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
 
       return rseolvedCode;
     }

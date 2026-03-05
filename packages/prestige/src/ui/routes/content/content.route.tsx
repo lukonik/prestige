@@ -1,4 +1,4 @@
-import { AnyRoute, createRoute, notFound } from "@tanstack/react-router";
+import { AnyRoute, createRoute } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
 
 import ContentNotFound from "../../components/content-not-found";
@@ -13,24 +13,6 @@ export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
     getParentRoute: () => root,
     path: "$",
-
-    loader: async ({ params }) => {
-      const slug = [params["slug"], params["_splat"]].filter(Boolean).join("/");
-
-      const contentFetcher = contents[slug];
-      if (!contentFetcher) throw notFound();
-
-      const response = await contentFetcher();
-      if (!response) throw notFound();
-      // ONLY return serializable data (strings, numbers, objects)
-      return {
-        code: response.html,
-        toc: response.toc || [],
-        prev: response.prev,
-        next: response.next,
-        metadata: response.metadata || {}, // If you have frontmatter
-      };
-    },
     component: ContentComponent,
     notFoundComponent: ContentNotFound,
   });

@@ -1,28 +1,29 @@
-declare module "virtual:prestige" {
-  export const contents: string[];
-}
-
 declare module "virtual:prestige/content-all" {
-  import { Content } from "./core/content/content.types";
-  export const contents: Record<string, () => Promise<Content>>;
+  interface ContentType {
+    toc: any;
+    prev: any;
+    next: any;
+    default: any;
+  }
+  export const contents: Record<string, () => Promise<ContentType>>;
   export default contents;
 }
 
 declare module "virtual:prestige/sidebar-all" {
-  export interface SidebarLinkType {
+  interface SidebarLinkType {
     slug: string;
     label: string;
   }
 
-  export interface SidebarGroupType {
+  interface SidebarGroupType {
     label: string;
     items: SidebarItemType[];
     collapsible?: boolean | undefined;
   }
 
-  export type SidebarItemType = SidebarLinkType | SidebarGroupType;
+  type SidebarItemType = SidebarLinkType | SidebarGroupType;
 
-  export interface SidebarType {
+  interface SidebarType {
     items: SidebarItemType[];
     defaultLink: string;
   }
@@ -32,7 +33,11 @@ declare module "virtual:prestige/sidebar-all" {
 }
 
 declare module "virtual:prestige/collection-all" {
-  import { CollectionNavigation } from "./core/content/content.types";
+  type CollectionNavigation = {
+    id: string;
+    label: string;
+    defaultLink?: string;
+  };
   const collections: Array<CollectionNavigation>;
   export default collections;
 }

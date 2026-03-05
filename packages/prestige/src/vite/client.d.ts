@@ -1,9 +1,23 @@
 declare module "virtual:prestige/content-all" {
+  interface TocItem {
+    value: string;
+    href: string;
+    depth: HeadingDepth;
+    numbering: number[];
+    parent: HeadingParent;
+    data?: Record<string, unknown>;
+  }
+
+  interface NavigationLink {
+    slug: string;
+    label: string;
+  }
+
   interface ContentType {
-    toc: any;
-    prev: any;
-    next: any;
-    default: any;
+    toc: TocItem[];
+    prev: NavigationLink;
+    next: NavigationLink;
+    default: React.ElementType;
   }
   export const contents: Record<string, () => Promise<ContentType>>;
   export default contents;

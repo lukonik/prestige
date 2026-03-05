@@ -1,19 +1,92 @@
-import { SidebarType, SidebarItemType, SidebarLinkType, ContentMatter } from "./content.types";
-import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
+import {
+  genDynamicImport,
+  genObjectFromRaw,
+  genObjectFromValues,
+} from "knitwork";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { parse, relative } from "pathe";
+import { glob } from "tinyglobby";
+import { read } from "to-vfile";
+import { VFile } from "vfile";
+import { matter } from "vfile-matter";
+import { PrestigeConfig } from "../../config/config.types";
+import { compileMarkdown } from "../../content/content-compiler";
 import {
   genDynamicImportWithDefault,
   genExportDefault,
   genExportUndefined,
 } from "../../utils/code-generation";
-import { join } from "node:path";
-import { pathToFileURL } from "node:url";
-import { glob } from "tinyglobby";
-import { parse, relative } from "pathe";
-import { matter } from "vfile-matter";
-import { read } from "to-vfile";
-import { VFile } from "vfile";
-import { compileMarkdown } from "../../content/content-compiler";
-import { PrestigeConfig } from "../../config/config.types";
+import {
+  ContentMatter,
+  SidebarItemType,
+  SidebarLinkType,
+  SidebarType,
+} from "./content.types";
+
+import {
+  compileFrontmatter
+} from "../../content/content-compiler";
+
+export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
+
+export function resolveSiblings(
+  base: string,
+  slug: string,
+  linksMap: Map<string, SidebarLinkType[]>,
+) {
+  const links = linksMap.get(base) as SidebarLinkType[];
+  const linkIndex = links.findIndex((link) => link.slug === slug);
+
+  let prev: SidebarLinkType | undefined;
+  let next: SidebarLinkType | undefined;
+  if (linkIndex > 0) {
+    prev = links[linkIndex - 1];
+  }
+  if (linkIndex < links.length - 1) {
+    next = links[linkIndex + 1];
+  }
+  return { prev, next };
+}
+
+export async function resolveMarkdown(slug: string, contentDir: string) {
+  const filePath = await getPathBySlug(slug, contentDir);
+  const baseUrl = pathToFileURL(filePath).href;
+  const file = await read(filePath);
+  const { code, toc } = await compileMarkdown(file, baseUrl);
+  const frontmatter = await compileFrontmatter(file);
+  return { code, toc, frontmatter };
+}
+
+export async function resolveContent(
+  id: string,
+  linksMap: Map<string, SidebarLinkType[]>,
+  contentDir: string,
+) {
+  const slug = id.replace(CONTENT_VIRTUAL_ID, "").replace("\0", "");
+  const base = slug.split("/")[0] as string;
+  const { prev, next } = resolveSiblings(base, slug, linksMap);
+  const { toc, code, frontmatter } = await resolveMarkdown(slug, contentDir);
+  let resolvedCode = code;
+
+  resolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
+  resolvedCode += `\n export const prev = ${JSON.stringify(prev)}\n`;
+  resolvedCode += `\n export const next = ${JSON.stringify(next)}\n`;
+  resolvedCode += `\n export const frontmatter = ${JSON.stringify(
+    frontmatter,
+  )}\n`;
+  return resolvedCode;
+}
+
+export async function getPathBySlug(slug: string, contentDir: string) {
+  const pathMatch = join(contentDir, slug);
+  return (await glob(`${pathMatch}.{md,mdx}`))[0] as string;
+}
+
+export function getVirtualModuleIdsForFile(path: string, contentDir: string) {
+  const slug = getSlugByPath(path, contentDir);
+  return ["\0" + CONTENT_VIRTUAL_ID + slug];
+}
 
 function getSlugByPath(path: string, contentDir: string) {
   // 1. Get the relative path: "zz/zz/myFile.json"
@@ -140,7 +213,9 @@ export class ContentStore {
       for (const [key] of this._store.entries()) {
         records[key] = {
           content: genDynamicImport(`virtual:prestige/content/${key}`),
-          head: genDynamicImportWithDefault(`virtual:prestige/content-head/${key}`),
+          head: genDynamicImportWithDefault(
+            `virtual:prestige/content-head/${key}`,
+          ),
         };
       }
       return genExportDefault(genObjectFromRaw(records));

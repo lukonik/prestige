@@ -30,11 +30,11 @@ export async function compileRoutes(
 function createLayoutRoute(id: string) {
   const code = `
   
-            import { createFileRoute,Outlet } from '@tanstack/react-router'
+            import { createLazyFileRoute,Outlet } from '@tanstack/react-router'
             import sidebar from "virtual:prestige/sidebar/${id}"
             import {CollectionRoute} from "@lonik/prestige/ui"
             
-            export const Route = createFileRoute('/(prestige)/${id}')(CollectionRoute(sidebar,"${id}"))
+            export const Route = createLazyFileRoute('/(prestige)/${id}')(CollectionRoute(sidebar,"${id}"))
             
             
   `;
@@ -43,12 +43,12 @@ function createLayoutRoute(id: string) {
 
 function createContentRoute(slug: string) {
   const code = `
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import * as contentData from "virtual:prestige/content/${slug}";
 import { ContentRoute } from "@lonik/prestige/ui";
 
 
-          export const Route = createFileRoute('/${slug}')(ContentRoute(contentData))
+          export const Route = createLazyFileRoute('/(prestige)/${slug}')(ContentRoute(contentData))
           
         
         

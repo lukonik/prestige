@@ -21,6 +21,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let contentSidebarStore: ContentSidebarStore;
   return {
     name: "vite-plugin-prestige",
+    enforce: "pre",
     async configResolved(resolvedConfig) {
       const { config: loadedConfig } = await resolvePrestigeConfig(
         inlineConfig,

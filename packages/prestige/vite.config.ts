@@ -1,13 +1,12 @@
 /// <reference types="vitest/config" />
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import { prestige } from "./src/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import react from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
+import { defineConfig } from "vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
-import mdx from "@mdx-js/rollup";
-import { nitro } from "nitro/vite";
+import { prestige } from "./src/vite";
 
 export default defineConfig(({ mode }) => {
   const isTest = mode === "test" || process.env.VITEST === "true";
@@ -17,21 +16,6 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Inspect(),
       tsconfigPaths(),
-      ...(!isTest
-        ? [
-            tanstackStart({
-              prerender: {
-                enabled: true,
-                crawlLinks: true,
-              },
-              spa: {
-                enabled: true,
-              },
-            }),
-            // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
-            nitro({ preset: "bun", renderer: false }),
-          ]
-        : []),
       prestige({
         title: "Title",
         description: " ee qweqwqeqeq  qweqw. ",
@@ -87,7 +71,21 @@ export default defineConfig(({ mode }) => {
           },
         ],
       }),
-      mdx(),
+      ...(!isTest
+        ? [
+            tanstackStart({
+              prerender: {
+                enabled: true,
+                crawlLinks: true,
+              },
+              spa: {
+                enabled: true,
+              },
+            }),
+            // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
+            nitro({ preset: "bun", renderer: false }),
+          ]
+        : []),
       tailwindcss(),
       react(),
     ],

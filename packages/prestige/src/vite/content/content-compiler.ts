@@ -1,11 +1,11 @@
 import { compile } from "@mdx-js/mdx";
-import { Compatible, VFile } from "vfile";
 import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
-import { PluggableList } from "unified";
-import { PrestigeConfig } from "../config/config.types";
 import rehypeSlug from "rehype-slug";
 import remarkFlexibleToc, { TocItem } from "remark-flexible-toc";
+import { PluggableList } from "unified";
+import { Compatible, VFile } from "vfile";
 import { matter } from "vfile-matter";
+import { PrestigeConfig } from "../config/config.types";
 
 export async function compileMarkdown(
   content: Readonly<Compatible>,
@@ -42,7 +42,7 @@ export async function compileMarkdown(
   return { code: String(code), toc };
 }
 
-export async function compileMatter(content: Compatible) {
+export async function compileFrontmatter(content: Compatible) {
   const vFile = new VFile(content);
   matter(vFile, { strip: true });
   return vFile.data;

@@ -1,4 +1,4 @@
-import { stat, mkdir, writeFile } from "node:fs/promises";
+import { stat, mkdir, writeFile, rm } from "node:fs/promises";
 import { dirname } from "pathe";
 
 export async function pathExists(path: string) {
@@ -20,4 +20,13 @@ export async function outputFile(filePath: string, data: string | NodeJS.ArrayBu
   // recursive: true won't throw if the dir already exists
   await mkdir(dir, { recursive: true });
   await writeFile(filePath, data);
+}
+
+export async function rmSafe(path: string) {
+  try {
+    await rm(path, { recursive: true, force: true });
+    return true;
+  } catch {
+    return false;
+  }
 }

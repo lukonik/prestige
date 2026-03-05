@@ -50,10 +50,10 @@ export default defineConfig(({ mode }) => {
                 slug: "docs/installation",
               },
               { label: "Typescript", slug: "docs/typescript" },
-              {
-                label: "Image",
-                slug: "docs/image/component",
-              },
+              // {
+              //   label: "Image",
+              //   slug: "docs/image/component",
+              // },
               { label: "Vite Plugin", slug: "docs/vite-plugin" },
               {
                 label: "Loaders",

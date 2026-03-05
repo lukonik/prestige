@@ -1,11 +1,13 @@
 import { AnyRoute, createRoute, notFound } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
-import ContentNavigations from "../../components/content-navigations/content-navigations";
 
 import ContentNotFound from "../../components/content-not-found";
+import React, { useEffect, useState } from "react";
+import { TocItem } from "remark-flexible-toc";
+import { SidebarLinkType } from "../../../vite/core/content/content.types";
+import ContentNavigations from "../../components/content-navigations/content-navigations";
 import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
-import ContentMarkdown from "./content-markdown";
 
 export default function createContentRoute(root: AnyRoute) {
   const contentRouter = createRoute({
@@ -34,18 +36,37 @@ export default function createContentRoute(root: AnyRoute) {
   });
 
   function ContentComponent() {
-    const { code, toc, prev, next } = contentRouter.useLoaderData();
+    const params = contentRouter.useParams();
+    const [Content, setContent] = useState<React.ElementType>();
+    const [toc, setToc] = useState<TocItem[]>();
+    const [prev, setPrev] = useState<SidebarLinkType>();
+    const [next, setNext] = useState<SidebarLinkType>();
+
+    const slug = [params["slug"], params["_splat"]].filter(Boolean).join("/");
+
+    useEffect(() => {
+      const contentFetcher = contents[slug];
+      if (!contentFetcher) {
+        return;
+      }
+      contentFetcher().then((data) => {
+        setContent(() => data.default);
+        setToc(data.toc);
+        setPrev(data.prev);
+        setNext(data.next);
+      });
+    }, [slug]);
 
     return (
       <div className="flex xl:gap-10 items-start">
         <div className="flex-1 min-w-0">
-          <MobileTableOfContent toc={toc} />
+          {toc && <MobileTableOfContent toc={toc} />}
           <article className="prose prose-lg max-w-none wrap-break-word">
-            <ContentMarkdown code={code} />
+            {Content && <Content />}
           </article>
-          <ContentNavigations prev={prev} next={next} />
+          {prev && next && <ContentNavigations prev={prev} next={next} />}
         </div>
-        <WebTableOfContent toc={toc} />
+        {toc && <WebTableOfContent toc={toc} />}
       </div>
     );
   }

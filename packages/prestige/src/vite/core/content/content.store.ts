@@ -1,10 +1,6 @@
 import { SidebarType, SidebarItemType, SidebarLinkType, ContentMatter } from "./content.types";
-import { genObjectFromRaw, genObjectFromValues } from "knitwork";
-import {
-  genDynamicImportWithDefault,
-  genExportDefault,
-  genExportUndefined,
-} from "../../utils/code-generation";
+import { genDynamicImport, genObjectFromRaw } from "knitwork";
+import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
 import { join } from "node:path";
 import { glob } from "tinyglobby";
 import { parse, relative } from "pathe";
@@ -121,7 +117,7 @@ export class ContentStore {
     if (id.includes("\0" + this._virtualIdAll)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImportWithDefault(`virtual:prestige/content/${key}`);
+        records[key] = genDynamicImport(`virtual:prestige/content/${key}`);
       }
       return genExportDefault(genObjectFromRaw(records));
     }
@@ -133,18 +129,22 @@ export class ContentStore {
         return genExportUndefined();
       }
 
-      const { code: content, toc } = await compileMarkdown(file.toString(), options?.markdown);
-      if (!content) {
+      const { code, toc } = await compileMarkdown(file.toString(), options?.markdown);
+      if (!code) {
         return genExportUndefined();
       }
-      return genExportDefault(
-        genObjectFromValues({
-          html: content,
-          toc,
-          prev: file.data["prev"] || null,
-          next: file.data["next"] || null,
-        }),
-      );
+
+      let rseolvedCode = code;
+
+      rseolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
+      if (file.data["prev"]) {
+        rseolvedCode += `\n export const prev = ${JSON.stringify(file.data["prev"])}\n`;
+      }
+      if (file.data["next"]) {
+        rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
+      }
+
+      return rseolvedCode;
     }
 
     return null;

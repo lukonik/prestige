@@ -32,7 +32,7 @@ export async function compileMarkdown(
   ];
 
   const code = await compile(content, {
-    outputFormat: "function-body",
+    outputFormat: "program",
     rehypePlugins,
     remarkPlugins,
   });

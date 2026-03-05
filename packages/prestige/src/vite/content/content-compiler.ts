@@ -9,6 +9,7 @@ import { matter } from "vfile-matter";
 
 export async function compileMarkdown(
   content: Readonly<Compatible>,
+  baseUrl: string,
   options?: PrestigeConfig["markdown"],
 ) {
   const toc: TocItem[] = [];
@@ -36,6 +37,7 @@ export async function compileMarkdown(
     outputFormat: "program",
     rehypePlugins,
     remarkPlugins,
+    baseUrl: baseUrl,
   });
   return { code: String(code), toc };
 }

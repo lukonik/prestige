@@ -6,6 +6,7 @@ import {
   genExportUndefined,
 } from "../../utils/code-generation";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import { glob } from "tinyglobby";
 import { parse, relative } from "pathe";
 import { matter } from "vfile-matter";
@@ -151,7 +152,6 @@ export class ContentStore {
         return genExportUndefined();
       }
       const matter = file.data["matter"];
-      console.log("MATER IS ", matter);
       if (!matter) {
         return genExportUndefined();
       }
@@ -165,7 +165,11 @@ export class ContentStore {
         return genExportUndefined();
       }
 
-      const { code, toc } = await compileMarkdown(file.toString(), options?.markdown);
+      const { code, toc } = await compileMarkdown(
+        file.toString(),
+        pathToFileURL(file.path).href,
+        options?.markdown,
+      );
       if (!code) {
         return genExportUndefined();
       }

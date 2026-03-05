@@ -1,8 +1,8 @@
 import { mkdir, writeFile } from "node:fs/promises";
-import { SidebarLinkType, SidebarType } from "../core/content/content.types";
+import { SidebarLinkType } from "../core/content/content.types";
 import { join } from "node:path";
 import { rmSafe } from "../utils/file-utils";
-export async function compileRoutes(sidebars: Map<string, SidebarType>, routesDir: string) {
+export async function compileRoutes(linksMap: Map<string, SidebarLinkType[]>, routesDir: string) {
   const prestigePath = "(prestige)";
   const prestigeFullPath = join(routesDir, prestigePath);
 
@@ -10,15 +10,13 @@ export async function compileRoutes(sidebars: Map<string, SidebarType>, routesDi
 
   await mkdir(prestigeFullPath, { recursive: true });
 
-  for (const [key, value] of sidebars) {
+  for (const [key, links] of linksMap) {
     const sidebarPath = key;
     const sidebarFullPath = join(prestigeFullPath, sidebarPath + ".tsx");
     await writeFile(sidebarFullPath, createLayoutRoute(key));
 
-    const links = value.items.filter((f) => !("items" in f)) as SidebarLinkType[];
-
     for (const l of links) {
-      const pathified = l.slug.replace("/", ".") + ".tsx";
+      const pathified = l.slug.replaceAll("/", ".") + ".tsx";
 
       const filePath = join(prestigeFullPath, pathified);
       await writeFile(filePath, createContentRoute(l.slug));

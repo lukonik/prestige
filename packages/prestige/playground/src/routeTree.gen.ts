@@ -18,6 +18,7 @@ import { Route as prestigeDocsTypescriptRouteImport } from './routes/(prestige)/
 import { Route as prestigeDocsIntroductionRouteImport } from './routes/(prestige)/docs.introduction'
 import { Route as prestigeDocsInstallationRouteImport } from './routes/(prestige)/docs.installation'
 import { Route as prestigeApiPrestigeRouteImport } from './routes/(prestige)/api.prestige'
+import { Route as prestigeDocsImageLoadersCustomLoaderRouteImport } from './routes/(prestige)/docs.image.loaders.custom-loader'
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -66,6 +67,12 @@ const prestigeApiPrestigeRoute = prestigeApiPrestigeRouteImport.update({
   path: '/prestige',
   getParentRoute: () => prestigeApiRoute,
 } as any)
+const prestigeDocsImageLoadersCustomLoaderRoute =
+  prestigeDocsImageLoadersCustomLoaderRouteImport.update({
+    id: '/image/loaders/custom-loader',
+    path: '/image/loaders/custom-loader',
+    getParentRoute: () => prestigeDocsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -77,6 +84,7 @@ export interface FileRoutesByFullPath {
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -88,6 +96,7 @@ export interface FileRoutesByTo {
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -100,6 +109,7 @@ export interface FileRoutesById {
   '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/(prestige)/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/(prestige)/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/(prestige)/docs/image/loaders/custom-loader': typeof prestigeDocsImageLoadersCustomLoaderRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/docs/introduction'
     | '/docs/typescript'
     | '/docs/vite-plugin'
+    | '/docs/image/loaders/custom-loader'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -124,6 +135,7 @@ export interface FileRouteTypes {
     | '/docs/introduction'
     | '/docs/typescript'
     | '/docs/vite-plugin'
+    | '/docs/image/loaders/custom-loader'
   id:
     | '__root__'
     | '/'
@@ -135,6 +147,7 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/introduction'
     | '/(prestige)/docs/typescript'
     | '/(prestige)/docs/vite-plugin'
+    | '/(prestige)/docs/image/loaders/custom-loader'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,6 +222,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeApiPrestigeRouteImport
       parentRoute: typeof prestigeApiRoute
     }
+    '/(prestige)/docs/image/loaders/custom-loader': {
+      id: '/(prestige)/docs/image/loaders/custom-loader'
+      path: '/image/loaders/custom-loader'
+      fullPath: '/docs/image/loaders/custom-loader'
+      preLoaderRoute: typeof prestigeDocsImageLoadersCustomLoaderRouteImport
+      parentRoute: typeof prestigeDocsRoute
+    }
   }
 }
 
@@ -229,6 +249,7 @@ interface prestigeDocsRouteChildren {
   prestigeDocsIntroductionRoute: typeof prestigeDocsIntroductionRoute
   prestigeDocsTypescriptRoute: typeof prestigeDocsTypescriptRoute
   prestigeDocsVitePluginRoute: typeof prestigeDocsVitePluginRoute
+  prestigeDocsImageLoadersCustomLoaderRoute: typeof prestigeDocsImageLoadersCustomLoaderRoute
 }
 
 const prestigeDocsRouteChildren: prestigeDocsRouteChildren = {
@@ -236,6 +257,8 @@ const prestigeDocsRouteChildren: prestigeDocsRouteChildren = {
   prestigeDocsIntroductionRoute: prestigeDocsIntroductionRoute,
   prestigeDocsTypescriptRoute: prestigeDocsTypescriptRoute,
   prestigeDocsVitePluginRoute: prestigeDocsVitePluginRoute,
+  prestigeDocsImageLoadersCustomLoaderRoute:
+    prestigeDocsImageLoadersCustomLoaderRoute,
 }
 
 const prestigeDocsRouteWithChildren = prestigeDocsRoute._addFileChildren(

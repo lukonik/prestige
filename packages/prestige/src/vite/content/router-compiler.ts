@@ -15,7 +15,7 @@ export async function compileRoutes(
 
   for (const [key, links] of linksMap) {
     const sidebarPath = key;
-    const sidebarFullPath = join(prestigeFullPath, sidebarPath + ".tsx");
+    const sidebarFullPath = join(prestigeFullPath, sidebarPath + ".lazy.tsx");
     await writeFile(sidebarFullPath, createLayoutRoute(key));
 
     for (const l of links) {

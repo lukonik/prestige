@@ -1,7 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 
-import appCss from "../styles.css?url";
 import { Header } from "@lonik/prestige/ui";
+import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
   head: () => ({

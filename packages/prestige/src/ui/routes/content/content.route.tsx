@@ -1,4 +1,4 @@
-import { AnyRoute, createRoute, notFound } from "@tanstack/react-router";
+import { AnyRoute, createRoute } from "@tanstack/react-router";
 import contents from "virtual:prestige/content-all";
 
 import ContentNotFound from "../../components/content-not-found";
@@ -19,7 +19,7 @@ export default function createContentRoute(root: AnyRoute) {
       const slug = [params["slug"], params["_splat"]].filter(Boolean).join("/");
       const contentFetcher = contents[slug];
       if (!contentFetcher) {
-        throw notFound();
+        return {};
       }
       const content = await contentFetcher.head();
 

@@ -19,7 +19,7 @@ export async function compileRoutes(
     await writeFile(sidebarFullPath, createLayoutRoute(key));
 
     for (const l of links) {
-      const pathified = l.slug.replaceAll("/", ".") + ".tsx";
+      const pathified = l.slug.replaceAll("/", ".") + ".lazy.tsx";
 
       const filePath = join(prestigeFullPath, pathified);
       await writeFile(filePath, createContentRoute(l.slug));

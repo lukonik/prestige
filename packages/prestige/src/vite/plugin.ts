@@ -1,15 +1,15 @@
+import { join } from "pathe";
+import picomatch, { type Matcher } from "picomatch";
 import { EnvironmentModuleNode, normalizePath, type Plugin } from "vite";
 import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
-import { join } from "pathe";
-import picomatch, { type Matcher } from "picomatch";
 
-import { ContentStore } from "./core/content/content.store";
-import { ContentCollectionStore } from "./core/content/content-collection.store";
-import { Collections } from "./core/content/content.types";
-import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 import { compileRoutes } from "./content/router-compiler";
+import { ContentCollectionStore } from "./core/content/content-collection.store";
 import { resolveContentLinks } from "./core/content/content-links";
+import { ContentSidebarStore } from "./core/content/content-sidebar.store";
+import { ContentStore } from "./core/content/content.store";
+import { Collections } from "./core/content/content.types";
 
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
@@ -72,7 +72,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       if (loadCollectionId) {
         return loadCollectionId;
       }
-      const loadId = contentStore.load(id);
+      const loadId = await contentStore.load(id);
       if (loadId) {
         return loadId;
       }

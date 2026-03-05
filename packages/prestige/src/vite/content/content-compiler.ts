@@ -24,7 +24,7 @@ export async function compileMarkdown(
 
   const rehypePlugins: PluggableList = [
     ...(options?.rehypePlugins ?? []),
-    [rehypeShiki, shikiOptions],
+    // [rehypeShiki, shikiOptions],
     rehypeSlug,
   ];
 

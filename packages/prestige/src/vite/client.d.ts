@@ -9,8 +9,25 @@ declare module "virtual:prestige/content-all" {
 }
 
 declare module "virtual:prestige/sidebar-all" {
-  import { Sidebar } from "./core/content/content.types";
-  const sidebars: Record<string, () => Promise<Sidebar>>;
+  export interface SidebarLinkType {
+    slug: string;
+    label: string;
+  }
+
+  export interface SidebarGroupType {
+    label: string;
+    items: SidebarItemType[];
+    collapsible?: boolean | undefined;
+  }
+
+  export type SidebarItemType = SidebarLinkType | SidebarGroupType;
+
+  export interface SidebarType {
+    items: SidebarItemType[];
+    defaultLink: string;
+  }
+
+  const sidebars: Record<string, () => Promise<SidebarType>>;
   export default sidebars;
 }
 

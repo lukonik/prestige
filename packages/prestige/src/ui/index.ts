@@ -1,13 +1,5 @@
 export { default as Header } from "./components/header/header";
-export {
-    CollectionComponent,
-    collectionLoader,
-    CollectionRoute
-} from "./route-components/collection-component";
-export {
-    ContentComponent,
-    ContentRoute
-} from "./route-components/content-component";
+export { CollectionRoute } from "./route-components/collection-component";
+export { ContentRoute } from "./route-components/content-component";
 export { default as NotFound } from "./routes/not-found";
-export { prestigeRoutes } from "./routes/prestige.routes";
 

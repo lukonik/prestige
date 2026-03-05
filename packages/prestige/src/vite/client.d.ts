@@ -13,7 +13,7 @@ declare module "virtual:prestige/content-all" {
     label: string;
   }
 
-  interface ContentMatter {
+  interface ContentHead {
     title: string;
     lastUpdated: string;
     label: string;
@@ -25,9 +25,14 @@ declare module "virtual:prestige/content-all" {
     prev: NavigationLink;
     next: NavigationLink;
     default: React.ElementType;
-    matter: ContentMatter;
   }
-  export const contents: Record<string, () => Promise<ContentType>>;
+  export const contents: Record<
+    string,
+    {
+      content: () => Promise<ContentType>;
+      head: () => Promise<ContentHead>;
+    }
+  >;
   export default contents;
 }
 

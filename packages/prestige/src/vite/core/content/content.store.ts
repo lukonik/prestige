@@ -1,6 +1,10 @@
 import { SidebarType, SidebarItemType, SidebarLinkType, ContentMatter } from "./content.types";
-import { genDynamicImport, genObjectFromRaw } from "knitwork";
-import { genExportDefault, genExportUndefined } from "../../utils/code-generation";
+import { genDynamicImport, genObjectFromRaw, genObjectFromValues } from "knitwork";
+import {
+  genDynamicImportWithDefault,
+  genExportDefault,
+  genExportUndefined,
+} from "../../utils/code-generation";
 import { join } from "node:path";
 import { glob } from "tinyglobby";
 import { parse, relative } from "pathe";
@@ -44,6 +48,7 @@ export class ContentStore {
   private _store = new Map<string, SidebarLinkType>();
   private _files = new Map<string, LocalVFile>();
   private _virtualId = "virtual:prestige/content/";
+  private _virtualHeadId = "virtual:prestige/content-head/";
   private _virtualIdAll = "virtual:prestige/content-all";
 
   constructor(private contentDir: string) {}
@@ -116,16 +121,41 @@ export class ContentStore {
     if (id.startsWith(this._virtualId)) {
       return "\0" + id;
     }
+    if (id.startsWith(this._virtualHeadId)) {
+      return "\0" + id;
+    }
     return null;
   }
 
   async load(id: string, options?: Pick<PrestigeConfig, "markdown">) {
     if (id.includes("\0" + this._virtualIdAll)) {
-      const records: Record<string, string> = {};
+      const records: Record<
+        string,
+        {
+          content: string;
+          head: string;
+        }
+      > = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImport(`virtual:prestige/content/${key}`);
+        records[key] = {
+          content: genDynamicImport(`virtual:prestige/content/${key}`),
+          head: genDynamicImportWithDefault(`virtual:prestige/content-head/${key}`),
+        };
       }
       return genExportDefault(genObjectFromRaw(records));
+    }
+    if (id.includes("\0" + this._virtualHeadId)) {
+      const pathPart = id.replace("\0" + this._virtualHeadId, "");
+      const file = this._files.get(pathPart);
+      if (!file) {
+        return genExportUndefined();
+      }
+      const matter = file.data["matter"];
+      console.log("MATER IS ", matter);
+      if (!matter) {
+        return genExportUndefined();
+      }
+      return genExportDefault(genObjectFromValues(matter));
     }
 
     if (id.includes("\0" + this._virtualId)) {
@@ -148,9 +178,6 @@ export class ContentStore {
       }
       if (file.data["next"]) {
         rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
-      }
-      if (file.data["matter"]) {
-        rseolvedCode += `\n export const matter = ${JSON.stringify(file.data["matter"])}\n`;
       }
 
       return rseolvedCode;

@@ -21,12 +21,12 @@ export default function createContentRoute(root: AnyRoute) {
       if (!contentFetcher) {
         throw notFound();
       }
-      const content = await contentFetcher();
+      const content = await contentFetcher.head();
 
       return {
         meta: [
           {
-            title: content.matter.title,
+            title: content?.title,
           },
         ],
       };
@@ -47,12 +47,11 @@ export default function createContentRoute(root: AnyRoute) {
       if (!contentFetcher) {
         return;
       }
-      contentFetcher().then((data) => {
+      contentFetcher.content().then((data) => {
         setContent(() => data.default);
         setToc(data.toc);
         setPrev(data.prev);
         setNext(data.next);
-        console.log(data.matter);
       });
     }, [slug]);
 

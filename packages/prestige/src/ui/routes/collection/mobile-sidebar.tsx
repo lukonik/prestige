@@ -1,7 +1,7 @@
+import { Menu, X } from "lucide-react";
 import { useState } from "react";
 import { SidebarType } from "../../../vite/core/content/content.types";
-import Sidebar from "../../components/sidebar/sidebar";
-import { Menu, X } from "lucide-react";
+import Sidebar from "./sidebar";
 
 function SidebarOverlay({ sidebar }: { sidebar: SidebarType }) {
   const [isOpen, setIsOpen] = useState(false);

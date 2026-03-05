@@ -36,6 +36,11 @@ declare module "virtual:prestige/content-all" {
   export default contents;
 }
 
+declare module "virtual:prestige/content/*" {
+  export const content: any;
+  export default content;
+}
+
 declare module "virtual:prestige/sidebar-all" {
   interface SidebarLinkType {
     slug: string;

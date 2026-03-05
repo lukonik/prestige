@@ -69,6 +69,10 @@ export async function getPathBySlug(slug: string, contentDir: string) {
   return (await glob(`${pathMatch}.{md,mdx}`))[0] as string;
 }
 
+export async function getFileBySlug(slug: string, contentDir: string) {
+  return await read(await getPathBySlug(slug, contentDir));
+}
+
 export function getVirtualModuleIdsForFile(path: string, contentDir: string) {
   const slug = getSlugByPath(path, contentDir);
   return ["\0" + CONTENT_VIRTUAL_ID + slug];
@@ -103,43 +107,3 @@ type LocalVFile = VFile & {
     prev?: SidebarLinkType | null | undefined;
   };
 };
-
-export class ContentStore {
-  private _store = new Map<string, SidebarLinkType>();
-  private _files = new Map<string, LocalVFile>();
-  private _virtualId = "virtual:prestige/content/";
-  private _virtualHeadId = "virtual:prestige/content-head/";
-  private _virtualIdAll = "virtual:prestige/content-all";
-
-  constructor(private contentDir: string) {}
-
-  async process() {
-    const paths = await glob(`${this.contentDir}/**/*.{md,mdx}`);
-    for (const path of paths) {
-      const { slug, vFile } = await processFile(path, this.contentDir);
-      this._files.set(slug, vFile);
-    }
-  }
-
-  async invalidate(path: string) {
-    const { slug, vFile } = await processFile(path, this.contentDir);
-    const existingFile = this._files.get(slug);
-    if (existingFile && existingFile.data) {
-      vFile.data = { ...existingFile.data };
-    }
-    this._files.set(slug, vFile);
-  }
-
-  getFileBySlug(slug: string): undefined | VFile {
-    return this._files.get(slug);
-  }
-
-  getMatter(file: VFile) {
-    return file.data["matter"] as ContentMatter;
-  }
-
-  getVirtualModuleIdsForFile(path: string) {
-    const slug = getSlugByPath(path, this.contentDir);
-    return ["\0" + this._virtualId + slug, "\0" + this._virtualIdAll];
-  }
-}

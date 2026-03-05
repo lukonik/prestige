@@ -1,29 +1,33 @@
-import { readdir } from "node:fs/promises";
-import { join } from "pathe";
-import {
-  Collection,
-  CollectionGroup,
-  CollectionItem,
-  CollectionLink,
-  Collections,
-  SidebarType,
-  SidebarGroupType,
-  SidebarItemType,
-  SidebarLinkType,
-} from "./content.types";
-import { basename } from "node:path";
-import logger from "../../utils/logger";
-import { pathExists } from "../../utils/file-utils";
 import { genObjectFromRaw, genObjectFromValues } from "knitwork";
+import { readdir } from "node:fs/promises";
+import { basename } from "node:path";
+import { join } from "pathe";
+import { compileFrontmatter } from "../../content/content-compiler";
 import {
   genDynamicImportWithDefault,
   genExportDefault,
   genExportUndefined,
 } from "../../utils/code-generation";
 import { PrestigeError } from "../../utils/errors";
-import { ContentStore } from "./content.store";
+import { pathExists } from "../../utils/file-utils";
+import logger from "../../utils/logger";
+import { getFileBySlug } from "./content.store";
+import {
+  Collection,
+  CollectionGroup,
+  CollectionItem,
+  CollectionLink,
+  Collections,
+  SidebarGroupType,
+  SidebarItemType,
+  SidebarLinkType,
+  SidebarType,
+} from "./content.types";
 
-function resolveDefaultLink(items: SidebarItemType[], defaultLink?: string): string | undefined {
+function resolveDefaultLink(
+  items: SidebarItemType[],
+  defaultLink?: string,
+): string | undefined {
   if (defaultLink) {
     return defaultLink;
   }
@@ -44,10 +48,7 @@ export class ContentSidebarStore {
   private _virtualId = "virtual:prestige/sidebar/";
   private _virtualAllId = "virtual:prestige/sidebar-all";
 
-  constructor(
-    private contentDir: string,
-    private contentStore: ContentStore,
-  ) {}
+  constructor(private contentDir: string) {}
 
   resolve(id: string) {
     if (id.includes(this._virtualId)) {
@@ -63,7 +64,9 @@ export class ContentSidebarStore {
     if (id.includes("\0" + this._virtualAllId)) {
       const records: Record<string, string> = {};
       for (const [key] of this._store.entries()) {
-        records[key] = genDynamicImportWithDefault(`virtual:prestige/sidebar/${key}`);
+        records[key] = genDynamicImportWithDefault(
+          `virtual:prestige/sidebar/${key}`,
+        );
       }
       return genExportDefault(genObjectFromRaw(records));
     }
@@ -124,7 +127,9 @@ export class ContentSidebarStore {
     const items: SidebarItemType[] = [];
 
     if (group.items?.length && group.autogenerate) {
-      logger.warn(`${group.label} has both items and autogenerate. Only items will be used.`);
+      logger.warn(
+        `${group.label} has both items and autogenerate. Only items will be used.`,
+      );
     }
 
     if (group.items) {
@@ -132,7 +137,9 @@ export class ContentSidebarStore {
         items.push(await this.processItem(childItem));
       }
     } else if (group.autogenerate?.directory) {
-      const generatedItems = await this.autogenerateSidebar(group.autogenerate.directory);
+      const generatedItems = await this.autogenerateSidebar(
+        group.autogenerate.directory,
+      );
       items.push(...generatedItems);
     }
 
@@ -203,22 +210,25 @@ export class ContentSidebarStore {
     if (typeof item === "string" || "slug" in item) {
       const slug = this.resolveSlug(item);
 
-      const file = this.contentStore.getFileBySlug(slug);
+      const file = await getFileBySlug(slug, this.contentDir);
       if (!file) {
         throw new PrestigeError(
           `markdown file not found with slug: ${slug} add one in content folder or update config`,
         );
       }
-      const matter = this.contentStore.getMatter(file);
-      if (matter.label) {
-        return matter.label;
+      const data = (await compileFrontmatter(file)) as any;
+      if (data?.["frontmatter"]?.label) {
+        return data?.["frontmatter"]?.label;
       }
 
       return basename(slug);
     }
 
     // is a group
-    if (typeof item !== "string" && ("items" in item || "autogenerate" in item)) {
+    if (
+      typeof item !== "string" &&
+      ("items" in item || "autogenerate" in item)
+    ) {
       return item.label;
     }
 

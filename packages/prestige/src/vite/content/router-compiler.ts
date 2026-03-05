@@ -1,7 +1,7 @@
-import { mkdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import { SidebarLinkType } from "../core/content/content.types";
-import { rmSafe } from "../utils/file-utils";
+
 export async function compileRoutes(
   linksMap: Map<string, SidebarLinkType[]>,
   routesDir: string,
@@ -9,22 +9,36 @@ export async function compileRoutes(
   const prestigePath = "(prestige)";
   const prestigeFullPath = join(routesDir, prestigePath);
 
-  await rmSafe(prestigeFullPath);
-
   await mkdir(prestigeFullPath, { recursive: true });
+
+  const generatedFiles = new Map<string, string>();
 
   for (const [key, links] of linksMap) {
     const sidebarPath = key;
-    const sidebarFullPath = join(prestigeFullPath, sidebarPath + ".lazy.tsx");
-    await writeFile(sidebarFullPath, createLayoutRoute(key));
+    const sidebarFile = sidebarPath + ".lazy.tsx";
+    generatedFiles.set(sidebarFile, createLayoutRoute(key));
 
     for (const l of links) {
       const pathified = l.slug.replaceAll("/", ".") + ".lazy.tsx";
-
-      const filePath = join(prestigeFullPath, pathified);
-      await writeFile(filePath, createContentRoute(l.slug));
+      generatedFiles.set(pathified, createContentRoute(l.slug));
     }
   }
+
+  await Promise.all(
+    [...generatedFiles.entries()].map(([fileName, contents]) => {
+      const filePath = join(prestigeFullPath, fileName);
+      return writeFile(filePath, contents);
+    }),
+  );
+
+  const existingFiles = await readdir(prestigeFullPath);
+  const staleFiles = existingFiles.filter(
+    (fileName) => fileName.endsWith(".lazy.tsx") && !generatedFiles.has(fileName),
+  );
+
+  await Promise.all(
+    staleFiles.map((fileName) => unlink(join(prestigeFullPath, fileName))),
+  );
 }
 
 function createLayoutRoute(id: string) {

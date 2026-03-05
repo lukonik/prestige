@@ -10,7 +10,6 @@ import { resolveContentLinks } from "./core/content/content-links";
 import { ContentSidebarStore } from "./core/content/content-sidebar.store";
 import {
   CONTENT_VIRTUAL_ID,
-  ContentStore,
   resolveContent,
 } from "./core/content/content.store";
 import { Collections, SidebarLinkType } from "./core/content/content.types";
@@ -19,7 +18,6 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
-  let contentStore: ContentStore;
   let contentCollectionStore: ContentCollectionStore;
   let collections: Collections = [];
   let contentSidebarStore: ContentSidebarStore;
@@ -38,10 +36,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
 
-      contentStore = new ContentStore(contentDir);
-      await contentStore.process();
-
-      contentSidebarStore = new ContentSidebarStore(contentDir, contentStore);
+      contentSidebarStore = new ContentSidebarStore(contentDir);
       const sidebars = await contentSidebarStore.init(collections);
 
       contentCollectionStore = new ContentCollectionStore();
@@ -88,8 +83,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     async hotUpdate({ file, timestamp }) {
       if (isDocsMatcher(file)) {
         const invalidatedModules = new Set<EnvironmentModuleNode>();
-        await contentStore.invalidate(file);
-        const virtualModuleIds = contentStore.getVirtualModuleIdsForFile(file);
+        const virtualModuleIds = `${CONTENT_VIRTUAL_ID}${file}`;
         for (const id of virtualModuleIds) {
           const module = this.environment.moduleGraph.getModuleById(id);
           if (module) {

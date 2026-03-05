@@ -20,10 +20,6 @@
     "test": "pnpm run --filter @lonik/prestige test",
     "coverage": "pnpm run --filter @lonik/prestige test --coverage",
     "typecheck": "pnpm run --filter @lonik/prestige typecheck",
-    "lint": "oxlint . --deny-warnings",
-    "lint:fix": "oxlint . --fix",
-    "fmt": "oxfmt",
-    "fmt:check": "oxfmt --check",
     "prepare": "husky",
     "build:all": "pnpm -p build",
     "test:all": "pnpm -p test"
@@ -31,15 +27,7 @@
   "dependencies": {},
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "oxfmt": "^0.34.0",
-    "oxlint": "^1.49.0"
-  },
-  "lint-staged": {
-    "**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
-      "oxlint . --deny-warnings"
-    ],
-    "*": "oxfmt --no-error-on-unmatched-pattern"
+    "lint-staged": "^16.2.7"
   },
   "packageManager": "pnpm@10.20.0"
 }

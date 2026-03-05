@@ -20,13 +20,5 @@
   },
   "files.readonlyInclude": {
     "**/routeTree.gen.ts": true
-  },
-  "editor.codeActionsOnSave": {
-    "source.fixAll.oxc": "explicit",
-    "source.organizeImports": "never",
-    "source.removeUnusedImports": "always"
-  },
-  "oxc.fmt.configPath": ".oxfmtrc.json",
-  "editor.defaultFormatter": "oxc.oxc-vscode",
-  "editor.formatOnSave": true
+  }
 }

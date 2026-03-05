@@ -32,7 +32,13 @@ async function processFile(path: string, contentDir: string) {
     vFile,
   };
 }
-type LocalVFile = VFile & { data: ContentMatter };
+type LocalVFile = VFile & {
+  data: {
+    matter?: ContentMatter | undefined;
+    next?: SidebarLinkType | null | undefined;
+    prev?: SidebarLinkType | null | undefined;
+  };
+};
 
 export class ContentStore {
   private _store = new Map<string, SidebarLinkType>();
@@ -142,6 +148,9 @@ export class ContentStore {
       }
       if (file.data["next"]) {
         rseolvedCode += `\n export const next = ${JSON.stringify(file.data["next"])}\n`;
+      }
+      if (file.data["matter"]) {
+        rseolvedCode += `\n export const matter = ${JSON.stringify(file.data["matter"])}\n`;
       }
 
       return rseolvedCode;

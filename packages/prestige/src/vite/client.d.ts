@@ -13,11 +13,19 @@ declare module "virtual:prestige/content-all" {
     label: string;
   }
 
+  interface ContentMatter {
+    title: string;
+    lastUpdated: string;
+    label: string;
+    description: string;
+  }
+
   interface ContentType {
     toc: TocItem[];
     prev: NavigationLink;
     next: NavigationLink;
     default: React.ElementType;
+    matter: ContentMatter;
   }
   export const contents: Record<string, () => Promise<ContentType>>;
   export default contents;

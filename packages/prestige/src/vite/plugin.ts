@@ -95,7 +95,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     },
 
     async hotUpdate({ file, timestamp }) {
-      if (file.includes(".md")) {
+      if (isDocsMatcher(file)) {
         const invalidatedModules = new Set<EnvironmentModuleNode>();
         const slug = getSlugByPath(file, contentDir);
         const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
@@ -108,6 +108,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
             timestamp,
             true,
           );
+          this.environment.hot.send({ type: "full-reload" });
         }
       }
     },

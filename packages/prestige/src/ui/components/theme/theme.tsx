@@ -30,7 +30,7 @@ export function Theme() {
       type="button"
       aria-label={`Theme: ${currentTheme}. Click to switch theme`}
       title={`Theme: ${currentTheme}`}
-      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-zinc-200 bg-white text-soft hover:bg-zinc-50 cursor-pointer"
       onClick={() => setTheme(nextTheme(currentTheme))}
     >
       {hydrated && icon}

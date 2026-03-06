@@ -4,8 +4,9 @@ import { EnvironmentModuleNode, normalizePath, type Plugin } from "vite";
 import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
-import { compileRoutes } from "./content/router-compiler";
+import { genObjectFromValues } from "knitwork";
 import { warmupCompiler } from "./content/content-compiler";
+import { compileRoutes } from "./content/router-compiler";
 import {
   COLLECTION_VIRTUAL_ID,
   resolveCollectionNavigations,
@@ -17,6 +18,7 @@ import {
 } from "./core/content/content-sidebar.store";
 import {
   CONTENT_VIRTUAL_ID,
+  getSlugByPath,
   resolveContent,
 } from "./core/content/content.store";
 import {
@@ -25,7 +27,6 @@ import {
   SidebarType,
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
-import { genObjectFromValues, genString } from "knitwork";
 
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
@@ -54,7 +55,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       const routesDir = join(resolvedConfig.root, "src", "routes");
       linksMap = resolveContentLinks(sidebarsMap);
       await compileRoutes(linksMap, routesDir);
-      
+
       // Warm up the MDX compiler to pre-initialize the syntax highlighter (e.g. Shiki)
       // We do this non-blocking so it doesn't slow down the Vite startup.
       warmupCompiler(config.markdown);
@@ -94,19 +95,19 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     },
 
     async hotUpdate({ file, timestamp }) {
-      if (isDocsMatcher(file)) {
+      if (file.includes(".md")) {
         const invalidatedModules = new Set<EnvironmentModuleNode>();
-        const virtualModuleIds = `${CONTENT_VIRTUAL_ID}${file}`;
-        for (const id of virtualModuleIds) {
-          const module = this.environment.moduleGraph.getModuleById(id);
-          if (module) {
-            this.environment.moduleGraph.invalidateModule(
-              module,
-              invalidatedModules,
-              timestamp,
-              true,
-            );
-          }
+        const slug = getSlugByPath(file, contentDir);
+        const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
+        const module =
+          this.environment.moduleGraph.getModuleById(virtualModuleId);
+        if (module) {
+          this.environment.moduleGraph.invalidateModule(
+            module,
+            invalidatedModules,
+            timestamp,
+            true,
+          );
         }
       }
     },

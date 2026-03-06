@@ -78,7 +78,7 @@ export function getVirtualModuleIdsForFile(path: string, contentDir: string) {
   return ["\0" + CONTENT_VIRTUAL_ID + slug];
 }
 
-function getSlugByPath(path: string, contentDir: string) {
+export function getSlugByPath(path: string, contentDir: string) {
   // 1. Get the relative path: "zz/zz/myFile.json"
   const relativePath = relative(contentDir, path);
 

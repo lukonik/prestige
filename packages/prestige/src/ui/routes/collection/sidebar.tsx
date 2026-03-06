@@ -62,7 +62,7 @@ function SidebarLink({
     <div>
       <Link
         onClick={onLinkClick}
-        activeProps={{ className: "bg-primary-50 text-primary-800" }}
+        activeProps={{ className: "bg-primary-50/70 text-primary-900" }}
         className="w-full inline-block rounded-sm py-1 px-2"
         to={slug}
       >

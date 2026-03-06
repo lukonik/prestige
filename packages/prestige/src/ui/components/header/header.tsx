@@ -4,7 +4,7 @@ import { Search } from "../search/search";
 
 export default function Header() {
   return (
-    <header className="flex border-b border-gray-200 h-header sticky top-0 bg-surface-container items-center px-4 justify-between">
+    <header className="flex border-b border-gray-200 h-header sticky top-0 bg-gray-50/90 background-  items-center px-4 justify-between">
       <div className="flex gap-2">
         <Link to={"/"}>Home</Link>
         {collections.map((collection) => (

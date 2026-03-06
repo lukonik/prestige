@@ -20,7 +20,6 @@
   --color-primary-900: var(--color-indigo-900);
   --color-primary-950: var(--color-indigo-950);
   /* Default default scale. Zinc is closest to Starlight’s defaults. */
-  --color-gray-25: #fcfcfd;
   --color-gray-50: var(--color-zinc-50);
   --color-gray-100: var(--color-zinc-100);
   --color-gray-200: var(--color-zinc-200);
@@ -46,7 +45,5 @@
 }
 
 :root {
-  color: var(--color-gray-950);
-  font-family: var(--font-sans);
-  background: var(--color-gray-25);
+  @apply bg-gray-50/10 text-gray-950 font-sans;
 }

@@ -2,6 +2,7 @@ import { compile } from "@mdx-js/mdx";
 import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
 import rehypeSlug from "rehype-slug";
 import remarkFlexibleToc, { TocItem } from "remark-flexible-toc";
+import remarkFrontmatter from "remark-frontmatter";
 import { PluggableList } from "unified";
 import { Compatible, VFile } from "vfile";
 import { matter } from "vfile-matter";
@@ -30,6 +31,7 @@ export async function compileMarkdown(
 
   const remarkPlugins: PluggableList = [
     ...(options?.remarkPlugins ?? []),
+    remarkFrontmatter,
     [remarkFlexibleToc, { tocRef: toc }],
   ];
 

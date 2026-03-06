@@ -45,5 +45,5 @@
 }
 
 :root {
-  @apply bg-gray-50/10 text-gray-950 font-sans;
+  @apply bg-gray-50/50 text-gray-950 font-sans;
 }

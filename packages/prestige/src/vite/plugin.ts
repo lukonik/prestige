@@ -5,6 +5,7 @@ import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { compileRoutes } from "./content/router-compiler";
+import { warmupCompiler } from "./content/content-compiler";
 import {
   COLLECTION_VIRTUAL_ID,
   resolveCollectionNavigations,
@@ -53,6 +54,10 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       const routesDir = join(resolvedConfig.root, "src", "routes");
       linksMap = resolveContentLinks(sidebarsMap);
       await compileRoutes(linksMap, routesDir);
+      
+      // Warm up the MDX compiler to pre-initialize the syntax highlighter (e.g. Shiki)
+      // We do this non-blocking so it doesn't slow down the Vite startup.
+      warmupCompiler(config.markdown);
     },
     resolveId(id) {
       if (id.includes(CONTENT_VIRTUAL_ID)) {

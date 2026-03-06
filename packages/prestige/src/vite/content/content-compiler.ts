@@ -25,7 +25,7 @@ export async function compileMarkdown(
 
   const rehypePlugins: PluggableList = [
     ...(options?.rehypePlugins ?? []),
-    // [rehypeShiki, shikiOptions],
+    [rehypeShiki, shikiOptions],
     rehypeSlug,
   ];
 
@@ -48,4 +48,8 @@ export async function compileFrontmatter(content: Compatible) {
   const vFile = new VFile(content);
   matter(vFile, { strip: true });
   return vFile.data;
+}
+
+export function warmupCompiler(options?: PrestigeConfig["markdown"]) {
+  compileMarkdown("```js\n```", "http://localhost", options).catch(() => {});
 }

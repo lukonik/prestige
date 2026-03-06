@@ -61,11 +61,11 @@ function SidebarLink({
 }) {
   const slug = `/${link.slug}`;
   return (
-    <div>
+    <div className="flex items-center">
       <Link
         onClick={onLinkClick}
         activeProps={{ className: "text-zinc-700 font-medium" }}
-        className="w-full inline-flex rounded py-1 px-2 gap-2 hover:bg-zinc-100 "
+        className="w-full inline-flex rounded py-1 px-2 gap-2 hover:bg-zinc-100 text-sm mr-2"
         to={slug}
       >
         <BookOpen className="w-4"/>
@@ -77,7 +77,7 @@ function SidebarLink({
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className=" w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header text-[15px]">
+    <div className="w-full lg:w-sidebar border-r border-gray-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4">
       {sidebar.items.map((item) => {
         if (typeof item === "string" || "slug" in item) {
           const key = typeof item === "string" ? item : item.slug;

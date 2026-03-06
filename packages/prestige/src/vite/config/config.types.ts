@@ -14,6 +14,14 @@ export const PrestigeConfigSchema = z.object({
     .describe("The directory of your docs, relative to root, defaults to src/content/docs")
     .default(DEFAULT_DOCS_DIR),
   collections: CollectionsSchema,
+  algolia: z
+    .object({
+      appId: z.string().describe("The Algolia App ID"),
+      apiKey: z.string().describe("The Algolia Search API Key"),
+      indexName: z.string().describe("The Algolia Index Name"),
+    })
+    .optional()
+    .describe("Algolia DocSearch configuration"),
   markdown: z
     .object({
       shikiOptions: z

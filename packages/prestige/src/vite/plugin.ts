@@ -28,6 +28,8 @@ import {
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 
+export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
+
 export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
@@ -61,6 +63,9 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       warmupCompiler(config.markdown);
     },
     resolveId(id) {
+      if (id === CONFIG_VIRTUAL_ID) {
+        return "\0" + id;
+      }
       if (id.includes(CONTENT_VIRTUAL_ID)) {
         return "\0" + id;
       }
@@ -75,6 +80,9 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       return null;
     },
     async load(id) {
+      if (id === `\0${CONFIG_VIRTUAL_ID}`) {
+        return genExportDefault(JSON.stringify(config));
+      }
       if (id.includes(CONTENT_VIRTUAL_ID)) {
         return await resolveContent(id, linksMap, contentDir);
       }

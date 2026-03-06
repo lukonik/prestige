@@ -20,6 +20,11 @@ export default defineConfig(({ mode }) => {
         title: "Title",
         description: " ee qweqwqeqeq  qweqw. ",
         docsDir: isTest ? "playground/src/content/docs" : undefined,
+        algolia: {
+          appId: "YOUR_APP_ID",
+          apiKey: "YOUR_SEARCH_API_KEY",
+          indexName: "YOUR_INDEX_NAME",
+        },
         collections: [
           {
             id: "docs",

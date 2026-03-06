@@ -64,6 +64,12 @@ declare module "virtual:prestige/sidebar-all" {
   export default sidebars;
 }
 
+declare module "virtual:prestige/sidebar/*" {
+  import { SidebarType } from "virtual:prestige/sidebar-all";
+  const sidebar: SidebarType;
+  export default sidebar;
+}
+
 declare module "virtual:prestige/collection-all" {
   type CollectionNavigation = {
     id: string;
@@ -72,4 +78,10 @@ declare module "virtual:prestige/collection-all" {
   };
   const collections: Array<CollectionNavigation>;
   export default collections;
+}
+
+declare module "virtual:prestige/config" {
+  import type { PrestigeConfig } from "./config/config.types";
+  const config: PrestigeConfig;
+  export default config;
 }

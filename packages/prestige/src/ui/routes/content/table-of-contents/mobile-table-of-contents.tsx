@@ -11,7 +11,10 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
-      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     }
@@ -42,7 +45,12 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
         >
           <div className="flex items-center gap-2">
             <span>On this page</span>
-            <ChevronRight className={clsx("w-4 h-4 transition-transform duration-200", isOpen && "rotate-90")} />
+            <ChevronRight
+              className={clsx(
+                "w-4 h-4 transition-transform duration-200",
+                isOpen && "rotate-90",
+              )}
+            />
           </div>
           {activeItem && (
             <span className="truncate text-gray-500 dark:text-gray-400 font-normal max-w-[50%] text-right">
@@ -52,20 +60,25 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
         </button>
 
         {isOpen && (
-          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 shadow-xl">
+          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-xl">
             <ul className="p-4 space-y-2.5 text-sm">
               {toc.map((item) => {
-                const itemHref = item.href.startsWith("#") ? item.href : `#${item.href}`;
+                const itemHref = item.href.startsWith("#")
+                  ? item.href
+                  : `#${item.href}`;
                 const isActive = activeId === itemHref;
                 return (
-                  <li key={itemHref} style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}>
+                  <li
+                    key={itemHref}
+                    style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}
+                  >
                     <a
                       href={itemHref}
                       className={clsx(
                         "block transition-colors duration-200 line-clamp-2",
                         isActive
-                          ? "text-primary-600 dark:text-primary-400 font-medium"
-                          : "text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100",
+                          ? "text-primary-600 font-medium"
+                          : "text-gray-600",
                       )}
                       onClick={(e) => {
                         handleLinkClick(e, item.href);

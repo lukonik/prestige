@@ -19,15 +19,15 @@ function ContentNavigation({
     <Link
       to={"/" + navigation.slug}
       className={clsx(
-        " flex-1 h-20 mb-4 shadow-md border border-default rounded-md cursor-pointer hover:border-gray-400 flex items-center px-4",
+        " flex-1 h-20 mb-4 border border-zinc-200 hover:bg-zinc-50 rounded-md cursor-pointer flex items-center px-4",
         isNext ? "justify-end" : "justify-start",
       )}
     >
-      <div className={clsx("flex items-center gap-2", isNext && "flex-row-reverse")}>
-        {isNext ? <ArrowRight /> : <ArrowLeft />}
+      <div className={clsx("flex items-center gap-4", isNext && "flex-row-reverse")}>
+        {isNext ? <ArrowRight className="text-zinc-400"/> : <ArrowLeft className="text-zinc-400" />}
         <div className={clsx("flex flex-col", isNext && "items-end")}>
-          <span className="font-light text-sm">{label}</span>
-          <span className="text-2xl">{navigation.label}</span>
+          <span className="text-xs tracking-widest font-mono">{label.toLocaleUpperCase()}</span>
+          <span className="text-2xl font-li text-text-strong">{navigation.label}</span>
         </div>
       </div>
     </Link>

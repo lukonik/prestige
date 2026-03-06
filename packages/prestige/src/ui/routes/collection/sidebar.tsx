@@ -61,11 +61,11 @@ function SidebarLink({
 }) {
   const slug = `/${link.slug}`;
   return (
-    <div className="flex items-center">
+    <div className="flex items-center " >
       <Link
         onClick={onLinkClick}
         activeProps={{ className: "text-zinc-700 font-medium" }}
-        className="w-full inline-flex rounded py-1 px-2 gap-2 hover:bg-zinc-100 text-sm mr-2"
+        className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-zinc-100 text-sm mr-2 items-center"
         to={slug}
       >
         <BookOpen className="w-4"/>

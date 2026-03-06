@@ -28,14 +28,19 @@ function SidebarGroup({
         onClick={() => setIsOpen((prev) => !prev)}
       >
         <span className="font-medium mb-1">{group.label}</span>
-        <ChevronDown size={20} className={clsx("transform transition", open && "rotate-180")} />
+        <ChevronDown
+          size={20}
+          className={clsx("transform transition", open && "rotate-180")}
+        />
       </button>
       {open && (
-        <div className="pl-2 border-l border-gray-200 mb-2">
+        <div className="pl-2  mb-2">
           {group.items.map((item) => {
             if (typeof item === "string" || "slug" in item) {
               const key = typeof item === "string" ? item : item.slug;
-              return <SidebarLink key={key} link={item} onLinkClick={onLinkClick} />;
+              return (
+                <SidebarLink key={key} link={item} onLinkClick={onLinkClick} />
+              );
             }
             return <SidebarGroup key={item.label} group={item} />;
           })}
@@ -57,8 +62,8 @@ function SidebarLink({
     <div>
       <Link
         onClick={onLinkClick}
-        activeProps={{ className: "bg-primary text-on-primary" }}
-        className="w-full inline-block rounded-sm py-1 px-2 font-light"
+        activeProps={{ className: "bg-primary-50 text-primary-800" }}
+        className="w-full inline-block rounded-sm py-1 px-2"
         to={slug}
       >
         {link.label}
@@ -69,11 +74,13 @@ function SidebarLink({
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header">
+    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header text-[15px]">
       {sidebar.items.map((item) => {
         if (typeof item === "string" || "slug" in item) {
           const key = typeof item === "string" ? item : item.slug;
-          return <SidebarLink onLinkClick={onLinkClick} key={key} link={item} />;
+          return (
+            <SidebarLink onLinkClick={onLinkClick} key={key} link={item} />
+          );
         }
         return <SidebarGroup key={item.label} group={item} />;
       })}

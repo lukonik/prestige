@@ -1,6 +1,7 @@
 import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 
 import { Header } from "@lonik/prestige/ui";
+import { ThemeProvider } from "@lonik/themer";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -29,14 +30,15 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
       <body>
-        <Header />
-        {children}
-        {/* <TanStackDevtools
+        <ThemeProvider attribute="data-theme" defaultTheme="system">
+          <Header />
+          {children}
+          {/* <TanStackDevtools
           config={{
             position: "middle-left",
           }}
@@ -47,6 +49,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
             },
           ]}
         /> */}
+        </ThemeProvider>
+
         <Scripts />
       </body>
     </html>

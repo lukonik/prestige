@@ -1,4 +1,5 @@
 import { useTheme } from "@lonik/themer";
+import { useHydrated } from "@tanstack/react-router";
 import { Moon, Sun, SunMoon } from "lucide-react";
 
 const themeOrder = ["system", "light", "dark"] as const;
@@ -7,6 +8,7 @@ type ThemeValue = (typeof themeOrder)[number];
 export function Theme() {
   const { theme, setTheme } = useTheme();
   const currentTheme: ThemeValue = (theme as ThemeValue) ?? "system";
+  const hydrated = useHydrated();
 
   const nextTheme = (value: ThemeValue): ThemeValue => {
     const index = themeOrder.indexOf(value);
@@ -24,13 +26,14 @@ export function Theme() {
 
   return (
     <button
+      suppressHydrationWarning
       type="button"
       aria-label={`Theme: ${currentTheme}. Click to switch theme`}
       title={`Theme: ${currentTheme}`}
       className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
       onClick={() => setTheme(nextTheme(currentTheme))}
     >
-      {icon}
+      {hydrated && icon}
     </button>
   );
 }

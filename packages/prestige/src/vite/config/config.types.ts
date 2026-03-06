@@ -22,6 +22,11 @@ export const PrestigeConfigSchema = z.object({
     })
     .optional()
     .describe("Algolia DocSearch configuration"),
+  github: z
+    .string()
+    .url()
+    .optional()
+    .describe("GitHub repository URL shown in the header"),
   markdown: z
     .object({
       shikiOptions: z

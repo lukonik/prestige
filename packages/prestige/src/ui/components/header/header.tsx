@@ -1,12 +1,11 @@
-import { ThemeProvider } from "@lonik/themer";
 import { Link } from "@tanstack/react-router";
 import collections from "virtual:prestige/collection-all";
+import { GitHub } from "../github/github";
 import { Search } from "../search/search";
 import { Theme } from "../theme/theme";
 
 export default function Header() {
   return (
-    <ThemeProvider attribute="data-theme" defaultTheme="system">
       <header className="sticky top-0 z-40 flex h-header  border-b border-gray-200 bg-gray-50/80 px-4 backdrop-blur-md">
         <div className="container mx-auto flex max-w-360  items-center justify-between">
           <div className="flex gap-2">
@@ -26,10 +25,10 @@ export default function Header() {
           </div>
           <div className="flex items-center gap-2">
             <Search />
+            <GitHub />
             <Theme />
           </div>
         </div>
       </header>
-    </ThemeProvider>
   );
 }

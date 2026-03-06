@@ -18,6 +18,7 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
       prestige({
         title: "Title",
+        github: "https://github.com/lukonik/Prestige",
         description: " ee qweqwqeqeq  qweqw. ",
         docsDir: isTest ? "playground/src/content/docs" : undefined,
         algolia: {

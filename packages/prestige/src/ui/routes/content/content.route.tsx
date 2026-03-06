@@ -6,7 +6,7 @@ export function ContentRoute(data: any) {
   return {
     component: () => {
       return (
-        <div className="flex lg:gap-10 items-start max-w-[100vw]">
+        <div className="flex lg:gap-6 items-start max-w-[100vw]">
           <div className="flex-1 min-w-0">
             <MobileTableOfContent toc={data.toc} />
             <article className="prose prose-base max-w-none wrap-break-word">

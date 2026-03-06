@@ -12,7 +12,7 @@ export function Search() {
       <DocSearch
         appId={config.algolia.appId}
         apiKey={config.algolia.apiKey}
-        indices={config.algolia.indexName}
+        indices={[config.algolia.indexName]}
       />
     </div>
   );

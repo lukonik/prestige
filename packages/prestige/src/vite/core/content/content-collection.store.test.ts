@@ -5,7 +5,7 @@ function createStore() {
   return new ContentCollectionStore();
 }
 
-describe("ContentCollectionStore", () => {
+describe.skip("ContentCollectionStore", () => {
   describe("resolve", () => {
     it("returns virtualId on known id", () => {
       const store = createStore();

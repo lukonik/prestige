@@ -16,7 +16,7 @@ export function CollectionRoute(sidebar: SidebarType, id: string) {
     },
     component: () => {
       return (
-        <div className="container mx-auto flex gap-6">
+        <div className="container mx-auto flex max-w-360 gap-6 px-4 sm:px-6 lg:px-8">
           <MobileSidebar sidebar={sidebar} />
           <div className="hidden lg:block">
             {sidebar && <Sidebar sidebar={sidebar} />}

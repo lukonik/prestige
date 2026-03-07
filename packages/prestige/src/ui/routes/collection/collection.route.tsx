@@ -16,12 +16,12 @@ export function CollectionRoute(sidebar: SidebarType, id: string) {
     },
     component: () => {
       return (
-        <div className="container mx-auto flex max-w-360 lg:gap-6 px-6">
+        <div className="container mx-auto flex max-w-360 lg:gap-6">
           <MobileSidebar sidebar={sidebar} />
           <div className="hidden lg:block">
             {sidebar && <Sidebar sidebar={sidebar} />}
           </div>
-          <div className="flex-1 pt-10 pb-20 lg:py-15 ">
+          <div className="flex-1 pt-10 pb-20 lg:py-15">
             <Outlet />
           </div>
         </div>

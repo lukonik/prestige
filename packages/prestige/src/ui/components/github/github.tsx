@@ -13,7 +13,7 @@ export function GitHub() {
       rel="noreferrer"
       aria-label="GitHub repository"
       title="GitHub repository"
-      className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100"
+      className="inline-flex h-8 w-8 items-center justify-center rounded border border-gray-200 bg-gray-50 text-soft hover:bg-gray-100"
     >
       <Github size={16} />
     </a>

@@ -1,6 +1,6 @@
 import { it, describe, expect, vi, beforeEach } from "vitest";
 import { resolveLink, resolveSlug, resolveSidebars, SIDEBAR_VIRTUAL_ID } from "./content-sidebar.store";
-import { getFileBySlug } from "../core/content/content.store";
+import { getFileBySlug } from "./content.store";
 import { compileFrontmatter } from "./content-compiler";
 import { pathExists } from "../utils/file-utils";
 import { readdir } from "node:fs/promises";
@@ -8,7 +8,7 @@ import { PrestigeError } from "../utils/errors";
 import { Collections } from "../core/content/content.types";
 import logger from "../utils/logger";
 
-vi.mock("../core/content/content.store", () => ({
+vi.mock("./content.store", () => ({
   getFileBySlug: vi.fn(),
 }));
 

@@ -5,7 +5,7 @@ import { compileFrontmatter } from "./content-compiler";
 import { PrestigeError } from "../utils/errors";
 import { pathExists } from "../utils/file-utils";
 import logger from "../utils/logger";
-import { getFileBySlug } from "../core/content/content.store";
+import { getFileBySlug } from "./content.store";
 import {
   Collection,
   CollectionGroup,

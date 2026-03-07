@@ -20,7 +20,7 @@ import {
   CONTENT_VIRTUAL_ID,
   getSlugByPath,
   resolveContent,
-} from "./core/content/content.store";
+} from "./content/content.store";
 import {
   Collections,
   InternalSidebarLinkType,

@@ -14,7 +14,7 @@ function SidebarOverlay({ sidebar }: { sidebar: SidebarType }) {
         {isOpen ? <X /> : <Menu />}
       </button>
       {isOpen && (
-        <div className="fixed shadow-xl left-0 overflow-auto top-[calc(var(--spacing-header))] w-full h-[calc(100vh-var(--spacing-header))] bg-surface-container">
+        <div className="fixed shadow-xl left-0 overflow-auto top-[calc(var(--spacing-header))] w-full h-[calc(100vh-var(--spacing-header))]">
           <Sidebar onLinkClick={() => setIsOpen(false)} sidebar={sidebar} />
         </div>
       )}

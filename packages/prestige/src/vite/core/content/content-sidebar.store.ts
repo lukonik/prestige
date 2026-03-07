@@ -1,13 +1,7 @@
-import { genObjectFromRaw, genObjectFromValues } from "knitwork";
 import { readdir } from "node:fs/promises";
 import { basename } from "node:path";
 import { join } from "pathe";
 import { compileFrontmatter } from "../../content/content-compiler";
-import {
-  genDynamicImportWithDefault,
-  genExportDefault,
-  genExportUndefined,
-} from "../../utils/code-generation";
 import { PrestigeError } from "../../utils/errors";
 import { pathExists } from "../../utils/file-utils";
 import logger from "../../utils/logger";
@@ -16,12 +10,13 @@ import {
   Collection,
   CollectionGroup,
   CollectionItem,
-  CollectionLink,
+  InternalCollectionLink,
   Collections,
   SidebarGroupType,
   SidebarItemType,
-  SidebarLinkType,
+  InternalSidebarLinkType,
   SidebarType,
+  SidebarLinkType,
 } from "./content.types";
 
 export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
@@ -36,6 +31,8 @@ function resolveDefaultLink(
   for (const item of items) {
     if ("slug" in item) {
       return item.slug;
+    } else if ("link" in item) {
+      return item.link;
     } else if ("items" in item && item.items.length > 0) {
       const link = resolveDefaultLink(item.items);
       if (link) return link;
@@ -84,7 +81,12 @@ async function processItem(
   contentDir: string,
 ): Promise<SidebarItemType> {
   if (typeof item === "string" || "slug" in item) {
-    return resolveSidebarLink(item as CollectionLink, contentDir);
+    return resolveInternalSidebarLink(
+      item as InternalCollectionLink,
+      contentDir,
+    );
+  } else if ("link" in item) {
+    return resolveSidebarLink(item, contentDir);
   } else {
     return resolveSidebarGroup(item as CollectionGroup, contentDir);
   }
@@ -124,10 +126,10 @@ async function resolveSidebarGroup(
 }
 
 /** @visibleForTesting */
-async function resolveSidebarLink(
-  item: CollectionLink,
+async function resolveInternalSidebarLink(
+  item: InternalCollectionLink,
   contentDir: string,
-): Promise<SidebarLinkType> {
+): Promise<InternalSidebarLinkType> {
   const label = await resolveLabel(item, contentDir);
   const slug = resolveSlug(item);
 
@@ -146,6 +148,26 @@ async function resolveSidebarLink(
   return {
     label,
     slug,
+  };
+}
+
+/** @visibleForTesting */
+async function resolveSidebarLink(
+  item: SidebarLinkType,
+  contentDir: string,
+): Promise<SidebarLinkType> {
+  const label = await resolveLabel(item, contentDir);
+  const link = resolveLink(item);
+
+  if (!link) {
+    throw new PrestigeError(
+      `The link cannot be empty. Remove it and try again. link label is ${label}`,
+    );
+  }
+
+  return {
+    label,
+    link,
   };
 }
 
@@ -176,7 +198,7 @@ async function autogenerateSidebar(
     } else if (dirent.isFile() && fileExtRegex.test(dirent.name)) {
       const fullPath = join(directory, dirent.name);
       const slug = fullPath.replace(fileExtRegex, "");
-      items.push(await resolveSidebarLink(slug, contentDir));
+      items.push(await resolveInternalSidebarLink(slug, contentDir));
     }
   }
   return items;
@@ -226,4 +248,12 @@ function resolveSlug(item: CollectionItem) {
     }
     return "";
   }
+}
+
+/** @visibleForTesting */
+function resolveLink(item: CollectionItem) {
+  if (typeof item === "object" && "link" in item) {
+    return item.link;
+  }
+  return "";
 }

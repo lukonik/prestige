@@ -17,8 +17,8 @@ export async function compileMarkdown(
 
   const shikiOptions: RehypeShikiOptions = {
     themes: {
-      light: "vitesse-light",
-      dark: "vitesse-dark",
+      light: "github-light",
+      dark: "github-dark",
     },
     ...options?.shikiOptions,
   };

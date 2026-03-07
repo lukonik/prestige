@@ -3,10 +3,8 @@ import { pathToFileURL } from "node:url";
 import { parse, relative } from "pathe";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
-import { VFile } from "vfile";
-import { matter } from "vfile-matter";
 import { compileMarkdown } from "../../content/content-compiler";
-import { ContentMatter, SidebarLinkType } from "./content.types";
+import { InternalSidebarLinkType } from "./content.types";
 
 import { compileFrontmatter } from "../../content/content-compiler";
 
@@ -15,7 +13,7 @@ export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
 export function resolveSiblings(
   base: string,
   slug: string,
-  linksMap: Map<string, SidebarLinkType[]>,
+  linksMap: Map<string, InternalSidebarLinkType[]>,
 ) {
   const links = linksMap.get(base);
   if (!links?.length) {
@@ -23,8 +21,8 @@ export function resolveSiblings(
   }
   const linkIndex = links.findIndex((link) => link.slug === slug);
 
-  let prev: SidebarLinkType | undefined;
-  let next: SidebarLinkType | undefined;
+  let prev: InternalSidebarLinkType | undefined;
+  let next: InternalSidebarLinkType | undefined;
   if (linkIndex > 0) {
     prev = links[linkIndex - 1];
   }
@@ -45,7 +43,7 @@ export async function resolveMarkdown(slug: string, contentDir: string) {
 
 export async function resolveContent(
   id: string,
-  linksMap: Map<string, SidebarLinkType[]>,
+  linksMap: Map<string, InternalSidebarLinkType[]>,
   contentDir: string,
 ) {
   const slug = id.replace(CONTENT_VIRTUAL_ID, "").replace("\0", "");
@@ -89,21 +87,3 @@ export function getSlugByPath(path: string, contentDir: string) {
 
   return result;
 }
-
-async function processFile(path: string, contentDir: string) {
-  const vFile = await read(path);
-  matter(vFile, { strip: true });
-
-  const slug = await getSlugByPath(path, contentDir);
-  return {
-    slug,
-    vFile,
-  };
-}
-type LocalVFile = VFile & {
-  data: {
-    matter?: ContentMatter | undefined;
-    next?: SidebarLinkType | null | undefined;
-    prev?: SidebarLinkType | null | undefined;
-  };
-};

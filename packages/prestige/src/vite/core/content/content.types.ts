@@ -16,7 +16,7 @@ export const ContentSchema = z.object({
 
 export type ContentType = z.infer<typeof ContentSchema>;
 
-const CollectionLinkSchema = z.union([
+const InternalCollectionLinkSchema = z.union([
   z.object({
     label: z.string(),
     slug: z.string(),
@@ -24,7 +24,16 @@ const CollectionLinkSchema = z.union([
   z.string(),
 ]);
 
+const CollectionLinkSchema = z.object({
+  label: z.string(),
+  link: z.string(),
+});
+
 export type CollectionLink = z.infer<typeof CollectionLinkSchema>;
+
+export type InternalCollectionLink = z.infer<
+  typeof InternalCollectionLinkSchema
+>;
 
 export type CollectionGroup = {
   label: string;
@@ -33,23 +42,30 @@ export type CollectionGroup = {
   autogenerate?: { directory: string } | undefined;
 };
 
-export type CollectionItem = CollectionLink | CollectionGroup;
+export type CollectionItem =
+  | InternalCollectionLink
+  | CollectionGroup
+  | CollectionLink;
 
-const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> = z.object({
-  label: z.string(),
-  items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
-  collapsible: z.boolean().optional(),
-  autogenerate: z
-    .object({
-      directory: z.string(),
-    })
-    .optional(),
-});
+const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> =
+  z.object({
+    label: z.string(),
+    items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
+    collapsible: z.boolean().optional(),
+    autogenerate: z
+      .object({
+        directory: z.string(),
+      })
+      .optional(),
+  });
 
-const CollectionItemSchema: z.ZodType<CollectionItem, CollectionItem> = z.union([
-  CollectionLinkSchema,
-  z.lazy(() => CollectionGroupSchema),
-]);
+const CollectionItemSchema: z.ZodType<CollectionItem, CollectionItem> = z.union(
+  [
+    CollectionLinkSchema,
+    InternalCollectionLinkSchema,
+    z.lazy(() => CollectionGroupSchema),
+  ],
+);
 
 export const CollectionSchema = z.object({
   id: z
@@ -63,7 +79,10 @@ export const CollectionSchema = z.object({
     .describe("The id of the collection, must match the folder name"),
   items: z.array(CollectionItemSchema),
   label: z.string().optional().describe("The label of the collection"),
-  defaultLink: z.string().optional().describe("The default link of the collection"),
+  defaultLink: z
+    .string()
+    .optional()
+    .describe("The default link of the collection"),
 });
 
 export type Collection = z.infer<typeof CollectionSchema>;
@@ -80,9 +99,14 @@ export const CollectionsSchema = z.array(CollectionSchema);
 
 export type Collections = z.infer<typeof CollectionsSchema>;
 
-export interface SidebarLinkType {
+export interface InternalSidebarLinkType {
   slug: string;
   label: string;
+}
+
+export interface SidebarLinkType {
+  label: string;
+  link: string;
 }
 
 export interface SidebarGroupType {
@@ -91,7 +115,10 @@ export interface SidebarGroupType {
   collapsible?: boolean | undefined;
 }
 
-export type SidebarItemType = SidebarLinkType | SidebarGroupType;
+export type SidebarItemType =
+  | InternalSidebarLinkType
+  | SidebarGroupType
+  | SidebarLinkType;
 
 export interface SidebarType {
   items: SidebarItemType[];

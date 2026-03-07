@@ -1,9 +1,9 @@
-import { SidebarItemType, SidebarLinkType, SidebarType } from "./content.types";
+import { SidebarItemType, InternalSidebarLinkType, SidebarType } from "./content.types";
 
 export function resolveContentLinks(sidebars: Map<string, SidebarType>) {
-  const links = new Map<string, SidebarLinkType[]>();
+  const links = new Map<string, InternalSidebarLinkType[]>();
   for (const [key, sidebar] of sidebars) {
-    const sidebarLinks: SidebarLinkType[] = [];
+    const sidebarLinks: InternalSidebarLinkType[] = [];
     for (const item of sidebar.items) {
       processItem(item, sidebarLinks);
     }
@@ -12,7 +12,7 @@ export function resolveContentLinks(sidebars: Map<string, SidebarType>) {
   return links;
 }
 
-function processItem(item: SidebarItemType, links: SidebarLinkType[] = []) {
+function processItem(item: SidebarItemType, links: InternalSidebarLinkType[] = []) {
   if ("slug" in item) {
     links.push(item);
   } else if ("items" in item) {

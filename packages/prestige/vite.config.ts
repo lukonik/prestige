@@ -40,10 +40,10 @@ export default defineConfig(({ mode }) => {
                 slug: "docs/installation",
               },
               { label: "Typescript", slug: "docs/typescript" },
-              // {
-              //   label: "Image",
-              //   slug: "docs/image/component",
-              // },
+              {
+                label: "Google",
+                link: "https://www.google.com",
+              },
               { label: "Vite Plugin", slug: "docs/vite-plugin" },
               {
                 label: "Loaders",
@@ -81,8 +81,11 @@ export default defineConfig(({ mode }) => {
         ? [
             tanstackStart({
               prerender: {
-                enabled: true,
+                enabled: false,
                 // crawlLinks: true,
+              },
+              spa: {
+                enabled: true,
               },
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.

@@ -23,7 +23,7 @@ import {
 } from "./core/content/content.store";
 import {
   Collections,
-  SidebarLinkType,
+  InternalSidebarLinkType,
   SidebarType,
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
@@ -35,7 +35,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let contentDir: string;
   let isDocsMatcher: Matcher;
   let collections: Collections = [];
-  let linksMap: Map<string, SidebarLinkType[]>;
+  let linksMap: Map<string, InternalSidebarLinkType[]>;
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
   return {

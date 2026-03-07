@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       Inspect(),
       tsconfigPaths(),
       prestige({
-        title: "Title",
+        title: "Prestige",
         github: "https://github.com/lukonik/Prestige",
         description: " ee qweqwqeqeq  qweqw. ",
         docsDir: isTest ? "playground/src/content/docs" : undefined,

@@ -82,6 +82,7 @@ declare module "virtual:prestige/collection-all" {
 
 declare module "virtual:prestige/config" {
   interface PrestigeConfig {
+    favicon?: string;
     algolia?: {
       appId: string;
       apiKey: string;

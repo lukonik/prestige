@@ -24,7 +24,7 @@ export function createPrestigeRootRoute(options: {
   if (config.favicon) {
     links.push({
       rel: "icon",
-      href: "/favicon.ico",
+      href: config.favicon,
     });
   }
 

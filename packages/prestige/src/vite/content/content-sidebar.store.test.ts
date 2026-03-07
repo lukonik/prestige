@@ -157,7 +157,7 @@ describe("resolveSidebars", () => {
       }
     ];
 
-    vi.mocked(getFileBySlug).mockResolvedValue(null);
+    vi.mocked(getFileBySlug).mockResolvedValue(null as any);
 
     await expect(resolveSidebars(collections, contentDir)).rejects.toThrow(PrestigeError);
   });

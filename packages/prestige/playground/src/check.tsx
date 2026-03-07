@@ -1,3 +1,3 @@
 export default function Check() {
-  return <h1>HELLLqeqeqeqqweqweqeqeasdsadqe</h1>;
+  return <h1 className="text-default-100">HELLLqeqeqeqqweqweqeqeasdsadqe</h1>;
 }

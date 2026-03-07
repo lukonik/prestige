@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 @layer theme {
   :root {
     --color-default-50: var(--color-stone-50);

@@ -7,7 +7,7 @@ export default defineConfig({
     ui: "./src/ui/index.ts",
   },
   platform: "neutral",
-  exports: true,
+  exports: false,
   dts: true,
   sourcemap: true,
   publint: true,

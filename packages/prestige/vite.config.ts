@@ -32,6 +32,10 @@ export default defineConfig(({ mode }) => {
             defaultLink: "docs/introduction",
             items: [
               {
+                label:"Google",
+                link:"https://www.google.com"
+              },
+              {
                 label: "Introduction",
                 slug: "docs/introduction",
               },
@@ -81,9 +85,12 @@ export default defineConfig(({ mode }) => {
         ? [
             tanstackStart({
               prerender: {
-                enabled: true,
+                enabled: false,
                 // crawlLinks: true,
               },
+              spa:{
+                enabled:true
+              }
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
             nitro({ preset: "bun", renderer: false }),

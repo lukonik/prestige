@@ -1,9 +1,9 @@
 import { mkdir, readdir, unlink, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { SidebarLinkType } from "../core/content/content.types";
+import { InternalSidebarLinkType } from "../core/content/content.types";
 
 export async function compileRoutes(
-  linksMap: Map<string, SidebarLinkType[]>,
+  linksMap: Map<string, InternalSidebarLinkType[]>,
   routesDir: string,
 ) {
   const prestigePath = "(prestige)";

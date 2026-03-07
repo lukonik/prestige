@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import clsx from "clsx";
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
 import {
   SidebarGroupType,
-  SidebarLinkType,
+  InternalSidebarLinkType,
   SidebarType,
+  SidebarLinkType,
 } from "../../../vite/core/content/content.types";
+import { ChevronDown } from "lucide-react";
+import clsx from "clsx";
+import { useState } from "react";
+import { isExternalURL } from "../../utils";
 
 export interface SidebarProps {
   sidebar: SidebarType;
@@ -34,10 +36,10 @@ function SidebarGroup({
         />
       </button>
       {open && (
-        <div className="pl-2  mb-2">
+        <div className="pl-2 border-l border-gray-200 mb-2">
           {group.items.map((item) => {
-            if (typeof item === "string" || "slug" in item) {
-              const key = typeof item === "string" ? item : item.slug;
+            if ("slug" in item || "link" in item) {
+              const key = "slug" in item ? item.slug : item.link;
               return (
                 <SidebarLink key={key} link={item} onLinkClick={onLinkClick} />
               );
@@ -54,30 +56,42 @@ function SidebarLink({
   link,
   onLinkClick,
 }: {
-  link: SidebarLinkType;
+  link: InternalSidebarLinkType | SidebarLinkType;
   onLinkClick?: (() => void) | undefined;
 }) {
-  const slug = `/${link.slug}`;
-  return (
-    <div>
+  if ("slug" in link || !isExternalURL(link.link)) {
+    const slug = "slug" in link ? `/${link.slug}` : link.link;
+    return (
       <Link
         onClick={onLinkClick}
-        activeProps={{ className: "bg-primary-50/70 text-primary-900" }}
-        className="w-full inline-block rounded-sm py-1 px-2"
+        activeProps={{ className: "bg-primary text-on-primary" }}
+        className="w-full inline-block rounded-sm py-1 px-2 font-light"
         to={slug}
       >
         {link.label}
       </Link>
-    </div>
-  );
+    );
+  } else {
+    return (
+      <a
+        onClick={onLinkClick}
+        className="w-full inline-block rounded-sm py-1 px-2 font-light"
+        href={link.link}
+        target="_blank"
+        rel="noreferrer"
+      >
+        {link.label}
+      </a>
+    );
+  }
 }
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header text-[15px]">
+    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header">
       {sidebar.items.map((item) => {
-        if (typeof item === "string" || "slug" in item) {
-          const key = typeof item === "string" ? item : item.slug;
+        if ("slug" in item || "link" in item) {
+          const key = "slug" in item ? item.slug : item.link;
           return (
             <SidebarLink onLinkClick={onLinkClick} key={key} link={item} />
           );

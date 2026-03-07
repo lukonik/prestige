@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link} from "@tanstack/react-router";
 import collections from "virtual:prestige/collection-all";
 import { GitHub } from "../github/github";
 import { Search } from "../search/search";
@@ -9,15 +9,15 @@ export default function Header() {
       <header className="sticky top-0 z-40 flex h-header  border-b border-gray-200 bg-gray-50/80 px-4 backdrop-blur-md">
         <div className="container mx-auto flex max-w-360  items-center justify-between">
           <div className="flex gap-2">
-            <Link to={"/"}>Home</Link>
+            <Link 
+            className="text-sm px-2 py-1 rounded hover:bg-gray-100 text-gray-500"
+            to={"/"}>Home</Link>
             {collections.map((collection) => (
               <Link
                 key={collection.id}
                 to={`/${collection.id}` as any}
-                className="border-b-transparent border-b-2"
-                activeProps={{
-                  style: { borderBottomColor: "var(--color-primary)" }, // style object is used to overide border transparent
-                }}
+                className="border-b-transparent border-b-2 text-gray-500 text-sm px-2 py-1 rounded hover:bg-gray-100 active:bg-gray-200 capitalize"
+                activeProps={{ className: "text-gray-800 font-medium" }}
               >
                 {collection.label}
               </Link>

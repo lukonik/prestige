@@ -1,20 +1,61 @@
-import ContentNavigations from "./content-navigations";
+import { TocItem } from "remark-flexible-toc";
+import ContentNavigations, { NavigationLink } from "./content-navigations";
 import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
+import config from "virtual:prestige/config";
+import { FunctionComponent } from "react";
 
-export function ContentRoute(data: any) {
+export function ContentRoute(inlineData: any) {
+  const castedData = inlineData as {
+    prev: NavigationLink | null;
+    next: NavigationLink | null;
+    toc: TocItem[];
+    default: FunctionComponent;
+  };
+  console.log(castedData);
   return {
+    head: () => ({
+      meta: [
+        {
+          name: "description",
+          content: "My App is a web application",
+        },
+        {
+          title: "My App" + config.title,
+        },
+      ],
+      links: [
+        {
+          rel: "icon",
+          href: "/favicon.ico",
+        },
+      ],
+      styles: [
+        {
+          media: "all and (max-width: 500px)",
+          children: `p {
+                  color: blue;
+                  background-color: yellow;
+                }`,
+        },
+      ],
+      scripts: [
+        {
+          src: "https://www.google-analytics.com/analytics.js",
+        },
+      ],
+    }),
     component: () => {
       return (
         <div className="flex lg:gap-6 items-start max-w-[100vw]">
           <div className="flex-1 min-w-0">
-            <MobileTableOfContent toc={data.toc} />
+            <MobileTableOfContent toc={castedData.toc} />
             <article className="prose prose-base max-w-none wrap-break-word">
-              <data.default />
+              <castedData.default />
             </article>
-            <ContentNavigations prev={data.prev} next={data.next} />
+            <ContentNavigations prev={castedData.prev} next={castedData.next} />
           </div>
-          <WebTableOfContent toc={data.toc} />
+          <WebTableOfContent toc={castedData.toc} />
         </div>
       );
     },

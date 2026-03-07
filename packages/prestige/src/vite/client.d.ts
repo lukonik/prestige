@@ -81,7 +81,16 @@ declare module "virtual:prestige/collection-all" {
 }
 
 declare module "virtual:prestige/config" {
-  import type { PrestigeConfig } from "./config/config.types";
+  interface PrestigeConfig {
+    algolia?: {
+      appId: string;
+      apiKey: string;
+      indexName: string;
+    };
+    github?: string;
+    title: string;
+    description: string;
+  }
   const config: PrestigeConfig;
   export default config;
 }

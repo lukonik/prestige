@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 
-interface NavigationLink {
+export interface NavigationLink {
   label: string;
   slug: string;
 }

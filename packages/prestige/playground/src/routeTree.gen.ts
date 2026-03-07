@@ -119,15 +119,11 @@ const prestigeApiPrestigeLazyRoute = prestigeApiPrestigeLazyRouteImport
   .lazy(() =>
     import('./routes/(prestige)/api.prestige.lazy').then((d) => d.Route),
   )
-const prestigeDocsCustomPageRoute = prestigeDocsCustomPageRouteImport
-  .update({
-    id: '/custom-page',
-    path: '/custom-page',
-    getParentRoute: () => prestigeDocsLazyRoute,
-  } as any)
-  .lazy(() =>
-    import('./routes/(prestige)/docs.custom-page.lazy').then((d) => d.Route),
-  )
+const prestigeDocsCustomPageRoute = prestigeDocsCustomPageRouteImport.update({
+  id: '/custom-page',
+  path: '/custom-page',
+  getParentRoute: () => prestigeDocsLazyRoute,
+} as any)
 const prestigeDocsImageLoadersCustomLoaderLazyRoute =
   prestigeDocsImageLoadersCustomLoaderLazyRouteImport
     .update({

@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => {
             items: [
               {
                 label:"Custom Page",
-                slug:"docs/custom-page"
+                link:"/docs/custom-page"
               },
               {
                 label:"Themer",

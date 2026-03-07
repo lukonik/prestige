@@ -223,8 +223,8 @@ async function resolveLabel(
       );
     }
     const data = (await compileFrontmatter(file)) as any;
-    if (data?.["frontmatter"]?.label) {
-      return data?.["frontmatter"]?.label;
+    if (data?.label) {
+      return data?.label;
     }
 
     return basename(slug);

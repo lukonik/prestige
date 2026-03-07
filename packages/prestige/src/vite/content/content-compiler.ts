@@ -3,6 +3,7 @@ import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
 import rehypeSlug from "rehype-slug";
 import remarkFlexibleToc, { TocItem } from "remark-flexible-toc";
 import remarkFrontmatter from "remark-frontmatter";
+import remarkGfm from "remark-gfm";
 import { PluggableList } from "unified";
 import { Compatible, VFile } from "vfile";
 import { matter } from "vfile-matter";
@@ -32,6 +33,7 @@ export async function compileMarkdown(
   const remarkPlugins: PluggableList = [
     ...(options?.remarkPlugins ?? []),
     remarkFrontmatter,
+    [remarkGfm, options?.gfmOptions || {}],
     [remarkFlexibleToc, { tocRef: toc }],
   ];
 
@@ -40,14 +42,14 @@ export async function compileMarkdown(
     rehypePlugins,
     remarkPlugins,
     baseUrl: baseUrl,
+    
   });
   return { code: String(code), toc };
 }
 
-export async function compileFrontmatter(content: Compatible) {
-  const vFile = new VFile(content);
+export async function compileFrontmatter(vFile: VFile) {
   matter(vFile, { strip: true });
-  return vFile.data;
+  return vFile.data["matter"] || {};
 }
 
 export function warmupCompiler(options?: PrestigeConfig["markdown"]) {

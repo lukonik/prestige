@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
       Inspect(),
       tsconfigPaths(),
       prestige({
-        title: "Title",
+        title: "Prestige",
         github: "https://github.com/lukonik/Prestige",
         description: " ee qweqwqeqeq  qweqw. ",
         docsDir: isTest ? "playground/src/content/docs" : undefined,
@@ -31,6 +31,10 @@ export default defineConfig(({ mode }) => {
             id: "docs",
             defaultLink: "docs/introduction",
             items: [
+              {
+                label:"Themer",
+                slug:"docs/themer"
+              },
               {
                 label: "Introduction",
                 slug: "docs/introduction",

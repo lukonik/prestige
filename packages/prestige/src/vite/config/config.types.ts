@@ -4,14 +4,21 @@ import { CollectionsSchema } from "../core/content/content.types";
 import { RehypeShikiOptions } from "@shikijs/rehype";
 import { PluggableList } from "unified";
 import { FlexibleTocOptions } from "remark-flexible-toc";
+import type { Options as RemarkGfmOptions } from "remark-gfm";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("The title of your website"),
-  description: z.string().optional().describe("The description of your website"),
+  favicon: z.string().optional().describe("The favicon of your website"),
+  description: z
+    .string()
+    .optional()
+    .describe("The description of your website"),
   docsDir: z
     .string()
     .optional()
-    .describe("The directory of your docs, relative to root, defaults to src/content/docs")
+    .describe(
+      "The directory of your docs, relative to root, defaults to src/content/docs",
+    )
     .default(DEFAULT_DOCS_DIR),
   collections: CollectionsSchema,
   algolia: z
@@ -33,8 +40,18 @@ export const PrestigeConfigSchema = z.object({
         .custom<RehypeShikiOptions>()
         .optional()
         .describe("Options for Shiki syntax highlighting"),
-      rehypePlugins: z.custom<PluggableList>().optional().describe("Additional rehype plugins"),
-      remarkPlugins: z.custom<PluggableList>().optional().describe("Additional remark plugins"),
+      gfmOptions: z
+        .custom<RemarkGfmOptions>()
+        .optional()
+        .describe("Options for remark-gfm"),
+      rehypePlugins: z
+        .custom<PluggableList>()
+        .optional()
+        .describe("Additional rehype plugins"),
+      remarkPlugins: z
+        .custom<PluggableList>()
+        .optional()
+        .describe("Additional remark plugins"),
       remarkFlexibleToc: z
         .custom<FlexibleTocOptions>()
         .optional()

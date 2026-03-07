@@ -1,14 +1,12 @@
 import { Link } from "@tanstack/react-router";
+import clsx from "clsx";
+import { BookOpen, ChevronRight } from "lucide-react";
+import { useState } from "react";
 import {
   SidebarGroupType,
-  InternalSidebarLinkType,
-  SidebarType,
   SidebarLinkType,
+  SidebarType,
 } from "../../../vite/core/content/content.types";
-import { ChevronDown } from "lucide-react";
-import clsx from "clsx";
-import { useState } from "react";
-import { isExternalURL } from "../../utils";
 
 export interface SidebarProps {
   sidebar: SidebarType;
@@ -24,24 +22,26 @@ function SidebarGroup({
 }) {
   const [open, setIsOpen] = useState(true);
   return (
-    <div className="mt-4">
+    <div className="mt-4 flex flex-col gap-1">
+      
       <button
-        className="flex items-center justify-between w-full cursor-pointer"
+        className="flex items-center w-full gap-2" 
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span className="font-medium mb-1">{group.label}</span>
-        <ChevronDown
-          size={20}
-          className={clsx("transform transition", open && "rotate-180")}
+         <ChevronRight
+        size={18}
+          className={clsx("transform transition cursor-pointer ml-1", open && "rotate-90")}
         />
+        <span className="font-mono text-xs tracking-widest">{group.label.toUpperCase()}</span>
+       
       </button>
       {open && (
-        <div className="pl-2 border-l border-gray-200 mb-2">
+        <div className="mb-2">
           {group.items.map((item) => {
-            if ("slug" in item || "link" in item) {
-              const key = "slug" in item ? item.slug : item.link;
+            if (typeof item === "string" || "slug" in item) {
+              const key = typeof item === "string" ? item : item.slug;
               return (
-                <SidebarLink key={key} link={item} onLinkClick={onLinkClick} />
+                <SidebarLink key={key} showIcon={false} link={item} onLinkClick={onLinkClick} />
               );
             }
             return <SidebarGroup key={item.label} group={item} />;
@@ -55,45 +55,36 @@ function SidebarGroup({
 function SidebarLink({
   link,
   onLinkClick,
+  showIcon
 }: {
-  link: InternalSidebarLinkType | SidebarLinkType;
+  link: SidebarLinkType;
   onLinkClick?: (() => void) | undefined;
+  showIcon:boolean
 }) {
-  if ("slug" in link || !isExternalURL(link.link)) {
-    const slug = "slug" in link ? `/${link.slug}` : link.link;
-    return (
+  const slug = `/${link.slug}`;
+  return (
+    <div className="flex items-center " >
       <Link
         onClick={onLinkClick}
-        activeProps={{ className: "bg-primary text-on-primary" }}
-        className="w-full inline-block rounded-sm py-1 px-2 font-light"
+        activeProps={{ className: "text-gray-700 font-medium" }}
+        className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-gray-100 text-sm mr-2 items-center text-gray-500"
         to={slug}
       >
+        {showIcon &&<BookOpen className="w-4"/>}
         {link.label}
       </Link>
-    );
-  } else {
-    return (
-      <a
-        onClick={onLinkClick}
-        className="w-full inline-block rounded-sm py-1 px-2 font-light"
-        href={link.link}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {link.label}
-      </a>
-    );
-  }
+    </div>
+  );
 }
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className="w-full lg:w-sidebar border-r border-gray-300 p-4 h-full overflow-auto lg:h-main lg:sticky top-header">
+    <div className="w-full lg:w-sidebar border-r border-gray-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4">
       {sidebar.items.map((item) => {
-        if ("slug" in item || "link" in item) {
-          const key = "slug" in item ? item.slug : item.link;
+        if (typeof item === "string" || "slug" in item) {
+          const key = typeof item === "string" ? item : item.slug;
           return (
-            <SidebarLink onLinkClick={onLinkClick} key={key} link={item} />
+            <SidebarLink showIcon={true} onLinkClick={onLinkClick} key={key} link={item} />
           );
         }
         return <SidebarGroup key={item.label} group={item} />;

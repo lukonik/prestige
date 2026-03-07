@@ -32,6 +32,10 @@ export default defineConfig(({ mode }) => {
             defaultLink: "docs/introduction",
             items: [
               {
+                label:"Custom Page",
+                link:"/docs/custom-page"
+              },
+              {
                 label:"Themer",
                 slug:"docs/themer"
               },

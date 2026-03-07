@@ -7,6 +7,7 @@ import { compileMarkdown } from "./content-compiler";
 import { InternalSidebarLinkType } from "../core/content/content.types";
 
 import { compileFrontmatter } from "./content-compiler";
+import { PrestigeError } from "../utils/errors";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
 
@@ -64,7 +65,11 @@ export async function resolveContent(
 
 export async function getPathBySlug(slug: string, contentDir: string) {
   const pathMatch = join(contentDir, slug);
-  return (await glob(`${pathMatch}.{md,mdx}`))[0] as string;
+  const matches = await glob(`${pathMatch}.{md,mdx}`);
+  if (matches.length === 0) {
+    throw new PrestigeError(`[Prestige] Could not find markdown file for slug: "${slug}". Searched at: ${pathMatch}.{md,mdx}. If you want to link to a custom page, use 'link: "${slug}"' instead of 'slug: "${slug}"' in your collection config.`);
+  }
+  return matches[0] as string;
 }
 
 export async function getFileBySlug(slug: string, contentDir: string) {

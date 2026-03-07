@@ -21,7 +21,7 @@ export function CollectionRoute(sidebar: SidebarType, id: string) {
           <div className="hidden lg:block">
             {sidebar && <Sidebar sidebar={sidebar} />}
           </div>
-          <div className="flex-1 pt-10 pb-20 lg:py-15">
+          <div className="flex-1 pb-20">
             <Outlet />
           </div>
         </div>

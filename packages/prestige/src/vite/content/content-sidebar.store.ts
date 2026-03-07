@@ -1,10 +1,10 @@
 import { readdir } from "node:fs/promises";
 import { basename } from "node:path";
 import { join } from "pathe";
-import { compileFrontmatter } from "../../content/content-compiler";
-import { PrestigeError } from "../../utils/errors";
-import { pathExists } from "../../utils/file-utils";
-import logger from "../../utils/logger";
+import { compileFrontmatter } from "./content-compiler";
+import { PrestigeError } from "../utils/errors";
+import { pathExists } from "../utils/file-utils";
+import logger from "../utils/logger";
 import { getFileBySlug } from "./content.store";
 import {
   Collection,
@@ -17,7 +17,7 @@ import {
   InternalSidebarLinkType,
   SidebarType,
   SidebarLinkType,
-} from "./content.types";
+} from "../core/content/content.types";
 
 export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
 
@@ -239,7 +239,7 @@ async function resolveLabel(
 }
 
 /** @visibleForTesting */
-function resolveSlug(item: CollectionItem) {
+export function resolveSlug(item: CollectionItem) {
   if (typeof item === "string") {
     return item;
   } else {
@@ -251,7 +251,7 @@ function resolveSlug(item: CollectionItem) {
 }
 
 /** @visibleForTesting */
-function resolveLink(item: CollectionItem) {
+export function resolveLink(item: CollectionItem) {
   if (typeof item === "object" && "link" in item) {
     return item.link;
   }

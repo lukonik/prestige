@@ -3,10 +3,10 @@ import { pathToFileURL } from "node:url";
 import { parse, relative } from "pathe";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
-import { compileMarkdown } from "../../content/content-compiler";
-import { InternalSidebarLinkType } from "./content.types";
+import { compileMarkdown } from "./content-compiler";
+import { InternalSidebarLinkType } from "../core/content/content.types";
 
-import { compileFrontmatter } from "../../content/content-compiler";
+import { compileFrontmatter } from "./content-compiler";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
 

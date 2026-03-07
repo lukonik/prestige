@@ -19,10 +19,10 @@ export function ContentRoute(inlineData: any) {
       meta: [
         {
           name: "description",
-          content: castedData.frontmatter.description,
+          content: castedData.frontmatter.description ?? "",
         },
         {
-          title: castedData.frontmatter.title + " | " + config.title,
+          title: castedData.frontmatter.title ?? "" + " | " + config.title,
         },
       ],
       links: [

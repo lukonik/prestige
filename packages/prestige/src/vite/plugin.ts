@@ -11,11 +11,11 @@ import {
   COLLECTION_VIRTUAL_ID,
   resolveCollectionNavigations,
 } from "./core/content/content-collection.store";
-import { resolveContentLinks } from "./core/content/content-links";
+import { resolveContentLinks } from "./content/content-links";
 import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
-} from "./core/content/content-sidebar.store";
+} from "./content/content-sidebar.store";
 import {
   CONTENT_VIRTUAL_ID,
   getSlugByPath,

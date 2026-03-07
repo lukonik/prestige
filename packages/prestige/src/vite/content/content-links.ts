@@ -1,4 +1,4 @@
-import { SidebarItemType, InternalSidebarLinkType, SidebarType } from "./content.types";
+import { SidebarItemType, InternalSidebarLinkType, SidebarType } from "../core/content/content.types";
 
 export function resolveContentLinks(sidebars: Map<string, SidebarType>) {
   const links = new Map<string, InternalSidebarLinkType[]>();

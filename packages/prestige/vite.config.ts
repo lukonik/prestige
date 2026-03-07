@@ -32,10 +32,6 @@ export default defineConfig(({ mode }) => {
             defaultLink: "docs/introduction",
             items: [
               {
-                label:"Google",
-                link:"https://www.google.com"
-              },
-              {
                 label: "Introduction",
                 slug: "docs/introduction",
               },
@@ -44,10 +40,10 @@ export default defineConfig(({ mode }) => {
                 slug: "docs/installation",
               },
               { label: "Typescript", slug: "docs/typescript" },
-              // {
-              //   label: "Image",
-              //   slug: "docs/image/component",
-              // },
+              {
+                label: "Google",
+                link: "https://www.google.com",
+              },
               { label: "Vite Plugin", slug: "docs/vite-plugin" },
               {
                 label: "Loaders",
@@ -88,9 +84,9 @@ export default defineConfig(({ mode }) => {
                 enabled: false,
                 // crawlLinks: true,
               },
-              spa:{
-                enabled:true
-              }
+              spa: {
+                enabled: true,
+              },
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
             nitro({ preset: "bun", renderer: false }),

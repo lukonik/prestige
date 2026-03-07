@@ -72,8 +72,8 @@ function SidebarLink({
       <div className="flex items-center ">
         <Link
           onClick={onLinkClick}
-          activeProps={{ className: "text-gray-700 font-medium" }}
-          className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-gray-100 text-sm mr-2 items-center text-gray-500"
+          activeProps={{ className: "text-default-700 font-medium" }}
+          className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-default-100 text-sm mr-2 items-center text-default-500"
           to={slug}
         >
           {showIcon && <BookOpen className="w-4" />}
@@ -86,7 +86,7 @@ function SidebarLink({
       <div className="flex items-center ">
         <a
           onClick={onLinkClick}
-          className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-gray-100 text-sm mr-2 items-center text-gray-500"
+          className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-default-100 text-sm mr-2 items-center text-default-500"
           href={link.link}
           target="_blank"
           rel="noreferrer"
@@ -101,7 +101,7 @@ function SidebarLink({
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className="w-full lg:w-sidebar border-r border-gray-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4">
+    <div className="w-full lg:w-sidebar border-r border-default-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4">
       {sidebar.items.map((item) => {
         if ("slug" in item || "link" in item) {
           const key = "slug" in item ? item.slug : item.link;

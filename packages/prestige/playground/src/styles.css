@@ -20,22 +20,22 @@
   --color-primary-900: var(--color-violet-900);
   --color-primary-950: var(--color-violet-950);
   /* Default default scale. Zinc is closest to Starlight’s defaults. */
-  --color-gray-50: var(--color-zinc-950);
-  --color-gray-100: var(--color-zinc-900);
-  --color-gray-200: var(--color-zinc-800);
-  --color-gray-300: var(--color-zinc-700);
-  --color-gray-400: var(--color-zinc-600);
-  --color-gray-500: var(--color-zinc-500);
-  --color-gray-600: var(--color-zinc-400);
-  --color-gray-700: var(--color-zinc-300);
-  --color-gray-800: var(--color-zinc-200);
-  --color-gray-900: var(--color-zinc-100);
-  --color-gray-950: var(--color-zinc-50);
+  --color-default-50: var(--color-zinc-950);
+  --color-default-100: var(--color-zinc-900);
+  --color-default-200: var(--color-zinc-800);
+  --color-default-300: var(--color-zinc-700);
+  --color-default-400: var(--color-zinc-600);
+  --color-default-500: var(--color-zinc-500);
+  --color-default-600: var(--color-zinc-400);
+  --color-default-700: var(--color-zinc-300);
+  --color-default-800: var(--color-zinc-200);
+  --color-default-900: var(--color-zinc-100);
+  --color-default-950: var(--color-zinc-50);
 
   --color-primary: var(--color-primary-600);
   --color-on-primary: var(--color-white);
 
-  --color-default: var(--color-gray-300);
+  --color-default: var(--color-default-300);
   --color-white: var(--color-white)
     --color-surface-container: var(--color-white);
   /* type */
@@ -43,8 +43,8 @@
   --color-text-soft: var(--color-zinc-300);
 
 .prose{
-   --tw-prose-code:var(--color-gray-700);
-   --tw-prose-body:var(--color-gray-500);
+   --tw-prose-code:var(--color-default-700);
+   --tw-prose-body:var(--color-default-500);
 }
 
 }
@@ -64,22 +64,22 @@
   --color-primary-900: var(--color-violet-900);
   --color-primary-950: var(--color-violet-950);
   /* Default default scale. Zinc is closest to Starlight’s defaults. */
-  --color-gray-50: var(--color-zinc-50);
-  --color-gray-100: var(--color-zinc-100);
-  --color-gray-200: var(--color-zinc-200);
-  --color-gray-300: var(--color-zinc-300);
-  --color-gray-400: var(--color-zinc-400);
-  --color-gray-500: var(--color-zinc-500);
-  --color-gray-600: var(--color-zinc-600);
-  --color-gray-700: var(--color-zinc-700);
-  --color-gray-800: var(--color-zinc-800);
-  --color-gray-900: var(--color-zinc-900);
-  --color-gray-950: var(--color-zinc-950);
+  --color-default-50: var(--color-zinc-50);
+  --color-default-100: var(--color-zinc-100);
+  --color-default-200: var(--color-zinc-200);
+  --color-default-300: var(--color-zinc-300);
+  --color-default-400: var(--color-zinc-400);
+  --color-default-500: var(--color-zinc-500);
+  --color-default-600: var(--color-zinc-600);
+  --color-default-700: var(--color-zinc-700);
+  --color-default-800: var(--color-zinc-800);
+  --color-default-900: var(--color-zinc-900);
+  --color-default-950: var(--color-zinc-950);
 
   --color-primary: var(--color-primary-600);
   --color-on-primary: var(--color-white);
 
-  --color-default: var(--color-gray-300);
+  --color-default: var(--color-default-300);
   --color-white: var(--color-white)
     --color-surface-container: var(--color-white);
 
@@ -88,7 +88,7 @@
 
 
 .prose{
-   --tw-prose-code:var(--color-gray-700);
+   --tw-prose-code:var(--color-default-700);
 }
 }
 
@@ -117,25 +117,25 @@
   --color-primary-900: var(--color-primary-900);
   --color-primary-950: var(--color-primary-950);
   /* Default default scale. Zinc is closest to Starlight’s defaults. */
-  --color-gray-50: var(--color-gray-50);
-  --color-gray-100: var(--color-gray-100);
-  --color-gray-200: var(--color-gray-200);
-  --color-gray-300: var(--color-gray-300);
-  --color-gray-400: var(--color-gray-400);
-  --color-gray-500: var(--color-gray-500);
-  --color-gray-600: var(--color-gray-600);
-  --color-gray-700: var(--color-gray-700);
-  --color-gray-800: var(--color-gray-800);
-  --color-gray-900: var(--color-gray-900);
-  --color-gray-950: var(--color-gray-950);
+  --color-default-50: var(--color-default-50);
+  --color-default-100: var(--color-default-100);
+  --color-default-200: var(--color-default-200);
+  --color-default-300: var(--color-default-300);
+  --color-default-400: var(--color-default-400);
+  --color-default-500: var(--color-default-500);
+  --color-default-600: var(--color-default-600);
+  --color-default-700: var(--color-default-700);
+  --color-default-800: var(--color-default-800);
+  --color-default-900: var(--color-default-900);
+  --color-default-950: var(--color-default-950);
 
   --color-primary: var(--color-primary-600);
   --color-on-primary: var(--color-white);
 
-  --color-default: var(--color-gray-300);
+  --color-default: var(--color-default-300);
   --color-white: var(--color-white)
 
-  --color-text-strong: var(--color-gray-700);
+  --color-text-strong: var(--color-default-700);
   --color-text-soft: var(--color-zinc-500);
 
 }
@@ -146,7 +146,7 @@ h1 {
   font-family: var(--font-sans);
   letter-spacing: -0.02rem;
   font-weight: 400;
-  @apply text-gray-700;
+  @apply text-default-700;
 }
 h2 {
   font-size: 1.875rem;
@@ -154,7 +154,7 @@ h2 {
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    @apply text-gray-700;
+    @apply text-default-700;
 
 }
 h3 {
@@ -163,7 +163,7 @@ h3 {
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    @apply text-gray-700;
+    @apply text-default-700;
 
 }
 h4 {
@@ -172,7 +172,7 @@ h4 {
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    @apply text-gray-700;
+    @apply text-default-700;
 
 }
 h5 {
@@ -181,7 +181,7 @@ h5 {
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    @apply text-gray-700;
+    @apply text-default-700;
 
 }
 h6 {
@@ -190,7 +190,7 @@ h6 {
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    @apply text-gray-700;
+    @apply text-default-700;
 
 }
 p {
@@ -198,14 +198,14 @@ p {
   line-height: 1.5rem;
   font-family: var(--font-sans);
   font-weight: 400;
-  @apply text-gray-500;
+  @apply text-default-500;
 }
 
 strong {
-  @apply font-medium text-gray-700;
+  @apply font-medium text-default-700;
 }
 code:not(:has(span)){
-  @apply bg-gray-100 p-1 rounded
+  @apply bg-default-100 p-1 rounded
 }
 
 /* Shiki Dual Theme Dark Mode Overrides */
@@ -213,7 +213,7 @@ code:not(:has(span)){
 
 :root .shiki,
 :root .shiki span {
-  background-color: var(--color-gray-50) !important;
+  background-color: var(--color-default-50) !important;
 }
 
 :root[data-theme="dark"] .shiki,

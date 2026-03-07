@@ -8,7 +8,7 @@ function SidebarOverlay({ sidebar }: { sidebar: SidebarType }) {
   return (
     <div className="lg:hidden">
       <button
-        className="bottom-4 bg-gray-100 p-3 rounded-full right-4 fixed shadow-lg z-50"
+        className="bottom-4 bg-default-100 p-3 rounded-full right-4 fixed shadow-lg z-50"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {isOpen ? <X /> : <Menu />}

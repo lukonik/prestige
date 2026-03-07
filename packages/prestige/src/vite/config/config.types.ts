@@ -4,6 +4,7 @@ import { CollectionsSchema } from "../core/content/content.types";
 import { RehypeShikiOptions } from "@shikijs/rehype";
 import { PluggableList } from "unified";
 import { FlexibleTocOptions } from "remark-flexible-toc";
+import type { Options as RemarkGfmOptions } from "remark-gfm";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("The title of your website"),
@@ -39,6 +40,10 @@ export const PrestigeConfigSchema = z.object({
         .custom<RehypeShikiOptions>()
         .optional()
         .describe("Options for Shiki syntax highlighting"),
+      gfmOptions: z
+        .custom<RemarkGfmOptions>()
+        .optional()
+        .describe("Options for remark-gfm"),
       rehypePlugins: z
         .custom<PluggableList>()
         .optional()

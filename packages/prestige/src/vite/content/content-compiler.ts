@@ -33,7 +33,7 @@ export async function compileMarkdown(
   const remarkPlugins: PluggableList = [
     ...(options?.remarkPlugins ?? []),
     remarkFrontmatter,
-    remarkGfm,
+    [remarkGfm, options?.gfmOptions || {}],
     [remarkFlexibleToc, { tocRef: toc }],
   ];
 

@@ -1,16 +1,15 @@
 import { z } from "zod";
 
-export const ContentMatterSchema = z.object({
-  title: z.string().optional().describe("The title of the article"),
-  describe: z.string().optional().describe("The description of the article"),
-  lastUpdated: z.union([z.date(), z.boolean()]).optional(),
+export const ContentFrontmatterSchema = z.object({
+  title: z.string().describe("The title of the article"),
+  description: z.string().optional().describe("The description of the article"),
   label: z.string().optional().describe("The label of the content"),
 });
 
-export type ContentMatter = z.infer<typeof ContentMatterSchema>;
+export type ContentFrontmatterType = z.infer<typeof ContentFrontmatterSchema>;
 
 export const ContentSchema = z.object({
-  matter: ContentMatterSchema,
+  matter: ContentFrontmatterSchema,
   html: z.string().describe("The html of the content"),
 });
 

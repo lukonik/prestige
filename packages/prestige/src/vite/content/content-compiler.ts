@@ -44,10 +44,9 @@ export async function compileMarkdown(
   return { code: String(code), toc };
 }
 
-export async function compileFrontmatter(content: Compatible) {
-  const vFile = new VFile(content);
+export async function compileFrontmatter(vFile: VFile) {
   matter(vFile, { strip: true });
-  return vFile.data;
+  return vFile.data["matter"] || {};
 }
 
 export function warmupCompiler(options?: PrestigeConfig["markdown"]) {

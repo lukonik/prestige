@@ -4,6 +4,7 @@ import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-conten
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
 import config from "virtual:prestige/config";
 import { FunctionComponent } from "react";
+import { ContentFrontmatterType } from "../../../vite/core/content/content.types";
 
 export function ContentRoute(inlineData: any) {
   const castedData = inlineData as {
@@ -11,17 +12,17 @@ export function ContentRoute(inlineData: any) {
     next: NavigationLink | null;
     toc: TocItem[];
     default: FunctionComponent;
+    frontmatter: ContentFrontmatterType;
   };
-  console.log(castedData);
   return {
     head: () => ({
       meta: [
         {
           name: "description",
-          content: "My App is a web application",
+          content: castedData.frontmatter.description,
         },
         {
-          title: "My App" + config.title,
+          title: castedData.frontmatter.title + " | " + config.title,
         },
       ],
       links: [

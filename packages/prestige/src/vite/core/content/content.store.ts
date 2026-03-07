@@ -36,8 +36,8 @@ export async function resolveMarkdown(slug: string, contentDir: string) {
   const filePath = await getPathBySlug(slug, contentDir);
   const baseUrl = pathToFileURL(filePath).href;
   const file = await read(filePath);
-  const { code, toc } = await compileMarkdown(file, baseUrl);
   const frontmatter = await compileFrontmatter(file);
+  const { code, toc } = await compileMarkdown(file, baseUrl);
   return { code, toc, frontmatter };
 }
 

@@ -10,8 +10,8 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
 
   return (
     <nav className="sticky top-24 max-h-[calc(100vh-6rem)] overflow-y-auto w-64 shrink-0 hidden lg:block">
-      <h3 className="text-xs font-mono mb-4 tracking-widest">ON THIS PAGE</h3>
-      <ul className="text-sm">
+     <span className="text-xs font-mono tracking-widest">ON THIS PAGE</span>
+      <ul className="text-sm my-4">
         {toc.map((item) => (
           <li
             key={item.href}

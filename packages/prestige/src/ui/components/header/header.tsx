@@ -10,14 +10,14 @@ export default function Header() {
         <div className="container mx-auto flex max-w-360  items-center justify-between">
           <div className="flex gap-2">
             <Link 
-            className="text-sm px-2 py-1 rounded hover:bg-zinc-100"
+            className="text-sm px-2 py-1 rounded hover:bg-gray-100 text-gray-500"
             to={"/"}>Home</Link>
             {collections.map((collection) => (
               <Link
                 key={collection.id}
                 to={`/${collection.id}` as any}
-                className="border-b-transparent border-b-2 text-sm px-2 py-1 rounded hover:bg-zinc-100 active:bg-zinc-200 capitalize"
-                activeProps={{ className: "text-zinc-800 font-medium" }}
+                className="border-b-transparent border-b-2 text-gray-500 text-sm px-2 py-1 rounded hover:bg-gray-100 active:bg-gray-200 capitalize"
+                activeProps={{ className: "text-gray-800 font-medium" }}
               >
                 {collection.label}
               </Link>

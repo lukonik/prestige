@@ -5,9 +5,49 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-@theme {
-  --font-sans: "Inter", sans-serif;
-  --font-mono: "Geist Mono", monospace;
+:root[data-theme="dark"] {
+  --color-white: black;
+  /* Default primary color. Indigo is closest to Starlight’s defaults. */
+  --color-primary-50: var(--color-violet-50);
+  --color-primary-100: var(--color-violet-100);
+  --color-primary-200: var(--color-violet-200);
+  --color-primary-300: var(--color-violet-300);
+  --color-primary-400: var(--color-violet-400);
+  --color-primary-500: var(--color-violet-500);
+  --color-primary-600: var(--color-violet-600);
+  --color-primary-700: var(--color-violet-700);
+  --color-primary-800: var(--color-violet-800);
+  --color-primary-900: var(--color-violet-900);
+  --color-primary-950: var(--color-violet-950);
+  /* Default default scale. Zinc is closest to Starlight’s defaults. */
+  --color-gray-50: var(--color-zinc-950);
+  --color-gray-100: var(--color-zinc-900);
+  --color-gray-200: var(--color-zinc-800);
+  --color-gray-300: var(--color-zinc-700);
+  --color-gray-400: var(--color-zinc-600);
+  --color-gray-500: var(--color-zinc-500);
+  --color-gray-600: var(--color-zinc-400);
+  --color-gray-700: var(--color-zinc-300);
+  --color-gray-800: var(--color-zinc-200);
+  --color-gray-900: var(--color-zinc-100);
+  --color-gray-950: var(--color-zinc-50);
+
+  --color-primary: var(--color-primary-600);
+  --color-on-primary: var(--color-white);
+
+  --color-default: var(--color-gray-300);
+  --color-white: var(--color-white)
+    --color-surface-container: var(--color-white);
+  /* type */
+  --color-text-strong: var(--color-zinc-100);
+  --color-text-soft: var(--color-zinc-300);
+
+  
+
+}
+
+:root {
+  --color-white: white;
   /* Default primary color. Indigo is closest to Starlight’s defaults. */
   --color-primary-50: var(--color-violet-50);
   --color-primary-100: var(--color-violet-100);
@@ -37,44 +77,82 @@
   --color-on-primary: var(--color-white);
 
   --color-default: var(--color-gray-300);
+  --color-white: var(--color-white)
+    --color-surface-container: var(--color-white);
 
-  --color-surface-container: var(--color-white);
-
-
-
-    --color-text-strong: var(--color-zinc-700);
+  --color-text-strong: var(--color-zinc-700);
   --color-text-soft: var(--color-zinc-500);
-  /** Spacings **/
+
+}
+
+:root {
+  @apply bg-gray-50 text-text-soft font-sans;
+}
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Geist Mono", monospace;
   --spacing-header: 64px;
   --height-main: calc(100vh - var(--spacing-header));
   --width-sidebar: 300px;
+
+  /* Default primary color. Indigo is closest to Starlight’s defaults. */
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+  /* Default default scale. Zinc is closest to Starlight’s defaults. */
+  --color-gray-50: var(--color-gray-50);
+  --color-gray-100: var(--color-gray-100);
+  --color-gray-200: var(--color-gray-200);
+  --color-gray-300: var(--color-gray-300);
+  --color-gray-400: var(--color-gray-400);
+  --color-gray-500: var(--color-gray-500);
+  --color-gray-600: var(--color-gray-600);
+  --color-gray-700: var(--color-gray-700);
+  --color-gray-800: var(--color-gray-800);
+  --color-gray-900: var(--color-gray-900);
+  --color-gray-950: var(--color-gray-950);
+
+  --color-primary: var(--color-primary-600);
+  --color-on-primary: var(--color-white);
+
+  --color-default: var(--color-gray-300);
+  --color-white: var(--color-white)
+
+  --color-text-strong: var(--color-gray-700);
+  --color-text-soft: var(--color-zinc-500);
+
 }
 
-h1{
-  color: var(--color-violet-500)
+h1 {
+  color: var(--color-violet-500);
 }
-h2{
+h2 {
   font-size: 1.875rem;
   font-family: var(--font-sans);
   letter-spacing: -0.03rem;
   font-weight: 400;
-    color: var(--color-zinc-700);
+  color: var(--color-zinc-700);
 }
-p{
+p {
   font-size: 1rem;
   font-family: var(--font-sans);
   letter-spacing: -0.01rem;
   font-weight: 400;
-    color: var(--color-zinc-600);
+  color: var(--color-zinc-600);
 }
 
-.prose{
-  h2{
+.prose {
+  h2 {
     color: red !important;
-    margin: 0
+    margin: 0;
   }
-}
-
-:root {
-  @apply bg-gray-50/50 text-text-soft font-sans;
 }

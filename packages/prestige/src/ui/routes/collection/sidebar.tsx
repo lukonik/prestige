@@ -66,8 +66,8 @@ function SidebarLink({
     <div className="flex items-center " >
       <Link
         onClick={onLinkClick}
-        activeProps={{ className: "text-zinc-700 font-medium" }}
-        className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-zinc-100 text-sm mr-2 items-center"
+        activeProps={{ className: "text-gray-700 font-medium" }}
+        className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-gray-100 text-sm mr-2 items-center text-gray-500"
         to={slug}
       >
         {showIcon &&<BookOpen className="w-4"/>}

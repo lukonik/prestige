@@ -71,8 +71,8 @@ export function PackageManagers({
     <Tabs defaultValue="npm" className={`my-6 ${className || ""}`}>
       <TabsList>
         {MANAGERS.map((pm) => (
-          <TabsTrigger key={pm} value={pm} className="capitalize">
-            {pm}
+          <TabsTrigger key={pm} value={pm}>
+            {pm.toLowerCase()}
           </TabsTrigger>
         ))}
       </TabsList>
@@ -81,7 +81,7 @@ export function PackageManagers({
         const command = generateCommand(pm, type, pkg, dev, args);
 
         return (
-          <TabsContent key={pm} value={pm}>
+          <TabsContent keepMounted={true} key={pm} value={pm}>
             <Code language="bash">{command}</Code>
           </TabsContent>
         );

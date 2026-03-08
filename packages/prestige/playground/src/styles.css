@@ -53,58 +53,24 @@
 }
 
 h1 {
-  font-size: 2rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.02rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 h2 {
-  font-size: 1.875rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.03rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 h3 {
-  font-size: 1.5rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.03rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 h4 {
-  font-size: 1.4rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.03rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 h5 {
-  font-size: 1.3rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.03rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 h6 {
-  font-size: 1.2rem;
-  line-height: 1.2rem;
-  font-family: var(--font-sans);
-  letter-spacing: -0.03rem;
-  font-weight: 400;
   @apply text-default-700;
 }
 p {
-  font-size: 1rem;
-  line-height: 1.5rem;
-  font-family: var(--font-sans);
-  font-weight: 400;
   @apply text-default-500;
 }
 

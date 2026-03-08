@@ -1,5 +1,6 @@
 import { Aside, Code, PrestigePage } from "@lonik/prestige/ui";
 import { createFileRoute } from "@tanstack/react-router";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@lonik/prestige/ui";
 
 export const Route = createFileRoute("/(prestige)/docs/custom-page")({
   component: RouteComponent,
@@ -8,16 +9,25 @@ export const Route = createFileRoute("/(prestige)/docs/custom-page")({
 function RouteComponent() {
   return (
     <PrestigePage>
+      <Tabs defaultValue="overview">
+        <TabsList>
+          <TabsTrigger value="overview">Overview</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsTrigger value="reports">Reports</TabsTrigger>
+          <TabsTrigger value="settings">Settings</TabsTrigger>
+        </TabsList>
+        <TabsContent value="overview">Tab 1</TabsContent>
+        <TabsContent value="analytics">Tab 2</TabsContent>
+        <TabsContent value="reports">Tab 3</TabsContent>
+        <TabsContent value="settings">Tab 4</TabsContent>
+      </Tabs>
       <h1>Project Title</h1>
       <p>
         This is a <strong>semantic HTML</strong> version of a Markdown file.
         It’s designed to be readable and structured for documentation.
       </p>
 
-
-      <Aside>
-        THIS IS NOTe
-      </Aside>
+      <Aside>THIS IS NOTe</Aside>
 
       <h2>Key Features</h2>
       <ul>

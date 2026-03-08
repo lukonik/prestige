@@ -16,7 +16,7 @@ export async function resolvePrestigeConfig(
   }
 
   const validatedConfig = validateConfig(configInput);
-  const docsDirPath = join(root, validatedConfig.docsDir);
+  const docsDirPath = join(root, "src/content");
 
   if (!(await pathExists(docsDirPath))) {
     throw new PrestigeError(`Docs! directory not found: ${docsDirPath}`);

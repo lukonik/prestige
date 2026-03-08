@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => {
         title: "Prestige",
         github: "https://github.com/lukonik/Prestige",
         description: " ee qweqwqeqeq  qweqw. ",
-        docsDir: isTest ? "playground/src/content/docs" : undefined,
         algolia: {
           appId: "YOUR_APP_ID",
           apiKey: "YOUR_SEARCH_API_KEY",

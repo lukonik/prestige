@@ -2,8 +2,8 @@ import { describe, expect, it } from "vitest";
 
 import { resolvePrestigeConfig, validateConfig } from "../../../src/vite/config/config";
 import { PrestigeError } from "../../../src/vite/utils/errors";
-import { DEFAULT_DOCS_DIR } from "../../../src/vite/constants";
 import { mkdir } from "node:fs/promises";
+import { join } from "pathe";
 
 function minimalConfig() {
   return {
@@ -17,7 +17,7 @@ function getTempDir(path?: string, options?: any) {
 }
 
 async function createDefaultDirs(dir?: string) {
-  await mkdir(getTempDir(dir ?? DEFAULT_DOCS_DIR), { recursive: true });
+  await mkdir(getTempDir(dir ?? "src/content"), { recursive: true });
 }
 
 describe.skip("CONFIG ", () => {
@@ -55,34 +55,23 @@ describe.skip("CONFIG ", () => {
       });
     });
 
-    it("should return docsDir", async () => {
-      await mkdir(getTempDir("test"), { recursive: true });
-      await expect(
-        resolvePrestigeConfig({ ...minimalConfig(), docsDir: "test" }, getTempDir()),
-      ).resolves.toMatchObject({
-        config: { docsDir: "test" },
-      });
-    });
-
-    it("should throw error if docsDir does not exist", async () => {
+    it("should throw error if content dir does not exist", async () => {
       await expect(resolvePrestigeConfig(minimalConfig(), "notfound/path")).rejects.toThrowError(
         PrestigeError,
       );
     });
 
     it("should return fullDocs dir", async () => {
-      const dir = "/dummy/dir";
-      await createDefaultDirs(dir);
+      const dir = getTempDir("/dummy/dir");
+      await createDefaultDirs(join(dir, "src/content"));
+      
       await expect(
         resolvePrestigeConfig(
-          {
-            ...minimalConfig(),
-            docsDir: dir,
-          },
-          getTempDir(),
+          minimalConfig(),
+          dir,
         ),
       ).resolves.toMatchObject({
-        fullDocsDir: getTempDir(dir),
+        fullDocsDir: join(dir, "src/content"),
       });
     });
   });

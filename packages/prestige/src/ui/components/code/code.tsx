@@ -1,4 +1,3 @@
-import { RehypeShikiOptions } from "@shikijs/rehype";
 import { ShikiHighlighter, Language } from "react-shiki";
 import type { BundledTheme } from "shiki";
 export interface CodeProps {

@@ -1,3 +1,4 @@
+import { Code } from "../code/code";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../tabs/tabs"; // Adjust import path
 
 type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
@@ -81,12 +82,7 @@ export function PackageManagers({
 
         return (
           <TabsContent key={pm} value={pm}>
-            {/* Note: Swap this <pre> with your custom CodeBlock/SyntaxHighlighter component if you have one! */}
-            <div className="relative mt-4 rounded-lg bg-default-900 px-4 py-3 text-sm text-default-50 overflow-x-auto shadow-sm">
-              <pre className="font-mono">
-                <code>{command}</code>
-              </pre>
-            </div>
+            <Code language="bash">{command}</Code>
           </TabsContent>
         );
       })}

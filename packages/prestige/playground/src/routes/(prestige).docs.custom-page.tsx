@@ -1,4 +1,4 @@
-import { Aside, PrestigePage } from "@lonik/prestige/ui";
+import { Aside, Code, PrestigePage } from "@lonik/prestige/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(prestige)/docs/custom-page")({
@@ -40,6 +40,12 @@ function RouteComponent() {
 
       <h2>Code Example</h2>
       <p>Below is a snippet showing how you might render a simple function:</p>
+
+      <Code lang="tsx">
+        {`function helloWorld() {
+  console.log("Hello, world!");
+}`}
+      </Code>
 
       <h2>Conclusion</h2>
       <p>Feel free to copy this structure for your own static content pages.</p>

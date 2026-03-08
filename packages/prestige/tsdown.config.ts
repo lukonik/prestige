@@ -21,5 +21,6 @@ export default defineConfig({
     "node:fs/promises",
     "virtual:prestige/collection-all",
     "virtual:prestige/content-all",
+    "node:url",
   ],
 });

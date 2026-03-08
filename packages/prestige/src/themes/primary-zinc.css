@@ -1,0 +1,42 @@
+@layer theme {
+  :root {
+    --color-primary-50: var(--color-zinc-50);
+    --color-primary-100: var(--color-zinc-100);
+    --color-primary-200: var(--color-zinc-200);
+    --color-primary-300: var(--color-zinc-300);
+    --color-primary-400: var(--color-zinc-400);
+    --color-primary-500: var(--color-zinc-500);
+    --color-primary-600: var(--color-zinc-600);
+    --color-primary-700: var(--color-zinc-700);
+    --color-primary-800: var(--color-zinc-800);
+    --color-primary-900: var(--color-zinc-900);
+    --color-primary-950: var(--color-zinc-950);
+    @variant dark {
+      --color-primary-50: var(--color-zinc-950);
+      --color-primary-100: var(--color-zinc-900);
+      --color-primary-200: var(--color-zinc-800);
+      --color-primary-300: var(--color-zinc-700);
+      --color-primary-400: var(--color-zinc-600);
+      --color-primary-500: var(--color-zinc-500);
+      --color-primary-600: var(--color-zinc-400);
+      --color-primary-700: var(--color-zinc-300);
+      --color-primary-800: var(--color-zinc-200);
+      --color-primary-900: var(--color-zinc-100);
+      --color-primary-950: var(--color-zinc-50);
+    }
+  }
+}
+
+@theme {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+}

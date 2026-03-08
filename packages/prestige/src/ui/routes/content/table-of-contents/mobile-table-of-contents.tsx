@@ -36,12 +36,12 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
   return (
     <div
       ref={containerRef}
-      className="sticky top-header z-30 -mx-6 -mt-10 mb-8 bg-gray-50/95 dark:bg-gray-950/95 backdrop-blur border-b border-gray-200 dark:border-gray-800 lg:hidden"
+      className="sticky top-header z-30 -mx-6 -mt-10 mb-8 bg-default-50/95 dark:bg-default-950/95 backdrop-blur border-b border-default-200 dark:border-default-800 lg:hidden"
     >
       <div className="relative">
         <button
           onClick={() => setIsOpen((prev) => !prev)}
-          className="flex w-full items-center justify-between gap-4 px-6 py-3 text-sm font-medium text-gray-900 dark:text-gray-100 cursor-pointer"
+          className="flex w-full items-center justify-between gap-4 px-6 py-3 text-sm font-medium text-default-900 dark:text-default-100 cursor-pointer"
         >
           <div className="flex items-center gap-2">
             <span>On this page</span>
@@ -53,14 +53,14 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
             />
           </div>
           {activeItem && (
-            <span className="truncate text-gray-500 dark:text-gray-400 font-normal max-w-[50%] text-right">
+            <span className="truncate text-default-500 dark:text-default-400 font-normal max-w-[50%] text-right">
               {activeItem.value}
             </span>
           )}
         </button>
 
         {isOpen && (
-          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-gray-200 bg-white shadow-xl">
+          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-default-200 bg-white shadow-xl">
             <ul className="p-4 space-y-2.5 text-sm">
               {toc.map((item) => {
                 const itemHref = item.href.startsWith("#")
@@ -78,7 +78,7 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
                         "block transition-colors duration-200 line-clamp-2",
                         isActive
                           ? "text-primary-600 font-medium"
-                          : "text-gray-600",
+                          : "text-default-600",
                       )}
                       onClick={(e) => {
                         handleLinkClick(e, item.href);

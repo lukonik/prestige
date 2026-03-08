@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+@layer theme {
+  :root {
+    --color-default-50: var(--color-mist-50);
+    --color-default-100: var(--color-mist-100);
+    --color-default-200: var(--color-mist-200);
+    --color-default-300: var(--color-mist-300);
+    --color-default-400: var(--color-mist-400);
+    --color-default-500: var(--color-mist-500);
+    --color-default-600: var(--color-mist-600);
+    --color-default-700: var(--color-mist-700);
+    --color-default-800: var(--color-mist-800);
+    --color-default-900: var(--color-mist-900);
+    --color-default-950: var(--color-mist-950);
+    @variant dark {
+      --color-default-50: var(--color-mist-950);
+      --color-default-100: var(--color-mist-900);
+      --color-default-200: var(--color-mist-800);
+      --color-default-300: var(--color-mist-700);
+      --color-default-400: var(--color-mist-600);
+      --color-default-500: var(--color-mist-500);
+      --color-default-600: var(--color-mist-400);
+      --color-default-700: var(--color-mist-300);
+      --color-default-800: var(--color-mist-200);
+      --color-default-900: var(--color-mist-100);
+      --color-default-950: var(--color-mist-50);
+    }
+  }
+}
+
+@theme {
+  --color-default-50: var(--color-default-50);
+  --color-default-100: var(--color-default-100);
+  --color-default-200: var(--color-default-200);
+  --color-default-300: var(--color-default-300);
+  --color-default-400: var(--color-default-400);
+  --color-default-500: var(--color-default-500);
+  --color-default-600: var(--color-default-600);
+  --color-default-700: var(--color-default-700);
+  --color-default-800: var(--color-default-800);
+  --color-default-900: var(--color-default-900);
+  --color-default-950: var(--color-default-950);
+}

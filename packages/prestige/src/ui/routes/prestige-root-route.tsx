@@ -7,7 +7,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import config from "virtual:prestige/config";
-import Header from "../components/header/header";
+import Header from "../core/header/header";
 
 export function createPrestigeRootRoute(options: {
   appCss: string;

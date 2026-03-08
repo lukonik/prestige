@@ -1,4 +1,4 @@
-import { PrestigePage } from "@lonik/prestige/ui";
+import { Aside, PrestigePage } from "@lonik/prestige/ui";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(prestige)/docs/custom-page")({
@@ -13,6 +13,11 @@ function RouteComponent() {
         This is a <strong>semantic HTML</strong> version of a Markdown file.
         It’s designed to be readable and structured for documentation.
       </p>
+
+
+      <Aside>
+        THIS IS NOTe
+      </Aside>
 
       <h2>Key Features</h2>
       <ul>

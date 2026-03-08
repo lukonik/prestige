@@ -16,3 +16,4 @@ export {
   TabsTrigger,
   TabsContent,
 } from "./components/tabs/tabs";
+export { PackageManagers,type PackageManagersProps } from "./components/package-managers/package-managers";

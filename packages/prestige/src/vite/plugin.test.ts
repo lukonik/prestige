@@ -38,9 +38,9 @@ describe.skip("prestige vite plugin", () => {
     };
   });
 
-  const setupPlugin = async (root: string, docsDir: string) => {
+  const setupPlugin = async (root: string) => {
     (resolvePrestigeConfig as any).mockResolvedValue({
-      config: { docsDir: docsDir, collections: [] },
+      config: { collections: [] },
     });
 
     if (plugin.configResolved) {
@@ -49,9 +49,9 @@ describe.skip("prestige vite plugin", () => {
     }
   };
 
-  const createProjectFile = async (docsDir: string, relativePath: string) => {
+  const createProjectFile = async (relativePath: string) => {
     const root = await mkdtemp(join(tmpdir(), "prestige-plugin-test-"));
-    const docsPath = join(root, docsDir);
+    const docsPath = join(root, "src/content");
     const fullFilePath = join(docsPath, relativePath);
 
     await mkdir(dirname(fullFilePath), { recursive: true });
@@ -60,10 +60,9 @@ describe.skip("prestige vite plugin", () => {
     return { root, file: fullFilePath };
   };
 
-  it("handleHotUpdate triggers full-reload for markdown files in docsDir", async () => {
-    const docsDir = "docs";
-    const { root, file } = await createProjectFile(docsDir, "foo.md");
-    await setupPlugin(root, docsDir);
+  it("handleHotUpdate triggers full-reload for markdown files in src/content", async () => {
+    const { root, file } = await createProjectFile("foo.md");
+    await setupPlugin(root);
 
     // @ts-ignore
     await plugin.handleHotUpdate({ file, server: mockServer, modules: [] });
@@ -75,9 +74,8 @@ describe.skip("prestige vite plugin", () => {
   });
 
   it("handleHotUpdate invalidates virtual content modules before full reload", async () => {
-    const docsDir = "docs";
-    const { root, file } = await createProjectFile(docsDir, "introduction.mdx");
-    await setupPlugin(root, docsDir);
+    const { root, file } = await createProjectFile("introduction.mdx");
+    await setupPlugin(root);
 
     const moduleById = { id: "\0virtual:prestige/content/introduction" };
     mockServer.moduleGraph.getModuleById.mockImplementation((id: string) => {
@@ -101,20 +99,18 @@ describe.skip("prestige vite plugin", () => {
 
   it("handleHotUpdate ignores non-markdown files", async () => {
     const root = "/project";
-    const docsDir = "docs";
-    await setupPlugin(root, docsDir);
+    await setupPlugin(root);
 
-    const file = "/project/docs/foo.ts";
+    const file = "/project/src/content/foo.ts";
     // @ts-ignore
     await plugin.handleHotUpdate({ file, server: mockServer, modules: [] });
 
     expect(mockServer.ws.send).not.toHaveBeenCalled();
   });
 
-  it("handleHotUpdate ignores markdown files outside docsDir", async () => {
+  it("handleHotUpdate ignores markdown files outside src/content", async () => {
     const root = "/project";
-    const docsDir = "docs";
-    await setupPlugin(root, docsDir);
+    await setupPlugin(root);
 
     const file = "/project/other/foo.md";
     // @ts-ignore

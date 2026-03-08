@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { DEFAULT_DOCS_DIR } from "../constants";
 import { CollectionsSchema } from "../core/content/content.types";
 import { RehypeShikiOptions } from "@shikijs/rehype";
 import { PluggableList } from "unified";
@@ -13,13 +12,6 @@ export const PrestigeConfigSchema = z.object({
     .string()
     .optional()
     .describe("The description of your website"),
-  docsDir: z
-    .string()
-    .optional()
-    .describe(
-      "The directory of your docs, relative to root, defaults to src/content/docs",
-    )
-    .default(DEFAULT_DOCS_DIR),
   collections: CollectionsSchema,
   algolia: z
     .object({

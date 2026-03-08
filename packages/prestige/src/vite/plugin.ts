@@ -1,16 +1,11 @@
 import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
-import { EnvironmentModuleNode, normalizePath, type Plugin } from "vite";
+import { EnvironmentModuleNode, type Plugin } from "vite";
 import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
 import { warmupCompiler } from "./content/content-compiler";
-import { compileRoutes } from "./content/router-compiler";
-import {
-  COLLECTION_VIRTUAL_ID,
-  resolveCollectionNavigations,
-} from "./core/content/content-collection.store";
 import { resolveContentLinks } from "./content/content-links";
 import {
   resolveSidebars,
@@ -21,6 +16,11 @@ import {
   getSlugByPath,
   resolveContent,
 } from "./content/content.store";
+import { compileRoutes } from "./content/router-compiler";
+import {
+  COLLECTION_VIRTUAL_ID,
+  resolveCollectionNavigations,
+} from "./core/content/content-collection.store";
 import {
   Collections,
   InternalSidebarLinkType,
@@ -30,7 +30,9 @@ import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
-export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
+export default function prestige(
+  inlineConfig?: PrestigeConfigInput,
+): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
@@ -47,7 +49,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         resolvedConfig.root,
       );
       config = loadedConfig;
-      contentDir = join(resolvedConfig.root, normalizePath(config.docsDir));
+      contentDir = join(resolvedConfig.root, "src/content");
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
       sidebarsMap = await resolveSidebars(collections, contentDir);

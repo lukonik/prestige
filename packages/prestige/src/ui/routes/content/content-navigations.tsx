@@ -27,7 +27,7 @@ function ContentNavigation({
         {isNext ? <ArrowRight className="text-default-400"/> : <ArrowLeft className="text-default-400" />}
         <div className={clsx("flex flex-col", isNext && "items-end")}>
           <span className="text-xs tracking-widest font-mono">{label.toLocaleUpperCase()}</span>
-          <span className="text-2xl font-li text-text-strong">{navigation.label}</span>
+          <span className="text-2xl font-li text-default-700">{navigation.label}</span>
         </div>
       </div>
     </Link>

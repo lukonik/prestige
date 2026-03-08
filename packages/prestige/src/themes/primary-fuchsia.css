@@ -1,0 +1,42 @@
+@layer theme {
+  :root {
+    --color-primary-50: var(--color-fuchsia-50);
+    --color-primary-100: var(--color-fuchsia-100);
+    --color-primary-200: var(--color-fuchsia-200);
+    --color-primary-300: var(--color-fuchsia-300);
+    --color-primary-400: var(--color-fuchsia-400);
+    --color-primary-500: var(--color-fuchsia-500);
+    --color-primary-600: var(--color-fuchsia-600);
+    --color-primary-700: var(--color-fuchsia-700);
+    --color-primary-800: var(--color-fuchsia-800);
+    --color-primary-900: var(--color-fuchsia-900);
+    --color-primary-950: var(--color-fuchsia-950);
+    @variant dark {
+      --color-primary-50: var(--color-fuchsia-950);
+      --color-primary-100: var(--color-fuchsia-900);
+      --color-primary-200: var(--color-fuchsia-800);
+      --color-primary-300: var(--color-fuchsia-700);
+      --color-primary-400: var(--color-fuchsia-600);
+      --color-primary-500: var(--color-fuchsia-500);
+      --color-primary-600: var(--color-fuchsia-400);
+      --color-primary-700: var(--color-fuchsia-300);
+      --color-primary-800: var(--color-fuchsia-200);
+      --color-primary-900: var(--color-fuchsia-100);
+      --color-primary-950: var(--color-fuchsia-50);
+    }
+  }
+}
+
+@theme {
+  --color-primary-50: var(--color-primary-50);
+  --color-primary-100: var(--color-primary-100);
+  --color-primary-200: var(--color-primary-200);
+  --color-primary-300: var(--color-primary-300);
+  --color-primary-400: var(--color-primary-400);
+  --color-primary-500: var(--color-primary-500);
+  --color-primary-600: var(--color-primary-600);
+  --color-primary-700: var(--color-primary-700);
+  --color-primary-800: var(--color-primary-800);
+  --color-primary-900: var(--color-primary-900);
+  --color-primary-950: var(--color-primary-950);
+}

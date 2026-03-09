@@ -1,0 +1,20 @@
+:root .prose {
+  --tw-prose-body: var(--color-default-700);
+  --tw-prose-headings: var(--color-default-900);
+  --tw-prose-lead: var(--color-default-600);
+  --tw-prose-links: var(--color-default-900);
+  --tw-prose-bold: var(--color-default-900);
+  --tw-prose-counters: var(--color-default-500);
+  --tw-prose-bullets: var(--color-default-300);
+  --tw-prose-hr: var(--color-default-200);
+  --tw-prose-quotes: var(--color-default-900);
+  --tw-prose-quote-borders: var(--color-default-200);
+  --tw-prose-captions: var(--color-default-500);
+  --tw-prose-kbd: var(--color-default-900);
+  --tw-prose-kbd-shadows: opacity(var(--color-default-900) ; 10%);
+  --tw-prose-code: var(--color-default-900);
+  --tw-prose-pre-code: var(--color-default-200);
+  --tw-prose-pre-bg: var(--color-default-800);
+  --tw-prose-th-borders: var(--color-default-300);
+  --tw-prose-td-borders: var(--color-default-200);
+}

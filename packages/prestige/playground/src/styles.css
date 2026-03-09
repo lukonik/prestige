@@ -1,8 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "@lonik/prestige/themes/primary-rose.css";
 @import "@lonik/prestige/themes/default-slate.css";
-@plugin "@tailwindcss/typography";
+@import "@lonik/prestige/themes/core.css";
 @source "../../src";
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
@@ -14,11 +15,6 @@
 
   --color-default: var(--color-default-300);
   --color-surface-container: var(--color-white);
-
-  .prose {
-    --tw-prose-code: var(--color-default-700);
-    --tw-prose-body: var(--color-default-500);
-  }
 }
 
 :root {
@@ -28,10 +24,6 @@
 
   --color-default: var(--color-default-300);
   --color-surface-container: var(--color-white);
-
-  .prose {
-    --tw-prose-code: var(--color-default-700);
-  }
 }
 
 :root {
@@ -52,35 +44,6 @@
   --color-white: var(--color-white);
 }
 .prose {
-  h1 {
-    @apply text-default-700;
-  }
-  h2 {
-    @apply text-default-700;
-  }
-  h3 {
-    @apply text-default-700;
-  }
-  h4 {
-    @apply text-default-700;
-  }
-  h5 {
-    @apply text-default-700;
-  }
-  h6 {
-    @apply text-default-700;
-  }
-  p {
-    @apply text-default-500;
-  }
-
-  strong {
-    @apply font-medium text-default-700;
-  }
-  code:not(:has(span)) {
-    @apply bg-default-100 p-1 rounded;
-  }
-
   /* Shiki Dual Theme Dark Mode Overrides */
   :root .shiki,
   :root .shiki span {

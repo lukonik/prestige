@@ -6,6 +6,7 @@ import { z } from "zod";
 import { CollectionsSchema } from "../core/content/content.types";
 
 export const PrestigeConfigSchema = z.object({
+  title: z.string().describe("Title of the website"),
   collections: CollectionsSchema,
   markdown: z
     .object({

@@ -19,6 +19,7 @@ export default defineConfig(({ mode }) => {
       tsconfigPaths(),
       ohImage(),
       prestige({
+        title: "Prestige",
         collections: [
           {
             id: "docs",

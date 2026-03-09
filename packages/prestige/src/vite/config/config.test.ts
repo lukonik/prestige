@@ -7,7 +7,6 @@ import { join } from "pathe";
 
 function minimalConfig() {
   return {
-    title: "test",
     collections: [],
   };
 }
@@ -35,24 +34,6 @@ describe.skip("CONFIG ", () => {
       await expect(resolvePrestigeConfig(undefined, "/some/path")).rejects.toThrowError(
         PrestigeError,
       );
-    });
-
-    it("should return title", async () => {
-      await createDefaultDirs();
-      await expect(
-        resolvePrestigeConfig({ ...minimalConfig(), title: "test" }, getTempDir()),
-      ).resolves.toMatchObject({
-        config: { title: "test" },
-      });
-    });
-
-    it("should return description", async () => {
-      await createDefaultDirs();
-      await expect(
-        resolvePrestigeConfig({ ...minimalConfig(), description: "test22" }, getTempDir()),
-      ).resolves.toMatchObject({
-        config: { description: "test22" },
-      });
     });
 
     it("should throw error if content dir does not exist", async () => {

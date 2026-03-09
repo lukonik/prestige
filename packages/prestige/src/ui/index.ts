@@ -20,6 +20,6 @@ export { CollectionRoute } from "./routes/collection/collection.route";
 export { ContentRoute } from "./routes/content/content.route";
 export { default as NotFound } from "./routes/not-found";
 export {
-  createPrestigeRootRoute, type AlgoliaOptions, type PrestigeRootRouteOptions
+  PrestigeShell, type AlgoliaOptions, type PrestigeRootRouteOptions
 } from "./routes/prestige-root-route";
 

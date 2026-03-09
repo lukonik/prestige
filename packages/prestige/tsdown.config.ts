@@ -20,10 +20,8 @@ export default defineConfig({
     "picocolors",
     "node:path",
     "node:fs/promises",
-    "virtual:prestige/collection-all",
-    "virtual:prestige/content-all",
-    "virtual:prestige/config",
     "node:url",
+    /^virtual:.*/
   ],
   plugins: [
     {

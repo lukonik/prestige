@@ -7,7 +7,7 @@
     "**/Thumbs.db": true,
     "**/node_modules": true,
     "**/demo": true,
-    "**/dist": true,
+    // "**/dist": true,
     "**/.output": true,
     "**/.tanstack": true
   },

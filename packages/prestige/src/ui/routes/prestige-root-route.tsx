@@ -48,6 +48,9 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
   }
 
   return createRootRoute({
+    beforeLoad: () => ({
+      prestigeOptions: options,
+    }),
     head: () => ({
       meta: [
         {

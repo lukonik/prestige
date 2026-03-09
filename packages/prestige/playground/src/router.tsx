@@ -1,6 +1,6 @@
+import { NotFound } from "@lonik/prestige/ui";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import { NotFound } from "@lonik/prestige/ui";
 
 export function getRouter() {
   const router = createTanStackRouter({

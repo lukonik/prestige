@@ -1,15 +1,21 @@
 import { Link } from "@tanstack/react-router";
 import collections from "virtual:prestige/collection-all";
-import { AlgoliaOptions } from "../../routes/prestige-root-route";
+import { PrestigeRootRouteOptions } from "../../routes/prestige-root-route";
 import { GitHub } from "../github/github";
 import { Search } from "../search/search";
 import { Theme } from "../theme/theme";
 
+export type HeaderProps = Pick<
+  PrestigeRootRouteOptions,
+  "algolia" | "title" | "customHeaderTitle" | "github"
+>;
+
 export default function Header({
   algolia,
-}: {
-  algolia: AlgoliaOptions | undefined;
-}) {
+  title,
+  github,
+  customHeaderTitle,
+}: HeaderProps) {
   return (
     <header className="sticky top-0 z-40 flex h-header  border-b border-default-200 bg-default-50/80 px-4 backdrop-blur-md">
       <div className="container mx-auto flex max-w-360  items-center justify-between">
@@ -18,7 +24,7 @@ export default function Header({
             className="text-sm px-2 py-1 rounded hover:bg-default-100 text-default-500"
             to={"/"}
           >
-            Home
+            {customHeaderTitle ? customHeaderTitle() : <span>{title}</span>}
           </Link>
           {collections.map((collection) => (
             <Link
@@ -33,7 +39,7 @@ export default function Header({
         </div>
         <div className="flex items-center gap-2">
           <Search algolia={algolia} />
-          <GitHub />
+          <GitHub github={github} />
           <Theme />
         </div>
       </div>

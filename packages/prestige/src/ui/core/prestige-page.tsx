@@ -1,10 +1,10 @@
 import React from "react";
-import { MobileTableOfContent } from "../routes/content/table-of-contents/mobile-table-of-contents";
-import { WebTableOfContent } from "../routes/content/table-of-contents/web-table-of-contents";
+import { TocItem } from "remark-flexible-toc";
 import ContentNavigations, {
   NavigationLink,
 } from "../routes/content/content-navigations";
-import { TocItem } from "remark-flexible-toc";
+import { MobileTableOfContent } from "../routes/content/table-of-contents/mobile-table-of-contents";
+import { WebTableOfContent } from "../routes/content/table-of-contents/web-table-of-contents";
 
 export interface PrestigePageProps {
   children: React.ReactNode;

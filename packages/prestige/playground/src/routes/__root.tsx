@@ -6,4 +6,5 @@ export const Route = createPrestigeRootRoute({
   appCss,
   title: "Prestige",
   favicon: favicon,
+  github: "https://github.com/lukonik/Prestige",
 });

@@ -5,6 +5,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
+import { ReactNode } from "react";
 import Header from "../core/header/header";
 
 export interface AlgoliaOptions {
@@ -18,6 +19,8 @@ export interface PrestigeRootRouteOptions {
   title: string;
   description?: string;
   algolia?: AlgoliaOptions;
+  github?: string;
+  customHeaderTitle?: () => ReactNode;
 }
 
 export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
@@ -72,7 +75,7 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
           </head>
           <body>
             <ThemeProvider attribute="data-theme" defaultTheme="system">
-              <Header algolia={options.algolia} />
+              <Header {...options} />
               {children}
               {/* <TanStackDevtools
           config={{

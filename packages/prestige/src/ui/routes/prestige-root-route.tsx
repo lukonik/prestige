@@ -6,6 +6,7 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import { ReactNode } from "react";
+import Footer from "../core/footer/footer";
 import Header from "../core/header/header";
 
 export interface AlgoliaOptions {
@@ -82,7 +83,9 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
           <body>
             <ThemeProvider attribute="data-theme" defaultTheme="system">
               <Header {...options} />
-              <main className="min-h-[calc(100vh-var(--spacing-header))]">{children}</main>
+              <main className="min-h-[calc(100vh-var(--spacing-header))]">
+                {children}
+              </main>
               {/* <TanStackDevtools
           config={{
             position: "middle-left",
@@ -94,7 +97,7 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
             },
           ]}
         /> */}
-              {/* <Footer {...options} /> */}
+              <Footer {...options} />
             </ThemeProvider>
 
             <Scripts />

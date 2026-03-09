@@ -42,7 +42,7 @@ export default function ContentNavigations({
   next: NavigationLink | null;
 }) {
   return (
-    <div className="lg:flex flex-row  items-center gap-2 mt-20 ">
+    <div className="lg:flex flex-row  items-center gap-2 mt-2 lg:mt-20 px-6">
       {prev && <ContentNavigation navigation={prev} />}
       {next && <ContentNavigation navigation={next} isNext />}
     </div>

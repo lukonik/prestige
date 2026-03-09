@@ -57,7 +57,7 @@ export function ContentRoute(inlineData: any): any {
         <div className="flex lg:gap-6 items-start max-w-[100vw]">
           <div className="flex-1 min-w-0">
             <MobileTableOfContent toc={toc} />
-            <article className="prose prose-base max-w-none wrap-break-word py-15">
+            <article className="prose prose-base max-w-none wrap-break-word py-15 px-6">
               <Component />
             </article>
             <ContentNavigations prev={prev} next={next} />

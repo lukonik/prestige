@@ -23,7 +23,7 @@ export function PrestigePage({
     <div className="flex lg:gap-6 items-start max-w-[100vw]">
       <div className="flex-1 min-w-0">
         <MobileTableOfContent toc={toc} />
-        <article className="prose prose-base max-w-none wrap-break-word py-15">
+        <article className="prose prose-base max-w-none wrap-break-word py-15 px-6">
           {children}
         </article>
         <ContentNavigations prev={prev} next={next} />

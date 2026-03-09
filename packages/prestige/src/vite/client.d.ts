@@ -91,6 +91,10 @@ declare module "virtual:prestige/config" {
     github?: string;
     title: string;
     description: string;
+    license?: {
+      label: string;
+      url: string;
+    };
   }
   const config: PrestigeConfig;
   export default config;

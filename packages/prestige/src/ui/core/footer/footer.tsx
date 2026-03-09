@@ -1,18 +1,16 @@
-import { PrestigeRootRouteOptions } from "../../routes/prestige-root-route";
+import config from "virtual:prestige/config";
 
-export type FooterProps = Pick<PrestigeRootRouteOptions, "license">;
-
-function License({ license }: { license: FooterProps["license"] }) {
-  if (!license) {
+function License() {
+  if (!config.license) {
     return null;
   }
-  return <a href={license.url}>Released under: {license.label}</a>;
+  return <a target="_blank" href={config.license.url}>Released under: {config.license.label}</a>;
 }
 
-export default function Footer({ license }: FooterProps) {
+export default function Footer() {
   return (
     <footer className="mt-10 flex items-center justify-center border-t border-t-default-100 pt-10 bg-default-50 text-sm py-10 text-default-700">
-      <License license={license} />
+      <License />
     </footer>
   );
 }

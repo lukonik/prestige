@@ -1,6 +1,6 @@
 import "@docsearch/css";
 import { DocSearch } from "@docsearch/react";
-import { AlgoliaOptions } from "../../routes/prestige-root-route";
+import { AlgoliaOptions } from "../../routes/prestige-shell";
 
 export function Search({ algolia }: { algolia: AlgoliaOptions | undefined }) {
   if (!algolia) {

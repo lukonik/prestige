@@ -7,21 +7,20 @@ export const Route = createFileRoute("/")({
 
 function RouteComponent() {
   return (
-    <div className="flex mx-auto lg:w-6xl items-start pt-20">
+    <div className="flex flex-col-reverse lg:flex-row mx-auto lg:w-6xl items-start lg:pt-20">
       <div>
-        <h1 className="text-6xl font-medium leading-snug mt-10">
+        <h1 className="text-3xl lg:text-6xl font-medium leading-snug mt-2 lg:mt-10 text-center lg:text-start">
           The Missing &lt;Image /&gt; Component for
           <span className="font-black ml-2 text-primary-600">React</span>
         </h1>
-        <div className="mt-10 flex items-center gap-4">
+        <div className="mt-10 flex lg:justify-start items-center justify-center gap-4">
           <Link to="/docs/introduction">
-            <button className="rounded-full px-8 bg-primary-600 text-white h-14 flex items-center justify-center gap-4 cursor-pointer">
+            <button className="rounded-full px-4 lg:px-8 bg-primary-600 text-white lg:h-14 h-12 flex items-center justify-center gap-4 cursor-pointer">
               Introduction <ArrowRight size={20} />
             </button>
           </Link>
-
           <a href="https://github.com/lukonik/Prestige" target="_blank">
-            <button className="rounded-full px-8  h-14 flex items-center justify-center gap-4 cursor-pointer">
+            <button className="rounded-full px-4 lg:px-8  h-14 flex items-center justify-center gap-4 cursor-pointer">
               Star on Github <Github />
             </button>
           </a>

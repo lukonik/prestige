@@ -7,4 +7,8 @@ export const Route = createPrestigeRootRoute({
   title: "Prestige",
   favicon: favicon,
   github: "https://github.com/lukonik/Prestige",
+  license: {
+    label: "MIT License",
+    url: "https://opensource.org/licenses/MIT",
+  },
 });

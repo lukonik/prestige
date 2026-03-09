@@ -13,6 +13,11 @@ export interface AlgoliaOptions {
   apiKey: string;
   indices: string[];
 }
+
+export interface LicenseOptions {
+  label: string;
+  url: string;
+}
 export interface PrestigeRootRouteOptions {
   appCss: string;
   favicon?: string;
@@ -21,6 +26,7 @@ export interface PrestigeRootRouteOptions {
   algolia?: AlgoliaOptions;
   github?: string;
   customHeaderTitle?: () => ReactNode;
+  license?: LicenseOptions;
 }
 
 export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
@@ -76,7 +82,7 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
           <body>
             <ThemeProvider attribute="data-theme" defaultTheme="system">
               <Header {...options} />
-              {children}
+              <main className="min-h-[calc(100vh-var(--spacing-header))]">{children}</main>
               {/* <TanStackDevtools
           config={{
             position: "middle-left",
@@ -88,6 +94,7 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
             },
           ]}
         /> */}
+              {/* <Footer {...options} /> */}
             </ThemeProvider>
 
             <Scripts />

@@ -18,3 +18,24 @@
   --tw-prose-th-borders: var(--color-default-300);
   --tw-prose-td-borders: var(--color-default-200);
 }
+
+:root {
+  --color-background: color-mix(
+    in srgb,
+    var(--color-default-50) 50%,
+    transparent
+  );
+
+  background: var(--color-background);
+  color: var(--color-default-950);
+}
+
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Geist Mono", monospace;
+  --spacing-header: 64px;
+  --height-main: calc(100vh - var(--spacing-header));
+  --width-sidebar: 300px;
+  --color-white: var(--color-white);
+  --color-background: var(--color-background);
+}

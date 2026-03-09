@@ -1,7 +1,9 @@
 import { FunctionComponent } from "react";
 import { TocItem } from "remark-flexible-toc";
 import { ContentFrontmatterType } from "../../../vite/core/content/content.types";
-import { PrestigeRootRouteOptions } from "../prestige-root-route";
+import {
+  PrestigeRootRouteContextOptions
+} from "../prestige-root-route";
 import ContentNavigations, { NavigationLink } from "./content-navigations";
 import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
@@ -23,7 +25,7 @@ export function ContentRoute(inlineData: any): any {
   return {
     head: ({ match }: { match: any }) => {
       const prestigeOptions = match.context
-        .prestigeOptions as PrestigeRootRouteOptions;
+        .prestigeOptions as PrestigeRootRouteContextOptions;
 
       const metas: Array<
         { name: string; content: string } | { title: string }

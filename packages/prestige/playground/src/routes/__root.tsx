@@ -11,4 +11,5 @@ export const Route = createPrestigeRootRoute({
     label: "MIT License",
     url: "https://opensource.org/licenses/MIT",
   },
+  customHeaderTitle: () => <span>HELLo</span>,
 });

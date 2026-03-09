@@ -60,7 +60,7 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
         </button>
 
         {isOpen && (
-          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-default-200 bg-white shadow-xl">
+          <div className="absolute left-6 right-6 top-full mt-2 max-h-[60vh] overflow-y-auto rounded-lg border border-default-200 bg-background shadow-xl">
             <ul className="p-4 space-y-2.5 text-sm">
               {toc.map((item) => {
                 const itemHref = item.href.startsWith("#")

@@ -30,6 +30,11 @@ export interface PrestigeRootRouteOptions {
   license?: LicenseOptions;
 }
 
+export type PrestigeRootRouteContextOptions = Pick<
+  PrestigeRootRouteOptions,
+  "title" | "description"
+>;
+
 export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
   const links: AnyRouteMatch["links"] = [];
   const metas: AnyRouteMatch["meta"] = [];
@@ -58,9 +63,14 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
   }
 
   return createRootRoute({
-    beforeLoad: () => ({
-      prestigeOptions: options,
-    }),
+    beforeLoad: () => {
+      return {
+        prestigeOptions: {
+          title: options.title,
+          description: options.description,
+        } as PrestigeRootRouteContextOptions,
+      };
+    },
     head: () => ({
       meta: [
         {

@@ -7,6 +7,22 @@ import { CollectionsSchema } from "../core/content/content.types";
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("Title of the website"),
+  github: z.string().optional().describe("Github repo"),
+  algolia: z
+    .object({
+      appId: z.string().describe("Algolia app id"),
+      apiKey: z.string().describe("Algolia api key"),
+      indices: z.array(z.string()).describe("Algolia indices"),
+    })
+    .optional()
+    .describe("Algolia options"),
+  license: z
+    .object({
+      label: z.string().describe("License label"),
+      url: z.string().describe("License url"),
+    })
+    .optional()
+    .describe("License options"),
   collections: CollectionsSchema,
   markdown: z
     .object({

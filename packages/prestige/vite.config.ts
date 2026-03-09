@@ -20,6 +20,10 @@ export default defineConfig(({ mode }) => {
       ohImage(),
       prestige({
         title: "Prestige",
+        license: {
+          label: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
         collections: [
           {
             id: "docs",

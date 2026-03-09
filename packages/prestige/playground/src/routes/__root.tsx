@@ -10,8 +10,6 @@ import appCss from "../styles.css?url";
 import config from "virtual:prestige/config";
 
 const options = {
-  appCss,
-  favicon: favicon,
   github: "https://github.com/lukonik/Prestige",
   license: {
     label: "MIT License",
@@ -30,8 +28,8 @@ export const Route = createRootRoute({
       { title: config.title },
     ],
     links: [
-      { rel: "stylesheet", href: options.appCss },
-      { rel: "icon", href: options.favicon },
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "./assets/favicon.ico" },
     ],
   }),
   component: () => (

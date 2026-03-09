@@ -115,15 +115,42 @@ Welcome to your new prestige documentation!
 `;
   await fs.writeFile(stylesPath, stylesContent);
 
-  // 8. update _root to call createPrestigeRootRoute
+  // 8. update _root to use PrestigeShell
   console.log(pc.cyan("Updating _root.tsx..."));
   const rootRoutePath = path.join(targetDir, "src/routes/__root.tsx");
-  const rootRouteContent = `import { createPrestigeRootRoute } from '@lonik/prestige/ui';
+  const rootRouteContent = `import { PrestigeShell } from '@lonik/prestige/ui';
+import { createRootRoute, HeadContent, Outlet, Scripts } from '@tanstack/react-router';
 import appCss from '../styles.css?url';
 
-export const Route = createPrestigeRootRoute({
+const options = {
   title: "My Prestige App",
   appCss: appCss,
+};
+
+export const Route = createRootRoute({
+  head: () => ({
+    meta: [
+      { charSet: "utf-8" },
+      { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { title: options.title },
+    ],
+    links: [
+      { rel: "stylesheet", href: options.appCss },
+    ],
+  }),
+  component: () => (
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <HeadContent />
+      </head>
+      <body>
+        <PrestigeShell options={options}>
+          <Outlet />
+        </PrestigeShell>
+        <Scripts />
+      </body>
+    </html>
+  ),
 });
 `;
   await fs.writeFile(rootRoutePath, rootRouteContent);

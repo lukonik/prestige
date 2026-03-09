@@ -86,7 +86,7 @@ declare module "virtual:prestige/config" {
     algolia?: {
       appId: string;
       apiKey: string;
-      indexName: string;
+      indices: string[];
     };
     github?: string;
     title: string;

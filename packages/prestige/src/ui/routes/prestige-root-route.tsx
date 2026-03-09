@@ -7,11 +7,17 @@ import {
 } from "@tanstack/react-router";
 import Header from "../core/header/header";
 
+export interface AlgoliaOptions {
+  appId: string;
+  apiKey: string;
+  indices: string[];
+}
 export interface PrestigeRootRouteOptions {
   appCss: string;
   favicon?: string;
   title: string;
   description?: string;
+  algolia?: AlgoliaOptions;
 }
 
 export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
@@ -63,7 +69,7 @@ export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
           </head>
           <body>
             <ThemeProvider attribute="data-theme" defaultTheme="system">
-              <Header />
+              <Header algolia={options.algolia} />
               {children}
               {/* <TanStackDevtools
           config={{

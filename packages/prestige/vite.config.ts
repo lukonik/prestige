@@ -1,4 +1,5 @@
 /// <reference types="vitest/config" />
+import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
@@ -16,27 +17,20 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Inspect(),
       tsconfigPaths(),
+      ohImage(),
       prestige({
-        title: "Prestige",
-        github: "https://github.com/lukonik/Prestige",
-        description: " ee qweqwqeqeq  qweqw. ",
-        algolia: {
-          appId: "YOUR_APP_ID",
-          apiKey: "YOUR_SEARCH_API_KEY",
-          indexName: "YOUR_INDEX_NAME",
-        },
         collections: [
           {
             id: "docs",
             defaultLink: "docs/introduction",
             items: [
               {
-                label:"Custom Page",
-                link:"/docs/custom-page"
+                label: "Custom Page",
+                link: "/docs/custom-page",
               },
               {
-                label:"Themer",
-                slug:"docs/themer"
+                label: "Themer",
+                slug: "docs/themer",
               },
               {
                 label: "Introduction",

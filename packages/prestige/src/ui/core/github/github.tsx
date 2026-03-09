@@ -1,14 +1,13 @@
 import { Github } from "lucide-react";
-import config from "virtual:prestige/config";
 
-export function GitHub() {
-  if (!config.github) {
+export function GitHub({ github }: { github: string | undefined }) {
+  if (!github) {
     return null;
   }
 
   return (
     <a
-      href={config.github}
+      href={github}
       target="_blank"
       rel="noreferrer"
       aria-label="GitHub repository"

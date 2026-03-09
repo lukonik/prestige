@@ -1,6 +1,5 @@
-import { Aside, Code, PrestigePage } from "@lonik/prestige/ui";
+import { Aside, Code, PrestigePage, Tabs, TabsContent, TabsList, TabsTrigger } from "@lonik/prestige/ui";
 import { createFileRoute } from "@tanstack/react-router";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@lonik/prestige/ui";
 
 export const Route = createFileRoute("/(prestige)/docs/custom-page")({
   component: RouteComponent,
@@ -51,7 +50,7 @@ function RouteComponent() {
       <h2>Code Example</h2>
       <p>Below is a snippet showing how you might render a simple function:</p>
 
-      <Code lang="tsx">
+      <Code language="tsx">
         {`function helloWorld() {
   console.log("Hello, world!");
 }`}

@@ -1,18 +1,18 @@
 import "@docsearch/css";
 import { DocSearch } from "@docsearch/react";
-import config from "virtual:prestige/config";
+import { AlgoliaOptions } from "../../routes/prestige-root-route";
 
-export function Search() {
-  if (!config.algolia) {
+export function Search({ algolia }: { algolia: AlgoliaOptions | undefined }) {
+  if (!algolia) {
     return null;
   }
 
   return (
     <div className="prestige-search">
       <DocSearch
-        appId={config.algolia.appId}
-        apiKey={config.algolia.apiKey}
-        indices={[config.algolia.indexName]}
+        appId={algolia.appId}
+        apiKey={algolia.apiKey}
+        indices={algolia.indices}
       />
     </div>
   );

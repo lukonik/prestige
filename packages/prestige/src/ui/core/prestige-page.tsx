@@ -1,10 +1,10 @@
 import React from "react";
-import { MobileTableOfContent } from "../routes/content/table-of-contents/mobile-table-of-contents";
-import { WebTableOfContent } from "../routes/content/table-of-contents/web-table-of-contents";
+import { TocItem } from "remark-flexible-toc";
 import ContentNavigations, {
   NavigationLink,
 } from "../routes/content/content-navigations";
-import { TocItem } from "remark-flexible-toc";
+import { MobileTableOfContent } from "../routes/content/table-of-contents/mobile-table-of-contents";
+import { WebTableOfContent } from "../routes/content/table-of-contents/web-table-of-contents";
 
 export interface PrestigePageProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ export function PrestigePage({
     <div className="flex lg:gap-6 items-start max-w-[100vw]">
       <div className="flex-1 min-w-0">
         <MobileTableOfContent toc={toc} />
-        <article className="prose prose-base max-w-none wrap-break-word py-15">
+        <article className="prose max-w-none wrap-break-word py-15 px-6">
           {children}
         </article>
         <ContentNavigations prev={prev} next={next} />

@@ -1,31 +1,12 @@
-import { z } from "zod";
-import { CollectionsSchema } from "../core/content/content.types";
 import { RehypeShikiOptions } from "@shikijs/rehype";
-import { PluggableList } from "unified";
 import { FlexibleTocOptions } from "remark-flexible-toc";
 import type { Options as RemarkGfmOptions } from "remark-gfm";
+import { PluggableList } from "unified";
+import { z } from "zod";
+import { CollectionsSchema } from "../core/content/content.types";
 
 export const PrestigeConfigSchema = z.object({
-  title: z.string().describe("The title of your website"),
-  favicon: z.string().optional().describe("The favicon of your website"),
-  description: z
-    .string()
-    .optional()
-    .describe("The description of your website"),
   collections: CollectionsSchema,
-  algolia: z
-    .object({
-      appId: z.string().describe("The Algolia App ID"),
-      apiKey: z.string().describe("The Algolia Search API Key"),
-      indexName: z.string().describe("The Algolia Index Name"),
-    })
-    .optional()
-    .describe("Algolia DocSearch configuration"),
-  github: z
-    .string()
-    .url()
-    .optional()
-    .describe("GitHub repository URL shown in the header"),
   markdown: z
     .object({
       shikiOptions: z

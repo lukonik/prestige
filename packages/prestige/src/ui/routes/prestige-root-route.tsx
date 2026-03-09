@@ -1,18 +1,43 @@
 import { ThemeProvider } from "@lonik/themer";
 import {
-  AnyRootRoute,
   AnyRouteMatch,
   createRootRoute,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import config from "virtual:prestige/config";
+import { ReactNode } from "react";
+import Footer from "../core/footer/footer";
 import Header from "../core/header/header";
 
-export function createPrestigeRootRoute(options: {
+export interface AlgoliaOptions {
+  appId: string;
+  apiKey: string;
+  indices: string[];
+}
+
+export interface LicenseOptions {
+  label: string;
+  url: string;
+}
+export interface PrestigeRootRouteOptions {
   appCss: string;
-}): AnyRootRoute {
+  favicon?: string;
+  title: string;
+  description?: string;
+  algolia?: AlgoliaOptions;
+  github?: string;
+  customHeaderTitle?: () => ReactNode;
+  license?: LicenseOptions;
+}
+
+export type PrestigeRootRouteContextOptions = Pick<
+  PrestigeRootRouteOptions,
+  "title" | "description"
+>;
+
+export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
   const links: AnyRouteMatch["links"] = [];
+  const metas: AnyRouteMatch["meta"] = [];
 
   if (options.appCss) {
     links.push({
@@ -21,14 +46,31 @@ export function createPrestigeRootRoute(options: {
     });
   }
 
-  if (config.favicon) {
+  if (options.favicon) {
     links.push({
       rel: "icon",
-      href: config.favicon,
+      href: options.favicon,
+    });
+  }
+  metas.push({
+    title: options.title,
+  });
+  if (options.description) {
+    metas.push({
+      name: "description",
+      content: options.description,
     });
   }
 
   return createRootRoute({
+    beforeLoad: () => {
+      return {
+        prestigeOptions: {
+          title: options.title,
+          description: options.description,
+        } as PrestigeRootRouteContextOptions,
+      };
+    },
     head: () => ({
       meta: [
         {
@@ -38,13 +80,7 @@ export function createPrestigeRootRoute(options: {
           name: "viewport",
           content: "width=device-width, initial-scale=1",
         },
-        {
-          title: config.title,
-        },
-        {
-          name: "description",
-          content: config.description,
-        },
+        ...metas,
       ],
       links: links,
     }),
@@ -56,8 +92,10 @@ export function createPrestigeRootRoute(options: {
           </head>
           <body>
             <ThemeProvider attribute="data-theme" defaultTheme="system">
-              <Header />
-              {children}
+              <Header {...options} />
+              <main className="min-h-[calc(100vh-var(--spacing-header))]">
+                {children}
+              </main>
               {/* <TanStackDevtools
           config={{
             position: "middle-left",
@@ -69,6 +107,7 @@ export function createPrestigeRootRoute(options: {
             },
           ]}
         /> */}
+              <Footer {...options} />
             </ThemeProvider>
 
             <Scripts />

@@ -120,16 +120,14 @@
     "tailwindcss": "catalog:",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
-    "vite": "^7.3.0",
     "vitest": "^4.0.16",
-    "vitest-browser-react": "^2.0.2"
-  },
-  "peerDependencies": {
+    "vitest-browser-react": "^2.0.2",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-start": "catalog:",
     "@vitest/coverage-v8": "^4.0.18",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "vite-tsconfig-paths": "^6.1.1"
+    "vite-tsconfig-paths": "^6.1.1",
+    "vite": "^7.3.0"
   }
 }

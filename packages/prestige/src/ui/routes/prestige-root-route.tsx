@@ -1,18 +1,22 @@
 import { ThemeProvider } from "@lonik/themer";
 import {
-  AnyRootRoute,
   AnyRouteMatch,
   createRootRoute,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import config from "virtual:prestige/config";
 import Header from "../core/header/header";
 
-export function createPrestigeRootRoute(options: {
+export interface PrestigeRootRouteOptions {
   appCss: string;
-}): AnyRootRoute {
+  favicon?: string;
+  title: string;
+  description?: string;
+}
+
+export function createPrestigeRootRoute(options: PrestigeRootRouteOptions) {
   const links: AnyRouteMatch["links"] = [];
+  const metas: AnyRouteMatch["meta"] = [];
 
   if (options.appCss) {
     links.push({
@@ -21,10 +25,19 @@ export function createPrestigeRootRoute(options: {
     });
   }
 
-  if (config.favicon) {
+  if (options.favicon) {
     links.push({
       rel: "icon",
-      href: config.favicon,
+      href: options.favicon,
+    });
+  }
+  metas.push({
+    title: options.title,
+  });
+  if (options.description) {
+    metas.push({
+      name: "description",
+      content: options.description,
     });
   }
 
@@ -38,13 +51,7 @@ export function createPrestigeRootRoute(options: {
           name: "viewport",
           content: "width=device-width, initial-scale=1",
         },
-        {
-          title: config.title,
-        },
-        {
-          name: "description",
-          content: config.description,
-        },
+        ...metas,
       ],
       links: links,
     }),

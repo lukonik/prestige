@@ -1,6 +1,6 @@
 {
   "name": "@lonik/prestige",
-  "version": "0.0.0",
+  "version": "0.0.3",
   "description": "Static Site Generator for Tanstack Start",
   "homepage": "https://github.com/lukonik/prestige#readme",
   "bugs": {
@@ -17,15 +17,8 @@
     "src/themes"
   ],
   "type": "module",
-  "main": "./dist/index.js",
-  "module": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "types": "./dist/client.d.ts",
   "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
-      "default": "./dist/index.js"
-    },
     "./ui": {
       "types": "./dist/ui.d.ts",
       "import": "./dist/ui.js",
@@ -40,7 +33,10 @@
       "style": "./src/themes/*",
       "default": "./src/themes/*"
     },
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./client": {
+      "types": "./dist/client.d.ts"
+    }
   },
   "publishConfig": {
     "access": "public"
@@ -54,7 +50,8 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "release": "bumpp && pnpm publish",
-    "prepublishOnly": "pnpm run build"
+    "prepublishOnly": "pnpm run build",
+    "release-v": "bumpp patch --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
     "@base-ui/react": "^1.2.0",

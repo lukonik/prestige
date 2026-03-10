@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/lukonik/prestige/compare/prestige-v0.0.2...prestige-v0.0.3) (2026-03-10)
+
+
+### Bug Fixes
+
+* plugin log ([7659c84](https://github.com/lukonik/prestige/commit/7659c84ee80ba97b2ff180b20b56e1fc8f4c5882))
+
 ## [0.0.2](https://github.com/lukonik/prestige/compare/prestige-v0.0.1...prestige-v0.0.2) (2026-03-10)
 
 

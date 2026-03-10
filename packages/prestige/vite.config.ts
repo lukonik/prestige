@@ -27,8 +27,11 @@ export default defineConfig(({ mode }) => {
         collections: [
           {
             id: "docs",
-            defaultLink: "docs/introduction",
             items: [
+              {
+                label: "Showcase",
+                slug: "docs/showcase",
+              },
               {
                 label: "Custom Page",
                 link: "/docs/custom-page",

@@ -1,0 +1,113 @@
+---
+title: "Showcase: Margaret Hamilton & The AGC"
+description: "A comprehensive MDX showcase featuring all GitHub Flavored Markdown formats, told through a classic computer science story."
+author: "CS Historian"
+date: "2026-03-10"
+---
+
+# Margaret Hamilton and the Apollo 11 Mission
+
+## The Birth of "Software Engineering"
+
+When humanity first traveled to the moon, it wasn't just rocket fuel that got us there; it was code. At the center of this monumental achievement was **Margaret Hamilton**, Director of the Software Engineering Division at the MIT Instrumentation Laboratory.
+
+This document serves as an _MDX showcase_ demonstrating ~~strikethrough~~, **bold text**, _italics_, and `inline code` formatting natively supported by GitHub.
+
+---
+
+### Key Contributions to the Apollo Mission
+
+Hamilton's team was responsible for the onboard flight software. Their rigorous approach included several groundbreaking concepts:
+
+- **Asynchronous Executive:** The system could interrupt itself to prioritize important tasks.
+- **Priority Displays:** Warning the astronauts in real-time.
+- **Human-in-the-loop:** Designing systems that assumed humans might make errors.
+
+> "There was no second chance. We all knew that."
+> — Margaret Hamilton, on the stakes of Apollo 11.
+
+---
+
+### The 1202 Program Alarm
+
+Minutes before the Eagle lander touched down, the computer threw a **1202** and **1201** alarm.
+
+1. The radar system was feeding the computer too much irrelevant data.
+2. The computer became overloaded.
+3. The _Asynchronous Executive_ kicked in, dropping low-priority tasks to focus exclusively on the steering and landing math.
+
+Because of this robust error-handling, the landing was a success.[^1]
+
+[^1]: This concept of fault tolerance is a cornerstone of modern software architecture.
+
+---
+
+### Pre-Landing Checklist (Task List Example)
+
+Here is a simplified look at the priority checks the system handled:
+
+- [x] Monitor radar altitude
+- [x] Calculate descent trajectory
+- [x] Control thruster orientation
+- [ ] Process unnecessary rendezvous radar pings (Dropped during overload!)
+
+---
+
+### AGC vs. Modern Tech (Table Example)
+
+How did the Apollo Guidance Computer (AGC) stack up against modern devices?
+
+| Specification       | Apollo Guidance Computer (1969) | iPhone 15 Pro (2023) | Difference Multiplier |
+| :------------------ | :------------------------------ | :------------------- | :-------------------- |
+| **Processor Speed** | 2.048 MHz                       | 3.78 GHz             | ~1,845x faster        |
+| **RAM**             | 4 KB (Magnetic Core)            | 8 GB                 | ~2,000,000x more      |
+| **Storage (ROM)**   | 72 KB (Core Rope)               | 256 GB               | ~3,500,000x more      |
+| **Weight**          | 70 lbs (32 kg)                  | 6.6 oz (187 g)       | Significantly lighter |
+
+---
+
+### The Code That Saved the Mission (Code Block Example)
+
+The code was written in AGC Assembly language. Below is an actual snippet from the `LUMINARY` source code (the software for the Lunar Module), specifically dealing with the ignition routine.
+
+```bash
+# LUMINARY Revision 69 - AGC Source Code
+# Routine: IGNITION ALGORITHM
+
+		BANK	33
+		SETLOC	P22
+		BANK
+
+		EBANK=	IGNAST
+
+IGNITION	TC	INTPRET		# Start interpreter
+		VLOAD
+			IGNAST		# Load ignition time
+		STORE	TIG		# Store as Time of Ignition
+		EXIT
+		TC	PHASCHNG	# Phase change for restart protection
+		OCT	04024
+
+		TC	ENDOFJOB	# Yield to higher priority jobs
+```
+
+:::note
+Starlight is a documentation website toolkit built with [Astro](https://astro.build/). You can get started with this command:
+:::
+
+:::caution
+If you are not sure you want an awesome docs site, think twice before using [Starlight](/).
+:::
+
+:::danger
+Your users may be more productive and find your product easier to use thanks to helpful Starlight features.
+
+- Clear navigation
+- User-configurable colour theme
+- [i18n support](/guides/i18n/)
+
+:::
+
+:::tip
+Astro helps you build faster websites with [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
+:::

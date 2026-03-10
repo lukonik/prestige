@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.2](https://github.com/lukonik/prestige/compare/prestige-v0.0.1...prestige-v0.0.2) (2026-03-10)
+
+
+### Bug Fixes
+
+* log shiki ([7a26277](https://github.com/lukonik/prestige/commit/7a2627702fb724447f5833033deb6f45b27e03e2))
+
 ## [0.0.1](https://github.com/lukonik/prestige/compare/prestige-v0.0.0...prestige-v0.0.1) (2026-03-10)
 
 

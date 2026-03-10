@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.4](https://github.com/lukonik/prestige/compare/v0.1.3...v0.1.4) (2026-03-10)
+
+
+### Bug Fixes
+
+* correct publish script ([#51](https://github.com/lukonik/prestige/issues/51)) ([43df39e](https://github.com/lukonik/prestige/commit/43df39ec47f35a0872545cc3214b9b340313f1e8))
+
 ## [0.1.3](https://github.com/lukonik/prestige/compare/v0.1.2...v0.1.3) (2026-03-10)
 
 

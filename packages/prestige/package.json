@@ -54,7 +54,6 @@
     "release-v": "bumpp patch --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
-    "@base-ui/react": "^1.2.0",
     "@docsearch/css": "^4.6.0",
     "@docsearch/react": "^4.6.0",
     "@fontsource/geist-mono": "^5.2.7",
@@ -65,10 +64,8 @@
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
     "@shikijs/rehype": "^3.22.0",
-    "clsx": "^2.1.1",
     "hastscript": "^9.0.1",
     "knitwork": "^1.3.0",
-    "lucide-react": "^0.545.0",
     "matter": "^0.2.0",
     "pathe": "^2.0.3",
     "picomatch": "^4.0.3",
@@ -91,8 +88,7 @@
     "unist-util-visit": "^5.1.0",
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
-    "yaml": "^2.8.2",
-    "zod": "^4.3.6"
+    "yaml": "^2.8.2"
   },
   "peerDependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -101,7 +97,11 @@
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0",
     "tailwindcss": "^4.0.0",
-    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0"
+    "vite": "^5.0.0 || ^6.0.0 || ^7.0.0",
+    "lucide-react": "^0.545.0",
+    "@base-ui/react": "^1.2.0",
+    "clsx": "^2.1.1",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@arethetypeswrong/core": "^0.18.2",

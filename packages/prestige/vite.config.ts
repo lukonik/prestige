@@ -88,10 +88,7 @@ export default defineConfig(({ mode }) => {
             tanstackStart({
               prerender: {
                 enabled: false,
-                // crawlLinks: true,
-              },
-              spa: {
-                enabled: true,
+                crawlLinks: false,
               },
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.

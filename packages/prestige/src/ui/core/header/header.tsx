@@ -25,27 +25,25 @@ export default function Header({ customHeaderTitle }: HeaderProps) {
               <span>{config.title}</span>
             )}
           </Link>
-          {collections
-            .filter((c) => c.defaultLink)
-            .map((collection) => {
-              const isActive =
-                location.pathname === `/${collection.id}` ||
-                location.pathname.startsWith(`/${collection.id}/`);
+          {collections.map((collection) => {
+            const isActive =
+              location.pathname === `/${collection.id}` ||
+              location.pathname.startsWith(`/${collection.id}/`);
 
-              return (
-                <Link
-                  key={collection.id}
-                  to={`/${collection.defaultLink}`}
-                  className={`border-b-2 text-sm rounded hover:bg-default-100 active:bg-default-200 capitalize ${
-                    isActive
-                      ? "border-default-800 text-default-800 font-medium"
-                      : "border-b-transparent text-default-500"
-                  }`}
-                >
-                  {collection.label}
-                </Link>
-              );
-            })}
+            return (
+              <Link
+                key={collection.id}
+                to={`/${collection.defaultLink}` as any}
+                className={`border-b-2 text-sm rounded hover:bg-default-100 active:bg-default-200 capitalize ${
+                  isActive
+                    ? "border-default-800 text-default-800 font-medium"
+                    : "border-b-transparent text-default-500"
+                }`}
+              >
+                {collection.label}
+              </Link>
+            );
+          })}
         </div>
         <div className="flex items-center gap-2">
           <Search algolia={config.algolia} />

@@ -1,10 +1,10 @@
-import { mkdir, readdir, unlink, writeFile, readFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
 import { join } from "node:path";
-import { InternalSidebarLinkType } from "../core/content/content.types";
+import { SidebarLinkType } from "../core/content/content.types";
 import logger from "../utils/logger";
 
 export async function compileRoutes(
-  linksMap: Map<string, InternalSidebarLinkType[]>,
+  linksMap: Map<string, SidebarLinkType[]>,
   routesDir: string,
 ) {
   const prestigePath = "(prestige)";
@@ -16,11 +16,13 @@ export async function compileRoutes(
     const generatedFiles = new Map<string, string>();
 
     for (const [key, links] of linksMap) {
+      const onlyInternalLinks = links.filter((l) => "slug" in l);
+
       const sidebarPath = key;
       const sidebarFile = sidebarPath + ".lazy.tsx";
       generatedFiles.set(sidebarFile, createLayoutRoute(key));
 
-      for (const l of links) {
+      for (const l of onlyInternalLinks) {
         const pathified = l.slug.replaceAll("/", ".") + ".lazy.tsx";
         generatedFiles.set(pathified, createContentRoute(l.slug));
       }
@@ -45,37 +47,50 @@ export async function compileRoutes(
 
     const existingFiles = await readdir(prestigeFullPath);
     const staleFiles = existingFiles.filter(
-      (fileName) => fileName.endsWith(".lazy.tsx") && !generatedFiles.has(fileName),
+      (fileName) =>
+        fileName.endsWith(".lazy.tsx") && !generatedFiles.has(fileName),
     );
 
     await Promise.all(
       staleFiles.map((fileName) => {
-        logger.info(`Removing stale route file: ${fileName}`, { timestamp: true });
+        logger.info(`Removing stale route file: ${fileName}`, {
+          timestamp: true,
+        });
         return unlink(join(prestigeFullPath, fileName));
       }),
     );
   } catch (error) {
-    logger.error(`[Prestige Router Compiler] Failed to compile routes: ${error}`, { timestamp: true });
-    console.error("[Prestige Router Compiler] Failed to compile routes:", error);
+    logger.error(
+      `[Prestige Router Compiler] Failed to compile routes: ${error}`,
+      { timestamp: true },
+    );
+    console.error(
+      "[Prestige Router Compiler] Failed to compile routes:",
+      error,
+    );
   }
 }
 
 function createLayoutRoute(id: string) {
-  return `
+  return (
+    `
 import { createLazyFileRoute } from '@tanstack/react-router';
 import sidebar from "virtual:prestige/sidebar/${id}";
 import { CollectionRoute } from "@lonik/prestige/ui";
 
 export const Route = createLazyFileRoute('/(prestige)/${id}')(CollectionRoute(sidebar, "${id}"));
-`.trim() + "\n";
+`.trim() + "\n"
+  );
 }
 
 function createContentRoute(slug: string) {
-  return `
+  return (
+    `
 import { createLazyFileRoute } from "@tanstack/react-router";
 import * as contentData from "virtual:prestige/content/${slug}";
 import { ContentRoute } from "@lonik/prestige/ui";
 
 export const Route = createLazyFileRoute('/(prestige)/${slug}')(ContentRoute(contentData));
-`.trim() + "\n";
+`.trim() + "\n"
+  );
 }

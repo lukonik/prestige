@@ -23,12 +23,14 @@ const InternalCollectionLinkSchema = z.union([
   z.string(),
 ]);
 
-const CollectionLinkSchema = z.object({
+const ExternalCollectionLinkSchema = z.object({
   label: z.string(),
   link: z.string(),
 });
 
-export type CollectionLink = z.infer<typeof CollectionLinkSchema>;
+export type ExternalCollectionLink = z.infer<
+  typeof ExternalCollectionLinkSchema
+>;
 
 export type InternalCollectionLink = z.infer<
   typeof InternalCollectionLinkSchema
@@ -44,7 +46,7 @@ export type CollectionGroup = {
 export type CollectionItem =
   | InternalCollectionLink
   | CollectionGroup
-  | CollectionLink;
+  | ExternalCollectionLink;
 
 const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> =
   z.object({
@@ -60,7 +62,7 @@ const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> =
 
 const CollectionItemSchema: z.ZodType<CollectionItem, CollectionItem> = z.union(
   [
-    CollectionLinkSchema,
+    ExternalCollectionLinkSchema,
     InternalCollectionLinkSchema,
     z.lazy(() => CollectionGroupSchema),
   ],
@@ -103,10 +105,12 @@ export interface InternalSidebarLinkType {
   label: string;
 }
 
-export interface SidebarLinkType {
+export interface ExternalSidebarLinkType {
   label: string;
   link: string;
 }
+
+export type SidebarLinkType = InternalSidebarLinkType | ExternalSidebarLinkType;
 
 export interface SidebarGroupType {
   label: string;
@@ -117,7 +121,7 @@ export interface SidebarGroupType {
 export type SidebarItemType =
   | InternalSidebarLinkType
   | SidebarGroupType
-  | SidebarLinkType;
+  | ExternalSidebarLinkType;
 
 export interface SidebarType {
   items: SidebarItemType[];

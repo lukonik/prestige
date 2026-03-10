@@ -3,32 +3,37 @@ import { pathToFileURL } from "node:url";
 import { parse, relative } from "pathe";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
+import {
+  InternalSidebarLinkType,
+  SidebarLinkType,
+} from "../core/content/content.types";
 import { compileMarkdown } from "./content-compiler";
-import { InternalSidebarLinkType } from "../core/content/content.types";
 
-import { compileFrontmatter } from "./content-compiler";
 import { PrestigeError } from "../utils/errors";
+import { compileFrontmatter } from "./content-compiler";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
 
 export function resolveSiblings(
   base: string,
   slug: string,
-  linksMap: Map<string, InternalSidebarLinkType[]>,
+  linksMap: Map<string, SidebarLinkType[]>,
 ) {
   const links = linksMap.get(base);
   if (!links?.length) {
     return { prev: undefined, next: undefined };
   }
-  const linkIndex = links.findIndex((link) => link.slug === slug);
+  const linkIndex = links
+    .filter((l) => "slug" in l)
+    .findIndex((link) => link.slug === slug);
 
   let prev: InternalSidebarLinkType | undefined;
   let next: InternalSidebarLinkType | undefined;
   if (linkIndex > 0) {
-    prev = links[linkIndex - 1];
+    prev = links[linkIndex - 1] as InternalSidebarLinkType;
   }
   if (linkIndex < links.length - 1) {
-    next = links[linkIndex + 1];
+    next = links[linkIndex + 1] as InternalSidebarLinkType;
   }
   return { prev, next };
 }
@@ -44,7 +49,7 @@ export async function resolveMarkdown(slug: string, contentDir: string) {
 
 export async function resolveContent(
   id: string,
-  linksMap: Map<string, InternalSidebarLinkType[]>,
+  linksMap: Map<string, SidebarLinkType[]>,
   contentDir: string,
 ) {
   const slug = id.replace(CONTENT_VIRTUAL_ID, "").replace("\0", "");
@@ -67,7 +72,9 @@ export async function getPathBySlug(slug: string, contentDir: string) {
   const pathMatch = join(contentDir, slug);
   const matches = await glob(`${pathMatch}.{md,mdx}`);
   if (matches.length === 0) {
-    throw new PrestigeError(`[Prestige] Could not find markdown file for slug: "${slug}". Searched at: ${pathMatch}.{md,mdx}. If you want to link to a custom page, use 'link: "${slug}"' instead of 'slug: "${slug}"' in your collection config.`);
+    throw new PrestigeError(
+      `[Prestige] Could not find markdown file for slug: "${slug}". Searched at: ${pathMatch}.{md,mdx}. If you want to link to a custom page, use 'link: "${slug}"' instead of 'slug: "${slug}"' in your collection config.`,
+    );
   }
   return matches[0] as string;
 }

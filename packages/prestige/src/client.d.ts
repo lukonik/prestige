@@ -74,7 +74,7 @@ declare module "virtual:prestige/collection-all" {
   type CollectionNavigation = {
     id: string;
     label: string;
-    defaultLink?: string;
+    defaultLink: string;
   };
   const collections: Array<CollectionNavigation>;
   export default collections;

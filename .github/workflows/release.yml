@@ -1,0 +1,51 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+      id-token: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+          
+      - name: Install dependencies
+        # Usually, pnpm install is run at the root of the repository
+        run: pnpm install --frozen-lockfile
+        
+      - name: Build package
+        # Move into the folder for the build step
+        working-directory: packages/prestige
+        run: pnpm run build
+        
+      - name: Release
+        # Move into the folder for the release step
+        working-directory: packages/prestige
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: pnpx semantic-release

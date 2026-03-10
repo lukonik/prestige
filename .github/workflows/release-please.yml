@@ -20,8 +20,6 @@ jobs:
           # Automatically provided by GitHub Actions to create PRs/Tags
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
-          bump-minor-pre-major: true
-          bump-patch-for-minor-pre-major: true
 
       # Run these steps ONLY if a release was just created
       - name: Checkout repository
@@ -31,8 +29,6 @@ jobs:
       - name: Install pnpm
         if: ${{ steps.release.outputs.release_created }}
         uses: pnpm/action-setup@v4
-        with:
-          version: 9 # You can lock this to a specific version if needed
 
       - name: Setup Node.js
         if: ${{ steps.release.outputs.release_created }}

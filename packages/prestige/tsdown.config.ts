@@ -1,5 +1,5 @@
-import { defineConfig } from "tsdown";
 import { copyFileSync } from "node:fs";
+import { defineConfig } from "tsdown";
 
 export default defineConfig({
   entry: {
@@ -21,7 +21,7 @@ export default defineConfig({
     "node:path",
     "node:fs/promises",
     "node:url",
-    /^virtual:.*/
+    /^virtual:.*/,
   ],
   plugins: [
     {

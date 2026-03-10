@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createHighlighter, Highlighter } from "shiki";
-
+import { createJavaScriptRegexEngine } from "shiki/engine/javascript";
 // Move highlighter instance outside to act as a singleton,
 // but don't use top-level await to prevent blocking the bundle.
 let highlighterPromise: Promise<Highlighter> | null = null;
@@ -26,6 +26,7 @@ export function Code({
           // OPTIMIZATION: Only load the themes/langs you actually use!
           themes: [theme],
           langs: [language],
+          engine: createJavaScriptRegexEngine(),
         });
       }
 

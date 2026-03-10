@@ -43,17 +43,6 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
-    config() {
-      return {
-        optimizeDeps: {
-          exclude: [
-            "@lonik/prestige",
-            CONFIG_VIRTUAL_ID,
-            COLLECTION_VIRTUAL_ID,
-          ],
-        },
-      };
-    },
     async configResolved(resolvedConfig) {
       logger.info("Resolving Prestige configuration...", { timestamp: true });
       const { config: loadedConfig } = await resolvePrestigeConfig(

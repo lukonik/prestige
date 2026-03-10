@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/lukonik/prestige/compare/v0.1.0...v0.1.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* skip validate-pr on release-please ([#47](https://github.com/lukonik/prestige/issues/47)) ([681ccb8](https://github.com/lukonik/prestige/commit/681ccb88057d5dfbc14db8461cfe2e9d81eebb16))
+
 ## 0.1.0 (2026-03-10)
 
 

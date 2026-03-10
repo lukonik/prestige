@@ -1,6 +1,6 @@
 {
   "name": "@lonik/prestige",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Static Site Generator for Tanstack Start",
   "homepage": "https://github.com/lukonik/prestige#readme",
   "bugs": {
@@ -56,9 +56,6 @@
   "dependencies": {
     "@docsearch/css": "^4.6.0",
     "@docsearch/react": "^4.6.0",
-    "@fontsource/geist-mono": "^5.2.7",
-    "@fontsource/geist-sans": "^5.2.5",
-    "@lonik/oh-image": "^3.1.0",
     "@lonik/themer": "^0.5.2",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
@@ -80,7 +77,6 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.2",
     "remark-toc": "^9.0.0",
-    "sharp": "^0.34.5",
     "shiki": "^4.0.1",
     "tinyglobby": "^0.2.15",
     "to-vfile": "^8.0.0",
@@ -91,6 +87,8 @@
     "yaml": "^2.8.2"
   },
   "peerDependencies": {
+    "@lonik/oh-image": "^3.1.0",
+    "sharp": "^0.34.5",
     "@tailwindcss/vite": "^4.0.0",
     "@tanstack/react-router": ">=1.0.0",
     "@tanstack/react-start": ">=1.0.0",

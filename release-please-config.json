@@ -1,8 +1,12 @@
 {
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
   "packages": {
     "packages/prestige": {
       "release-type": "node",
-      "package-name": "@lonik/prestige"
+      "package-name": "@lonik/prestige",
+      "initial-version": "0.0.0",
+      "bump-minor-pre-major": true,
+      "bump-patch-for-minor-pre-major": true
     }
   }
 }

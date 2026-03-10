@@ -60,7 +60,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       logger.info("Resolving content links...", { timestamp: true });
       internalLinksMap = resolveContentInternalLinks(sidebarsMap);
 
-      logger.info("Resolving collection navigations...", { timestamp: true });
+      logger.info("Resolving collection navigations....", { timestamp: true });
       collectionNavigations = resolveCollectionNavigations(
         collections,
         internalLinksMap,

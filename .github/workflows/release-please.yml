@@ -19,10 +19,9 @@ jobs:
         with:
           # Automatically provided by GitHub Actions to create PRs/Tags
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: node
-          # Ensure release-please updates the package in packages/prestige
-          path: packages/prestige
-          package-name: "@lonik/prestige"
+          # Use manifest/config to control package path and name
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
 
       # Run these steps ONLY if a release was just created
       - name: Checkout repository

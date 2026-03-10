@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "packages/prestige": {
+      "release-type": "node",
+      "package-name": "@lonik/prestige"
+    }
+  }
+}

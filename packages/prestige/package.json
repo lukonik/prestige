@@ -10,7 +10,7 @@
   "author": "Luka Onikadze",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/author/library.git"
+    "url": "git+https://github.com/lukonik/prestige.git"
   },
   "files": [
     "dist",

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/lukonik/prestige/compare/v0.1.2...v0.1.3) (2026-03-10)
+
+
+### Bug Fixes
+
+* pnpm publish script ([4680be1](https://github.com/lukonik/prestige/commit/4680be1deac336ff48345cbd48b211a07235d572))
+
 ## [0.1.2](https://github.com/lukonik/prestige/compare/v0.1.1...v0.1.2) (2026-03-10)
 
 

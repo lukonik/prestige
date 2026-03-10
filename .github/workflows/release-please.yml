@@ -20,6 +20,8 @@ jobs:
           # Automatically provided by GitHub Actions to create PRs/Tags
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: node
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
 
       # Run these steps ONLY if a release was just created
       - name: Checkout repository

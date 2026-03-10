@@ -1,6 +1,7 @@
 import { mkdir, readdir, unlink, writeFile, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { InternalSidebarLinkType } from "../core/content/content.types";
+import logger from "../utils/logger";
 
 export async function compileRoutes(
   linksMap: Map<string, InternalSidebarLinkType[]>,
@@ -37,6 +38,7 @@ export async function compileRoutes(
         } catch (e) {
           // File doesn't exist yet, proceed to write
         }
+        logger.info(`Writing route file: ${fileName}`, { timestamp: true });
         return writeFile(filePath, contents);
       }),
     );
@@ -47,9 +49,13 @@ export async function compileRoutes(
     );
 
     await Promise.all(
-      staleFiles.map((fileName) => unlink(join(prestigeFullPath, fileName))),
+      staleFiles.map((fileName) => {
+        logger.info(`Removing stale route file: ${fileName}`, { timestamp: true });
+        return unlink(join(prestigeFullPath, fileName));
+      }),
     );
   } catch (error) {
+    logger.error(`[Prestige Router Compiler] Failed to compile routes: ${error}`, { timestamp: true });
     console.error("[Prestige Router Compiler] Failed to compile routes:", error);
   }
 }

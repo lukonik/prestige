@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.1](https://github.com/lukonik/prestige/compare/prestige-v0.0.0...prestige-v0.0.1) (2026-03-10)
+
+
+### Bug Fixes
+
+* bump version fix ([5a0f117](https://github.com/lukonik/prestige/commit/5a0f11714ce3f0d5f2e08f9841c2d47da6abcd59))
+
 ## 0.0.0 (2026-03-10)
 
 

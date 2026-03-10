@@ -1,3 +1,4 @@
+import { copyFileSync } from "node:fs";
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
@@ -19,8 +20,16 @@ export default defineConfig({
     "picocolors",
     "node:path",
     "node:fs/promises",
-    "virtual:prestige/collection-all",
-    "virtual:prestige/content-all",
     "node:url",
+    /^virtual:.*/,
+  ],
+  plugins: [
+    {
+      name: "copy-files",
+      writeBundle() {
+        copyFileSync("src/client.d.ts", "dist/client.d.ts");
+        copyFileSync("README.md", "dist/README.md");
+      },
+    },
   ],
 });

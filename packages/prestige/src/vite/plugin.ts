@@ -6,7 +6,7 @@ import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
 import { warmupCompiler } from "./content/content-compiler";
-import { resolveContentLinks } from "./content/content-links";
+import { resolveContentInternalLinks } from "./content/content-links";
 import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
@@ -24,10 +24,11 @@ import {
 import {
   Collections,
   InternalSidebarLinkType,
-  SidebarType,
+  SidebarType
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 import { extractVirtualId } from "./utils/file-utils";
+import logger from "./utils/logger";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
@@ -36,13 +37,14 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let contentDir: string;
   let isDocsMatcher: Matcher;
   let collections: Collections = [];
-  let linksMap: Map<string, InternalSidebarLinkType[]>;
+  let internalLinksMap: Map<string, InternalSidebarLinkType[]>;
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
+      logger.info("Resolving Prestige configuration...", { timestamp: true });
       const { config: loadedConfig } = await resolvePrestigeConfig(
         inlineConfig,
         resolvedConfig.root,
@@ -51,14 +53,25 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       contentDir = join(resolvedConfig.root, "src/content");
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
+
+      logger.info("Resolving sidebars...", { timestamp: true });
       sidebarsMap = await resolveSidebars(collections, contentDir);
 
-      collectionNavigations = resolveCollectionNavigations(collections);
+      logger.info("Resolving content links...", { timestamp: true });
+      internalLinksMap = resolveContentInternalLinks(sidebarsMap);
+
+      logger.info("Resolving collection navigations...", { timestamp: true });
+      collectionNavigations = resolveCollectionNavigations(
+        collections,
+        internalLinksMap,
+      );
 
       const routesDir = join(resolvedConfig.root, "src", "routes");
-      linksMap = resolveContentLinks(sidebarsMap);
-      await compileRoutes(linksMap, routesDir);
 
+      logger.info("Compiling routes...", { timestamp: true });
+      await compileRoutes(internalLinksMap, routesDir);
+
+      logger.info("Warming up compiler...", { timestamp: true });
       // Warm up the MDX compiler to pre-initialize the syntax highlighter (e.g. Shiki)
       // We do this non-blocking so it doesn't slow down the Vite startup.
       warmupCompiler(config.markdown);
@@ -66,21 +79,27 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"
       // it is not guaranteed that some other plugin doesn't modify this import and attach full path
-      // we call extractVirtualId to trim the import      
+      // we call extractVirtualId to trim the import
 
       if (id.includes(CONFIG_VIRTUAL_ID)) {
+        logger.info(`Resolving config virtual ID: ${id}`, { timestamp: true });
         return extractVirtualId(id, CONFIG_VIRTUAL_ID);
       }
 
       if (id.includes(CONTENT_VIRTUAL_ID)) {
+        logger.info(`Resolving content virtual ID: ${id}`, { timestamp: true });
         return extractVirtualId(id, CONTENT_VIRTUAL_ID);
       }
 
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
+        logger.info(`Resolving collection virtual ID: ${id}`, {
+          timestamp: true,
+        });
         return extractVirtualId(id, COLLECTION_VIRTUAL_ID);
       }
 
       if (id.includes(SIDEBAR_VIRTUAL_ID)) {
+        logger.info(`Resolving sidebar virtual ID: ${id}`, { timestamp: true });
         return extractVirtualId(id, SIDEBAR_VIRTUAL_ID);
       }
 
@@ -88,16 +107,28 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     },
     async load(id) {
       if (id === `\0${CONFIG_VIRTUAL_ID}`) {
+        logger.info(`Loading config virtual module: ${id}`, {
+          timestamp: true,
+        });
         return genExportDefault(JSON.stringify(config));
       }
       if (id.includes(CONTENT_VIRTUAL_ID)) {
-        return await resolveContent(id, linksMap, contentDir);
+        logger.info(`Loading content virtual module: ${id}`, {
+          timestamp: true,
+        });
+        return await resolveContent(id, internalLinksMap, contentDir);
       }
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
+        logger.info(`Loading collection virtual module: ${id}`, {
+          timestamp: true,
+        });
         return collectionNavigations;
       }
 
       if (id.includes(SIDEBAR_VIRTUAL_ID)) {
+        logger.info(`Loading sidebar virtual module: ${id}`, {
+          timestamp: true,
+        });
         const sidebarId = id.replace(SIDEBAR_VIRTUAL_ID, "").replace("\0", "");
         const sidebar = sidebarsMap.get(sidebarId);
         if (!sidebar) {
@@ -111,6 +142,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
 
     async hotUpdate({ file, timestamp }) {
       if (isDocsMatcher(file)) {
+        logger.info(`Invalidating module ${file}...`, { timestamp: true });
         const invalidatedModules = new Set<EnvironmentModuleNode>();
         const slug = getSlugByPath(file, contentDir);
         const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
@@ -123,6 +155,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
             timestamp,
             true,
           );
+          logger.info(`Reloading application...`, { timestamp: true });
           this.environment.hot.send({ type: "full-reload" });
         }
       }

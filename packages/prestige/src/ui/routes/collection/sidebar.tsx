@@ -3,10 +3,10 @@ import clsx from "clsx";
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import {
-  InternalSidebarLinkType,
-  SidebarGroupType,
-  SidebarLinkType,
-  SidebarType,
+    ExternalSidebarLinkType,
+    InternalSidebarLinkType,
+    SidebarGroupType,
+    SidebarType,
 } from "../../../vite/core/content/content.types";
 import { isExternalURL } from "../../utils";
 
@@ -62,7 +62,7 @@ function SidebarLink({
   onLinkClick,
   showIcon,
 }: {
-  link: InternalSidebarLinkType | SidebarLinkType;
+  link: InternalSidebarLinkType | ExternalSidebarLinkType;
   onLinkClick?: (() => void) | undefined;
   showIcon: boolean;
 }) {

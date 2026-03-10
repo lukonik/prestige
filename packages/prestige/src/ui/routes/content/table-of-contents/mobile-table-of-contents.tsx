@@ -33,10 +33,11 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
     return itemHref === activeId;
   });
 
+  /* pl-12 is needed for mobile sidebar, because sidebar button is fixed position */
   return (
     <div
       ref={containerRef}
-      className="sticky top-header z-30 -mx-6 -mt-10 mb-8 bg-default-50/95 backdrop-blur border-b border-default-200 dark:border-default-800 lg:hidden px-6"
+      className="sticky top-header z-30 -mx-6 -mt-10 mb-8 bg-default-50/95 backdrop-blur border-b border-default-200 dark:border-default-800 lg:hidden px-6 pl-12"
     >
       <div className="relative">
         <button

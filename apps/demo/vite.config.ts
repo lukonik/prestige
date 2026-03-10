@@ -27,17 +27,17 @@ const config = defineConfig({
             {
               label: "Text",
               type: "link",
-              slug: "/demo",
+              slug: "demo",
             },
             {
               label: "opaaaa",
               type: "link",
-              slug: "/demo",
+              slug: "demo",
             },
             {
               label: "opaa22aa",
               type: "link",
-              slug: "/demo",
+              slug: "demo",
             },
           ],
         },

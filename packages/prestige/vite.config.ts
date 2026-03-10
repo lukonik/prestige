@@ -14,6 +14,10 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: "./playground",
+    optimizeDeps: {
+      noDiscovery: true,
+      include: [], // Ensures nothing is forced into the optimizer
+    },
     plugins: [
       Inspect(),
       tsconfigPaths(),
@@ -27,8 +31,11 @@ export default defineConfig(({ mode }) => {
         collections: [
           {
             id: "docs",
-            defaultLink: "docs/introduction",
             items: [
+              {
+                label: "Showcase",
+                slug: "docs/showcase",
+              },
               {
                 label: "Custom Page",
                 link: "/docs/custom-page",
@@ -88,10 +95,7 @@ export default defineConfig(({ mode }) => {
             tanstackStart({
               prerender: {
                 enabled: false,
-                // crawlLinks: true,
-              },
-              spa: {
-                enabled: true,
+                crawlLinks: false,
               },
             }),
             // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.

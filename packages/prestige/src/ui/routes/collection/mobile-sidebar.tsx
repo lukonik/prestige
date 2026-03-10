@@ -7,14 +7,15 @@ function SidebarOverlay({ sidebar }: { sidebar: SidebarType }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="lg:hidden">
+      {/* Mobile sidebar button is placed on the start of mobile of content tab, we have to position is via fixed because table of content lives inside content.route */}
       <button
-        className="bottom-4 bg-default-100 p-3 rounded-full right-4 fixed shadow-lg z-50"
+        className="bg-transparent p-3 -mt-[2px] text-default-700 top-header left-0 fixed  z-50"
         onClick={() => setIsOpen((prev) => !prev)}
       >
         {isOpen ? <X /> : <Menu />}
       </button>
       {isOpen && (
-        <div className="fixed shadow-xl left-0 overflow-auto top-0 z-10 bg-default-50 w-full h-screen">
+        <div className="fixed top-[calc(var(--spacing-header)+44 )] shadow-xl left-0 overflow-auto z-10 bg-default-50 w-full h-screen">
           <Sidebar onLinkClick={() => setIsOpen(false)} sidebar={sidebar} />
         </div>
       )}

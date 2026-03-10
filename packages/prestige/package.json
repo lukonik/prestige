@@ -51,7 +51,6 @@
     "typecheck": "tsc --noEmit",
     "publish": "pnpm publish --no-git-checks",
     "release": "bumpp && pnpm publish",
-    "prepublishOnly": "pnpm run build",
     "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "peerDependencies": {

@@ -9,6 +9,7 @@ function RouteComponent() {
   return (
     <div className="flex flex-col-reverse lg:flex-row mx-auto lg:w-6xl items-start lg:pt-20">
       <div>
+   test test
         <h1 className="text-3xl lg:text-6xl font-medium leading-snug mt-2 lg:mt-10 text-center lg:text-start">
           The Missing &lt;Image /&gt; Component for
           <span className="font-black ml-2 text-primary-600">React</span>

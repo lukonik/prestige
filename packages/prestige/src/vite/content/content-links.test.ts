@@ -1,6 +1,6 @@
-import { describe, it, expect } from "vitest";
-import { resolveContentLinks } from "./content-links";
+import { describe, expect, it } from "vitest";
 import { SidebarType } from "../core/content/content.types";
+import { resolveContentInternalLinks } from "./content-links";
 
 describe("resolveContentLinks", () => {
   it("should extract internal links from a flat sidebar", () => {
@@ -18,7 +18,7 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentLinks(sidebars);
+    const links = resolveContentInternalLinks(sidebars);
 
     expect(links.get("docs")).toEqual([
       { slug: "getting-started", label: "Getting Started" },
@@ -52,7 +52,7 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentLinks(sidebars);
+    const links = resolveContentInternalLinks(sidebars);
 
     expect(links.get("guides")).toEqual([
       { slug: "intro", label: "Introduction" },
@@ -79,7 +79,7 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentLinks(sidebars);
+    const links = resolveContentInternalLinks(sidebars);
 
     expect(links.get("docs")).toEqual([
       { slug: "getting-started", label: "Getting Started" },
@@ -100,14 +100,14 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentLinks(sidebars);
+    const links = resolveContentInternalLinks(sidebars);
 
     expect(links.get("empty")).toEqual([]);
   });
 
   it("should handle an empty sidebars map", () => {
     const sidebars = new Map<string, SidebarType>();
-    const links = resolveContentLinks(sidebars);
+    const links = resolveContentInternalLinks(sidebars);
     expect(links.size).toBe(0);
   });
 });

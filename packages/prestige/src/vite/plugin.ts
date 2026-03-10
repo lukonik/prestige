@@ -77,7 +77,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"
       // it is not guaranteed that some other plugin doesn't modify this import and attach full path
-      // we call extractVirtualId to trim the import      
+      // we call extractVirtualId to trim the import
 
       if (id.includes(CONFIG_VIRTUAL_ID)) {
         return extractVirtualId(id, CONFIG_VIRTUAL_ID);

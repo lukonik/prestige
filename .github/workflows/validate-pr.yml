@@ -3,6 +3,7 @@ name: validate-pr
 on:
   pull_request:
     branches: [main]
+    # Added types to ensure the check re-runs if you rename the PR
     types:
       - opened
       - edited
@@ -10,13 +11,13 @@ on:
 
 jobs:
   validate-pr:
-    # This prevents the job from running on Release Please branches
-    if: ${{ !startsWith(github.head_ref, 'release-please') }}
+    if: ${{ github.event.pull_request.user.login != 'release-please[bot]' && !startsWith(github.event.pull_request.head.ref, 'release-please--') }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          # Required for some linters to see the history/context
           fetch-depth: 0
 
       - name: Validate PR Title (Conventional Commits)
@@ -38,6 +39,15 @@ jobs:
 
       - name: Install Playwright
         run: pnpm dlx playwright install
+
+      # - name: Lint
+      #   run: pnpm run lint
+
+      # - name: Format
+      #   run: pnpm run fmt
+
+      # - name: Test
+      #   run: pnpm run test:all
 
       - name: Build
         run: pnpm run build:all

@@ -50,6 +50,6 @@ jobs:
       - name: Publish to npm
         if: ${{ steps.release.outputs.release_created }}
         # --no-git-checks skips strict git branch checks which can fail in CI
-        run: pnpm publish --no-git-checks
+        run: pnpm run publish 
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

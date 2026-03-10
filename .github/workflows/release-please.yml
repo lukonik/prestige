@@ -15,11 +15,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: googleapis/release-please-action@v4
+        id: release
         with:
-          # this assumes that you have created a personal access token
-          # (PAT) and configured it as a GitHub action secret named
-          # `MY_RELEASE_PLEASE_TOKEN` (this secret name is not important).
-          token: ${{ secrets.NPM_TOKEN }}
-          # this is a built-in strategy in release-please, see "Action Inputs"
-          # for more options
-          release-type: simple
+          # Automatically provided by GitHub Actions to create PRs/Tags
+          token: ${{ secrets.GITHUB_TOKEN }}
+          release-type: node
+
+      # Run these steps ONLY if a release was just created
+      - name: Checkout repository
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        if: ${{ steps.release.outputs.release_created }}
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9 # You can lock this to a specific version if needed
+
+      - name: Setup Node.js
+        if: ${{ steps.release.outputs.release_created }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        if: ${{ steps.release.outputs.release_created }}
+        # --frozen-lockfile ensures strict installation based on pnpm-lock.yaml
+        run: pnpm install --frozen-lockfile
+
+      - name: Build project
+        if: ${{ steps.release.outputs.release_created }}
+        run: pnpm run build
+
+      - name: Publish to npm
+        if: ${{ steps.release.outputs.release_created }}
+        # --no-git-checks skips strict git branch checks which can fail in CI
+        run: pnpm publish --no-git-checks
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

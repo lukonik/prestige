@@ -17,6 +17,7 @@
     "play:build": "pnpm run --filter @lonik/prestige play:build",
     "play:preview": "pnpm run --filter @lonik/prestige play:preview",
     "build": "pnpm run --filter @lonik/prestige build",
+    "publish":"pnpm run --filter @lonik/prestige publish",
     "test": "pnpm run --filter @lonik/prestige test",
     "coverage": "pnpm run --filter @lonik/prestige test --coverage",
     "typecheck": "pnpm run --filter @lonik/prestige typecheck",

@@ -1,4 +1,3 @@
-import { RehypeShikiOptions } from "@shikijs/rehype";
 import { FlexibleTocOptions } from "remark-flexible-toc";
 import type { Options as RemarkGfmOptions } from "remark-gfm";
 import { PluggableList } from "unified";
@@ -26,10 +25,6 @@ export const PrestigeConfigSchema = z.object({
   collections: CollectionsSchema,
   markdown: z
     .object({
-      shikiOptions: z
-        .custom<RehypeShikiOptions>()
-        .optional()
-        .describe("Options for Shiki syntax highlighting"),
       gfmOptions: z
         .custom<RemarkGfmOptions>()
         .optional()

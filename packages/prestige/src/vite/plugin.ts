@@ -5,7 +5,6 @@ import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
-import { warmupCompiler } from "./content/content-compiler";
 import { resolveContentLinks } from "./content/content-links";
 import {
   resolveSidebars,
@@ -70,11 +69,6 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
 
       logger.info("Compiling routes...", { timestamp: true });
       await compileRoutes(linksMap, routesDir);
-
-      logger.info("Warming up shiki compiler...", { timestamp: true });
-      // Warm up the MDX compiler to pre-initialize the syntax highlighter (e.g. Shiki)
-      // We do this non-blocking so it doesn't slow down the Vite startup.
-      warmupCompiler(config.markdown);
     },
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"

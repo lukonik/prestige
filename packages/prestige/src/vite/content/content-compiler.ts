@@ -1,18 +1,18 @@
 import { compile } from "@mdx-js/mdx";
-import rehypeShiki, { RehypeShikiOptions } from "@shikijs/rehype";
+import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
+import remarkDirective from "remark-directive";
 import remarkFlexibleToc, { TocItem } from "remark-flexible-toc";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
-import remarkDirective from "remark-directive";
 import { PluggableList } from "unified";
 import { Compatible, VFile } from "vfile";
 import { matter } from "vfile-matter";
 import { PrestigeConfig } from "../config/config.types";
 
-import { visit } from "unist-util-visit";
 import { h } from "hastscript";
 import type { Node } from "unist";
+import { visit } from "unist-util-visit";
 
 export default function remarkAdmonitions() {
   return (tree: Node) => {
@@ -186,18 +186,10 @@ export async function compileMarkdown(
 ) {
   const toc: TocItem[] = [];
 
-  const shikiOptions: RehypeShikiOptions = {
-    themes: {
-      light: "github-light",
-      dark: "github-dark",
-    },
-    ...options?.shikiOptions,
-  };
-
   const rehypePlugins: PluggableList = [
     ...(options?.rehypePlugins ?? []),
-    [rehypeShiki, shikiOptions],
     rehypeSlug,
+    rehypePrism,
   ];
 
   const remarkPlugins: PluggableList = [

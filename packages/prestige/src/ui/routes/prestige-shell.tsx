@@ -5,6 +5,7 @@ import Header from "../core/header/header";
 
 export interface PrestigeShellProps {
   customHeaderTitle?: (() => ReactNode) | undefined;
+  copyright?: (() => ReactNode) | null | undefined;
 }
 
 export function PrestigeShell({
@@ -20,7 +21,7 @@ export function PrestigeShell({
       <main className="min-h-[calc(100vh-var(--spacing-header))]">
         {children}
       </main>
-      <Footer />
+      <Footer copyright={options?.copyright} />
     </ThemeProvider>
   );
 }

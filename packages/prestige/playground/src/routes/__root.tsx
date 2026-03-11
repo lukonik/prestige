@@ -1,22 +1,26 @@
-import { PrestigeShell } from "@lonik/prestige/ui";
+import { PrestigeShell, PrestigeShellProps } from "@lonik/prestige/ui";
 import {
   createRootRoute,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router";
-import favicon from "../assets/favicon.ico";
-import appCss from "../styles.css?url";
 import config from "virtual:prestige/config";
+import appCss from "../styles.css?url";
 
-const options = {
-  github: "https://github.com/lukonik/Prestige",
-  license: {
-    label: "MIT License",
-    url: "https://opensource.org/licenses/MIT",
-  },
+const options: PrestigeShellProps = {
   customHeaderTitle: () => (
     <span className="font-rubik text-primary-600 text-2xl">Oh Image</span>
+  ),
+  copyright: () => (
+    <a
+      className="underline"
+      href="https://github.com/lukonik/Prestige"
+      target="_blank"
+      rel="norefferer"
+    >
+      Built with  Prestige 🎩
+    </a>
   ),
 };
 

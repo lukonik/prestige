@@ -1,20 +1,20 @@
 import { FunctionComponent } from "react";
 import { TocItem } from "remark-flexible-toc";
-import { ContentFrontmatterType } from "../../../vite/core/content/content.types";
-import ContentNavigations, { NavigationLink } from "./content-navigations";
+import config from "virtual:prestige/config";
+import {
+  ContentFrontmatterType,
+  SiblingNavigationType,
+} from "../../../vite/core/content/content.types";
 import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
 import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
-import config from "virtual:prestige/config";
 export function ContentRoute(inlineData: any): any {
   const {
     frontmatter,
-    prev,
-    next,
     toc,
     default: Component,
   } = inlineData as {
-    prev: NavigationLink | null;
-    next: NavigationLink | null;
+    prev: SiblingNavigationType | null;
+    next: SiblingNavigationType | null;
     toc: TocItem[];
     default: FunctionComponent;
     frontmatter: ContentFrontmatterType;
@@ -52,7 +52,6 @@ export function ContentRoute(inlineData: any): any {
             <article className="prose max-w-none wrap-break-word py-15 px-6">
               <Component />
             </article>
-            <ContentNavigations prev={prev} next={next} />
           </div>
           <WebTableOfContent toc={toc} />
         </div>

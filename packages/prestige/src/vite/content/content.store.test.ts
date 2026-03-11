@@ -76,22 +76,22 @@ describe("content.store", () => {
       const result = resolveSiblings("docs", "docs/getting-started", linksMap);
       expect(result).toEqual({
         prev: undefined,
-        next: { slug: "docs/installation", label: "Installation" },
+        next: { link: "docs/installation", label: "Installation" },
       });
     });
 
     it("should return correct prev and next siblings for middle item", () => {
       const result = resolveSiblings("docs", "docs/installation", linksMap);
       expect(result).toEqual({
-        prev: { slug: "docs/getting-started", label: "Getting Started" },
-        next: { slug: "docs/advanced", label: "Advanced" },
+        prev: { link: "docs/getting-started", label: "Getting Started" },
+        next: { link: "docs/advanced", label: "Advanced" },
       });
     });
 
     it("should return correct prev sibling for last item", () => {
       const result = resolveSiblings("docs", "docs/advanced", linksMap);
       expect(result).toEqual({
-        prev: { slug: "docs/installation", label: "Installation" },
+        prev: { link: "docs/installation", label: "Installation" },
         next: undefined,
       });
     });
@@ -105,8 +105,8 @@ describe("content.store", () => {
 
       const resultSecond = resolveSiblings("mixed", "mixed/second", linksMap);
       expect(resultSecond).toEqual({
-        prev: { slug: "mixed/first", label: "First" },
-        next: { slug: "mixed/third", label: "Third" },
+        prev: { link: "mixed/first", label: "First" },
+        next: { link: "mixed/third", label: "Third" },
       });
 
       const resultThird = resolveSiblings("mixed", "mixed/third", linksMap);
@@ -200,7 +200,7 @@ describe("content.store", () => {
 
       expect(result).toContain("const code = 'compiled';");
       expect(result).toContain("export const toc = [{\"depth\":1,\"value\":\"Intro\",\"id\":\"intro\"}]");
-      expect(result).toContain("export const prev = {\"slug\":\"docs/getting-started\",\"label\":\"Getting Started\"}");
+      expect(result).toContain("export const prev = {\"label\":\"Getting Started\",\"link\":\"docs/getting-started\"}");
       expect(result).toContain("export const next = undefined");
       expect(result).toContain("export const frontmatter = {\"title\":\"Intro\"}");
     });

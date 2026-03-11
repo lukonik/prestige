@@ -61,18 +61,17 @@ export default defineConfig(({ mode }) => {
               {
                 label: "Loaders",
                 items: [
-                  // { label: "Overview", slug: "docs/image/loaders/overview" },
-                  // { label: "Cloudflare", slug: "docs/loaders/cloudflare" },
-                  // { label: "Cloudinary", slug: "docs/loaders/cloudinary" },
-                  // { label: "Contentful", slug: "docs/loaders/contentful" },
-                  // { label: "Imgproxy", slug: "docs/loaders/imgproxy" },
-                  // { label: "Kontent", slug: "docs/loaders/kontent" },
-                  // { label: "Netlify", slug: "docs/loaders/netlify" },
-                  // { label: "Wordpress", slug: "docs/loaders/wordpress" },
-
+                  { label: "Overview", slug: "docs/image/loaders/overview" },
+                  { label: "Cloudflare", link: "/docs/loaders/cloudflare" },
+                  { label: "Cloudinary", slug: "docs/loaders/cloudinary" },
+                  { label: "Contentful", link: "/docs/loaders/contentful" },
+                  { label: "Imgproxy", link: "/docs/loaders/imgproxy" },
+                  { label: "Kontent", link: "/docs/loaders/kontent" },
+                  { label: "Netlify", link: "/docs/loaders/netlify" },
+                  { label: "Wordpress", link: "/docs/loaders/wordpress" },
                   {
                     label: "Custom Loader",
-                    slug: "docs/image/loaders/custom-loader",
+                    slug: "docs/loaders/custom-loader",
                   },
                 ],
               },

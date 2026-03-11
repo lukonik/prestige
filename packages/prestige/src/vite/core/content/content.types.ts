@@ -126,4 +126,15 @@ export type SidebarItemType =
 export interface SidebarType {
   items: SidebarItemType[];
   defaultLink: string;
+  navigation: Record<string, NavigationLinks>;
+}
+
+export interface SiblingNavigationType {
+  label: string;
+  link: string;
+}
+
+export interface NavigationLinks {
+  prev: SiblingNavigationType | null | undefined;
+  next: SiblingNavigationType | null | undefined;
 }

@@ -24,7 +24,7 @@ import {
 import {
   Collections,
   SidebarLinkType,
-  SidebarType
+  SidebarType,
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 import { extractVirtualId } from "./utils/file-utils";

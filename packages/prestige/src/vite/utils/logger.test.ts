@@ -13,7 +13,8 @@ vi.mock("picocolors", () => ({
 
 describe("logger", () => {
   function createInfoSpy(level: "info" | "warn" | "error") {
-    return vi.spyOn(console, level).mockImplementation(() => {});
+    const method = level === "info" ? "log" : level;
+    return vi.spyOn(console, method).mockImplementation(() => {});
   }
 
   afterEach(() => {
@@ -23,16 +24,17 @@ describe("logger", () => {
   it("should info the message", () => {
     const logSpy = createInfoSpy("info");
     logger.info("Info Message");
-    expect(logSpy).toHaveBeenCalledWith("[prestige]: Info Message");
+    expect(logSpy).toHaveBeenCalledWith("Info Message");
   });
   it("should warn the message", () => {
     const logSpy = createInfoSpy("warn");
     logger.warn("Warning Message");
-    expect(logSpy).toHaveBeenCalledWith("[prestige]: Warning Message");
+    expect(logSpy).toHaveBeenCalledWith("Warning Message");
   });
   it("should error the message", () => {
     const logSpy = createInfoSpy("error");
     logger.error("This is error");
-    expect(logSpy).toHaveBeenCalledWith("[prestige]: This is error");
+    expect(logSpy).toHaveBeenCalledWith("This is error");
   });
 });
+

@@ -127,3 +127,8 @@ export interface SidebarType {
   items: SidebarItemType[];
   defaultLink: string;
 }
+
+export interface SiblingNavigationType {
+  label: string;
+  link: string;
+}

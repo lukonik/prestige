@@ -4,7 +4,7 @@ import { parse, relative } from "pathe";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
 import {
-  InternalSidebarLinkType,
+  SiblingNavigationType,
   SidebarLinkType,
 } from "../core/content/content.types";
 import { compileMarkdown } from "./content-compiler";
@@ -13,6 +13,18 @@ import { PrestigeError } from "../utils/errors";
 import { compileFrontmatter } from "./content-compiler";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
+
+function getSiblingLink(
+  link: SidebarLinkType | undefined,
+): SiblingNavigationType | undefined {
+  if (!link) {
+    return undefined;
+  }
+  return {
+    label: link.label,
+    link: "slug" in link ? link.slug : link.link,
+  };
+}
 
 export function resolveSiblings(
   base: string,
@@ -33,18 +45,21 @@ export function resolveSiblings(
   });
 
   const linkIndex = validLinks.findIndex((link) => {
-    return ("slug" in link && link.slug === slug) || ("link" in link && link.link === slug);
+    return (
+      ("slug" in link && link.slug === slug) ||
+      ("link" in link && link.link === slug)
+    );
   });
 
-  let prev: SidebarLinkType | undefined;
-  let next: SidebarLinkType | undefined;
-  
+  let prev: SiblingNavigationType | undefined;
+  let next: SiblingNavigationType | undefined;
+
   if (linkIndex !== -1) {
     if (linkIndex > 0) {
-      prev = validLinks[linkIndex - 1];
+      prev = getSiblingLink(validLinks[linkIndex - 1]);
     }
     if (linkIndex < validLinks.length - 1) {
-      next = validLinks[linkIndex + 1];
+      next = getSiblingLink(validLinks[linkIndex + 1]);
     }
   }
 

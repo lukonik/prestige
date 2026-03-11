@@ -1,33 +1,42 @@
 import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-
-export interface NavigationLink {
-  label: string;
-  slug: string;
-}
+import { SiblingNavigationType } from "../../../vite/core/content/content.types";
 
 function ContentNavigation({
   isNext,
   navigation,
 }: {
   isNext?: boolean;
-  navigation: NavigationLink;
+  navigation: SiblingNavigationType;
 }) {
   const label = isNext ? "Next" : "Previous";
   return (
     <Link
-      to={"/" + navigation.slug}
+      to={navigation.link}
       className={clsx(
         " flex-1 h-20 mb-4 border border-default-200 hover:bg-default-50 rounded-md cursor-pointer flex items-center px-4",
         isNext ? "justify-end" : "justify-start",
       )}
     >
-      <div className={clsx("flex items-center gap-4", isNext && "flex-row-reverse")}>
-        {isNext ? <ArrowRight className="text-default-400"/> : <ArrowLeft className="text-default-400" />}
+      <div
+        className={clsx(
+          "flex items-center gap-4",
+          isNext && "flex-row-reverse",
+        )}
+      >
+        {isNext ? (
+          <ArrowRight className="text-default-400" />
+        ) : (
+          <ArrowLeft className="text-default-400" />
+        )}
         <div className={clsx("flex flex-col", isNext && "items-end")}>
-          <span className="text-xs tracking-widest font-mono">{label.toLocaleUpperCase()}</span>
-          <span className="text-2xl font-li text-default-700">{navigation.label}</span>
+          <span className="text-xs tracking-widest font-mono">
+            {label.toLocaleUpperCase()}
+          </span>
+          <span className="text-2xl font-li text-default-700">
+            {navigation.label}
+          </span>
         </div>
       </div>
     </Link>

@@ -13,7 +13,7 @@ export function PrestigePage({ children, toc = [] }: PrestigePageProps) {
     <div className="flex lg:gap-6 items-start max-w-[100vw]">
       <div className="flex-1 min-w-0">
         <MobileTableOfContent toc={toc} />
-        <article className="prose wrap-break-word py-15 px-6 max-w-none lg:w-[80ch]">
+        <article className="prose wrap-break-word py-15 px-6 max-w-none lg:w-web-content">
           {children}
         </article>
       </div>

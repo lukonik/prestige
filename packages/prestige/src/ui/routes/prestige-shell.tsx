@@ -3,10 +3,12 @@ import { ReactNode } from "react";
 import Footer from "../core/footer/footer";
 import Header from "../core/header/header";
 
-export interface PrestigeShellProps {
-  customHeaderTitle?: (() => ReactNode) | undefined;
-}
+type RenderNode = () => ReactNode;
 
+export interface PrestigeShellProps {
+  customHeaderTitle?: RenderNode | undefined;
+  copyright?: RenderNode | undefined;
+}
 export function PrestigeShell({
   children,
   options,
@@ -20,7 +22,7 @@ export function PrestigeShell({
       <main className="min-h-[calc(100vh-var(--spacing-header))]">
         {children}
       </main>
-      <Footer />
+      <Footer copyright={options?.copyright} />
     </ThemeProvider>
   );
 }

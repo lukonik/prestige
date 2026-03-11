@@ -23,18 +23,31 @@ export function resolveSiblings(
   if (!links?.length) {
     return { prev: undefined, next: undefined };
   }
-  const linkIndex = links
-    .filter((l) => "slug" in l)
-    .findIndex((link) => link.slug === slug);
 
-  let prev: InternalSidebarLinkType | undefined;
-  let next: InternalSidebarLinkType | undefined;
-  if (linkIndex > 0) {
-    prev = links[linkIndex - 1] as InternalSidebarLinkType;
+  const validLinks = links.filter((l) => {
+    if ("slug" in l) return true;
+    if ("link" in l) {
+      return !l.link.startsWith("http://") && !l.link.startsWith("https://");
+    }
+    return false;
+  });
+
+  const linkIndex = validLinks.findIndex((link) => {
+    return ("slug" in link && link.slug === slug) || ("link" in link && link.link === slug);
+  });
+
+  let prev: SidebarLinkType | undefined;
+  let next: SidebarLinkType | undefined;
+  
+  if (linkIndex !== -1) {
+    if (linkIndex > 0) {
+      prev = validLinks[linkIndex - 1];
+    }
+    if (linkIndex < validLinks.length - 1) {
+      next = validLinks[linkIndex + 1];
+    }
   }
-  if (linkIndex < links.length - 1) {
-    next = links[linkIndex + 1] as InternalSidebarLinkType;
-  }
+
   return { prev, next };
 }
 

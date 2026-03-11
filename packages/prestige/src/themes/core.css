@@ -29,20 +29,6 @@
   background: var(--color-background);
   color: var(--color-default-950);
   --color-white: #fff;
-
-  @variant dark {
-    --color-white: var(--color-black);
-
-    .shiki,
-    .shiki span {
-      color: var(--shiki-dark) !important;
-      background-color: var(--shiki-dark-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-dark-font-style) !important;
-      font-weight: var(--shiki-dark-font-weight) !important;
-      text-decoration: var(--shiki-dark-text-decoration) !important;
-    }
-  }
 }
 
 @theme {
@@ -53,4 +39,126 @@
   --color-background: var(--color-background);
   --width-web-table-of-content: 300px;
   --width-web-content: 80ch;
+}
+
+@layer base {
+  /* Base setup for code blocks */
+  code[class*="language-"],
+  pre[class*="language-"] {
+    @apply text-gray-800 dark:text-[#c5c8c6] font-mono text-left whitespace-pre break-normal leading-relaxed;
+    direction: ltr;
+    word-spacing: normal;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  /* Code blocks backgrounds */
+  pre[class*="language-"] {
+    @apply p-4 my-2 overflow-auto rounded-lg bg-gray-50 dark:bg-[#1d1f21];
+  }
+
+  /* Inline code backgrounds */
+  :not(pre) > code[class*="language-"] {
+    @apply p-1 rounded-md bg-gray-100 dark:bg-[#1d1f21];
+  }
+
+  /* --- Tokens --- */
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    @apply text-gray-500 dark:text-[#7c7c7c];
+  }
+
+  .token.punctuation {
+    @apply text-gray-500 dark:text-[#c5c8c6];
+  }
+
+  .namespace {
+    @apply opacity-70;
+  }
+
+  .token.property,
+  .token.keyword,
+  .token.tag {
+    @apply text-blue-600 dark:text-[#96cbfe];
+  }
+
+  .token.class-name {
+    @apply text-yellow-700 dark:text-[#ffffb6] underline;
+  }
+
+  .token.boolean,
+  .token.constant {
+    @apply text-emerald-600 dark:text-[#99cc99];
+  }
+
+  .token.symbol,
+  .token.deleted {
+    @apply text-pink-600 dark:text-[#f92672];
+  }
+
+  .token.number {
+    @apply text-fuchsia-600 dark:text-[#ff73fd];
+  }
+
+  .token.selector,
+  .token.attr-name,
+  .token.string,
+  .token.char,
+  .token.builtin,
+  .token.inserted {
+    @apply text-green-600 dark:text-[#a8ff60];
+  }
+
+  .token.variable {
+    @apply text-indigo-600 dark:text-[#c6c5fe];
+  }
+
+  .token.operator {
+    @apply text-gray-500 dark:text-[#ededed];
+  }
+
+  .token.entity {
+    @apply text-yellow-700 dark:text-[#ffffb6] cursor-help;
+  }
+
+  .token.url {
+    @apply text-blue-600 dark:text-[#96cbfe];
+  }
+
+  .language-css .token.string,
+  .style .token.string {
+    @apply text-green-700 dark:text-[#87c38a];
+  }
+
+  .token.atrule,
+  .token.attr-value {
+    @apply text-yellow-600 dark:text-[#f9ee98];
+  }
+
+  .token.function {
+    @apply text-amber-600 dark:text-[#dad085];
+  }
+
+  .token.regex {
+    @apply text-orange-600 dark:text-[#e9c062];
+  }
+
+  .token.important {
+    @apply text-orange-700 dark:text-[#fd971f] font-bold;
+  }
+
+  .token.bold {
+    @apply font-bold;
+  }
+
+  .token.italic {
+    @apply italic;
+  }
 }

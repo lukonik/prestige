@@ -61,7 +61,6 @@
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
-    "@shikijs/rehype": "^3.22.0",
     "@tailwindcss/vite": "^4.0.0",
     "@tanstack/react-router": ">=1.0.0",
     "@tanstack/react-start": ">=1.0.0",
@@ -85,7 +84,6 @@
     "remark-rehype": "^11.1.2",
     "remark-toc": "^9.0.0",
     "sharp": "^0.34.5",
-    "shiki": "^4.0.1",
     "tailwindcss": "^4.0.0",
     "tinyglobby": "^0.2.15",
     "to-vfile": "^8.0.0",
@@ -127,5 +125,11 @@
     "vite-tsconfig-paths": "^6.1.1",
     "vitest": "^4.0.16",
     "vitest-browser-react": "^2.0.2"
+  },
+  "dependencies": {
+    "highlight.js": "^11.11.1",
+    "prism-react-renderer": "^2.4.1",
+    "rehype-highlight": "^7.0.2",
+    "rehype-prism-plus": "^2.0.2"
   }
 }

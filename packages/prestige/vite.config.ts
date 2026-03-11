@@ -37,10 +37,6 @@ export default defineConfig(({ mode }) => {
                 slug: "docs/showcase",
               },
               {
-                label: "Custom Page",
-                link: "/docs/custom-page",
-              },
-              {
                 label: "Themer",
                 slug: "docs/themer",
               },

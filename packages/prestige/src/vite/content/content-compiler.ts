@@ -206,7 +206,7 @@ export async function compileMarkdown(
   const rehypePlugins: PluggableList = [
     ...(options?.rehypePlugins ?? []),
     rehypeSlug,
-    rehypePrism,
+    [rehypePrism, { options: { showLineNumbers: false } }],
     rehypeAddNotProseToPre,
   ];
 

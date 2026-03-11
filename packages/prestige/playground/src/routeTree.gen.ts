@@ -13,7 +13,6 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as prestigeDocsCustomPageRouteImport } from './routes/(prestige).docs.custom-page'
 import { Route as prestigeDocsLoadersLoaderRouteImport } from './routes/(prestige).docs.loaders.$loader'
 
 const prestigeDocsLazyRouteImport = createFileRoute('/(prestige)/docs')()
@@ -138,11 +137,6 @@ const prestigeApiPrestigeLazyRoute = prestigeApiPrestigeLazyRouteImport
   .lazy(() =>
     import('./routes/(prestige)/api.prestige.lazy').then((d) => d.Route),
   )
-const prestigeDocsCustomPageRoute = prestigeDocsCustomPageRouteImport.update({
-  id: '/custom-page',
-  path: '/custom-page',
-  getParentRoute: () => prestigeDocsLazyRoute,
-} as any)
 const prestigeDocsLoadersCustomLoaderLazyRoute =
   prestigeDocsLoadersCustomLoaderLazyRouteImport
     .update({
@@ -191,7 +185,6 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/api': typeof prestigeApiLazyRouteWithChildren
   '/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/docs/custom-page': typeof prestigeDocsCustomPageRoute
   '/api/prestige': typeof prestigeApiPrestigeLazyRoute
   '/docs/installation': typeof prestigeDocsInstallationLazyRoute
   '/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
@@ -209,7 +202,6 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/api': typeof prestigeApiLazyRouteWithChildren
   '/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/docs/custom-page': typeof prestigeDocsCustomPageRoute
   '/api/prestige': typeof prestigeApiPrestigeLazyRoute
   '/docs/installation': typeof prestigeDocsInstallationLazyRoute
   '/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
@@ -228,7 +220,6 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/(prestige)/api': typeof prestigeApiLazyRouteWithChildren
   '/(prestige)/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/(prestige)/docs/custom-page': typeof prestigeDocsCustomPageRoute
   '/(prestige)/api/prestige': typeof prestigeApiPrestigeLazyRoute
   '/(prestige)/docs/installation': typeof prestigeDocsInstallationLazyRoute
   '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
@@ -248,7 +239,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/api'
     | '/docs'
-    | '/docs/custom-page'
     | '/api/prestige'
     | '/docs/installation'
     | '/docs/introduction'
@@ -266,7 +256,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/api'
     | '/docs'
-    | '/docs/custom-page'
     | '/api/prestige'
     | '/docs/installation'
     | '/docs/introduction'
@@ -284,7 +273,6 @@ export interface FileRouteTypes {
     | '/about'
     | '/(prestige)/api'
     | '/(prestige)/docs'
-    | '/(prestige)/docs/custom-page'
     | '/(prestige)/api/prestige'
     | '/(prestige)/docs/installation'
     | '/(prestige)/docs/introduction'
@@ -384,13 +372,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeApiPrestigeLazyRouteImport
       parentRoute: typeof prestigeApiLazyRoute
     }
-    '/(prestige)/docs/custom-page': {
-      id: '/(prestige)/docs/custom-page'
-      path: '/custom-page'
-      fullPath: '/docs/custom-page'
-      preLoaderRoute: typeof prestigeDocsCustomPageRouteImport
-      parentRoute: typeof prestigeDocsLazyRoute
-    }
     '/(prestige)/docs/loaders/custom-loader': {
       id: '/(prestige)/docs/loaders/custom-loader'
       path: '/loaders/custom-loader'
@@ -435,7 +416,6 @@ const prestigeApiLazyRouteWithChildren = prestigeApiLazyRoute._addFileChildren(
 )
 
 interface prestigeDocsLazyRouteChildren {
-  prestigeDocsCustomPageRoute: typeof prestigeDocsCustomPageRoute
   prestigeDocsInstallationLazyRoute: typeof prestigeDocsInstallationLazyRoute
   prestigeDocsIntroductionLazyRoute: typeof prestigeDocsIntroductionLazyRoute
   prestigeDocsShowcaseLazyRoute: typeof prestigeDocsShowcaseLazyRoute
@@ -449,7 +429,6 @@ interface prestigeDocsLazyRouteChildren {
 }
 
 const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
-  prestigeDocsCustomPageRoute: prestigeDocsCustomPageRoute,
   prestigeDocsInstallationLazyRoute: prestigeDocsInstallationLazyRoute,
   prestigeDocsIntroductionLazyRoute: prestigeDocsIntroductionLazyRoute,
   prestigeDocsShowcaseLazyRoute: prestigeDocsShowcaseLazyRoute,

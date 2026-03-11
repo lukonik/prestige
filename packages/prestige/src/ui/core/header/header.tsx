@@ -13,7 +13,7 @@ export default function Header({ customHeaderTitle }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-40 flex h-header  border-b border-default-200 bg-default-50/80 px-4 backdrop-blur-md">
-      <div className="container mx-auto flex max-w-360  items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between">
         <div className="flex gap-4 items-baseline">
           <Link
             className="text-sm rounded hover:bg-default-100 text-default-500"

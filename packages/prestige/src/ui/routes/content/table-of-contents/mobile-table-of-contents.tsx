@@ -24,10 +24,6 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
     };
   }, []);
 
-  if (toc.length === 0) {
-    return null;
-  }
-
   const activeItem = toc.find((item) => {
     const itemHref = item.href.startsWith("#") ? item.href : `#${item.href}`;
     return itemHref === activeId;

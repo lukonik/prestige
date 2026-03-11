@@ -33,7 +33,7 @@ export function MobileTableOfContent({ toc }: { toc: TocItem[] }) {
   return (
     <div
       ref={containerRef}
-      className="sticky top-header z-30 -mx-6 -mt-10 mb-8 bg-default-50/95 backdrop-blur border-b border-default-200 dark:border-default-800 lg:hidden px-6 pl-12"
+      className="sticky top-header z-30 bg-default-50/95 backdrop-blur border-b border-default-200 dark:border-default-800 lg:hidden px-6 pl-12"
     >
       <div className="relative">
         <button

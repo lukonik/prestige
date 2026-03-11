@@ -47,13 +47,19 @@ export default function ContentNavigations({
   prev,
   next,
 }: {
-  prev: NavigationLink | null;
-  next: NavigationLink | null;
+  prev: SiblingNavigationType | null | undefined;
+  next: SiblingNavigationType | null | undefined;
 }) {
+  if (!prev && !next) return null;
+  // width of content navigation must match with content route content width, so we manually
+  // add empty div with table-of-content width and add proper gap to match the size
   return (
-    <div className="lg:flex flex-row  items-center gap-2 mt-2 lg:mt-20 px-6">
-      {prev && <ContentNavigation navigation={prev} />}
-      {next && <ContentNavigation navigation={next} isNext />}
+    <div className="flex gap-6">
+      <div className="lg:flex flex-row items-center gap-2 mt-2 lg:mt-8 flex-1">
+        {prev && <ContentNavigation navigation={prev} />}
+        {next && <ContentNavigation navigation={next} isNext />}
+      </div>
+      <div className="lg:w-web-table-of-content h-1"></div>
     </div>
   );
 }

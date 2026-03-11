@@ -2,16 +2,18 @@ import { readdir } from "node:fs/promises";
 import { basename } from "node:path";
 import { join } from "pathe";
 import {
-    Collection,
-    CollectionGroup,
-    CollectionItem,
-    Collections,
-    ExternalSidebarLinkType,
-    InternalCollectionLink,
-    InternalSidebarLinkType,
-    SidebarGroupType,
-    SidebarItemType,
-    SidebarType,
+  Collection,
+  CollectionGroup,
+  CollectionItem,
+  Collections,
+  ExternalSidebarLinkType,
+  InternalCollectionLink,
+  InternalSidebarLinkType,
+  NavigationLinks,
+  SiblingNavigationType,
+  SidebarGroupType,
+  SidebarItemType,
+  SidebarType,
 } from "../core/content/content.types";
 import { PrestigeError } from "../utils/errors";
 import { pathExists } from "../utils/file-utils";
@@ -20,6 +22,44 @@ import { compileFrontmatter } from "./content-compiler";
 import { getFileBySlug } from "./content.store";
 
 export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
+
+function flattenSidebar(items: SidebarItemType[]): SiblingNavigationType[] {
+  return items.flatMap((item) => {
+    if ("slug" in item) {
+      return [{ label: item.label, link: `/${item.slug}` }];
+    }
+    if ("link" in item) {
+      // Ignore external links
+      if (item.link.startsWith("http://") || item.link.startsWith("https://")) {
+        return [];
+      }
+      return [{ label: item.label, link: item.link }];
+    }
+    if ("items" in item) {
+      return flattenSidebar(item.items);
+    }
+    return [];
+  });
+}
+
+function computeNavigation(
+  items: SidebarItemType[],
+): Record<string, NavigationLinks> {
+  const flattenedLinks = flattenSidebar(items);
+  const navigation: Record<string, NavigationLinks> = {};
+
+  for (let i = 0; i < flattenedLinks.length; i++) {
+    const link = flattenedLinks[i];
+    if (link) {
+      navigation[link.link] = {
+        prev: i > 0 ? flattenedLinks[i - 1] : null,
+        next: i < flattenedLinks.length - 1 ? flattenedLinks[i + 1] : null,
+      };
+    }
+  }
+
+  return navigation;
+}
 
 function resolveDefaultLink(
   items: SidebarItemType[],
@@ -72,6 +112,7 @@ async function processCollection(
   return {
     items,
     defaultLink: defaultLink,
+    navigation: computeNavigation(items),
   };
 }
 

@@ -70,12 +70,12 @@ describe("resolveSidebars", () => {
     ];
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         { label: "Getting Started", slug: "getting-started" }
       ],
       defaultLink: "getting-started"
-    });
+    }));
   });
 
   it("should resolve internal collection link via string", async () => {
@@ -92,12 +92,12 @@ describe("resolveSidebars", () => {
     vi.mocked(compileFrontmatter).mockResolvedValue({ label: "Getting Started" } as any);
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         { label: "Getting Started", slug: "getting-started" }
       ],
       defaultLink: "getting-started"
-    });
+    }));
   });
 
   it("should throw if slug starts or ends with slash", async () => {
@@ -139,12 +139,12 @@ describe("resolveSidebars", () => {
     vi.mocked(compileFrontmatter).mockResolvedValue({} as any); // no label
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         { label: "getting-started", slug: "some/path/getting-started" }
       ],
       defaultLink: "some/path/getting-started"
-    });
+    }));
   });
 
   it("should throw if markdown file not found for string link without label", async () => {
@@ -173,12 +173,12 @@ describe("resolveSidebars", () => {
     ];
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         { label: "Example", link: "https://example.com" }
       ],
       defaultLink: "https://example.com"
-    });
+    }));
   });
 
   it("should throw if generic link is empty", async () => {
@@ -211,7 +211,7 @@ describe("resolveSidebars", () => {
     ];
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         {
           label: "Group 1",
@@ -222,7 +222,7 @@ describe("resolveSidebars", () => {
         }
       ],
       defaultLink: "child"
-    });
+    }));
   });
 
   it("should autogenerate a sidebar group", async () => {
@@ -255,7 +255,7 @@ describe("resolveSidebars", () => {
     vi.mocked(compileFrontmatter).mockResolvedValue({}); // will fallback to basename
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         {
           label: "Autogen Group",
@@ -272,7 +272,7 @@ describe("resolveSidebars", () => {
         }
       ],
       defaultLink: "auto-dir/a-file1"
-    });
+    }));
   });
 
   it("should handle autogenerate when directory doesn't exist", async () => {
@@ -292,7 +292,7 @@ describe("resolveSidebars", () => {
     vi.mocked(pathExists).mockResolvedValue(false);
 
     const store = await resolveSidebars(collections, contentDir);
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         {
           label: "Autogen Group",
@@ -301,7 +301,7 @@ describe("resolveSidebars", () => {
         }
       ],
       defaultLink: "fallback"
-    });
+    }));
     expect(logger.warn).toHaveBeenCalledWith("Directory doesn't exist: missing-dir");
   });
 
@@ -321,7 +321,7 @@ describe("resolveSidebars", () => {
 
     const store = await resolveSidebars(collections, contentDir);
     expect(logger.warn).toHaveBeenCalledWith("Mixed Group has both items and autogenerate. Only items will be used.");
-    expect(store.get("docs")).toEqual({
+    expect(store.get("docs")).toEqual(expect.objectContaining({
       items: [
         {
           label: "Mixed Group",
@@ -330,7 +330,7 @@ describe("resolveSidebars", () => {
         }
       ],
       defaultLink: "explicit"
-    });
+    }));
   });
 
   it("should throw if no default link is found in collection", async () => {

@@ -4,12 +4,9 @@ import { useTableOfContents } from "./use-table-of-contents";
 
 export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
   const { activeId, handleLinkClick } = useTableOfContents(toc);
-  if (toc.length === 0) {
-    return null;
-  }
 
   return (
-    <nav className="sticky top-header h-main pt-4 overflow-y-auto w-64 shrink-0 hidden lg:block">
+    <nav className="sticky top-header pt-4 overflow-y-auto w-web-table-of-content  hidden lg:block">
       <span className="text-xs font-mono tracking-widest">ON THIS PAGE</span>
       <ul className="text-sm my-4">
         {toc.map((item) => (

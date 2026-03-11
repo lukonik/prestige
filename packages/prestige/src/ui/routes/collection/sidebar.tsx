@@ -3,10 +3,10 @@ import clsx from "clsx";
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { useState } from "react";
 import {
-    ExternalSidebarLinkType,
-    InternalSidebarLinkType,
-    SidebarGroupType,
-    SidebarType,
+  ExternalSidebarLinkType,
+  InternalSidebarLinkType,
+  SidebarGroupType,
+  SidebarType,
 } from "../../../vite/core/content/content.types";
 import { isExternalURL } from "../../utils";
 
@@ -46,10 +46,15 @@ function SidebarGroup({
             if ("slug" in item || "link" in item) {
               const key = "slug" in item ? item.slug : item.link;
               return (
-                <SidebarLink showIcon={false} key={key} link={item} onLinkClick={onLinkClick} />
+                <SidebarLink
+                  showIcon={false}
+                  key={key}
+                  link={item}
+                  onLinkClick={onLinkClick}
+                />
               );
             }
-            return <SidebarGroup key={item.label} group={item} />;
+            return <SidebarGroup key={item.label} group={item} onLinkClick={onLinkClick} />;
           })}
         </div>
       )}
@@ -85,10 +90,10 @@ function SidebarLink({
     return (
       <div className="flex items-center ">
         <a
-          onClick={onLinkClick}
           className="w-full inline-flex gap-2 py-1 px-2 rounded hover:bg-default-100 text-sm mr-2 items-center text-default-500"
           href={link.link}
           target="_blank"
+          onClick={onLinkClick}
           rel="noreferrer"
         >
           {showIcon && <ExternalLink className="w-4" />}
@@ -106,10 +111,15 @@ export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
         if ("slug" in item || "link" in item) {
           const key = "slug" in item ? item.slug : item.link;
           return (
-            <SidebarLink showIcon={true} onLinkClick={onLinkClick} key={key} link={item} />
+            <SidebarLink
+              showIcon={true}
+              onLinkClick={onLinkClick}
+              key={key}
+              link={item}
+            />
           );
         }
-        return <SidebarGroup key={item.label} group={item} />;
+        return <SidebarGroup key={item.label} group={item} onLinkClick={onLinkClick} />;
       })}
     </div>
   );

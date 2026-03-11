@@ -179,6 +179,23 @@ export default function remarkAdmonitions() {
   };
 }
 
+export function rehypeAddNotProseToPre() {
+  return (tree: Node) => {
+    visit(tree, (node: any) => {
+      // Look specifically for HTML elements that are <pre> tags
+      if (node.type === "element" && node.tagName === "pre") {
+        node.properties = node.properties || {};
+
+        // HAST classNames are generally arrays of strings
+        const currentClass = node.properties.className || [];
+        node.properties.className = Array.isArray(currentClass)
+          ? [...currentClass, "not-prose"]
+          : [currentClass, "not-prose"];
+      }
+    });
+  };
+}
+
 export async function compileMarkdown(
   content: Readonly<Compatible>,
   baseUrl: string,
@@ -190,6 +207,7 @@ export async function compileMarkdown(
     ...(options?.rehypePlugins ?? []),
     rehypeSlug,
     rehypePrism,
+    rehypeAddNotProseToPre,
   ];
 
   const remarkPlugins: PluggableList = [

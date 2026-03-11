@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { SidebarType } from "../core/content/content.types";
-import { resolveContentInternalLinks } from "./content-links";
+import { resolveContentLinks } from "./content-links";
 
 describe("resolveContentLinks", () => {
   it("should extract internal links from a flat sidebar", () => {
@@ -12,17 +12,18 @@ describe("resolveContentLinks", () => {
           items: [
             { slug: "getting-started", label: "Getting Started" },
             { slug: "installation", label: "Installation" },
-            { link: "https://example.com", label: "External Link" }, // Should be ignored
+            { link: "https://example.com", label: "External Link" }, // Should be included
           ],
         },
       ],
     ]);
 
-    const links = resolveContentInternalLinks(sidebars);
+    const links = resolveContentLinks(sidebars);
 
     expect(links.get("docs")).toEqual([
       { slug: "getting-started", label: "Getting Started" },
       { slug: "installation", label: "Installation" },
+      { link: "https://example.com", label: "External Link" },
     ]);
   });
 
@@ -44,7 +45,7 @@ describe("resolveContentLinks", () => {
                     { slug: "advanced/deep-dive/internals", label: "Internals" },
                   ],
                 },
-                { link: "https://example.com/advanced", label: "Advanced Guide" }, // Should be ignored
+                { link: "https://example.com/advanced", label: "Advanced Guide" }, // Should be included
               ],
             },
           ],
@@ -52,12 +53,13 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentInternalLinks(sidebars);
+    const links = resolveContentLinks(sidebars);
 
     expect(links.get("guides")).toEqual([
       { slug: "intro", label: "Introduction" },
       { slug: "advanced/setup", label: "Setup" },
       { slug: "advanced/deep-dive/internals", label: "Internals" },
+      { link: "https://example.com/advanced", label: "Advanced Guide" },
     ]);
   });
 
@@ -79,7 +81,7 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentInternalLinks(sidebars);
+    const links = resolveContentLinks(sidebars);
 
     expect(links.get("docs")).toEqual([
       { slug: "getting-started", label: "Getting Started" },
@@ -100,14 +102,14 @@ describe("resolveContentLinks", () => {
       ],
     ]);
 
-    const links = resolveContentInternalLinks(sidebars);
+    const links = resolveContentLinks(sidebars);
 
     expect(links.get("empty")).toEqual([]);
   });
 
   it("should handle an empty sidebars map", () => {
     const sidebars = new Map<string, SidebarType>();
-    const links = resolveContentInternalLinks(sidebars);
+    const links = resolveContentLinks(sidebars);
     expect(links.size).toBe(0);
   });
 });

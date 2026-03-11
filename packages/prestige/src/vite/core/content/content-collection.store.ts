@@ -4,14 +4,14 @@ import { PrestigeError } from "../../utils/errors";
 import {
   CollectionNavigation,
   Collections,
-  InternalSidebarLinkType,
+  SidebarLinkType,
 } from "./content.types";
 
 export const COLLECTION_VIRTUAL_ID = "virtual:prestige/collection-all";
 
 export function resolveCollectionNavigations(
   inlineCollections: Collections,
-  linksMap: Map<string, InternalSidebarLinkType[]>,
+  linksMap: Map<string, SidebarLinkType[]>,
 ) {
   const collections: CollectionNavigation[] = inlineCollections.map((c) => ({
     id: c.id,
@@ -26,11 +26,11 @@ export function resolveCollectionNavigations(
 
   for (const coll of collections) {
     const links = linksMap.get(coll.id);
-    const firstLink = links?.[0];
-    if (coll.defaultLink || !firstLink) {
+    const firstInternalLink = links?.find(l => "slug" in l);
+    if (coll.defaultLink || !firstInternalLink) {
       continue;
     }
-    coll.defaultLink = firstLink.slug;
+    coll.defaultLink = firstInternalLink.slug;
   }
 
   for (const coll of collections) {

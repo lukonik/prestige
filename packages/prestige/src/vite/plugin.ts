@@ -6,7 +6,7 @@ import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
 import { warmupCompiler } from "./content/content-compiler";
-import { resolveContentInternalLinks } from "./content/content-links";
+import { resolveContentLinks } from "./content/content-links";
 import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
@@ -23,7 +23,7 @@ import {
 } from "./core/content/content-collection.store";
 import {
   Collections,
-  InternalSidebarLinkType,
+  SidebarLinkType,
   SidebarType
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
@@ -37,7 +37,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let contentDir: string;
   let isDocsMatcher: Matcher;
   let collections: Collections = [];
-  let internalLinksMap: Map<string, InternalSidebarLinkType[]>;
+  let linksMap: Map<string, SidebarLinkType[]>;
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
   return {
@@ -58,18 +58,18 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       sidebarsMap = await resolveSidebars(collections, contentDir);
 
       logger.info("Resolving content links...", { timestamp: true });
-      internalLinksMap = resolveContentInternalLinks(sidebarsMap);
+      linksMap = resolveContentLinks(sidebarsMap);
 
       logger.info("Resolving collection navigations....", { timestamp: true });
       collectionNavigations = resolveCollectionNavigations(
         collections,
-        internalLinksMap,
+        linksMap,
       );
 
       const routesDir = join(resolvedConfig.root, "src", "routes");
 
       logger.info("Compiling routes...", { timestamp: true });
-      await compileRoutes(internalLinksMap, routesDir);
+      await compileRoutes(linksMap, routesDir);
 
       logger.info("Warming up shiki compiler...", { timestamp: true });
       // Warm up the MDX compiler to pre-initialize the syntax highlighter (e.g. Shiki)
@@ -116,7 +116,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         logger.info(`Loading content virtual module: ${id}`, {
           timestamp: true,
         });
-        return await resolveContent(id, internalLinksMap, contentDir);
+        return await resolveContent(id, linksMap, contentDir);
       }
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
         logger.info(`Loading collection virtual module: ${id}`, {

@@ -48,6 +48,15 @@ describe("content.store", () => {
         ],
       ],
       [
+        "mixed",
+        [
+          { slug: "mixed/first", label: "First" },
+          { link: "mixed/second", label: "Second" },
+          { link: "https://example.com", label: "External" },
+          { slug: "mixed/third", label: "Third" },
+        ] as any,
+      ],
+      [
         "empty",
         []
       ]
@@ -83,6 +92,26 @@ describe("content.store", () => {
       const result = resolveSiblings("docs", "docs/advanced", linksMap);
       expect(result).toEqual({
         prev: { slug: "docs/installation", label: "Installation" },
+        next: undefined,
+      });
+    });
+
+    it("should include internal links and ignore external links in mixed arrays", () => {
+      const resultFirst = resolveSiblings("mixed", "mixed/first", linksMap);
+      expect(resultFirst).toEqual({
+        prev: undefined,
+        next: { link: "mixed/second", label: "Second" },
+      });
+
+      const resultSecond = resolveSiblings("mixed", "mixed/second", linksMap);
+      expect(resultSecond).toEqual({
+        prev: { slug: "mixed/first", label: "First" },
+        next: { slug: "mixed/third", label: "Third" },
+      });
+
+      const resultThird = resolveSiblings("mixed", "mixed/third", linksMap);
+      expect(resultThird).toEqual({
+        prev: { link: "mixed/second", label: "Second" },
         next: undefined,
       });
     });

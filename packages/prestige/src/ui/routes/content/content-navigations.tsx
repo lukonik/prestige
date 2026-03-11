@@ -55,7 +55,7 @@ export default function ContentNavigations({
   // add empty div with table-of-content width and add proper gap to match the size
   return (
     <div className="flex gap-6">
-      <div className="lg:flex flex-row items-center gap-2 mt-2 lg:mt-8 flex-1">
+      <div className="lg:flex flex-row items-center gap-2 mt-2 lg:mt-8 lg:w-web-content w-full">
         {prev && <ContentNavigation navigation={prev} />}
         {next && <ContentNavigation navigation={next} isNext />}
       </div>

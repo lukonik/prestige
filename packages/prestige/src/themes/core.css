@@ -52,4 +52,5 @@
   --color-white: var(--color-white);
   --color-background: var(--color-background);
   --width-web-table-of-content: 300px;
+  --width-web-content: 80ch;
 }

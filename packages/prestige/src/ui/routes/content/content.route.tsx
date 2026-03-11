@@ -5,8 +5,7 @@ import {
   ContentFrontmatterType,
   SiblingNavigationType,
 } from "../../../vite/core/content/content.types";
-import { MobileTableOfContent } from "./table-of-contents/mobile-table-of-contents";
-import { WebTableOfContent } from "./table-of-contents/web-table-of-contents";
+import { PrestigePage } from "../../core/prestige-page";
 export function ContentRoute(inlineData: any): any {
   const {
     frontmatter,
@@ -46,15 +45,9 @@ export function ContentRoute(inlineData: any): any {
     },
     component: () => {
       return (
-        <div className="flex lg:gap-6 items-start max-w-[100vw]">
-          <div className="flex-1 min-w-0">
-            <MobileTableOfContent toc={toc} />
-            <article className="prose max-w-none wrap-break-word py-15 px-6">
-              <Component />
-            </article>
-          </div>
-          <WebTableOfContent toc={toc} />
-        </div>
+        <PrestigePage toc={toc}>
+          <Component />
+        </PrestigePage>
       );
     },
   };

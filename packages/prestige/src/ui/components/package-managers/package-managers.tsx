@@ -1,5 +1,5 @@
 import { Code } from "../code/code";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../tabs/tabs"; // Adjust import path
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tabs/tabs"; // Adjust import path
 
 type PackageManager = "npm" | "pnpm" | "yarn" | "bun";
 type CommandType = "add" | "create" | "exec" | "run";
@@ -82,7 +82,7 @@ export function PackageManagers({
 
         return (
           <TabsContent keepMounted={true} key={pm} value={pm}>
-            <Code language="bash">{command}</Code>
+            <Code code={command} language="bash"></Code>
           </TabsContent>
         );
       })}

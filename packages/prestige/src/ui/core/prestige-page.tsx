@@ -8,15 +8,12 @@ export interface PrestigePageProps {
   toc?: TocItem[];
 }
 
-export function PrestigePage({
-  children,
-  toc = [],
-}: PrestigePageProps) {
+export function PrestigePage({ children, toc = [] }: PrestigePageProps) {
   return (
     <div className="flex lg:gap-6 items-start max-w-[100vw]">
       <div className="flex-1 min-w-0">
         <MobileTableOfContent toc={toc} />
-        <article className="prose max-w-none wrap-break-word py-15 px-6">
+        <article className="prose wrap-break-word py-15 px-6 max-w-none lg:w-[80ch]">
           {children}
         </article>
       </div>
@@ -24,4 +21,3 @@ export function PrestigePage({
     </div>
   );
 }
-

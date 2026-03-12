@@ -6,6 +6,7 @@ import {
   isCancel,
   outro,
   spinner,
+  text,
 } from "@clack/prompts";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -35,6 +36,17 @@ async function main() {
   });
 
   if (isCancel(shouldContinue) || !shouldContinue) {
+    cancel("Operation cancelled.");
+    process.exit(0);
+  }
+
+  const projectTitle = await text({
+    message: "What is the title of your project? (This will be displayed in the browser tab)",
+    placeholder: "My Prestige Docs",
+    defaultValue: "My Prestige Docs",
+  });
+
+  if (isCancel(projectTitle)) {
     cancel("Operation cancelled.");
     process.exit(0);
   }
@@ -79,6 +91,7 @@ async function main() {
         const importStatement = `import { prestige } from "@lonik/prestige/vite";
 `;
         const pluginConfig = `prestige({
+      title: "${projectTitle}",
       collections: [
         {
           id: "docs",

@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 import {
   cancel,
-  confirm,
   intro,
   isCancel,
   outro,
   spinner,
-  text,
+  text
 } from "@clack/prompts";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -29,19 +28,11 @@ async function main() {
     process.exit(1);
   }
 
-  const shouldContinue = await confirm({
-    message:
-      "This will configure Prestige in the current TanStack Start project. Do you want to continue?",
-    initialValue: true,
-  });
-
-  if (isCancel(shouldContinue) || !shouldContinue) {
-    cancel("Operation cancelled.");
-    process.exit(0);
-  }
+  outro(pc.yellow("Starting to add Prestige to your project"));
 
   const projectTitle = await text({
-    message: "What is the title of your project? (This will be displayed in the browser tab)",
+    message:
+      "What is the title of your project? (This will be displayed in the browser tab)",
     placeholder: "My Prestige Docs",
     defaultValue: "My Prestige Docs",
   });
@@ -201,9 +192,6 @@ import config from "virtual:prestige/config";
 import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
-  customHeaderTitle: () => (
-    <span className="font-rubik text-primary-600 text-2xl">Prestige</span>
-  ),
   copyright: () => (
     <a
       className="underline"
@@ -225,7 +213,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "./assets/favicon.ico" },
+      { rel: "icon", href: "/favicon.ico" },
     ],
   }),
   component: () => (
@@ -250,6 +238,43 @@ export const Route = createRootRoute({
     s.stop(`Updated ${rootDir}/routes/__root.tsx`);
   } catch (err) {
     s.stop("Failed to update root route");
+    console.error(err);
+  }
+
+  // 5. Update styles.css
+  s.start("Updating styles.css");
+  try {
+    let rootDir = "src";
+    const srcExists = await fs
+      .access(path.join(cwd, "src"))
+      .then(() => true)
+      .catch(() => false);
+    const appExists = await fs
+      .access(path.join(cwd, "app"))
+      .then(() => true)
+      .catch(() => false);
+
+    if (appExists && !srcExists) {
+      rootDir = "app";
+    }
+
+    const cssPath = path.join(cwd, rootDir, "styles.css");
+    const cssContent = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import 'tailwindcss';
+@import '@lonik/prestige/themes/primary-rose.css';
+@import '@lonik/prestige/themes/default-slate.css';
+@import '@lonik/prestige/themes/core.css';
+@source "../node_modules/@lonik/prestige";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+}
+`;
+    await fs.writeFile(cssPath, cssContent);
+    s.stop(`Updated ${rootDir}/styles.css`);
+  } catch (err) {
+    s.stop("Failed to update styles.css");
     console.error(err);
   }
 

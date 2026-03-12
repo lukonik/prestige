@@ -8,13 +8,19 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <>
-      <div className="container mx-auto flex justify-center flex-col items-center">
-        <h1 className="text-3xl lg:text-8xl font-medium leading-snug mt-2 lg:mt-10 uppercase">
-          {config.title}
+      <div className="container mx-auto flex justify-center flex-col items-center mt-40">
+
+        <div className="w-4xl text-center flex flex-col gap-6">
+        <h1 className="font-flex uppercase text-gray-600">
+          Static Site Generator 
         </h1>
-        <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
-          Your great project
+    
+        <h2 className="font-flex text-7xl text-gray-800">
+          Experience liftoff with the next-generation IDE
         </h2>
+
+
+        </div>
         <div className="mt-10 flex lg:justify-start items-center justify-center gap-4">
           <Link to="/docs/introduction">
             <button className="rounded-full px-4 lg:px-8 bg-primary-600 text-white lg:h-14 h-12 flex items-center justify-center gap-4 cursor-pointer">
@@ -46,3 +52,7 @@ function RouteComponent() {
     </>
   );
 }
+
+  // <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
+  //         Prestige takes your markdown content and transforms them to TanStack routes pages automatically
+  //       </h2>

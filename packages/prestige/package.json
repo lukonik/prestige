@@ -53,16 +53,19 @@
     "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
+    "@base-ui/react": "^1.2.0",
     "@docsearch/css": "^4.6.0",
     "@docsearch/react": "^4.6.0",
+    "@lonik/themer": "^0.5.2",
     "@mdx-js/mdx": "^3.1.1",
     "@mdx-js/react": "^3.1.1",
     "@mdx-js/rollup": "^3.1.1",
+    "@tailwindcss/typography": "^0.5.19",
     "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
     "hastscript": "9.0.1",
     "knitwork": "^1.3.0",
     "lucide-react": "^0.545.0",
-    "gray-matter": "^4.0.3",
     "pathe": "^2.0.3",
     "picomatch": "^4.0.3",
     "prism-react-renderer": "^2.4.1",
@@ -84,25 +87,23 @@
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
     "vite-tsconfig-paths": "^6.1.1",
-    "yaml": "^2.8.2",
-    "@lonik/themer": "^0.5.2",
-    "@base-ui/react": "^1.2.0",
-    "@tailwindcss/typography": "^0.5.19"
+    "yaml": "^2.8.2"
   },
   "peerDependencies": {
     "@tailwindcss/vite": "^4.0.0",
+    "@tanstack/react-router": ">=1.0.0",
+    "@tanstack/react-start": ">=1.0.0",
     "react": "^18.2.0 || ^19.0.0",
     "react-dom": "^18.2.0 || ^19.0.0",
     "tailwindcss": "^4.0.0",
-    "@tanstack/react-router": ">=1.0.0",
-    "@tanstack/react-start": ">=1.0.0",
     "vite": "^6.0.0 || ^7.0.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "sharp": "^0.34.5",
-    "@lonik/oh-image": "^3.1.0",
     "@arethetypeswrong/core": "^0.18.2",
+    "@lonik/oh-image": "^3.1.0",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
@@ -119,16 +120,18 @@
     "@vitest/coverage-v8": "^4.0.18",
     "bumpp": "^10.3.2",
     "memfs": "^4.56.10",
+    "nitro": "3.0.1-alpha.2",
     "publint": "^0.3.17",
     "react": "catalog:",
     "react-dom": "catalog:",
+    "semantic-release": "^25.0.3",
+    "sharp": "^0.34.5",
     "tailwindcss": "catalog:",
     "tsdown": "^0.18.1",
     "typescript": "^5.9.3",
     "vite": ">=7.0.0",
     "vite-plugin-inspect": "^11.3.3",
     "vitest": "^4.0.16",
-    "vitest-browser-react": "^2.0.2",
-    "nitro": "3.0.1-alpha.2"
+    "vitest-browser-react": "^2.0.2"
   }
 }

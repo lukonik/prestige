@@ -9,9 +9,6 @@ import config from "virtual:prestige/config";
 import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
-  customHeaderTitle: () => (
-    <span className="font-rubik text-primary-600 text-2xl">Oh Image</span>
-  ),
   copyright: () => (
     <a
       className="underline"
@@ -19,7 +16,7 @@ const options: PrestigeShellProps = {
       target="_blank"
       rel="norefferer"
     >
-      Built with  Prestige 🎩
+      Built with Prestige 🎩
     </a>
   ),
 };

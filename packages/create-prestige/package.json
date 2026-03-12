@@ -1,0 +1,29 @@
+{
+  "name": "@lonik/create-prestige",
+  "version": "0.7.0",
+  "description": "Scaffold a Prestige application",
+  "author": "Luka Onikadze",
+  "license": "MIT",
+  "bin": {
+    "create-prestige": "./dist/index.mjs"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
+  },
+  "dependencies": {
+    "@clack/prompts": "^0.9.0",
+    "magicast": "^0.3.5",
+    "nypm": "^0.6.5",
+    "pathe": "^2.0.0",
+    "picocolors": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "bumpp": "^10.4.1",
+    "tsdown": "^0.18.1",
+    "typescript": "^5.9.3"
+  }
+}

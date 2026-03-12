@@ -1,3 +1,6 @@
+@plugin "@tailwindcss/typography";
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 :root .prose {
   --tw-prose-body: var(--color-default-700);
   --tw-prose-headings: var(--color-default-900);

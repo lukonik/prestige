@@ -86,7 +86,8 @@
     "vite-tsconfig-paths": "^6.1.1",
     "yaml": "^2.8.2",
     "@lonik/themer": "^0.5.2",
-    "@base-ui/react": "^1.2.0"
+    "@base-ui/react": "^1.2.0",
+    "@tailwindcss/typography": "^0.5.19"
   },
   "peerDependencies": {
     "@tailwindcss/vite": "^4.0.0",
@@ -95,7 +96,6 @@
     "tailwindcss": "^4.0.0",
     "@tanstack/react-router": ">=1.0.0",
     "@tanstack/react-start": ">=1.0.0",
-    "nitro": "3.0.1-alpha.2",
     "vite": "^6.0.0 || ^7.0.0",
     "zod": "^4.3.6"
   },
@@ -103,7 +103,6 @@
     "sharp": "^0.34.5",
     "@lonik/oh-image": "^3.1.0",
     "@arethetypeswrong/core": "^0.18.2",
-    "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
@@ -129,6 +128,7 @@
     "vite": ">=7.0.0",
     "vite-plugin-inspect": "^11.3.3",
     "vitest": "^4.0.16",
-    "vitest-browser-react": "^2.0.2"
+    "vitest-browser-react": "^2.0.2",
+    "nitro": "3.0.1-alpha.2"
   }
 }

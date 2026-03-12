@@ -1,26 +1,36 @@
 #!/usr/bin/env node
-import { cancel, confirm, intro, isCancel, outro, spinner } from "@clack/prompts";
+import {
+  cancel,
+  confirm,
+  intro,
+  isCancel,
+  outro,
+  spinner,
+} from "@clack/prompts";
 import fs from "node:fs/promises";
 import path from "node:path";
-import pc from "picocolors";
 import { installDependencies } from "nypm";
+import pc from "picocolors";
 
 async function main() {
   intro(pc.inverse(" create-prestige "));
 
   const cwd = process.cwd();
-  
+
   // Check for package.json to ensure we're in a project
   const packageJsonPath = path.join(cwd, "package.json");
   try {
     await fs.access(packageJsonPath);
   } catch {
-    cancel("No package.json found. Please run this command inside an existing TanStack Start project.");
+    cancel(
+      "No package.json found. Please run this command inside an existing TanStack Start project.",
+    );
     process.exit(1);
   }
 
   const shouldContinue = await confirm({
-    message: "This will configure Prestige in the current TanStack Start project. Do you want to continue?",
+    message:
+      "This will configure Prestige in the current TanStack Start project. Do you want to continue?",
     initialValue: true,
   });
 
@@ -51,7 +61,7 @@ async function main() {
   try {
     const viteConfigPaths = ["vite.config.ts", "vite.config.js"];
     let viteConfigPath = null;
-    
+
     for (const p of viteConfigPaths) {
       try {
         await fs.access(path.join(cwd, p));
@@ -62,7 +72,7 @@ async function main() {
 
     if (viteConfigPath) {
       let configContent = await fs.readFile(viteConfigPath, "utf-8");
-      
+
       // Simple string manipulation if magicast is tricky with tsx/react stuff
       // But we will use string replacement for reliability first
       if (!configContent.includes("prestige(")) {
@@ -81,9 +91,9 @@ async function main() {
         }
       ]
     }),`;
-        
+
         // Add import
-        if (!configContent.includes('@lonik/prestige/vite')) {
+        if (!configContent.includes("@lonik/prestige/vite")) {
           configContent = importStatement + configContent;
         }
 
@@ -91,9 +101,9 @@ async function main() {
         configContent = configContent.replace(
           /plugins:\s*\[/,
           `plugins: [
-    ${pluginConfig}`
+    ${pluginConfig}`,
         );
-        
+
         await fs.writeFile(viteConfigPath, configContent);
         s.stop("Configured prestige plugin in vite.config");
       } else {
@@ -114,16 +124,22 @@ async function main() {
     // But user specified 'it will create the content/docs folder in src'
     // Let's check if there is an app dir vs src dir. Let's default to src or app based on what exists.
     let rootDir = "src";
-    const srcExists = await fs.access(path.join(cwd, "src")).then(() => true).catch(() => false);
-    const appExists = await fs.access(path.join(cwd, "app")).then(() => true).catch(() => false);
-    
+    const srcExists = await fs
+      .access(path.join(cwd, "src"))
+      .then(() => true)
+      .catch(() => false);
+    const appExists = await fs
+      .access(path.join(cwd, "app"))
+      .then(() => true)
+      .catch(() => false);
+
     if (appExists && !srcExists) {
       rootDir = "app";
     }
 
     const docsDir = path.join(cwd, rootDir, "content", "docs");
     await fs.mkdir(docsDir, { recursive: true });
-    
+
     const introPath = path.join(docsDir, "introduction.mdx");
     const mdxContent = `---
 title: Introduction
@@ -145,16 +161,23 @@ Welcome to Prestige! This is your generated documentation site.
   s.start("Updating root route");
   try {
     let rootDir = "src";
-    const srcExists = await fs.access(path.join(cwd, "src")).then(() => true).catch(() => false);
-    const appExists = await fs.access(path.join(cwd, "app")).then(() => true).catch(() => false);
-    
+    const srcExists = await fs
+      .access(path.join(cwd, "src"))
+      .then(() => true)
+      .catch(() => false);
+    const appExists = await fs
+      .access(path.join(cwd, "app"))
+      .then(() => true)
+      .catch(() => false);
+
     if (appExists && !srcExists) {
       rootDir = "app";
     }
 
     const rootRoutePath = path.join(cwd, rootDir, "routes", "__root.tsx");
-    
-    const rootContent = `import { PrestigeShell,type PrestigeShellProps } from "@lonik/prestige/ui";
+
+    const rootContent = `import type { PrestigeShellProps } from '@lonik/prestige/ui';
+import { PrestigeShell } from '@lonik/prestige/ui';
 import {
   createRootRoute,
   HeadContent,
@@ -223,13 +246,17 @@ export const Route = createRootRoute({
     await installDependencies({ cwd });
     s.stop("Successfully installed dependencies!");
   } catch (err) {
-    s.stop("Failed to install dependencies. Please run your package manager's install command manually.");
+    s.stop(
+      "Failed to install dependencies. Please run your package manager's install command manually.",
+    );
     console.error(err);
   }
 
   outro(pc.green("✔ Prestige is now configured in your project!"));
   console.log("\\nNext steps:");
-  console.log(`1. Run ${pc.cyan(`npm run dev`)} (or yarn/pnpm equivalent) to start the development server\\n`);
+  console.log(
+    `1. Run ${pc.cyan(`npm run dev`)} (or yarn/pnpm equivalent) to start the development server\\n`,
+  );
 }
 
 main().catch(console.error);

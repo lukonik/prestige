@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Github } from "lucide-react";
 import config from "virtual:prestige/config";
+import { motion } from "motion/react";
+import { Button } from "../components/button/button";
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
@@ -8,51 +10,97 @@ export const Route = createFileRoute("/")({
 function RouteComponent() {
   return (
     <>
-      <div className="container mx-auto flex justify-center flex-col items-center mt-40">
-
+      <div className="container mx-auto flex justify-center flex-col items-center mt-40 gap-24">
         <div className="w-4xl text-center flex flex-col gap-6">
-        <h1 className="font-flex uppercase text-gray-600">
-          Static Site Generator 
-        </h1>
-    
-        <h2 className="font-flex text-7xl text-gray-800">
-          Experience liftoff with the next-generation IDE
-        </h2>
-
-
+          <h1 className="font-flex uppercase text-default-600">
+            Static Site Generator
+          </h1>
+          <h2 className="font-flex text-7xl text-default-800">
+            Built with TanStack start, Vite, Tailwind, React
+          </h2>
         </div>
         <div className="mt-10 flex lg:justify-start items-center justify-center gap-4">
           <Link to="/docs/introduction">
-            <button className="rounded-full px-4 lg:px-8 bg-primary-600 text-white lg:h-14 h-12 flex items-center justify-center gap-4 cursor-pointer">
-              Introduction <ArrowRight size={20} />
-            </button>
+            <Button label="Introduction">
+              <ArrowRight size={18} />
+            </Button>
           </Link>
           <a href="https://github.com/lukonik/Prestige" target="_blank">
-            <button className="rounded-full px-4 lg:px-8  h-14 flex items-center justify-center gap-4 cursor-pointer">
-              Star on Github{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-github-icon lucide-github"
-              >
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
-              </svg>
-            </button>
+            <Button label="Star on github" variant="secondary">
+              <Github size={18} />
+            </Button>
           </a>
+        </div>
+
+        <motion.div
+          initial={{ scale: 0.5 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 0.2, ease: "easeOut" }}
+          className="bg-black rounded-xl w-full h-[800px] items-center justify-center"
+        ></motion.div>
+
+        <div className="flex flex-col gap-8">
+          <h2 className="font-flex text-7xl text-default-800">
+            Prestige takes your markdown content and transforms them into
+            TanStack route pages automatically.
+          </h2>
+          <motion.div
+            initial={{ scale: 0.5 }}
+            whileInView={{ scale: 1 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            className="bg-default-100 rounded-xl w-full h-[800px] items-center justify-center"
+          ></motion.div>
+        </div>
+
+        <div className="flex flex-col gap-8">
+          <h2 className="font-flex text-7xl text-default-800">
+            On top of that ot adds many feature that will please you while
+            developing docs
+          </h2>
+
+          <div className="flex">
+            <div className="flex flex-col flex-1 mt-20">
+              <h2 className="font-flex text-4xl text-default-800">
+                Feature numero uno
+              </h2>
+              <p className="font-flex text-xl text-default-400">
+                descriptiono numero uno
+              </p>
+            </div>
+            <motion.div
+              initial={{ scale: 0.5 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className=" flex-2 bg-default-100 rounded-xl w-full h-[600px] items-center justify-center"
+            ></motion.div>
+          </div>
+
+
+          <div className="flex">
+            <div className="flex flex-col flex-1 mt-20">
+              <h2 className="font-flex text-4xl text-gray-800">
+                Feature numero do
+              </h2>
+              <p className="font-flex text-xl text-gray-400">
+                descriptiono numero do
+              </p>
+            </div>
+            <motion.div
+              initial={{ scale: 0.5 }}
+              whileInView={{ scale: 1 }}
+              transition={{ duration: 0.2, ease: "easeOut" }}
+              className=" flex-2 bg-gray-100 rounded-xl w-full h-[600px] items-center justify-center"
+            ></motion.div>
+          </div>
+
+
+
         </div>
       </div>
     </>
   );
 }
 
-  // <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
-  //         Prestige takes your markdown content and transforms them to TanStack routes pages automatically
-  //       </h2>
+// <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
+//         Prestige takes your markdown content and transforms them to TanStack routes pages automatically
+//       </h2>

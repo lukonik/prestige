@@ -12,7 +12,7 @@ function RouteComponent() {
         <h1 className="text-3xl lg:text-8xl font-medium leading-snug mt-2 lg:mt-10 uppercase">
           {config.title}
         </h1>
-        <h2 className="text-3xl lg:text-6xl font-medium leading-snug mt-2 lg:mt-10">
+        <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
           Your great project
         </h2>
         <div className="mt-10 flex lg:justify-start items-center justify-center gap-4">

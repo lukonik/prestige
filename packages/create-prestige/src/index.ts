@@ -3,6 +3,7 @@ import { cancel, confirm, intro, isCancel, outro, spinner } from "@clack/prompts
 import fs from "node:fs/promises";
 import path from "node:path";
 import pc from "picocolors";
+import { installDependencies } from "nypm";
 
 async function main() {
   intro(pc.inverse(" create-prestige "));
@@ -216,10 +217,19 @@ export const Route = createRootRoute({
     console.error(err);
   }
 
+  // 5. Install dependencies
+  s.start("Installing dependencies...");
+  try {
+    await installDependencies({ cwd });
+    s.stop("Successfully installed dependencies!");
+  } catch (err) {
+    s.stop("Failed to install dependencies. Please run your package manager's install command manually.");
+    console.error(err);
+  }
+
   outro(pc.green("✔ Prestige is now configured in your project!"));
   console.log("\\nNext steps:");
-  console.log("1. Run " + pc.cyan("npm install") + " (or yarn/pnpm equivalent)");
-  console.log("2. Run " + pc.cyan("npm run dev") + " to start the development server\\n");
+  console.log(`1. Run ${pc.cyan(`npm run dev`)} (or yarn/pnpm equivalent) to start the development server\\n`);
 }
 
 main().catch(console.error);

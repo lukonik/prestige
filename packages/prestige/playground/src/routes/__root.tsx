@@ -10,7 +10,7 @@ import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
   customHeaderTitle: () => (
-    <span className="font-rubik text-primary-600 text-2xl">Oh Image</span>
+    <span className="font-rubik text-primary-600 text-2xl">Prestige</span>
   ),
   copyright: () => (
     <a
@@ -19,7 +19,7 @@ const options: PrestigeShellProps = {
       target="_blank"
       rel="norefferer"
     >
-      Built with  Prestige 🎩
+      Built with Prestige 🎩
     </a>
   ),
 };

@@ -40,10 +40,10 @@ export default defineConfig(({ mode }) => {
                 label: "Custom Page",
                 link: "/docs/custom-page",
               },
-              {
-                label: "Themer",
-                slug: "docs/themer",
-              },
+              // {
+              //   label: "Themer",
+              //   slug: "docs/themer",
+              // },
               {
                 label: "Introduction",
                 slug: "docs/introduction",

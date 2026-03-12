@@ -8,7 +8,7 @@ import {
 import favicon from "../assets/favicon.ico";
 import appCss from "../styles.css?url";
 import config from "virtual:prestige/config";
-
+import prestige from '../assets/prestige.svg'
 const options = {
   github: "https://github.com/lukonik/Prestige",
   license: {
@@ -16,7 +16,10 @@ const options = {
     url: "https://opensource.org/licenses/MIT",
   },
   customHeaderTitle: () => (
-    <span className="font-rubik text-primary-600 text-2xl">Oh Image</span>
+    // <span className="font-rubik text-primary-600 text-2xl">Oh Image</span>
+    <div className="">
+    <img src={prestige} width={80} className="text-gray-500"/>
+    </div>
   ),
 };
 

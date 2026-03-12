@@ -7,7 +7,7 @@ import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import { PluggableList } from "unified";
 import { Compatible, VFile } from "vfile";
-import { matter } from "vfile-matter";
+import matter from "gray-matter";
 import { PrestigeConfig } from "../config/config.types";
 
 import { h } from "hastscript";
@@ -229,8 +229,8 @@ export async function compileMarkdown(
 }
 
 export async function compileFrontmatter(vFile: VFile) {
-  matter(vFile, { strip: true });
-  return vFile.data["matter"] || {};
+  const result = matter(String(vFile.value));
+  return result.data || {};
 }
 
 export function warmupCompiler(options?: PrestigeConfig["markdown"]) {

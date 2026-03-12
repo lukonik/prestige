@@ -14,6 +14,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 
 const prestigeDocsLazyRouteImport = createFileRoute('/(prestige)/docs')()
+const prestigeDemoLazyRouteImport = createFileRoute('/(prestige)/demo')()
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -27,30 +28,41 @@ const prestigeDocsLazyRoute = prestigeDocsLazyRouteImport
     getParentRoute: () => rootRouteImport,
   } as any)
   .lazy(() => import('./routes/(prestige)/docs.lazy').then((d) => d.Route))
+const prestigeDemoLazyRoute = prestigeDemoLazyRouteImport
+  .update({
+    id: '/(prestige)/demo',
+    path: '/demo',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+  .lazy(() => import('./routes/(prestige)/demo.lazy').then((d) => d.Route))
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/demo': typeof prestigeDemoLazyRoute
   '/docs': typeof prestigeDocsLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/demo': typeof prestigeDemoLazyRoute
   '/docs': typeof prestigeDocsLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(prestige)/demo': typeof prestigeDemoLazyRoute
   '/(prestige)/docs': typeof prestigeDocsLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/docs'
+  fullPaths: '/' | '/demo' | '/docs'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs'
-  id: '__root__' | '/' | '/(prestige)/docs'
+  to: '/' | '/demo' | '/docs'
+  id: '__root__' | '/' | '/(prestige)/demo' | '/(prestige)/docs'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  prestigeDemoLazyRoute: typeof prestigeDemoLazyRoute
   prestigeDocsLazyRoute: typeof prestigeDocsLazyRoute
 }
 
@@ -70,11 +82,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeDocsLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(prestige)/demo': {
+      id: '/(prestige)/demo'
+      path: '/demo'
+      fullPath: '/demo'
+      preLoaderRoute: typeof prestigeDemoLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  prestigeDemoLazyRoute: prestigeDemoLazyRoute,
   prestigeDocsLazyRoute: prestigeDocsLazyRoute,
 }
 export const routeTree = rootRouteImport

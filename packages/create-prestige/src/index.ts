@@ -259,7 +259,7 @@ export const Route = createRootRoute({
     const cssPath = path.join(cwd, rootDir, "styles.css");
     const cssContent = `@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 @import 'tailwindcss';
-@import '@lonik/prestige/themes/primary-rose.css';
+@import '@lonik/prestige/themes/primary-blue.css';
 @import '@lonik/prestige/themes/default-slate.css';
 @import '@lonik/prestige/themes/core.css';
 @source "../node_modules/@lonik/prestige";

@@ -1,0 +1,27 @@
+{
+  "branches": ["feat/create-prestige"],
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/exec",
+      {
+        "prepareCmd": "pnpm -r --include-workspace-root exec npm version ${nextRelease.version} --no-git-tag-version",
+        "publishCmd": "pnpm publish -r --no-git-checks --access public"
+      }
+    ],
+    [
+      "@semantic-release/git",
+      {
+        "assets": [
+          "package.json",
+          "packages/*/package.json",
+          "CHANGELOG.md"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "@semantic-release/github"
+  ]
+}

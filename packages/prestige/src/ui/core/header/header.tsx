@@ -16,6 +16,9 @@ export default function Header({ customHeaderTitle }: HeaderProps) {
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex gap-4 items-baseline">
           <Link
+            activeProps={{
+              className: "border-default-800 text-default-800 font-medium",
+            }}
             className="text-sm rounded hover:bg-default-100 text-default-500"
             to={"/"}
           >

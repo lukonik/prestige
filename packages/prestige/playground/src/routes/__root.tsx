@@ -9,9 +9,6 @@ import config from "virtual:prestige/config";
 import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
-  customHeaderTitle: () => (
-    <span className="font-rubik text-primary-600 text-2xl">Prestige</span>
-  ),
   copyright: () => (
     <a
       className="underline"

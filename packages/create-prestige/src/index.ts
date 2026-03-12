@@ -1,12 +1,5 @@
 #!/usr/bin/env node
-import {
-  cancel,
-  intro,
-  isCancel,
-  outro,
-  spinner,
-  text
-} from "@clack/prompts";
+import { cancel, intro, isCancel, outro, spinner, text } from "@clack/prompts";
 import fs from "node:fs/promises";
 import path from "node:path";
 import { installDependencies } from "nypm";
@@ -83,6 +76,11 @@ async function main() {
 `;
         const pluginConfig = `prestige({
       title: "${projectTitle}",
+      license: {
+          label: "MIT",
+          url: "https://opensource.org/licenses/MIT",
+        },
+      github: "https://github.com/lukonik/prestige",
       collections: [
         {
           id: "docs",

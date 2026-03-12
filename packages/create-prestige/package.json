@@ -1,6 +1,6 @@
 {
   "name": "@lonik/create-prestige",
-  "version": "0.4.0",
+  "version": "0.6.0",
   "description": "Scaffold a Prestige application",
   "author": "Luka Onikadze",
   "license": "MIT",
@@ -11,7 +11,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
+    "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
     "@clack/prompts": "^0.9.0",

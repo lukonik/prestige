@@ -1,10 +1,8 @@
 #!/usr/bin/env node
-import { intro, outro, spinner, confirm, text, note, cancel, isCancel } from "@clack/prompts";
-import pc from "picocolors";
+import { cancel, confirm, intro, isCancel, outro, spinner } from "@clack/prompts";
 import fs from "node:fs/promises";
 import path from "node:path";
-import { loadFile, writeFile as writeMagicastFile } from "magicast";
-import { addVitePlugin } from "magicast/helpers";
+import pc from "picocolors";
 
 async function main() {
   intro(pc.inverse(" create-prestige "));
@@ -155,7 +153,7 @@ Welcome to Prestige! This is your generated documentation site.
 
     const rootRoutePath = path.join(cwd, rootDir, "routes", "__root.tsx");
     
-    const rootContent = `import { PrestigeShell, PrestigeShellProps } from "@lonik/prestige/ui";
+    const rootContent = `import { PrestigeShell,type PrestigeShellProps } from "@lonik/prestige/ui";
 import {
   createRootRoute,
   HeadContent,

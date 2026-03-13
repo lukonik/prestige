@@ -1,0 +1,38 @@
+---
+title: Getting Started
+description: Getting Started page
+---
+
+# Getting Started
+
+:::caution
+Prestige is still in active development v0. Although API is stable and core functionality is implemented, some breaking changes might stil appear.
+and they might be released in patch/minor releases. We are working hard to release stable version soon (v1). Stay tuned
+:::
+
+To get started, first create Tanstack Start project, open terminal and run:
+
+```bash
+npm create @tanstack/start@latest
+```
+
+_For a hosting provided we recommend using nitro server, it has tons of hosting provided integration out of the box, like github-pages and are easy to use. Nevertherless Prestige is non-opinionated on that, as long as it works with Tanstack-Start it works with Prestige_
+
+after installation, run Prestige create script that will automatically add Prestige to your project.
+
+```bash
+npx @lonik/create-prestige@latest
+```
+
+it will configure the project and install neccessary dependencies. After that the project is ready to go.
+
+## Usage
+
+run the dev `npnm run dev` and you should see the Prestige landing page with the docs navigation in the header.
+navigate to the docs and you should see the introduction page. open the `introduction.mdx` file in `src/content/docs`
+and update some text, you should see changes instantly in browser. in later guides we will explore the library in depth.
+
+## Manual installation
+Although we recommend usign `@lonik/create-prestige` to configure project, you can also add Prestige manually
+
+

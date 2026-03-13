@@ -1,4 +1,4 @@
-import { NotFound } from "@lonik/prestige/ui";
+import { PrestigeNotFound } from "@lonik/prestige/ui";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 
@@ -9,7 +9,7 @@ export function getRouter() {
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
-    defaultNotFoundComponent: NotFound,
+    defaultNotFoundComponent: PrestigeNotFound,
   });
 
   return router;

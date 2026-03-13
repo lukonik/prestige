@@ -1,18 +1,18 @@
 export {
   Aside,
   type AsideProps,
-  type AsideType
+  type AsideType,
 } from "./components/aside/aside";
 export { Code, type CodeProps } from "./components/code/code";
 export {
   PackageManagers,
-  type PackageManagersProps
+  type PackageManagersProps,
 } from "./components/package-managers/package-managers";
 export {
   Tabs,
   TabsContent,
   TabsList,
-  TabsTrigger
+  TabsTrigger,
 } from "./components/tabs/tabs";
 export { default as Header } from "./core/header/header";
 export { PrestigePage, type PrestigePageProps } from "./core/prestige-page";
@@ -21,6 +21,7 @@ export { ContentRoute } from "./routes/content/content.route";
 export { PrestigeNotFound } from "./routes/not-found";
 export {
   PrestigeShell,
-  type PrestigeShellProps
+  type PrestigeShellProps,
 } from "./routes/prestige-shell";
-
+export { StepItem, type StepItemProps } from "./components/steps/step-item";
+export { Steps, type StepsProps } from "./components/steps/steps";

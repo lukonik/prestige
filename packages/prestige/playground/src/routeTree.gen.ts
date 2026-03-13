@@ -11,6 +11,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TestRouteImport } from './routes/test'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as prestigeDocsLoadersLoaderRouteImport } from './routes/(prestige).docs.loaders.$loader'
@@ -48,6 +49,11 @@ const prestigeDocsImageLoadersOverviewLazyRouteImport = createFileRoute(
   '/(prestige)/docs/image/loaders/overview',
 )()
 
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
@@ -183,6 +189,7 @@ const prestigeDocsImageLoadersOverviewLazyRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/api': typeof prestigeApiLazyRouteWithChildren
   '/docs': typeof prestigeDocsLazyRouteWithChildren
   '/api/prestige': typeof prestigeApiPrestigeLazyRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/api': typeof prestigeApiLazyRouteWithChildren
   '/docs': typeof prestigeDocsLazyRouteWithChildren
   '/api/prestige': typeof prestigeApiPrestigeLazyRoute
@@ -218,6 +226,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/test': typeof TestRoute
   '/(prestige)/api': typeof prestigeApiLazyRouteWithChildren
   '/(prestige)/docs': typeof prestigeDocsLazyRouteWithChildren
   '/(prestige)/api/prestige': typeof prestigeApiPrestigeLazyRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/test'
     | '/api'
     | '/docs'
     | '/api/prestige'
@@ -254,6 +264,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/test'
     | '/api'
     | '/docs'
     | '/api/prestige'
@@ -271,6 +282,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
+    | '/test'
     | '/(prestige)/api'
     | '/(prestige)/docs'
     | '/(prestige)/api/prestige'
@@ -289,12 +301,20 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  TestRoute: typeof TestRoute
   prestigeApiLazyRoute: typeof prestigeApiLazyRouteWithChildren
   prestigeDocsLazyRoute: typeof prestigeDocsLazyRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
@@ -450,6 +470,7 @@ const prestigeDocsLazyRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  TestRoute: TestRoute,
   prestigeApiLazyRoute: prestigeApiLazyRouteWithChildren,
   prestigeDocsLazyRoute: prestigeDocsLazyRouteWithChildren,
 }

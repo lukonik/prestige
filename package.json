@@ -22,7 +22,8 @@
     "prepare": "husky",
     "build:all": "pnpm -p build",
     "test:all": "pnpm -p test",
-    "release-v": "pnpm --filter prestige release-v"
+    "release-v": "pnpm --filter prestige release-v",
+    "docs":"pnpm run --filter docs dev"
   },
   "dependencies": {
     "@semantic-release/changelog": "^6.0.3",

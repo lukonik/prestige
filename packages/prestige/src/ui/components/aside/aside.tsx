@@ -96,7 +96,7 @@ export function Aside({
         </span>
         {title || defaultTitles[type]}
       </p>
-      <section className="[&>p]:mt-0 [&>p]:mb-2 [&>p:last-child]:mb-0 text-sm">
+      <section className="[&>p]:mt-0 [&>p]:mb-2 [&>p:last-child]:mb-0">
         {children}
       </section>
     </aside>

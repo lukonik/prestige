@@ -8,46 +8,45 @@ import { Steps, StepItem } from "@lonik/prestige/ui";
 # Getting Started
 
 :::caution
-Prestige is still in active development v0. Although API is stable and core functionality is implemented, some breaking changes might stil appear.
-and they might be released in patch/minor releases. We are working hard to release stable version soon (v1). Stay tuned
+Prestige is still in active development (v0). Although the API is stable and core functionality is implemented, some breaking changes might still appear, and they might be released in patch/minor releases. We are working hard to release a stable version soon (v1). Stay tuned!
 :::
 
-To get started, first create Tanstack Start project, open terminal and run:
+To get started, first create a TanStack Start project, open your terminal, and run:
 
 ```bash
 npm create @tanstack/start@latest
 ```
 
-_For a hosting provided we recommend using nitro server, it has tons of hosting provided integration out of the box, like github-pages and are easy to use. Nevertherless Prestige is non-opinionated on that, as long as it works with Tanstack-Start it works with Prestige_
+_For a hosting provider, we recommend using a Nitro server. It has tons of hosting provider integrations out of the box, like GitHub Pages, and is easy to use. Nevertheless, Prestige is non-opinionated on that; as long as it works with TanStack Start, it works with Prestige._
 
-after installation, run Prestige create script that will automatically add Prestige to your project.
+After installation, run the Prestige create script that will automatically add Prestige to your project:
 
 ```bash
 npx @lonik/create-prestige@latest
 ```
 
-it will configure the project and install neccessary dependencies. After that the project is ready to go.
+It will configure the project and install necessary dependencies. After that, the project is ready to go.
 
 ## Usage
 
-run the dev `npnm run dev` and you should see the Prestige landing page with the docs navigation in the header.
-navigate to the docs and you should see the introduction page. open the `introduction.mdx` file in `src/content/docs`
-and update some text, you should see changes instantly in browser. in later guides we will explore the library in depth.
+Run the dev server with `npm run dev`, and you should see the Prestige landing page with the docs navigation in the header. Navigate to the docs, and you should see the introduction page. Open the `introduction.mdx` file in `src/content/docs` and update some text; you should see changes instantly in the browser. In later guides, we will explore the library in depth.
 
 ## Manual installation
 
-Although we recommend usign `@lonik/create-prestige` to configure project, you can also add Prestige manually
+Although we recommend using `@lonik/create-prestige` to configure the project, you can also add Prestige manually.
 
 <Steps>
   <StepItem label="Install packages" index="1">
-    ```bash npm install @lonik/prestige@latest --save ```
+    ```bash 
+    npm install @lonik/prestige@latest --save 
+    ```
   </StepItem>
   <StepItem label="Create content folder" index="2">
-    Create `src/content/docs` folder in your project. This folder will be used
-    for docs markdown pages
+    Create a `src/content/docs` folder in your project. This folder will be used
+    for docs markdown pages.
   </StepItem>
-  <StepItem label="add PrestigeShell in _root" index="3">
-    To display prestige layout like header,footer etc. add `PrestigeShell` component in `__root.tsx`
+  <StepItem label="Add PrestigeShell in __root.txt" index="3">
+    To display the Prestige layout, like the header, footer, etc., add the `PrestigeShell` component in `__root.tsx`.
     
     ```tsx
         import { PrestigeShell } from '@lonik/prestige/ui';
@@ -59,9 +58,11 @@ Although we recommend usign `@lonik/create-prestige` to configure project, you c
     ```
 
   </StepItem>
-  <StepItem label="add prestige plugin in vite config" index="4">
-    In `vite.config.ts` add `prestige` plugin
+  <StepItem label="Add the prestige plugin in the Vite config" index="4">
+    In `vite.config.ts`, add the `prestige` plugin.
     ```ts
+        import {prestige} from "@lonik/prestige/vite";
+        ...
         {
           plugins:[
             ...
@@ -69,7 +70,7 @@ Although we recommend usign `@lonik/create-prestige` to configure project, you c
                     title:"Prestige",
                     collections:[{
                         id:'docs',
-                        items:[] // for now it is empty we will add content later
+                        items:[] // for now it is empty; we will add content later
                     }]
                 })
             ...
@@ -79,8 +80,8 @@ Although we recommend usign `@lonik/create-prestige` to configure project, you c
   </StepItem>
 </Steps>
 
-Now prestige is fully configured to be used. For testing that everything works. create `introduction.mdx`
-inside `src/content/docs`, with following content:
+Now Prestige is fully configured to be used. To test that everything works, create `introduction.mdx`
+inside `src/content/docs` with the following content:
 
 ```md
 ---
@@ -89,10 +90,10 @@ title: Introduction
 
 # Introduction
 
-This is introduction page
+This is the introduction page.
 ```
 
-and add link to the collections array in `vite.config.ts`.
+Then, add a link to the collections array in `vite.config.ts`:
 
 ```ts
     {
@@ -111,4 +112,4 @@ and add link to the collections array in `vite.config.ts`.
     }
 ```
 
-run `npm run dev` navigate to `/docs/introduction` and you should see rendered introduction page.
+Run `npm run dev` and navigate to `/docs/introduction`, you should see the rendered introduction page.

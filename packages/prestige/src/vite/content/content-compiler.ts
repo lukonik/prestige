@@ -166,7 +166,6 @@ export default function remarkAdmonitions() {
                 "[&>p]:mt-0",
                 "[&>p]:mb-2",
                 "[&>p:last-child]:mb-0",
-                "text-sm",
               ],
             },
           },

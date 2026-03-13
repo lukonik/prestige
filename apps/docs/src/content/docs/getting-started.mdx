@@ -3,6 +3,8 @@ title: Getting Started
 description: Getting Started page
 ---
 
+import { Steps, StepItem } from "@lonik/prestige/ui";
+
 # Getting Started
 
 :::caution
@@ -33,6 +35,80 @@ navigate to the docs and you should see the introduction page. open the `introdu
 and update some text, you should see changes instantly in browser. in later guides we will explore the library in depth.
 
 ## Manual installation
+
 Although we recommend usign `@lonik/create-prestige` to configure project, you can also add Prestige manually
 
+<Steps>
+  <StepItem label="Install packages" index="1">
+    ```bash npm install @lonik/prestige@latest --save ```
+  </StepItem>
+  <StepItem label="Create content folder" index="2">
+    Create `src/content/docs` folder in your project. This folder will be used
+    for docs markdown pages
+  </StepItem>
+  <StepItem label="add PrestigeShell in _root" index="3">
+    To display prestige layout like header,footer etc. add `PrestigeShell` component in `__root.tsx`
+    
+    ```tsx
+        import { PrestigeShell } from '@lonik/prestige/ui';
+        ...
+         <PrestigeShell >
+          <Outlet />
+        </PrestigeShell>
+        ...
+    ```
 
+  </StepItem>
+  <StepItem label="add prestige plugin in vite config" index="4">
+    In `vite.config.ts` add `prestige` plugin
+    ```ts
+        {
+          plugins:[
+            ...
+                prestige({
+                    title:"Prestige",
+                    collections:[{
+                        id:'docs',
+                        items:[] // for now it is empty we will add content later
+                    }]
+                })
+            ...
+          ]
+        }
+    ```
+  </StepItem>
+</Steps>
+
+Now prestige is fully configured to be used. For testing that everything works. create `introduction.mdx`
+inside `src/content/docs`, with following content:
+
+```md
+---
+title: Introduction
+---
+
+# Introduction
+
+This is introduction page
+```
+
+and add link to the collections array in `vite.config.ts`.
+
+```ts
+    {
+        ...
+            prestige({
+                title:"Prestige",
+                collections:[{
+                    id:'docs',
+                    items:[{
+                        label:"Introduction",
+                        slug:"docs/introduction"
+                    }]
+                }]
+            })
+        ...
+    }
+```
+
+run `npm run dev` navigate to `/docs/introduction` and you should see rendered introduction page.

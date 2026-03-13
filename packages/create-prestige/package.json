@@ -9,7 +9,7 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsdown",
+    "build": "tsdown && copyfiles -a -u 2 \"../../template/**/*\" \"../../template/.*\" ./template",
     "dev": "tsdown --watch",
     "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
@@ -23,6 +23,7 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "bumpp": "catalog:",
+    "copyfiles": "^2.4.1",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }

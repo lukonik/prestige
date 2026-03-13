@@ -6,21 +6,81 @@ settings:
 
 catalogs:
   default:
+    '@semantic-release/exec':
+      specifier: ^7.1.0
+      version: 7.1.0
+    '@semantic-release/git':
+      specifier: ^10.0.1
+      version: 10.0.1
+    '@tailwindcss/typography':
+      specifier: ^0.5.19
+      version: 0.5.19
+    '@tailwindcss/vite':
+      specifier: ^4.2.1
+      version: 4.2.1
+    '@tanstack/react-devtools':
+      specifier: 0.9.6
+      version: 0.9.6
+    '@tanstack/react-router':
+      specifier: ^1.162.4
+      version: 1.162.4
+    '@tanstack/react-router-devtools':
+      specifier: 1.162.4
+      version: 1.162.4
+    '@tanstack/react-start':
+      specifier: ^1.162.4
+      version: 1.162.4
     '@types/node':
       specifier: ^25.0.3
       version: 25.3.0
+    '@types/react':
+      specifier: ^19.2.7
+      version: 19.2.14
+    '@types/react-dom':
+      specifier: ^19.2.3
+      version: 19.2.3
+    '@vitejs/plugin-react':
+      specifier: ^5.1.4
+      version: 5.1.4
     bumpp:
       specifier: ^10.4.1
       version: 10.4.1
+    lucide-react:
+      specifier: ^0.545.0
+      version: 0.545.0
+    nitro:
+      specifier: 3.0.1-alpha.2
+      version: 3.0.1-alpha.2
     pathe:
       specifier: ^2.0.3
       version: 2.0.3
+    react:
+      specifier: ^19.2.0
+      version: 19.2.4
+    react-dom:
+      specifier: ^19.2.0
+      version: 19.2.4
+    semantic-release:
+      specifier: ^25.0.3
+      version: 25.0.3
+    tailwindcss:
+      specifier: ^4.2.1
+      version: 4.2.1
     tsdown:
       specifier: ^0.18.1
       version: 0.18.4
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
+    vite:
+      specifier: ^7.3.1
+      version: 7.3.1
+    vite-tsconfig-paths:
+      specifier: ^6.1.1
+      version: 6.1.1
+    vitest:
+      specifier: ^4.0.16
+      version: 4.0.18
 
 importers:
 
@@ -52,7 +112,7 @@ importers:
   apps/docs:
     dependencies:
       '@lonik/prestige':
-        specifier: latest
+        specifier: workspace:*
         version: link:../../packages/prestige
       '@tailwindcss/vite':
         specifier: 'catalog:'
@@ -2111,10 +2171,6 @@ packages:
 
   '@tanstack/devtools-event-bus@0.4.1':
     resolution: {integrity: sha512-cNnJ89Q021Zf883rlbBTfsaxTfi2r73/qejGtyTa7ksErF3hyDyAq1aTbo5crK9dAL7zSHh9viKY1BtMls1QOA==}
-    engines: {node: '>=18'}
-
-  '@tanstack/devtools-event-client@0.4.0':
-    resolution: {integrity: sha512-RPfGuk2bDZgcu9bAJodvO2lnZeHuz4/71HjZ0bGb/SPg8+lyTA+RLSKQvo7fSmPSi8/vcH3aKQ8EM9ywf1olaw==}
     engines: {node: '>=18'}
 
   '@tanstack/devtools-event-client@0.4.3':
@@ -6971,7 +7027,7 @@ snapshots:
 
   '@tanstack/devtools-client@0.0.5':
     dependencies:
-      '@tanstack/devtools-event-client': 0.4.0
+      '@tanstack/devtools-event-client': 0.4.3
 
   '@tanstack/devtools-client@0.0.6':
     dependencies:
@@ -6983,8 +7039,6 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-
-  '@tanstack/devtools-event-client@0.4.0': {}
 
   '@tanstack/devtools-event-client@0.4.3': {}
 

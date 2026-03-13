@@ -25,16 +25,20 @@ const config = defineConfig({
             {
               label: "Introduction",
               slug: "docs/introduction",
-            }
+            },
           ],
         },
       ],
     }),
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+    nitro({ rollupConfig: { external: [/^@sentry\//] }, renderer: false }),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+      },
+    }),
     viteReact(),
   ],
 });

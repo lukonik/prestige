@@ -9,12 +9,13 @@
   },
   "type": "module",
   "scripts": {
-    "build": "tsdown && copyfiles -a -u 2 \"../../template/**/*\" \"../../template/.*\" ./template",
+    "build": "tsdown",
     "dev": "tsdown --watch",
     "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
     "@clack/prompts": "^0.9.0",
+    "giget": "^3.1.2",
     "magicast": "^0.3.5",
     "nypm": "^0.6.5",
     "pathe": "catalog:",
@@ -23,7 +24,6 @@
   "devDependencies": {
     "@types/node": "catalog:",
     "bumpp": "catalog:",
-    "copyfiles": "^2.4.1",
     "tsdown": "catalog:",
     "typescript": "catalog:"
   }

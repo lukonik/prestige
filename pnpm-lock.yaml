@@ -6,81 +6,21 @@ settings:
 
 catalogs:
   default:
-    '@semantic-release/exec':
-      specifier: ^7.1.0
-      version: 7.1.0
-    '@semantic-release/git':
-      specifier: ^10.0.1
-      version: 10.0.1
-    '@tailwindcss/typography':
-      specifier: ^0.5.19
-      version: 0.5.19
-    '@tailwindcss/vite':
-      specifier: ^4.2.1
-      version: 4.2.1
-    '@tanstack/react-devtools':
-      specifier: 0.9.6
-      version: 0.9.6
-    '@tanstack/react-router':
-      specifier: ^1.162.4
-      version: 1.162.4
-    '@tanstack/react-router-devtools':
-      specifier: 1.162.4
-      version: 1.162.4
-    '@tanstack/react-start':
-      specifier: ^1.162.4
-      version: 1.162.4
     '@types/node':
       specifier: ^25.0.3
       version: 25.3.0
-    '@types/react':
-      specifier: ^19.2.7
-      version: 19.2.14
-    '@types/react-dom':
-      specifier: ^19.2.3
-      version: 19.2.3
-    '@vitejs/plugin-react':
-      specifier: ^5.1.4
-      version: 5.1.4
     bumpp:
       specifier: ^10.4.1
       version: 10.4.1
-    lucide-react:
-      specifier: ^0.545.0
-      version: 0.545.0
-    nitro:
-      specifier: 3.0.1-alpha.2
-      version: 3.0.1-alpha.2
     pathe:
       specifier: ^2.0.3
       version: 2.0.3
-    react:
-      specifier: ^19.2.0
-      version: 19.2.4
-    react-dom:
-      specifier: ^19.2.0
-      version: 19.2.4
-    semantic-release:
-      specifier: ^25.0.3
-      version: 25.0.3
-    tailwindcss:
-      specifier: ^4.2.1
-      version: 4.2.1
     tsdown:
       specifier: ^0.18.1
       version: 0.18.4
     typescript:
       specifier: ^5.9.3
       version: 5.9.3
-    vite:
-      specifier: ^7.3.1
-      version: 7.3.1
-    vite-tsconfig-paths:
-      specifier: ^6.1.1
-      version: 6.1.1
-    vitest:
-      specifier: ^4.0.16
-      version: 4.0.18
 
 importers:
 
@@ -196,6 +136,9 @@ importers:
       '@clack/prompts':
         specifier: ^0.9.0
         version: 0.9.1
+      giget:
+        specifier: ^3.1.2
+        version: 3.1.2
       magicast:
         specifier: ^0.3.5
         version: 0.3.5
@@ -3269,6 +3212,10 @@ packages:
 
   giget@2.0.0:
     resolution: {integrity: sha512-L5bGsVkxJbJgdnwyuheIunkGatUF/zssUoxxjACCseZYAVbaqdh9Tsmmlkl8vYan09H7sbvKt4pS8GqKLBrEzA==}
+    hasBin: true
+
+  giget@3.1.2:
+    resolution: {integrity: sha512-T2qUpKBHeUTwHcIhydgnJzhL0Hj785ms+JkxaaWQH9SDM/llXeewnOkfJcFShAHjWI+26hOChwUfCoupaXLm8g==}
     hasBin: true
 
   git-log-parser@1.2.1:
@@ -8415,6 +8362,8 @@ snapshots:
       node-fetch-native: 1.6.7
       nypm: 0.6.5
       pathe: 2.0.3
+
+  giget@3.1.2: {}
 
   git-log-parser@1.2.1:
     dependencies:

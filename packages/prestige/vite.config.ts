@@ -27,11 +27,11 @@ export default defineConfig(({ mode }) => {
         },
         collections: [
           {
-            id: "test",
+            id: "testfolder",
             items: [
               {
                 label: "sub",
-                autogenerate: { directory: "docs/auto" },
+                autogenerate: { directory: "testfolder/sub" },
               },
             ],
           },

@@ -14,10 +14,6 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: "./playground",
-    optimizeDeps: {
-      noDiscovery: true,
-      include: [], // Ensures nothing is forced into the optimizer
-    },
     plugins: [
       Inspect(),
       tsconfigPaths(),

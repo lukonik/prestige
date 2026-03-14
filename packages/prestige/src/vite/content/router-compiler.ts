@@ -23,8 +23,9 @@ export async function compileRoutes(
       generatedFiles.set(sidebarFile, createLayoutRoute(key));
 
       for (const l of onlyInternalLinks) {
-        const pathified = l.slug.replaceAll("/", ".") + ".lazy.tsx";
-        generatedFiles.set(pathified, createContentRoute(l.slug));
+        const pathified = l.slug.replaceAll("/", ".");
+        generatedFiles.set(pathified + ".tsx", createContentHeadRoute(l.slug));
+        generatedFiles.set(pathified + ".lazy.tsx", createContentRoute(l.slug));
       }
     }
 
@@ -46,10 +47,17 @@ export async function compileRoutes(
     );
 
     const existingFiles = await readdir(prestigeFullPath);
-    const staleFiles = existingFiles.filter(
+    const staleLazyFiles = existingFiles.filter(
       (fileName) =>
         fileName.endsWith(".lazy.tsx") && !generatedFiles.has(fileName),
     );
+    const staleHeadFiles = staleLazyFiles
+      .map((fileName) => fileName.replace(".lazy.tsx", ".tsx"))
+      .filter(
+        (fileName) =>
+          existingFiles.includes(fileName) && !generatedFiles.has(fileName),
+      );
+    const staleFiles = [...new Set([...staleLazyFiles, ...staleHeadFiles])];
 
     await Promise.all(
       staleFiles.map((fileName) => {
@@ -83,14 +91,26 @@ export const Route = createLazyFileRoute('/(prestige)/${id}')(CollectionRoute(si
   );
 }
 
+function createContentHeadRoute(slug: string) {
+  return (
+    `
+import { createFileRoute } from "@tanstack/react-router";
+import * as contentData from "virtual:prestige/content/${slug}";
+import { ContentRoute } from "@lonik/prestige/ui";
+
+export const Route = createFileRoute('/(prestige)/${slug}')(ContentRoute(contentData));
+`.trim() + "\n"
+  );
+}
+
 function createContentRoute(slug: string) {
   return (
     `
 import { createLazyFileRoute } from "@tanstack/react-router";
 import * as contentData from "virtual:prestige/content/${slug}";
-import { ContentRoute } from "@lonik/prestige/ui";
+import { LazyContentRoute } from "@lonik/prestige/ui";
 
-export const Route = createLazyFileRoute('/(prestige)/${slug}')(ContentRoute(contentData));
+export const Route = createLazyFileRoute('/(prestige)/${slug}')(LazyContentRoute(contentData));
 `.trim() + "\n"
   );
 }

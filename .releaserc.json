@@ -6,7 +6,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "pnpm -r --include-workspace-root exec npm version ${nextRelease.version} --no-git-tag-version",
+        "prepareCmd": "pnpm -r --filter './packages/*' exec npm version ${nextRelease.version} --no-git-tag-version --allow-same-version",
         "publishCmd": "pnpm -r --filter './packages/*' publish --no-git-checks --access public"
       }
     ],

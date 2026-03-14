@@ -39,7 +39,7 @@ export type InternalCollectionLink = z.infer<
 export type CollectionGroup = {
   label: string;
   items?: CollectionItem[] | undefined;
-  collapsible?: boolean | undefined;
+  collapsed?: boolean | undefined;
   autogenerate?: { directory: string } | undefined;
 };
 
@@ -52,7 +52,7 @@ const CollectionGroupSchema: z.ZodType<CollectionGroup, CollectionGroup> =
   z.object({
     label: z.string(),
     items: z.lazy(() => z.array(CollectionItemSchema)).optional(),
-    collapsible: z.boolean().optional(),
+    collapsed: z.boolean().optional(),
     autogenerate: z
       .object({
         directory: z.string(),
@@ -115,7 +115,7 @@ export type SidebarLinkType = InternalSidebarLinkType | ExternalSidebarLinkType;
 export interface SidebarGroupType {
   label: string;
   items: SidebarItemType[];
-  collapsible?: boolean | undefined;
+  collapsed?: boolean | undefined;
 }
 
 export type SidebarItemType =

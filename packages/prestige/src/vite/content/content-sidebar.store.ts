@@ -161,7 +161,7 @@ async function resolveSidebarGroup(
 
   return {
     label,
-    collapsible: group.collapsible,
+    collapsed: group.collapsed,
     items,
   };
 }

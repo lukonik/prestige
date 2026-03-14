@@ -81,6 +81,7 @@ export default defineConfig(({ mode }) => {
               { label: "Vite Plugin", slug: "docs/vite-plugin" },
               {
                 label: "Loaders",
+                collapsed: true,
                 items: [
                   { label: "Overview", slug: "docs/image/loaders/overview" },
                   { label: "Cloudflare", link: "/docs/loaders/cloudflare" },

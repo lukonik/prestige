@@ -201,7 +201,7 @@ describe("resolveSidebars", () => {
         items: [
           {
             label: "Group 1",
-            collapsible: true,
+            collapsed: true,
             items: [
               { slug: "child", label: "Child" }
             ]
@@ -215,7 +215,7 @@ describe("resolveSidebars", () => {
       items: [
         {
           label: "Group 1",
-          collapsible: true,
+          collapsed: true,
           items: [
             { slug: "child", label: "Child" }
           ]
@@ -259,12 +259,12 @@ describe("resolveSidebars", () => {
       items: [
         {
           label: "Autogen Group",
-          collapsible: undefined,
+          collapsed: undefined,
           items: [
             { label: "a-file1", slug: "auto-dir/a-file1" },
             { 
               label: "b-subdir", 
-              collapsible: undefined,
+              collapsed: undefined,
               items: []
             },
             { label: "c-file2", slug: "auto-dir/c-file2" }
@@ -296,7 +296,7 @@ describe("resolveSidebars", () => {
       items: [
         {
           label: "Autogen Group",
-          collapsible: undefined,
+          collapsed: undefined,
           items: []
         }
       ],
@@ -325,7 +325,7 @@ describe("resolveSidebars", () => {
       items: [
         {
           label: "Mixed Group",
-          collapsible: undefined,
+          collapsed: undefined,
           items: [{ slug: "explicit", label: "Explicit" }]
         }
       ],

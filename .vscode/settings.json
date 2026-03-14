@@ -5,19 +5,21 @@
     "**/.hg": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
-    // "**/node_modules": true,
-    // "**/dist": true,
+    "**/node_modules": true,
+    "**/dist": true,
     "**/.output": true,
     "**/.tanstack": true
   },
   "files.watcherExclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "**/(prestige)/**": true
   },
   "search.exclude": {
     "**/routeTree.gen.ts": true,
-    "**/demo/**": true
+    "**/(prestige)/**": true
   },
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
+    "**/routeTree.gen.ts": true,
+    "**/(prestige)/**": true
   }
 }

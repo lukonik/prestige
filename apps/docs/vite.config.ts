@@ -30,6 +30,15 @@ const config = defineConfig({
               label: "Getting Started",
               slug: "docs/getting-started",
             },
+            {
+              label: "Guides",
+              items: [
+                {
+                  label: "Pages",
+                  slug: "docs/guides/pages",
+                },
+              ],
+            },
           ],
         },
       ],

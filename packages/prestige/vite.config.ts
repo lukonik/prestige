@@ -30,6 +30,34 @@ export default defineConfig(({ mode }) => {
             id: "docs",
             items: [
               {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Introduction",
+                slug: "docs/introduction",
+              },
+              {
+                label: "Showcase",
+                slug: "docs/showcase",
+              },
+              {
                 label: "Showcase",
                 slug: "docs/showcase",
               },
@@ -68,8 +96,13 @@ export default defineConfig(({ mode }) => {
                   },
                 ],
               },
+              {
+                label: "Auto",
+                autogenerate: { directory: "docs/auto" },
+              },
             ],
           },
+
           {
             id: "api",
             label: "API",

@@ -24,7 +24,11 @@ import { Route as prestigeApiPrestigeRouteImport } from './routes/(prestige)/api
 import { Route as prestigeDocsLoadersCustomLoaderRouteImport } from './routes/(prestige)/docs.loaders.custom-loader'
 import { Route as prestigeDocsLoadersCloudinaryRouteImport } from './routes/(prestige)/docs.loaders.cloudinary'
 import { Route as prestigeDocsLoadersLoaderRouteImport } from './routes/(prestige).docs.loaders.$loader'
+import { Route as prestigeDocsAutoAuto3RouteImport } from './routes/(prestige)/docs.auto.auto-3'
+import { Route as prestigeDocsAutoAuto2RouteImport } from './routes/(prestige)/docs.auto.auto-2'
+import { Route as prestigeDocsAutoAuto1RouteImport } from './routes/(prestige)/docs.auto.auto-1'
 import { Route as prestigeDocsImageLoadersOverviewRouteImport } from './routes/(prestige)/docs.image.loaders.overview'
+import { Route as prestigeDocsAutoSubAutoAuto4RouteImport } from './routes/(prestige)/docs.auto.sub-auto.auto-4'
 
 const prestigeDocsLazyRouteImport = createFileRoute('/(prestige)/docs')()
 const prestigeApiLazyRouteImport = createFileRoute('/(prestige)/api')()
@@ -151,6 +155,33 @@ const prestigeDocsLoadersLoaderRoute =
     path: '/loaders/$loader',
     getParentRoute: () => prestigeDocsLazyRoute,
   } as any)
+const prestigeDocsAutoAuto3Route = prestigeDocsAutoAuto3RouteImport
+  .update({
+    id: '/auto/auto-3',
+    path: '/auto/auto-3',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.auto.auto-3.lazy').then((d) => d.Route),
+  )
+const prestigeDocsAutoAuto2Route = prestigeDocsAutoAuto2RouteImport
+  .update({
+    id: '/auto/auto-2',
+    path: '/auto/auto-2',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.auto.auto-2.lazy').then((d) => d.Route),
+  )
+const prestigeDocsAutoAuto1Route = prestigeDocsAutoAuto1RouteImport
+  .update({
+    id: '/auto/auto-1',
+    path: '/auto/auto-1',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.auto.auto-1.lazy').then((d) => d.Route),
+  )
 const prestigeDocsImageLoadersOverviewRoute =
   prestigeDocsImageLoadersOverviewRouteImport
     .update({
@@ -160,6 +191,18 @@ const prestigeDocsImageLoadersOverviewRoute =
     } as any)
     .lazy(() =>
       import('./routes/(prestige)/docs.image.loaders.overview.lazy').then(
+        (d) => d.Route,
+      ),
+    )
+const prestigeDocsAutoSubAutoAuto4Route =
+  prestigeDocsAutoSubAutoAuto4RouteImport
+    .update({
+      id: '/auto/sub-auto/auto-4',
+      path: '/auto/sub-auto/auto-4',
+      getParentRoute: () => prestigeDocsLazyRoute,
+    } as any)
+    .lazy(() =>
+      import('./routes/(prestige)/docs.auto.sub-auto.auto-4.lazy').then(
         (d) => d.Route,
       ),
     )
@@ -177,9 +220,13 @@ export interface FileRoutesByFullPath {
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/auto/auto-1': typeof prestigeDocsAutoAuto1Route
+  '/docs/auto/auto-2': typeof prestigeDocsAutoAuto2Route
+  '/docs/auto/auto-3': typeof prestigeDocsAutoAuto3Route
   '/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
+  '/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
   '/docs/image/loaders/overview': typeof prestigeDocsImageLoadersOverviewRoute
 }
 export interface FileRoutesByTo {
@@ -195,9 +242,13 @@ export interface FileRoutesByTo {
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/docs/auto/auto-1': typeof prestigeDocsAutoAuto1Route
+  '/docs/auto/auto-2': typeof prestigeDocsAutoAuto2Route
+  '/docs/auto/auto-3': typeof prestigeDocsAutoAuto3Route
   '/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
+  '/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
   '/docs/image/loaders/overview': typeof prestigeDocsImageLoadersOverviewRoute
 }
 export interface FileRoutesById {
@@ -214,9 +265,13 @@ export interface FileRoutesById {
   '/(prestige)/docs/themer': typeof prestigeDocsThemerRoute
   '/(prestige)/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/(prestige)/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
+  '/(prestige)/docs/auto/auto-1': typeof prestigeDocsAutoAuto1Route
+  '/(prestige)/docs/auto/auto-2': typeof prestigeDocsAutoAuto2Route
+  '/(prestige)/docs/auto/auto-3': typeof prestigeDocsAutoAuto3Route
   '/(prestige)/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/(prestige)/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/(prestige)/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
+  '/(prestige)/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
   '/(prestige)/docs/image/loaders/overview': typeof prestigeDocsImageLoadersOverviewRoute
 }
 export interface FileRouteTypes {
@@ -234,9 +289,13 @@ export interface FileRouteTypes {
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
+    | '/docs/auto/auto-1'
+    | '/docs/auto/auto-2'
+    | '/docs/auto/auto-3'
     | '/docs/loaders/$loader'
     | '/docs/loaders/cloudinary'
     | '/docs/loaders/custom-loader'
+    | '/docs/auto/sub-auto/auto-4'
     | '/docs/image/loaders/overview'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -252,9 +311,13 @@ export interface FileRouteTypes {
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
+    | '/docs/auto/auto-1'
+    | '/docs/auto/auto-2'
+    | '/docs/auto/auto-3'
     | '/docs/loaders/$loader'
     | '/docs/loaders/cloudinary'
     | '/docs/loaders/custom-loader'
+    | '/docs/auto/sub-auto/auto-4'
     | '/docs/image/loaders/overview'
   id:
     | '__root__'
@@ -270,9 +333,13 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/themer'
     | '/(prestige)/docs/typescript'
     | '/(prestige)/docs/vite-plugin'
+    | '/(prestige)/docs/auto/auto-1'
+    | '/(prestige)/docs/auto/auto-2'
+    | '/(prestige)/docs/auto/auto-3'
     | '/(prestige)/docs/loaders/$loader'
     | '/(prestige)/docs/loaders/cloudinary'
     | '/(prestige)/docs/loaders/custom-loader'
+    | '/(prestige)/docs/auto/sub-auto/auto-4'
     | '/(prestige)/docs/image/loaders/overview'
   fileRoutesById: FileRoutesById
 }
@@ -391,11 +458,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeDocsLoadersLoaderRouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
+    '/(prestige)/docs/auto/auto-3': {
+      id: '/(prestige)/docs/auto/auto-3'
+      path: '/auto/auto-3'
+      fullPath: '/docs/auto/auto-3'
+      preLoaderRoute: typeof prestigeDocsAutoAuto3RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/auto/auto-2': {
+      id: '/(prestige)/docs/auto/auto-2'
+      path: '/auto/auto-2'
+      fullPath: '/docs/auto/auto-2'
+      preLoaderRoute: typeof prestigeDocsAutoAuto2RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/auto/auto-1': {
+      id: '/(prestige)/docs/auto/auto-1'
+      path: '/auto/auto-1'
+      fullPath: '/docs/auto/auto-1'
+      preLoaderRoute: typeof prestigeDocsAutoAuto1RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
     '/(prestige)/docs/image/loaders/overview': {
       id: '/(prestige)/docs/image/loaders/overview'
       path: '/image/loaders/overview'
       fullPath: '/docs/image/loaders/overview'
       preLoaderRoute: typeof prestigeDocsImageLoadersOverviewRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/auto/sub-auto/auto-4': {
+      id: '/(prestige)/docs/auto/sub-auto/auto-4'
+      path: '/auto/sub-auto/auto-4'
+      fullPath: '/docs/auto/sub-auto/auto-4'
+      preLoaderRoute: typeof prestigeDocsAutoSubAutoAuto4RouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
   }
@@ -420,9 +515,13 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsThemerRoute: typeof prestigeDocsThemerRoute
   prestigeDocsTypescriptRoute: typeof prestigeDocsTypescriptRoute
   prestigeDocsVitePluginRoute: typeof prestigeDocsVitePluginRoute
+  prestigeDocsAutoAuto1Route: typeof prestigeDocsAutoAuto1Route
+  prestigeDocsAutoAuto2Route: typeof prestigeDocsAutoAuto2Route
+  prestigeDocsAutoAuto3Route: typeof prestigeDocsAutoAuto3Route
   prestigeDocsLoadersLoaderRoute: typeof prestigeDocsLoadersLoaderRoute
   prestigeDocsLoadersCloudinaryRoute: typeof prestigeDocsLoadersCloudinaryRoute
   prestigeDocsLoadersCustomLoaderRoute: typeof prestigeDocsLoadersCustomLoaderRoute
+  prestigeDocsAutoSubAutoAuto4Route: typeof prestigeDocsAutoSubAutoAuto4Route
   prestigeDocsImageLoadersOverviewRoute: typeof prestigeDocsImageLoadersOverviewRoute
 }
 
@@ -433,9 +532,13 @@ const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
   prestigeDocsThemerRoute: prestigeDocsThemerRoute,
   prestigeDocsTypescriptRoute: prestigeDocsTypescriptRoute,
   prestigeDocsVitePluginRoute: prestigeDocsVitePluginRoute,
+  prestigeDocsAutoAuto1Route: prestigeDocsAutoAuto1Route,
+  prestigeDocsAutoAuto2Route: prestigeDocsAutoAuto2Route,
+  prestigeDocsAutoAuto3Route: prestigeDocsAutoAuto3Route,
   prestigeDocsLoadersLoaderRoute: prestigeDocsLoadersLoaderRoute,
   prestigeDocsLoadersCloudinaryRoute: prestigeDocsLoadersCloudinaryRoute,
   prestigeDocsLoadersCustomLoaderRoute: prestigeDocsLoadersCustomLoaderRoute,
+  prestigeDocsAutoSubAutoAuto4Route: prestigeDocsAutoSubAutoAuto4Route,
   prestigeDocsImageLoadersOverviewRoute: prestigeDocsImageLoadersOverviewRoute,
 }
 

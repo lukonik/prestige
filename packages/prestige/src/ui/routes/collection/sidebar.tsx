@@ -41,7 +41,7 @@ function SidebarGroup({
         </span>
       </button>
       {open && (
-        <div className="mb-2">
+        <div className="mb-2 pl-5">
           {group.items.map((item) => {
             if ("slug" in item || "link" in item) {
               const key = "slug" in item ? item.slug : item.link;
@@ -106,7 +106,7 @@ function SidebarLink({
 
 export default function Sidebar({ sidebar, onLinkClick }: SidebarProps) {
   return (
-    <div className="w-full lg:w-sidebar border-r border-default-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4">
+    <div className="w-full lg:w-sidebar border-r border-default-200 h-full overflow-auto lg:h-main lg:sticky top-header pt-4 pb-10">
       {sidebar.items.map((item) => {
         if ("slug" in item || "link" in item) {
           const key = "slug" in item ? item.slug : item.link;

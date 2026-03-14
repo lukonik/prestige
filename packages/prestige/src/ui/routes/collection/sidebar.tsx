@@ -22,7 +22,7 @@ function SidebarGroup({
   group: SidebarGroupType;
   onLinkClick?: (() => void) | undefined;
 }) {
-  const [open, setIsOpen] = useState(true);
+  const [open, setIsOpen] = useState(!group.collapsed);
   return (
     <div className="mt-4 flex flex-col gap-1">
       <button

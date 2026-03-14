@@ -50,7 +50,7 @@ declare module "virtual:prestige/sidebar-all" {
   interface SidebarGroupType {
     label: string;
     items: SidebarItemType[];
-    collapsible?: boolean | undefined;
+    collapsed?: boolean | undefined;
   }
 
   type SidebarItemType = SidebarLinkType | SidebarGroupType;

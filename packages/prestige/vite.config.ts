@@ -27,6 +27,15 @@ export default defineConfig(({ mode }) => {
         },
         collections: [
           {
+            id: "test",
+            items: [
+              {
+                label: "sub",
+                autogenerate: { directory: "docs/auto" },
+              },
+            ],
+          },
+          {
             id: "docs",
             items: [
               {

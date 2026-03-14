@@ -28,6 +28,7 @@ import {
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 import { extractVirtualId } from "./utils/file-utils";
 import logger from "./utils/logger";
+import { initContentWatcher } from "./content/content-watcher";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
@@ -64,11 +65,19 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         collections,
         linksMap,
       );
-
       const routesDir = join(resolvedConfig.root, "src", "routes");
 
       logger.info("Compiling routes...", { timestamp: true });
       await compileRoutes(linksMap, routesDir);
+    },
+    configureServer(server) {
+      const contentWatcher = initContentWatcher(contentDir, () => {
+        server.restart();
+      });
+      server.httpServer?.on("close", () => {
+        console.log("CLOOOOSING");
+        contentWatcher();
+      });
     },
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"
@@ -135,24 +144,24 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     },
 
     async hotUpdate({ file, timestamp }) {
-      if (isDocsMatcher(file)) {
-        logger.info(`Invalidating module ${file}...`, { timestamp: true });
-        const invalidatedModules = new Set<EnvironmentModuleNode>();
-        const slug = getSlugByPath(file, contentDir);
-        const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
-        const module =
-          this.environment.moduleGraph.getModuleById(virtualModuleId);
-        if (module) {
-          this.environment.moduleGraph.invalidateModule(
-            module,
-            invalidatedModules,
-            timestamp,
-            true,
-          );
-          logger.info(`Reloading application...`, { timestamp: true });
-          this.environment.hot.send({ type: "full-reload" });
-        }
-      }
+      // if (isDocsMatcher(file)) {
+      //   logger.info(`Invalidating module ${file}...`, { timestamp: true });
+      //   const invalidatedModules = new Set<EnvironmentModuleNode>();
+      //   const slug = getSlugByPath(file, contentDir);
+      //   const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
+      //   const module =
+      //     this.environment.moduleGraph.getModuleById(virtualModuleId);
+      //   if (module) {
+      //     this.environment.moduleGraph.invalidateModule(
+      //       module,
+      //       invalidatedModules,
+      //       timestamp,
+      //       true,
+      //     );
+      //     logger.info(`Reloading application...`, { timestamp: true });
+      //     this.environment.hot.send({ type: "full-reload" });
+      //   }
+      // }
     },
   };
 }

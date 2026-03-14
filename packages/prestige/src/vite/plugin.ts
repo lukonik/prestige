@@ -75,7 +75,6 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         server.restart();
       });
       server.httpServer?.on("close", () => {
-        console.log("CLOOOOSING");
         contentWatcher();
       });
     },
@@ -143,25 +142,26 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       return null;
     },
 
-    async hotUpdate({ file, timestamp }) {
-      // if (isDocsMatcher(file)) {
-      //   logger.info(`Invalidating module ${file}...`, { timestamp: true });
-      //   const invalidatedModules = new Set<EnvironmentModuleNode>();
-      //   const slug = getSlugByPath(file, contentDir);
-      //   const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
-      //   const module =
-      //     this.environment.moduleGraph.getModuleById(virtualModuleId);
-      //   if (module) {
-      //     this.environment.moduleGraph.invalidateModule(
-      //       module,
-      //       invalidatedModules,
-      //       timestamp,
-      //       true,
-      //     );
-      //     logger.info(`Reloading application...`, { timestamp: true });
-      //     this.environment.hot.send({ type: "full-reload" });
-      //   }
-      // }
+    async hotUpdate({ file, timestamp, type }) {
+      if (type !== "update" || !isDocsMatcher(file)) {
+        return;
+      }
+      logger.info(`Invalidating module ${file}...`, { timestamp: true });
+      const invalidatedModules = new Set<EnvironmentModuleNode>();
+      const slug = getSlugByPath(file, contentDir);
+      const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
+      const module =
+        this.environment.moduleGraph.getModuleById(virtualModuleId);
+      if (module) {
+        this.environment.moduleGraph.invalidateModule(
+          module,
+          invalidatedModules,
+          timestamp,
+          true,
+        );
+        logger.info(`Reloading application...`, { timestamp: true });
+        this.environment.hot.send({ type: "full-reload" });
+      }
     },
   };
 }

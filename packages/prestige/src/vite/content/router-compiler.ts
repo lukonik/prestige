@@ -7,7 +7,6 @@ export async function compileRoutes(
   linksMap: Map<string, SidebarLinkType[]>,
   routesDir: string,
 ) {
-  console.log(linksMap)
   const prestigePath = "(prestige)";
   const prestigeFullPath = join(routesDir, prestigePath);
 

@@ -27,7 +27,7 @@ import {
 } from "./core/content/content.types";
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 import { extractVirtualId } from "./utils/file-utils";
-import logger from "./utils/logger";
+import { createLogger, Logger } from "./utils/logger";
 import { initContentWatcher } from "./content/content-watcher";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
@@ -40,34 +40,41 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let linksMap: Map<string, SidebarLinkType[]>;
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
+  let logger: Logger;
+
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
-      logger.info("Resolving Prestige configuration...", { timestamp: true });
       const { config: loadedConfig } = await resolvePrestigeConfig(
         inlineConfig,
         resolvedConfig.root,
       );
+
       config = loadedConfig;
+      logger = createLogger({
+        disabled: config.disableLog,
+        debug: config.enableDebugLog,
+      });
+
       contentDir = join(resolvedConfig.root, "src/content");
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
 
-      logger.info("Resolving sidebars...", { timestamp: true });
+      logger.debug("Resolving sidebars...");
       sidebarsMap = await resolveSidebars(collections, contentDir);
 
-      logger.info("Resolving content links...", { timestamp: true });
+      logger.debug("Resolving content links...");
       linksMap = resolveContentLinks(sidebarsMap);
 
-      logger.info("Resolving collection navigations....", { timestamp: true });
+      logger.debug("Resolving collection navigations....");
       collectionNavigations = resolveCollectionNavigations(
         collections,
         linksMap,
       );
       const routesDir = join(resolvedConfig.root, "src", "routes");
 
-      logger.info("Compiling routes...", { timestamp: true });
+      logger.debug("Compiling routes...");
       await compileRoutes(linksMap, routesDir);
     },
     configureServer(server) {
@@ -84,24 +91,22 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       // we call extractVirtualId to trim the import
 
       if (id.includes(CONFIG_VIRTUAL_ID)) {
-        logger.info(`Resolving config virtual ID: ${id}`, { timestamp: true });
+        logger.debug(`Resolving config virtual ID: ${id}`);
         return extractVirtualId(id, CONFIG_VIRTUAL_ID);
       }
 
       if (id.includes(CONTENT_VIRTUAL_ID)) {
-        logger.info(`Resolving content virtual ID: ${id}`, { timestamp: true });
+        logger.debug(`Resolving content virtual ID: ${id}`);
         return extractVirtualId(id, CONTENT_VIRTUAL_ID);
       }
 
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
-        logger.info(`Resolving collection virtual ID: ${id}`, {
-          timestamp: true,
-        });
+        logger.debug(`Resolving collection virtual ID: ${id}`);
         return extractVirtualId(id, COLLECTION_VIRTUAL_ID);
       }
 
       if (id.includes(SIDEBAR_VIRTUAL_ID)) {
-        logger.info(`Resolving sidebar virtual ID: ${id}`, { timestamp: true });
+        logger.debug(`Resolving sidebar virtual ID: ${id}`);
         return extractVirtualId(id, SIDEBAR_VIRTUAL_ID);
       }
 
@@ -109,28 +114,20 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     },
     async load(id) {
       if (id === `\0${CONFIG_VIRTUAL_ID}`) {
-        logger.info(`Loading config virtual module: ${id}`, {
-          timestamp: true,
-        });
+        logger.debug(`Loading config virtual module: ${id}`);
         return genExportDefault(JSON.stringify(config));
       }
       if (id.includes(CONTENT_VIRTUAL_ID)) {
-        logger.info(`Loading content virtual module: ${id}`, {
-          timestamp: true,
-        });
+        logger.debug(`Loading content virtual module: ${id}`);
         return await resolveContent(id, linksMap, contentDir);
       }
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
-        logger.info(`Loading collection virtual module: ${id}`, {
-          timestamp: true,
-        });
+        logger.debug(`Loading collection virtual module: ${id}`);
         return collectionNavigations;
       }
 
       if (id.includes(SIDEBAR_VIRTUAL_ID)) {
-        logger.info(`Loading sidebar virtual module: ${id}`, {
-          timestamp: true,
-        });
+        logger.debug(`Loading sidebar virtual module: ${id}`);
         const sidebarId = id.replace(SIDEBAR_VIRTUAL_ID, "").replace("\0", "");
         const sidebar = sidebarsMap.get(sidebarId);
         if (!sidebar) {
@@ -146,7 +143,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       if (type !== "update" || !isDocsMatcher(file)) {
         return;
       }
-      logger.info(`Invalidating module ${file}...`, { timestamp: true });
+      logger.debug(`Invalidating module ${file}...`);
       const invalidatedModules = new Set<EnvironmentModuleNode>();
       const slug = getSlugByPath(file, contentDir);
       const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
@@ -159,7 +156,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
           timestamp,
           true,
         );
-        logger.info(`Reloading application...`, { timestamp: true });
+        logger.debug(`Reloading application...`);
         this.environment.hot.send({ type: "full-reload" });
       }
     },

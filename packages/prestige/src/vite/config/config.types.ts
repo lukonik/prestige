@@ -7,6 +7,16 @@ import { CollectionsSchema } from "../core/content/content.types";
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("Title of the website"),
   github: z.string().optional().describe("Github repo"),
+  disableLog: z
+    .boolean()
+    .optional()
+    .default(false)
+    .describe("Disable logger, default is false"),
+  enableDebugLog: z
+    .boolean()
+    .optional()
+    .default(false)
+    .describe("Enable debug log, default is false"),
   algolia: z
     .object({
       appId: z.string().describe("Algolia app id"),

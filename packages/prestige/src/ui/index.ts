@@ -17,7 +17,7 @@ export {
 export { default as Header } from "./core/header/header";
 export { PrestigePage, type PrestigePageProps } from "./core/prestige-page";
 export { CollectionRoute } from "./routes/collection/collection.route";
-export { ContentRoute } from "./routes/content/content.route";
+export { ContentRoute, LazyContentRoute } from "./routes/content/content.route";
 export { PrestigeNotFound } from "./routes/not-found";
 export {
   PrestigeShell,

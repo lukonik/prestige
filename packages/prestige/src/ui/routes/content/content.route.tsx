@@ -3,21 +3,20 @@ import { TocItem } from "remark-flexible-toc";
 import config from "virtual:prestige/config";
 import {
   ContentFrontmatterType,
-  SiblingNavigationType,
 } from "../../../vite/core/content/content.types";
 import { PrestigePage } from "../../core/prestige-page";
-export function ContentRoute(inlineData: any): any {
-  const {
-    frontmatter,
-    toc,
-    default: Component,
-  } = inlineData as {
-    prev: SiblingNavigationType | null;
-    next: SiblingNavigationType | null;
+
+function resolveContentData(inlineData: any) {
+  return inlineData as {
     toc: TocItem[];
     default: FunctionComponent;
     frontmatter: ContentFrontmatterType;
   };
+}
+
+export function ContentRoute(inlineData: any): any {
+  const { frontmatter } = resolveContentData(inlineData);
+
   return {
     head: () => {
       const metas: Array<
@@ -43,6 +42,16 @@ export function ContentRoute(inlineData: any): any {
         meta: metas,
       };
     },
+  };
+}
+
+export function LazyContentRoute(inlineData: any): any {
+  const {
+    toc,
+    default: Component,
+  } = resolveContentData(inlineData);
+
+  return {
     component: () => {
       return (
         <PrestigePage toc={toc}>

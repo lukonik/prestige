@@ -23,9 +23,6 @@ import { Route as prestigeDocsInstallationRouteImport } from './routes/(prestige
 import { Route as prestigeApiPrestigeRouteImport } from './routes/(prestige)/api.prestige'
 import { Route as prestigeTestfolderSubIntroductioncopy3RouteImport } from './routes/(prestige)/testfolder.sub.introduction copy 3'
 import { Route as prestigeTestfolderSubIntroductioncopy2RouteImport } from './routes/(prestige)/testfolder.sub.introduction copy 2'
-import { Route as prestigeTestfolderSubIntroductioncopyRouteImport } from './routes/(prestige)/testfolder.sub.introduction copy'
-import { Route as prestigeTestfolderSubIntroductionRouteImport } from './routes/(prestige)/testfolder.sub.introduction'
-import { Route as prestigeTestfolderSubInstallationRouteImport } from './routes/(prestige)/testfolder.sub.installation'
 import { Route as prestigeDocsLoadersCustomLoaderRouteImport } from './routes/(prestige)/docs.loaders.custom-loader'
 import { Route as prestigeDocsLoadersCloudinaryRouteImport } from './routes/(prestige)/docs.loaders.cloudinary'
 import { Route as prestigeDocsLoadersLoaderRouteImport } from './routes/(prestige).docs.loaders.$loader'
@@ -166,42 +163,6 @@ const prestigeTestfolderSubIntroductioncopy2Route =
         (d) => d.Route,
       ),
     )
-const prestigeTestfolderSubIntroductioncopyRoute =
-  prestigeTestfolderSubIntroductioncopyRouteImport
-    .update({
-      id: '/sub/introduction copy',
-      path: '/sub/introduction copy',
-      getParentRoute: () => prestigeTestfolderLazyRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(prestige)/testfolder.sub.introduction copy.lazy').then(
-        (d) => d.Route,
-      ),
-    )
-const prestigeTestfolderSubIntroductionRoute =
-  prestigeTestfolderSubIntroductionRouteImport
-    .update({
-      id: '/sub/introduction',
-      path: '/sub/introduction',
-      getParentRoute: () => prestigeTestfolderLazyRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(prestige)/testfolder.sub.introduction.lazy').then(
-        (d) => d.Route,
-      ),
-    )
-const prestigeTestfolderSubInstallationRoute =
-  prestigeTestfolderSubInstallationRouteImport
-    .update({
-      id: '/sub/installation',
-      path: '/sub/installation',
-      getParentRoute: () => prestigeTestfolderLazyRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(prestige)/testfolder.sub.installation.lazy').then(
-        (d) => d.Route,
-      ),
-    )
 const prestigeDocsLoadersCustomLoaderRoute =
   prestigeDocsLoadersCustomLoaderRouteImport
     .update({
@@ -304,9 +265,6 @@ export interface FileRoutesByFullPath {
   '/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
-  '/testfolder/sub/installation': typeof prestigeTestfolderSubInstallationRoute
-  '/testfolder/sub/introduction': typeof prestigeTestfolderSubIntroductionRoute
-  '/testfolder/sub/introduction copy': typeof prestigeTestfolderSubIntroductioncopyRoute
   '/testfolder/sub/introduction copy 2': typeof prestigeTestfolderSubIntroductioncopy2Route
   '/testfolder/sub/introduction copy 3': typeof prestigeTestfolderSubIntroductioncopy3Route
   '/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
@@ -332,9 +290,6 @@ export interface FileRoutesByTo {
   '/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
-  '/testfolder/sub/installation': typeof prestigeTestfolderSubInstallationRoute
-  '/testfolder/sub/introduction': typeof prestigeTestfolderSubIntroductionRoute
-  '/testfolder/sub/introduction copy': typeof prestigeTestfolderSubIntroductioncopyRoute
   '/testfolder/sub/introduction copy 2': typeof prestigeTestfolderSubIntroductioncopy2Route
   '/testfolder/sub/introduction copy 3': typeof prestigeTestfolderSubIntroductioncopy3Route
   '/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
@@ -361,9 +316,6 @@ export interface FileRoutesById {
   '/(prestige)/docs/loaders/$loader': typeof prestigeDocsLoadersLoaderRoute
   '/(prestige)/docs/loaders/cloudinary': typeof prestigeDocsLoadersCloudinaryRoute
   '/(prestige)/docs/loaders/custom-loader': typeof prestigeDocsLoadersCustomLoaderRoute
-  '/(prestige)/testfolder/sub/installation': typeof prestigeTestfolderSubInstallationRoute
-  '/(prestige)/testfolder/sub/introduction': typeof prestigeTestfolderSubIntroductionRoute
-  '/(prestige)/testfolder/sub/introduction copy': typeof prestigeTestfolderSubIntroductioncopyRoute
   '/(prestige)/testfolder/sub/introduction copy 2': typeof prestigeTestfolderSubIntroductioncopy2Route
   '/(prestige)/testfolder/sub/introduction copy 3': typeof prestigeTestfolderSubIntroductioncopy3Route
   '/(prestige)/docs/auto/sub-auto/auto-4': typeof prestigeDocsAutoSubAutoAuto4Route
@@ -391,9 +343,6 @@ export interface FileRouteTypes {
     | '/docs/loaders/$loader'
     | '/docs/loaders/cloudinary'
     | '/docs/loaders/custom-loader'
-    | '/testfolder/sub/installation'
-    | '/testfolder/sub/introduction'
-    | '/testfolder/sub/introduction copy'
     | '/testfolder/sub/introduction copy 2'
     | '/testfolder/sub/introduction copy 3'
     | '/docs/auto/sub-auto/auto-4'
@@ -419,9 +368,6 @@ export interface FileRouteTypes {
     | '/docs/loaders/$loader'
     | '/docs/loaders/cloudinary'
     | '/docs/loaders/custom-loader'
-    | '/testfolder/sub/installation'
-    | '/testfolder/sub/introduction'
-    | '/testfolder/sub/introduction copy'
     | '/testfolder/sub/introduction copy 2'
     | '/testfolder/sub/introduction copy 3'
     | '/docs/auto/sub-auto/auto-4'
@@ -447,9 +393,6 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/loaders/$loader'
     | '/(prestige)/docs/loaders/cloudinary'
     | '/(prestige)/docs/loaders/custom-loader'
-    | '/(prestige)/testfolder/sub/installation'
-    | '/(prestige)/testfolder/sub/introduction'
-    | '/(prestige)/testfolder/sub/introduction copy'
     | '/(prestige)/testfolder/sub/introduction copy 2'
     | '/(prestige)/testfolder/sub/introduction copy 3'
     | '/(prestige)/docs/auto/sub-auto/auto-4'
@@ -572,27 +515,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeTestfolderSubIntroductioncopy2RouteImport
       parentRoute: typeof prestigeTestfolderLazyRoute
     }
-    '/(prestige)/testfolder/sub/introduction copy': {
-      id: '/(prestige)/testfolder/sub/introduction copy'
-      path: '/sub/introduction copy'
-      fullPath: '/testfolder/sub/introduction copy'
-      preLoaderRoute: typeof prestigeTestfolderSubIntroductioncopyRouteImport
-      parentRoute: typeof prestigeTestfolderLazyRoute
-    }
-    '/(prestige)/testfolder/sub/introduction': {
-      id: '/(prestige)/testfolder/sub/introduction'
-      path: '/sub/introduction'
-      fullPath: '/testfolder/sub/introduction'
-      preLoaderRoute: typeof prestigeTestfolderSubIntroductionRouteImport
-      parentRoute: typeof prestigeTestfolderLazyRoute
-    }
-    '/(prestige)/testfolder/sub/installation': {
-      id: '/(prestige)/testfolder/sub/installation'
-      path: '/sub/installation'
-      fullPath: '/testfolder/sub/installation'
-      preLoaderRoute: typeof prestigeTestfolderSubInstallationRouteImport
-      parentRoute: typeof prestigeTestfolderLazyRoute
-    }
     '/(prestige)/docs/loaders/custom-loader': {
       id: '/(prestige)/docs/loaders/custom-loader'
       path: '/loaders/custom-loader'
@@ -702,21 +624,12 @@ const prestigeDocsLazyRouteWithChildren =
   prestigeDocsLazyRoute._addFileChildren(prestigeDocsLazyRouteChildren)
 
 interface prestigeTestfolderLazyRouteChildren {
-  prestigeTestfolderSubInstallationRoute: typeof prestigeTestfolderSubInstallationRoute
-  prestigeTestfolderSubIntroductionRoute: typeof prestigeTestfolderSubIntroductionRoute
-  prestigeTestfolderSubIntroductioncopyRoute: typeof prestigeTestfolderSubIntroductioncopyRoute
   prestigeTestfolderSubIntroductioncopy2Route: typeof prestigeTestfolderSubIntroductioncopy2Route
   prestigeTestfolderSubIntroductioncopy3Route: typeof prestigeTestfolderSubIntroductioncopy3Route
 }
 
 const prestigeTestfolderLazyRouteChildren: prestigeTestfolderLazyRouteChildren =
   {
-    prestigeTestfolderSubInstallationRoute:
-      prestigeTestfolderSubInstallationRoute,
-    prestigeTestfolderSubIntroductionRoute:
-      prestigeTestfolderSubIntroductionRoute,
-    prestigeTestfolderSubIntroductioncopyRoute:
-      prestigeTestfolderSubIntroductioncopyRoute,
     prestigeTestfolderSubIntroductioncopy2Route:
       prestigeTestfolderSubIntroductioncopy2Route,
     prestigeTestfolderSubIntroductioncopy3Route:

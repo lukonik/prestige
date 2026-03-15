@@ -14,10 +14,10 @@ declare module "virtual:prestige/content-all" {
   }
 
   interface ContentHead {
-    title: string;
-    lastUpdated: string;
-    label: string;
-    description: string;
+    meta?: Array<Record<string, any>>;
+    links?: Array<Record<string, any>>;
+    styles?: Array<Record<string, any>>;
+    scripts?: Array<Record<string, any>>;
   }
 
   interface ContentType {

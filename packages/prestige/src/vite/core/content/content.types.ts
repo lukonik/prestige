@@ -1,9 +1,21 @@
 import { z } from "zod";
 
+export const ContentHeadFrontmatterSchema = z.object({
+  meta: z.array(z.record(z.string(), z.any())).optional(),
+  links: z.array(z.record(z.string(), z.any())).optional(),
+  styles: z.array(z.record(z.string(), z.any())).optional(),
+  scripts: z.array(z.record(z.string(), z.any())).optional(),
+});
+
+export type ContentHeadFrontmatterType = z.infer<
+  typeof ContentHeadFrontmatterSchema
+>;
+
 export const ContentFrontmatterSchema = z.object({
   title: z.string().describe("The title of the article"),
   description: z.string().optional().describe("The description of the article"),
   label: z.string().optional().describe("The label of the content"),
+  head: ContentHeadFrontmatterSchema.optional(),
 });
 
 export type ContentFrontmatterType = z.infer<typeof ContentFrontmatterSchema>;

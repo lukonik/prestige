@@ -18,6 +18,9 @@ import { Route as prestigeDocsGettingStartedRouteImport } from './routes/(presti
 import { Route as prestigeDocsGuidesPagesRouteImport } from './routes/(prestige)/docs.guides.pages'
 
 const prestigeDocsLazyRouteImport = createFileRoute('/(prestige)/docs')()
+const prestigeDocsGuidesCollectionsLazyRouteImport = createFileRoute(
+  '/(prestige)/docs/guides/collections',
+)()
 
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
@@ -56,6 +59,18 @@ const prestigeDocsGettingStartedRoute = prestigeDocsGettingStartedRouteImport
       (d) => d.Route,
     ),
   )
+const prestigeDocsGuidesCollectionsLazyRoute =
+  prestigeDocsGuidesCollectionsLazyRouteImport
+    .update({
+      id: '/guides/collections',
+      path: '/guides/collections',
+      getParentRoute: () => prestigeDocsLazyRoute,
+    } as any)
+    .lazy(() =>
+      import('./routes/(prestige)/docs.guides.collections.lazy').then(
+        (d) => d.Route,
+      ),
+    )
 const prestigeDocsGuidesPagesRoute = prestigeDocsGuidesPagesRouteImport
   .update({
     id: '/guides/pages',
@@ -73,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/guides/pages': typeof prestigeDocsGuidesPagesRoute
+  '/docs/guides/collections': typeof prestigeDocsGuidesCollectionsLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -81,6 +97,7 @@ export interface FileRoutesByTo {
   '/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/guides/pages': typeof prestigeDocsGuidesPagesRoute
+  '/docs/guides/collections': typeof prestigeDocsGuidesCollectionsLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -90,6 +107,7 @@ export interface FileRoutesById {
   '/(prestige)/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/(prestige)/docs/guides/pages': typeof prestigeDocsGuidesPagesRoute
+  '/(prestige)/docs/guides/collections': typeof prestigeDocsGuidesCollectionsLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -100,6 +118,7 @@ export interface FileRouteTypes {
     | '/docs/getting-started'
     | '/docs/introduction'
     | '/docs/guides/pages'
+    | '/docs/guides/collections'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -108,6 +127,7 @@ export interface FileRouteTypes {
     | '/docs/getting-started'
     | '/docs/introduction'
     | '/docs/guides/pages'
+    | '/docs/guides/collections'
   id:
     | '__root__'
     | '/'
@@ -116,6 +136,7 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/getting-started'
     | '/(prestige)/docs/introduction'
     | '/(prestige)/docs/guides/pages'
+    | '/(prestige)/docs/guides/collections'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -161,6 +182,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeDocsGettingStartedRouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
+    '/(prestige)/docs/guides/collections': {
+      id: '/(prestige)/docs/guides/collections'
+      path: '/guides/collections'
+      fullPath: '/docs/guides/collections'
+      preLoaderRoute: typeof prestigeDocsGuidesCollectionsLazyRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
     '/(prestige)/docs/guides/pages': {
       id: '/(prestige)/docs/guides/pages'
       path: '/guides/pages'
@@ -175,12 +203,15 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsGettingStartedRoute: typeof prestigeDocsGettingStartedRoute
   prestigeDocsIntroductionRoute: typeof prestigeDocsIntroductionRoute
   prestigeDocsGuidesPagesRoute: typeof prestigeDocsGuidesPagesRoute
+  prestigeDocsGuidesCollectionsLazyRoute: typeof prestigeDocsGuidesCollectionsLazyRoute
 }
 
 const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
   prestigeDocsGettingStartedRoute: prestigeDocsGettingStartedRoute,
   prestigeDocsIntroductionRoute: prestigeDocsIntroductionRoute,
   prestigeDocsGuidesPagesRoute: prestigeDocsGuidesPagesRoute,
+  prestigeDocsGuidesCollectionsLazyRoute:
+    prestigeDocsGuidesCollectionsLazyRoute,
 }
 
 const prestigeDocsLazyRouteWithChildren =

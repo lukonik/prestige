@@ -62,7 +62,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       collections = config.collections ?? [];
 
       logger.debug("Resolving sidebars...");
-      sidebarsMap = await resolveSidebars(collections, contentDir);
+      sidebarsMap = await resolveSidebars(collections, contentDir, logger);
 
       logger.debug("Resolving content links...");
       linksMap = resolveContentLinks(sidebarsMap);
@@ -75,7 +75,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       const routesDir = join(resolvedConfig.root, "src", "routes");
 
       logger.debug("Compiling routes...");
-      await compileRoutes(linksMap, routesDir);
+      await compileRoutes(linksMap, routesDir, logger);
     },
     configureServer(server) {
       const contentWatcher = initContentWatcher(contentDir, () => {

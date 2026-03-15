@@ -17,9 +17,9 @@ import {
 } from "../core/content/content.types";
 import { PrestigeError } from "../utils/errors";
 import { pathExists } from "../utils/file-utils";
-import logger from "../utils/logger";
 import { compileFrontmatter } from "./content-compiler";
 import { getFileBySlug } from "./content.store";
+import { Logger } from "../utils/logger";
 
 export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
 
@@ -84,11 +84,12 @@ function resolveDefaultLink(
 export async function resolveSidebars(
   collections: Collections,
   contentDir: string,
+  logger: Logger,
 ) {
   const store = new Map<string, SidebarType>();
 
   for (const collection of collections) {
-    const sidebar = await processCollection(collection, contentDir);
+    const sidebar = await processCollection(collection, contentDir, logger);
     store.set(collection.id, sidebar);
   }
   return store;
@@ -98,10 +99,11 @@ export async function resolveSidebars(
 async function processCollection(
   collection: Collection,
   contentDir: string,
+  logger: Logger,
 ): Promise<SidebarType> {
   const items: SidebarItemType[] = [];
   for (const item of collection.items) {
-    items.push(await processItem(item, contentDir));
+    items.push(await processItem(item, contentDir, logger));
   }
   const defaultLink = resolveDefaultLink(items, collection.defaultLink);
   if (!defaultLink) {
@@ -120,6 +122,7 @@ async function processCollection(
 async function processItem(
   item: CollectionItem,
   contentDir: string,
+  logger: Logger,
 ): Promise<SidebarItemType> {
   if (typeof item === "string" || "slug" in item) {
     return resolveInternalSidebarLink(
@@ -129,7 +132,7 @@ async function processItem(
   } else if ("link" in item) {
     return resolveSidebarLink(item, contentDir);
   } else {
-    return resolveSidebarGroup(item as CollectionGroup, contentDir);
+    return resolveSidebarGroup(item as CollectionGroup, contentDir, logger);
   }
 }
 
@@ -137,6 +140,7 @@ async function processItem(
 async function resolveSidebarGroup(
   group: CollectionGroup,
   contentDir: string,
+  logger: Logger,
 ): Promise<SidebarGroupType> {
   const label = await resolveLabel(group, contentDir);
   const items: SidebarItemType[] = [];
@@ -149,12 +153,13 @@ async function resolveSidebarGroup(
 
   if (group.items) {
     for (const childItem of group.items) {
-      items.push(await processItem(childItem, contentDir));
+      items.push(await processItem(childItem, contentDir, logger));
     }
   } else if (group.autogenerate?.directory) {
     const generatedItems = await autogenerateSidebar(
       group.autogenerate.directory,
       contentDir,
+      logger,
     );
     items.push(...generatedItems);
   }
@@ -216,6 +221,7 @@ async function resolveSidebarLink(
 async function autogenerateSidebar(
   directory: string,
   contentDir: string,
+  logger: Logger,
 ): Promise<SidebarItemType[]> {
   const fileExtRegex = /\.mdx?$/i;
 
@@ -235,7 +241,7 @@ async function autogenerateSidebar(
         label: dirent.name,
         autogenerate: { directory: subDir },
       };
-      items.push(await resolveSidebarGroup(group, contentDir));
+      items.push(await resolveSidebarGroup(group, contentDir, logger));
     } else if (dirent.isFile() && fileExtRegex.test(dirent.name)) {
       const fullPath = join(directory, dirent.name);
       const slug = fullPath.replace(fileExtRegex, "");

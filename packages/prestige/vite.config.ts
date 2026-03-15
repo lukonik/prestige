@@ -25,7 +25,17 @@ export default defineConfig(({ mode }) => {
           label: "MIT",
           url: "https://opensource.org/licenses/MIT",
         },
+        enableDebugLog: true,
         collections: [
+          {
+            id: "testfolder",
+            items: [
+              {
+                label: "sub",
+                autogenerate: { directory: "testfolder/sub" },
+              },
+            ],
+          },
           {
             id: "docs",
             items: [
@@ -34,40 +44,12 @@ export default defineConfig(({ mode }) => {
                 slug: "docs/introduction",
               },
               {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Showcase",
-                slug: "docs/showcase",
-              },
-              {
                 label: "Showcase",
                 slug: "docs/showcase",
               },
               {
                 label: "Themer",
                 slug: "docs/themer",
-              },
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
               },
               {
                 label: "Installation",

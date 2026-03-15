@@ -34,12 +34,25 @@ const config = defineConfig({
               label: "Guides",
               items: [
                 {
-                  label:"Collections",
-                  slug: "docs/guides/collections"
+                  label: "Collections",
+                  slug: "docs/guides/collections",
                 },
                 {
                   label: "Pages",
                   slug: "docs/guides/pages",
+                },
+              ],
+            },
+            {
+              label: "Reference",
+              items: [
+                {
+                  label: "Frontmatter Reference",
+                  slug: "docs/reference/frontmatter-reference",
+                },
+                {
+                  label: "Plugin Reference",
+                  slug: "docs/reference/plugin-reference",
                 },
               ],
             },

@@ -15,6 +15,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as prestigeDocsIntroductionRouteImport } from './routes/(prestige)/docs.introduction'
 import { Route as prestigeDocsGettingStartedRouteImport } from './routes/(prestige)/docs.getting-started'
+import { Route as prestigeDocsReferencePrestigeShellReferenceRouteImport } from './routes/(prestige)/docs.reference.prestige-shell-reference'
 import { Route as prestigeDocsReferencePluginReferenceRouteImport } from './routes/(prestige)/docs.reference.plugin-reference'
 import { Route as prestigeDocsReferenceFrontmatterReferenceRouteImport } from './routes/(prestige)/docs.reference.frontmatter-reference'
 import { Route as prestigeDocsGuidesVitePluginRouteImport } from './routes/(prestige)/docs.guides.vite-plugin'
@@ -61,6 +62,18 @@ const prestigeDocsGettingStartedRoute = prestigeDocsGettingStartedRouteImport
       (d) => d.Route,
     ),
   )
+const prestigeDocsReferencePrestigeShellReferenceRoute =
+  prestigeDocsReferencePrestigeShellReferenceRouteImport
+    .update({
+      id: '/reference/prestige-shell-reference',
+      path: '/reference/prestige-shell-reference',
+      getParentRoute: () => prestigeDocsLazyRoute,
+    } as any)
+    .lazy(() =>
+      import('./routes/(prestige)/docs.reference.prestige-shell-reference.lazy').then(
+        (d) => d.Route,
+      ),
+    )
 const prestigeDocsReferencePluginReferenceRoute =
   prestigeDocsReferencePluginReferenceRouteImport
     .update({
@@ -143,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
   '/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
+  '/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -156,6 +170,7 @@ export interface FileRoutesByTo {
   '/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
   '/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
+  '/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -170,6 +185,7 @@ export interface FileRoutesById {
   '/(prestige)/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
   '/(prestige)/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/(prestige)/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
+  '/(prestige)/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -185,6 +201,7 @@ export interface FileRouteTypes {
     | '/docs/guides/vite-plugin'
     | '/docs/reference/frontmatter-reference'
     | '/docs/reference/plugin-reference'
+    | '/docs/reference/prestige-shell-reference'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -198,6 +215,7 @@ export interface FileRouteTypes {
     | '/docs/guides/vite-plugin'
     | '/docs/reference/frontmatter-reference'
     | '/docs/reference/plugin-reference'
+    | '/docs/reference/prestige-shell-reference'
   id:
     | '__root__'
     | '/'
@@ -211,6 +229,7 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/guides/vite-plugin'
     | '/(prestige)/docs/reference/frontmatter-reference'
     | '/(prestige)/docs/reference/plugin-reference'
+    | '/(prestige)/docs/reference/prestige-shell-reference'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -254,6 +273,13 @@ declare module '@tanstack/react-router' {
       path: '/getting-started'
       fullPath: '/docs/getting-started'
       preLoaderRoute: typeof prestigeDocsGettingStartedRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/reference/prestige-shell-reference': {
+      id: '/(prestige)/docs/reference/prestige-shell-reference'
+      path: '/reference/prestige-shell-reference'
+      fullPath: '/docs/reference/prestige-shell-reference'
+      preLoaderRoute: typeof prestigeDocsReferencePrestigeShellReferenceRouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
     '/(prestige)/docs/reference/plugin-reference': {
@@ -310,6 +336,7 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsGuidesVitePluginRoute: typeof prestigeDocsGuidesVitePluginRoute
   prestigeDocsReferenceFrontmatterReferenceRoute: typeof prestigeDocsReferenceFrontmatterReferenceRoute
   prestigeDocsReferencePluginReferenceRoute: typeof prestigeDocsReferencePluginReferenceRoute
+  prestigeDocsReferencePrestigeShellReferenceRoute: typeof prestigeDocsReferencePrestigeShellReferenceRoute
 }
 
 const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
@@ -324,6 +351,8 @@ const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
     prestigeDocsReferenceFrontmatterReferenceRoute,
   prestigeDocsReferencePluginReferenceRoute:
     prestigeDocsReferencePluginReferenceRoute,
+  prestigeDocsReferencePrestigeShellReferenceRoute:
+    prestigeDocsReferencePrestigeShellReferenceRoute,
 }
 
 const prestigeDocsLazyRouteWithChildren =

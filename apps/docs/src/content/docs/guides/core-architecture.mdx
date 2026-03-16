@@ -1,0 +1,135 @@
+---
+label: Core Architecture
+---
+
+# Core Architecture
+
+This page eplains how prestige works, it overviews the core concepts that the prestige is built upon and will help you to understand all the features that Prestige provides.
+
+## Content Folder
+
+Content folder should contain all the markdown files that you want prestige to transform. It will be created automatically by `@lonik/create-prestige`. The full path of the content folder is
+`<root>/src/content`. Anything outside this folder wont be analyzed by Prestige
+
+## Markdown Files
+
+Markdown files will contain two main pars: The content itself and the frontmatter object.
+
+The content will be rendered as HTML markup by Prestige.
+
+The frontmatter object will be used to customize the metadata for page. For example to change the title of the page you can set it in frontmatter
+
+```md
+---
+title: Overview
+---
+```
+
+## Markdown Type Support
+
+Prestige can transform following markdown types:
+
+- MD (regular markdown)
+- MDX (markdown with JSX) [link](https://mdxjs.com/)
+- GFM (GitHub Flavored Markdown) [link](https://github.github.com/gfm/). It is an extension over markdown, for example by default markdown spec doesn't support table, but GFM does
+  The extension value should be either `.md` or `.mdx`
+
+## Collections
+
+Prestige ignores your markdown files in `src/content` unless they are specified in collections array. Collection has to have its own folder in `content` and be defined in vite plugin as well.
+For example to have docs collection in app, we will create `src/content/docs` folder and define it in prestige plugin
+
+```ts
+    prestige(
+        collections:[{
+        id:"docs",
+        items:[...]
+    }])
+```
+
+now we can add as many content pages as we want. For example this will generate introduction page on path `/docs/introduction`.
+(src/content/docs/introduction.md)
+
+```md
+    # Introduction Page
+    I am introduction page
+```
+
+```ts
+prestige({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Introduction",
+          slug: "docs/introduction",
+        },
+      ],
+    },
+  ],
+});
+```
+
+Now let's see how prestige generates routes based on content files
+
+## (prestige) folder
+
+Tanstack router preferred way to create routes is file-based approach. We follow the same pattern. Prestige creates one route per content file.
+The output folder is `routes/(prestige)`. There are three different files that are created based on route type.
+
+### Content Type
+
+when prestige generates route for content, two separate files are generated. One regular file that will set critical options for a route, and one lazy loaded route that will load HTML markup.
+For example `introduction.mdx` will have two respective files:
+
+- `docs.introduction.tsx`
+- `docs.introduction.lazy.tsx`
+
+so the url for this page will be `/docs/introduction`
+
+### Collection Type
+
+every collection will have it's own layout route that will be used to display collection based UIs like sidebar,navigation buttons and more. In our example
+docs collection will create `docs.lazy.tsx` file
+
+### Routes are statically analyzed
+
+Prestige routes are treated as a regular routes for Tanstack router, so you get the full benefits that Tanstack router gives you like, path type definitions, prerender and more
+
+### (Prestige) directory is readonly
+
+you shouldn't modify (prestige) directory manually in any way. It should be modified only by prestige plugin. You shouldn't add any new route manually either.
+Prestige might decide to clean the directory and recreate everything from scratch so your route will be lost.
+
+### How to add route manually in collection
+
+Outside of (prestige) folder you can add as many regular routes as you want. If you want to display a page under collection for example under `/docs` collection, create a router file
+with the following name pattern.
+
+`(prestige).docs.custom.tsx`
+and add it in collections array
+
+```ts
+    prestige(collections:[{
+        id:"docs",
+        items:[{
+            label:"custom",
+            link:"/docs/custom"
+        }]
+    }])
+```
+
+:::note
+We might change the structure of the `(prestige)` folder in future, based on improvements. So in general ignore the `(prestige)` folder. Think of it like `routeTree.gen.ts` file. `@lonik/create-prestige`
+scripts automatically adds readonly settings in vscode settings the same way as it is for `routeTree.gen.ts`
+:::
+
+## Prestige vite plugin
+
+Prestige vite plugin does all the heavy lifting, it generates HTML markup from content, builds sidebar, generate Tanstack route files and more. it should be added in vite plugins array
+and can be customized by config paramter.
+
+## Prestige Shell
+
+Prestige Shell is a react component that displayes core UI elements like header,search,footer and more. It is defined in `_root.tsx` file and can be customized via props.

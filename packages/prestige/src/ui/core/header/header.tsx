@@ -6,9 +6,16 @@ import { GitHub } from "../github/github";
 import { Search } from "../search/search";
 import { Theme } from "../theme/theme";
 
-export type HeaderProps = Pick<PrestigeShellProps, "customHeaderTitle">;
+export type HeaderProps = Pick<
+  PrestigeShellProps,
+  "customHeaderTitle" | "algolia" | "github"
+>;
 
-export default function Header({ customHeaderTitle }: HeaderProps) {
+export default function Header({
+  customHeaderTitle,
+  algolia,
+  github,
+}: HeaderProps) {
   const location = useLocation();
 
   return (
@@ -49,8 +56,8 @@ export default function Header({ customHeaderTitle }: HeaderProps) {
           })}
         </div>
         <div className="flex items-center gap-2">
-          <Search algolia={config.algolia} />
-          <GitHub github={config.github} />
+          <Search algolia={algolia} />
+          <GitHub github={github} />
           <Theme />
         </div>
       </div>

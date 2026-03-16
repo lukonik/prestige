@@ -19,6 +19,11 @@ const options: PrestigeShellProps = {
       Built with Prestige 🎩
     </a>
   ),
+  github: "https://github.com/lukonik/prestige",
+  license: {
+    label: "MIT",
+    url: "https://opensource.org/licenses/MIT",
+  },
 };
 
 export const Route = createRootRoute({

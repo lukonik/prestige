@@ -83,18 +83,8 @@ declare module "virtual:prestige/collection-all" {
 declare module "virtual:prestige/config" {
   interface PrestigeConfig {
     favicon?: string;
-    algolia?: {
-      appId: string;
-      apiKey: string;
-      indices: string[];
-    };
-    github?: string;
     title: string;
     description: string;
-    license?: {
-      label: string;
-      url: string;
-    };
   }
   const config: PrestigeConfig;
   export default config;

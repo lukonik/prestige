@@ -12,7 +12,7 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
         {toc.map((item) => (
           <li
             key={item.href}
-            // style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}
+            style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}
           >
             <a
               href={`${item.href}`}

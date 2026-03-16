@@ -4,14 +4,14 @@ title: Collection
 
 # Collection
 
-Collection is a cornerstone of a Prestige library. This is where you define the pages, you want to render
+Collection is a cornerstone of a Prestige library. This is where you define the pages you want to render
 on your documentation website.
 
 ## Definition
 
-You define collections in the Prestige vite plugin config. it expects the array of the collection. each collection will
-represent separate page area with a separate navigation link in the top header, which will navigate to the separate page with it's own
-sidebar. for example you can have two collection for your project one for `docs` and one for `api`.
+You define collections in the Prestige vite plugin config. It expects an array of collections. Each collection will
+represent a separate page area with a separate navigation link in the top header, which will navigate to a separate page with its own
+sidebar. For example, you can have two collections for your project: one for `docs` and one for `api`.
 
 ```ts
     ...
@@ -28,38 +28,39 @@ sidebar. for example you can have two collection for your project one for `docs`
         })
     ...
 ```
-Thinks of a each collection as a sidebar of page structure. Because sidebar is UI element collection is more general purpose, so that's why we call collection.
+
+Think of each collection as a sidebar of the page structure. Because a sidebar is a UI element, a collection is more general-purpose, so that's why we call it a collection.
 
 ## How it works
 
-Collection needs two main fields, the ID and the items array.
+A collection needs two main fields: the ID and the items array.
 
 ### ID
 
-id field is the unique key that identifies the root folder that the prestige will look to generate content pages.
-For example id:"docs" will look into folder `src/content/docs`
+The id field is the unique key that identifies the root folder that Prestige will look in to generate content pages.
+For example, `id: "docs"` will look into the folder `src/content/docs`.
 
 ### items
 
-items accepts an array where you define hierarchy structure of the collection. Prestige will generate sidebar and navigationbuttons based on that.
-Let's review what can be passed in items array
+The items field accepts an array where you define the hierarchical structure of the collection. Prestige will generate the sidebar and navigation buttons based on that.
+Let's review what can be passed in the items array.
 
 ### InternalCollectionItem
 
-InternalCollectionItem represents a single page. it will be automatically generate tanstack router file, taht will have
-transformed version of markdown file it has following options
+InternalCollectionItem represents a single page. It will automatically generate a TanStack router file that will have a
+transformed version of the markdown file. It has the following options:
 
 #### label
 
-label to display in the sidebar
+The label to display in the sidebar.
 
 #### slug
 
-this is the slug which will be displayed in the url and prestige will transform it to the file path to fetch the content
-it shouldn't have start and end slashes and there should exist md or mdx file on that path. the shlug should contain
+This is the slug which will be displayed in the URL, and Prestige will transform it into the file path to fetch the content.
+It shouldn't have starting or ending slashes, and there should exist an `.md` or `.mdx` file on that path. The slug should contain
 
-the full path relative to the `src/content` for example if introduction content is in the `src/content/docs/introduction.mdx`
-slug will be `docs/introduction`
+the full path relative to `src/content`. For example, if the introduction content is in `src/content/docs/introduction.mdx`,
+the slug will be `docs/introduction`.
 
 #### example
 
@@ -76,47 +77,47 @@ items: [
 ];
 ```
 
-file extension md/mdx will be detected automatically.
+The file extension (`.md`/`.mdx`) will be detected automatically.
 
 ### ExternalCollectionItem
 
-ExternalCollectionItem can be used to add link to the sidebar when the page is outside the content directory
-for example you have `about.tsx` route that you want to add in sidebar. you will declare it like this:
+ExternalCollectionItem can be used to add a link to the sidebar when the page is outside the content directory.
+For example, if you have an `about.tsx` route that you want to add in the sidebar, you will declare it like this:
 
 ```ts
     {
-        labe:"about",
+        label:"about",
         link:"/about"
     }
 ```
 
-The prestige plugin wont process this item in anyway so it has to be valid Tanstack route page and not markdown file.
-link can also be an extenral link like `https://react.dev` in that case value will be passed to the `a` html element.
+The Prestige plugin won't process this item in any way, so it has to be a valid TanStack route page and not a markdown file.
+The link can also be an external link like `https://react.dev`. In that case, the value will be passed to the HTML `a` element.
 
 #### label
 
-similar to InternalCollectionItem label field
+Similar to the InternalCollectionItem label field.
 
 ### link
 
-intenral or external link to use for navigation
+An internal or external link to use for navigation.
 
 ### CollectionGroup
 
-CollectionGroup groups the link items. Think of it as a directory of file-system. It can be recursively added one another infinite number of times. but for good UI/UX guidlines it is better
-to have three or four level. CollectionGroup doesn't have it's own path in the url it is pathless.
+CollectionGroup groups the link items. Think of it as a file-system directory. It can be recursively added to one another an infinite number of times. But for good UI/UX guidelines, it is better
+to have three or four levels. A CollectionGroup doesn't have its own path in the URL; it is pathless.
 
 #### label: string
 
-label to display as a header of group
+The label to display as the header of the group.
 
 #### collapsed: boolean
 
-wheter group is collapsed by default
+Whether the group is collapsed by default.
 
 #### items
 
-it can be either InternalCollectionLink,ExternalCollectionLink or SidebarGroupItem
+It can be either an InternalCollectionLink, an ExternalCollectionLink, or a SidebarGroupItem.
 
 #### example
 
@@ -160,14 +161,14 @@ prestige({
 
 #### Autogenerate
 
-CollectionGroups can also be generated automatically by it's folder. For that you need to set Autogenerate field. Prestige will recursively iterate over directory
-and generate groups automatically. the labels of the page links will be file names of the markdown file. You can customize it via pages frontmatter object.
+CollectionGroups can also be generated automatically by their folder. For that, you need to set the Autogenerate field. Prestige will recursively iterate over the directory
+and generate groups automatically. The labels of the page links will be the file names of the markdown files. You can customize this via the page's frontmatter object.
 
 ##### Autodiscovery: object
 
 ##### directory: string
 
-directory to use for generation
+The directory to use for generation.
 
 ##### example
 
@@ -177,7 +178,7 @@ prestige({
   autogenerate: { directory: "guides" },
 });
 
-// the generated might looks like this
+// the generated output might look like this
  {
           label: "Guides",
           items: [

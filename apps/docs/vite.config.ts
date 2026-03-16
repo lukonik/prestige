@@ -54,7 +54,11 @@ const config = defineConfig({
                   slug: "docs/reference/frontmatter-reference",
                 },
                 {
-                  label: "Plugin Reference",
+                  label: "Prestige Shell Reference",
+                  slug: "docs/reference/prestige-shell-reference",
+                },
+                {
+                  label: "Vite Plugin Reference",
                   slug: "docs/reference/plugin-reference",
                 },
               ],

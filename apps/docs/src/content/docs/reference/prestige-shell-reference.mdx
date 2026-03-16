@@ -1,0 +1,107 @@
+---
+title: Prestige Shell Reference
+description: Reference for the PrestigeShell component options.
+---
+
+# Prestige Shell Reference
+
+`PrestigeShell` is the main layout component for a Prestige site. It wraps your app with theming and renders the shared header, search entry point, main content area, and footer.
+
+```tsx
+import { PrestigeShell, type PrestigeShellProps } from "@lonik/prestige/ui";
+
+const options: PrestigeShellProps = {
+  github: "https://github.com/lukonik/prestige",
+};
+
+<PrestigeShell options={options}>{children}</PrestigeShell>;
+```
+
+## PrestigeShell props
+
+`PrestigeShell` itself accepts two props.
+
+### `children`
+
+Type: `ReactNode`
+
+Required page content rendered inside the shell's `<main>` element.
+
+### `options`
+
+Type: [`PrestigeShellProps`](#prestigeshellprops)
+
+Optional shell configuration for header and footer customization.
+
+## PrestigeShellProps
+
+### `customHeaderTitle`
+
+Type: `() => ReactNode`
+
+Optional render function that replaces the default header title text.
+
+### `copyright`
+
+Type: `() => ReactNode`
+
+Optional render function for custom footer copyright content.
+
+### `github`
+
+Type: `string`
+
+Optional GitHub URL shown in the header.
+
+### `algolia`
+
+Type: [`AlgoliaOptions`](#algoliaoptions)
+
+Optional Algolia DocSearch configuration. When omitted, the search UI is not rendered.
+
+### `license`
+
+Type: [`LicenseOptions`](#licenseoptions)
+
+Optional license metadata for footer display.
+
+## AlgoliaOptions
+
+### `appId`
+
+Type: `string`
+
+Required Algolia application ID.
+
+### `apiKey`
+
+Type: `string`
+
+Required Algolia search-only API key used by DocSearch.
+
+### `indices`
+
+Type: `string[]`
+
+Required list of Algolia index names queried by the search UI.
+
+## LicenseOptions
+
+### `label`
+
+Type: `string`
+
+Required license label shown in the footer, for example `MIT`.
+
+### `url`
+
+Type: `string`
+
+Required URL for the license target.
+
+## Notes
+
+- `customHeaderTitle` and `copyright` are render functions, not plain strings.
+- If `github` is omitted, the GitHub icon is hidden.
+- If `algolia` is omitted, the search trigger is hidden.
+- The shell already wraps content in `ThemeProvider`, so it should be mounted once at the app root.

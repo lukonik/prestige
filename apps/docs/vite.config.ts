@@ -34,8 +34,8 @@ const config = defineConfig({
               label: "Guides",
               items: [
                 {
-                  label: "Collections",
-                  slug: "docs/guides/collections",
+                  label: "Collection",
+                  slug: "docs/guides/collection",
                 },
                 {
                   label: "Pages",

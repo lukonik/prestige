@@ -1,0 +1,100 @@
+---
+title: Collection
+---
+
+# Collection
+
+Collection is a cornerstone of a Prestige library. This is where you define the pages, you want to render
+on your documentation website.
+
+## Definition
+
+You define collections in the Prestige vite plugin config. it expects the array of the collection. each collection will
+represent separate page area with a separate navigation link in the top header, which will navigate to the separate page with it's own
+sidebar. for example you can have two collection for your project one for `docs` and one for `api`.
+
+```ts
+    ...
+        prestige({
+            collections:[{
+                id:'docs',
+                items:[...]
+            },
+                {
+                    id:'api',
+                    items:[...]
+                }
+            ]
+        })
+    ...
+```
+
+## How it works
+
+Collection needs two main fields, the ID and the items array.
+
+### ID
+
+id field is the unique key that identifies the root folder that the prestige will look to generate content pages.
+For example id:"docs" will look into folder `src/content/docs`
+
+### items
+
+items accepts an array where you define hierarchy structure of the collection. Prestige will generate sidebar and navigationbuttons based on that.
+Let's review what can be passed in items array
+
+### InternalCollectionItem
+
+InternalCollectionItem represents a single page. it will be automatically generate tanstack router file, taht will have
+transformed version of markdown file it has following options
+
+#### label
+
+label to display in the sidebar
+
+#### slug
+
+this is the slug which will be displayed in the url and prestige will transform it to the file path to fetch the content
+it shouldn't have start and end slashes and there should exist md or mdx file on that path. the shlug should contain
+
+the full path relative to the `src/content` for example if introduction content is in the `src/content/docs/introduction.mdx`
+slug will be `docs/introduction`
+
+#### example
+
+```ts
+items: [
+  {
+    label: "Introduction",
+    slug: "docs/introduction", // src/content/docs/introduction.mdx
+  },
+  {
+    label: "Showcase",
+    slug: "docs/showcase", // src/content/docs/showcase.md
+  },
+];
+```
+file extension md/mdx will be detected automatically.
+
+### ExternalCollectionItem
+
+ExternalCollectionItem can be used to add link to the sidebar when the page is outside the content directory
+for example you have `about.tsx` route that you want to add in sidebar. you will declare it like this:
+
+```ts
+    {
+        labe:"about",
+        link:"/about"
+    }
+```
+The prestige plugin wont process this item in anyway so it has to be valid Tanstack route page and not markdown file.
+link can also be an extenral link like `https://react.dev` in that case value will be passed to the `a` html element.
+
+#### label
+similar to InternalCollectionItem label field
+
+### link
+intenral or external link to use for navigation
+
+### CollectionGroup
+

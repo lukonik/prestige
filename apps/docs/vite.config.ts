@@ -45,6 +45,10 @@ const config = defineConfig({
                   label: "Page",
                   slug: "docs/guides/page",
                 },
+                {
+                  label: "Vite Plugin",
+                  slug: "docs/guides/vite-plugin",
+                },
               ],
             },
             {

@@ -1,12 +1,12 @@
 import { prestige } from "@lonik/prestige/vite";
-import { defineConfig } from "vite";
 import { devtools } from "@tanstack/devtools-vite";
+import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
-import viteReact from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
+import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 
 const config = defineConfig({
@@ -38,8 +38,8 @@ const config = defineConfig({
                   slug: "docs/guides/collection",
                 },
                 {
-                  label: "Pages",
-                  slug: "docs/guides/pages",
+                  label: "Page",
+                  slug: "docs/guides/page",
                 },
               ],
             },

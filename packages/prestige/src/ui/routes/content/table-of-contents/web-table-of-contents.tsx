@@ -10,11 +10,9 @@ export function WebTableOfContent({ toc }: { toc: TocItem[] }) {
       <span className="text-xs font-mono tracking-widest">ON THIS PAGE</span>
       <ul className="text-sm my-4">
         {toc.map((item) => (
-          <li
-            key={item.href}
-            style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}
-          >
+          <li key={item.href}>
             <a
+              style={{ paddingLeft: `${(item.depth - 1) * 0.75}rem` }}
               href={`${item.href}`}
               className={clsx(
                 "border-l py-1 px-4 block hover:text-default-700 dark:hover:text-slate-100 transition-colors duration-200 line-clamp-2",

@@ -1,115 +1,195 @@
 ---
-title: "Showcase: Margaret Hamilton & The AGC"
-description: "A comprehensive MDX showcase featuring all GitHub Flavored Markdown formats, told through a classic computer science story."
-author: "CS Historian"
-date: "2026-03-10"
+title: Collection
 ---
 
-CHANGED
+# Collection
 
-# Margaret Hamilton and the Apollo 11 Mission
+Collection is a cornerstone of a Prestige library. This is where you define the pages you want to render
+on your documentation website.
 
-## The Birth of "Software Engineering"
+## Definition
 
-When humanity first traveled to the moon, it wasn't just rocket fuel that got us there; it was code. At the center of this monumental achievement was **Margaret Hamilton**, Director of the Software Engineering Division at the MIT Instrumentation Laboratory.
+You define collections in the Prestige vite plugin config. It expects an array of collections. Each collection will
+represent a separate page area with a separate navigation link in the top header, which will navigate to a separate page with its own
+sidebar. For example, you can have two collections for your project: one for `docs` and one for `api`.
 
-This document serves as an _MDX showcase_ demonstrating ~~strikethrough~~, **bold text**, _italics_, and `inline code` formatting natively supported by GitHub.
-
----
-
-### Key Contributions to the Apollo Mission
-
-Hamilton's team was responsible for the onboard flight software. Their rigorous approach included several groundbreaking concepts:
-
-- **Asynchronous Executive:** The system could interrupt itself to prioritize important tasks.
-- **Priority Displays:** Warning the astronauts in real-time.
-- **Human-in-the-loop:** Designing systems that assumed humans might make errors.
-
-> "There was no second chance. We all knew that."
-> — Margaret Hamilton, on the stakes of Apollo 11.
-
----
-
-### The 1202 Program Alarm
-
-Minutes before the Eagle lander touched down, the computer threw a **1202** and **1201** alarm.
-
-1. The radar system was feeding the computer too much irrelevant data.
-2. The computer became overloaded.
-3. The _Asynchronous Executive_ kicked in, dropping low-priority tasks to focus exclusively on the steering and landing math.
-
-Because of this robust error-handling, the landing was a success.[^1]
-
-[^1]: This concept of fault tolerance is a cornerstone of modern software architecture.
-
----
-
-### Pre-Landing Checklist (Task List Example)
-
-Here is a simplified look at the priority checks the system handled:
-
-- [x] Monitor radar altitude
-- [x] Calculate descent trajectory
-- [x] Control thruster orientation
-- [ ] Process unnecessary rendezvous radar pings (Dropped during overload!)
-
----
-
-### AGC vs. Modern Tech (Table Example)
-
-How did the Apollo Guidance Computer (AGC) stack up against modern devices?
-
-| Specification       | Apollo Guidance Computer (1969) | iPhone 15 Pro (2023) | Difference Multiplier |
-| :------------------ | :------------------------------ | :------------------- | :-------------------- |
-| **Processor Speed** | 2.048 MHz                       | 3.78 GHz             | ~1,845x faster        |
-| **RAM**             | 4 KB (Magnetic Core)            | 8 GB                 | ~2,000,000x more      |
-| **Storage (ROM)**   | 72 KB (Core Rope)               | 256 GB               | ~3,500,000x more      |
-| **Weight**          | 70 lbs (32 kg)                  | 6.6 oz (187 g)       | Significantly lighter |
-
----
-
-### The Code That Saved the Mission (Code Block Example)
-
-The code was written in AGC Assembly language. Below is an actual snippet from the `LUMINARY` source code (the software for the Lunar Module), specifically dealing with the ignition routine.
-
-```bash
-# LUMINARY Revision 69 - AGC Source Code
-# Routine: IGNITION ALGORITHM
-
-		BANK	33
-		SETLOC	P22
-		BANK
-
-		EBANK=	IGNAST
-
-IGNITION	TC	INTPRET		# Start interpreter
-		VLOAD
-			IGNAST		# Load ignition time
-		STORE	TIG		# Store as Time of Ignition
-		EXIT
-		TC	PHASCHNG	# Phase change for restart protection
-		OCT	04024
-
-		TC	ENDOFJOB	# Yield to higher priority jobs
+```ts
+    ...
+        prestige({
+            collections:[{
+                id:'docs',
+                items:[...]
+            },
+                {
+                    id:'api',
+                    items:[...]
+                }
+            ]
+        })
+    ...
 ```
 
-:::note
-Starlight is a documentation website toolkit built with [Astro](https://astro.build/). You can get started with this command:
-:::
+Think of each collection as a sidebar of the page structure. Because a sidebar is a UI element, a collection is more general-purpose, so that's why we call it a collection.
 
-:::caution
-If you are not sure you want an awesome docs site, think twice before using [Starlight](/).
-:::
+## How it works
 
-:::danger
-Your users may be more productive and find your product easier to use thanks to helpful Starlight features.
+A collection needs two main fields: the ID and the items array.
 
-- Clear navigation
-- User-configurable colour theme
-- [i18n support](/guides/i18n/)
+### ID
 
-:::
+The id field is the unique key that identifies the root folder that Prestige will look in to generate content pages.
+For example, `id: "docs"` will look into the folder `src/content/docs`.
 
-:::tip
-Astro helps you build faster websites with [“Islands Architecture”](https://docs.astro.build/en/concepts/islands/).
-:::
+### items
+
+The items field accepts an array where you define the hierarchical structure of the collection. Prestige will generate the sidebar and navigation buttons based on that.
+Let's review what can be passed in the items array.
+
+### InternalCollectionItem
+
+InternalCollectionItem represents a single page. It will automatically generate a TanStack router file that will have a
+transformed version of the markdown file. It has the following options:
+
+#### label
+
+The label to display in the sidebar.
+
+#### slug
+
+This is the slug which will be displayed in the URL, and Prestige will transform it into the file path to fetch the content.
+It shouldn't have starting or ending slashes, and there should exist an `.md` or `.mdx` file on that path. The slug should contain
+
+the full path relative to `src/content`. For example, if the introduction content is in `src/content/docs/introduction.mdx`,
+the slug will be `docs/introduction`.
+
+#### example
+
+```ts
+items: [
+  {
+    label: "Introduction",
+    slug: "docs/introduction", // src/content/docs/introduction.mdx
+  },
+  {
+    label: "Showcase",
+    slug: "docs/showcase", // src/content/docs/showcase.md
+  },
+];
+```
+
+The file extension (`.md`/`.mdx`) will be detected automatically.
+
+### ExternalCollectionItem
+
+ExternalCollectionItem can be used to add a link to the sidebar when the page is outside the content directory.
+For example, if you have an `about.tsx` route that you want to add in the sidebar, you will declare it like this:
+
+```ts
+    {
+        label:"about",
+        link:"/about"
+    }
+```
+
+The Prestige plugin won't process this item in any way, so it has to be a valid TanStack route page and not a markdown file.
+The link can also be an external link like `https://react.dev`. In that case, the value will be passed to the HTML `a` element.
+
+#### label
+
+Similar to the InternalCollectionItem label field.
+
+### link
+
+An internal or external link to use for navigation.
+
+### CollectionGroup
+
+CollectionGroup groups the link items. Think of it as a file-system directory. It can be recursively added to one another an infinite number of times. But for good UI/UX guidelines, it is better
+to have three or four levels. A CollectionGroup doesn't have its own path in the URL; it is pathless.
+
+#### label: string
+
+The label to display as the header of the group.
+
+#### collapsed: boolean
+
+Whether the group is collapsed by default.
+
+#### items
+
+It can be either an InternalCollectionLink, an ExternalCollectionLink, or a SidebarGroupItem.
+
+#### example
+
+```ts
+prestige({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Guides",
+          items: [
+            {
+              label: "Introduction",
+              slug: "docs/introduction",
+            },
+            {
+              label: "Installation",
+              docs: "docs/installation",
+            },
+            {
+              label: "Examples",
+              items: [
+                {
+                  label: "Example 1",
+                  slug: "docs/example-1",
+                },
+                {
+                  label: "Example 2",
+                  slug: "docs/example-2",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+});
+```
+
+#### Autogenerate
+
+CollectionGroups can also be generated automatically by their folder. For that, you need to set the Autogenerate field. Prestige will recursively iterate over the directory
+and generate groups automatically. The labels of the page links will be the file names of the markdown files. You can customize this via the page's frontmatter object.
+
+##### Autodiscovery: object
+
+##### directory: string
+
+The directory to use for generation.
+
+##### example
+
+```ts
+prestige({
+  label: "Guides",
+  autogenerate: { directory: "guides" },
+});
+
+// the generated output might look like this
+ {
+          label: "Guides",
+          items: [
+            {
+              label: "Introduction",
+              slug: "docs/introduction",
+            },
+            {
+              label: "Installation",
+              docs: "docs/installation",
+            },
+          ],
+}
+```

@@ -57,8 +57,7 @@ The label to display in the sidebar.
 #### slug
 
 This is the slug which will be displayed in the URL, and Prestige will transform it into the file path to fetch the content.
-It shouldn't have starting or ending slashes, and there should exist an `.md` or `.mdx` file on that path. The slug should contain
-
+It shouldn't have starting or ending slashes, and there should exist an `.md` or `.mdx` file on that path. The slug should contain 
 the full path relative to `src/content`. For example, if the introduction content is in `src/content/docs/introduction.mdx`,
 the slug will be `docs/introduction`.
 
@@ -77,7 +76,7 @@ items: [
 ];
 ```
 
-The file extension (`.md`/`.mdx`) will be detected automatically.
+The file extension will be detected automatically.
 
 ### ExternalCollectionItem
 
@@ -98,7 +97,7 @@ The link can also be an external link like `https://react.dev`. In that case, th
 
 Similar to the InternalCollectionItem label field.
 
-### link
+#### link
 
 An internal or external link to use for navigation.
 
@@ -162,11 +161,12 @@ prestige({
 #### Autogenerate
 
 CollectionGroups can also be generated automatically by their folder. For that, you need to set the Autogenerate field. Prestige will recursively iterate over the directory
-and generate groups automatically. The labels of the page links will be the file names of the markdown files. You can customize this via the page's frontmatter object.
+and generate groups automatically. The labels of the page links will be the file names of the markdown files. You can customize it via the page's frontmatter object.
 
 ##### Autodiscovery: object
+object to configure autodiscovery options
 
-##### directory: string
+###### directory: string
 
 The directory to use for generation.
 

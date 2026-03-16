@@ -28,6 +28,7 @@ sidebar. for example you can have two collection for your project one for `docs`
         })
     ...
 ```
+Thinks of a each collection as a sidebar of page structure. Because sidebar is UI element collection is more general purpose, so that's why we call collection.
 
 ## How it works
 
@@ -74,6 +75,7 @@ items: [
   },
 ];
 ```
+
 file extension md/mdx will be detected automatically.
 
 ### ExternalCollectionItem
@@ -87,14 +89,106 @@ for example you have `about.tsx` route that you want to add in sidebar. you will
         link:"/about"
     }
 ```
+
 The prestige plugin wont process this item in anyway so it has to be valid Tanstack route page and not markdown file.
 link can also be an extenral link like `https://react.dev` in that case value will be passed to the `a` html element.
 
 #### label
+
 similar to InternalCollectionItem label field
 
 ### link
+
 intenral or external link to use for navigation
 
 ### CollectionGroup
 
+CollectionGroup groups the link items. Think of it as a directory of file-system. It can be recursively added one another infinite number of times. but for good UI/UX guidlines it is better
+to have three or four level. CollectionGroup doesn't have it's own path in the url it is pathless.
+
+#### label: string
+
+label to display as a header of group
+
+#### collapsed: boolean
+
+wheter group is collapsed by default
+
+#### items
+
+it can be either InternalCollectionLink,ExternalCollectionLink or SidebarGroupItem
+
+#### example
+
+```ts
+prestige({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Guides",
+          items: [
+            {
+              label: "Introduction",
+              slug: "docs/introduction",
+            },
+            {
+              label: "Installation",
+              docs: "docs/installation",
+            },
+            {
+              label: "Examples",
+              items: [
+                {
+                  label: "Example 1",
+                  slug: "docs/example-1",
+                },
+                {
+                  label: "Example 2",
+                  slug: "docs/example-2",
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  ],
+});
+```
+
+#### Autogenerate
+
+CollectionGroups can also be generated automatically by it's folder. For that you need to set Autogenerate field. Prestige will recursively iterate over directory
+and generate groups automatically. the labels of the page links will be file names of the markdown file. You can customize it via pages frontmatter object.
+
+##### Autodiscovery: object
+
+##### directory: string
+
+directory to use for generation
+
+##### example
+
+```ts
+prestige({
+  label: "Guides",
+  autogenerate: { directory: "guides" },
+});
+
+// the generated might looks like this
+ {
+          label: "Guides",
+          items: [
+            {
+              label: "Introduction",
+              slug: "docs/introduction",
+            },
+            {
+              label: "Installation",
+              docs: "docs/installation",
+            },
+          ],
+}
+```

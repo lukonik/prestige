@@ -13,11 +13,6 @@ const config = defineConfig({
   plugins: [
     prestige({
       title: "Prestige",
-      license: {
-        label: "MIT",
-        url: "https://opensource.org/licenses/MIT",
-      },
-      github: "https://github.com/lukonik/prestige",
       collections: [
         {
           id: "docs",

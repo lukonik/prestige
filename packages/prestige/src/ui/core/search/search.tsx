@@ -1,12 +1,12 @@
 import "@docsearch/css";
 import { DocSearch } from "@docsearch/react";
-import config from "virtual:prestige/config";
+import { AlgoliaOptions } from "../../routes/prestige-shell";
 
 export function Search({
   algolia,
 }: {
   // 2. Add 'typeof' to extract the type from the value
-  algolia: (typeof config)["algolia"] | undefined;
+  algolia: AlgoliaOptions | undefined;
 }) {
   if (!algolia) {
     return null;

@@ -5,9 +5,21 @@ import Header from "../core/header/header";
 
 type RenderNode = () => ReactNode;
 
+export interface AlgoliaOptions {
+  appId: string;
+  apiKey: string;
+  indices: string[];
+}
+export interface LicenseOptions {
+  label: string;
+  url: string;
+}
 export interface PrestigeShellProps {
   customHeaderTitle?: RenderNode | undefined;
   copyright?: RenderNode | undefined;
+  github?: string | undefined;
+  algolia?: AlgoliaOptions | undefined;
+  license?: LicenseOptions | undefined;
 }
 export function PrestigeShell({
   children,
@@ -18,7 +30,11 @@ export function PrestigeShell({
 }) {
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="system">
-      <Header customHeaderTitle={options?.customHeaderTitle} {...options} />
+      <Header
+        algolia={options?.algolia}
+        customHeaderTitle={options?.customHeaderTitle}
+        {...options}
+      />
       <main className="min-h-[calc(100vh-var(--spacing-header))]">
         {children}
       </main>

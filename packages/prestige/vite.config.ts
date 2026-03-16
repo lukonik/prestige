@@ -20,11 +20,6 @@ export default defineConfig(({ mode }) => {
       ohImage(),
       prestige({
         title: "Prestige",
-        github: "https://github.com/lukonik/prestige",
-        license: {
-          label: "MIT",
-          url: "https://opensource.org/licenses/MIT",
-        },
         enableDebugLog: true,
         collections: [
           {

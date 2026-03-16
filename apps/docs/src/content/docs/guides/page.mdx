@@ -1,5 +1,95 @@
 ---
-    title: Page
+title: Page
 ---
 
 # Page
+
+Page is a markdown file, that is rendered as a HTML markup by Prestige plugin. It consists of two main parts:
+The content where you define text and frontmatter data for page metadata customization.
+
+## How to define a page
+
+Page should be defined inside `src/content` folder.
+each page should be attached to the specific collection, to be proccessed.
+for example if you want to have an introduction page inside the docs collection, you will add it in
+`src/content/docs` folder. Page file can also be deep nested inside the `docs` folder.
+When you add content page in the content folder, Prestige doesn't process it automatically. Page content must be defined
+in collections array as well, after that Prestige will attach the correct url to that content page and process it properly.
+For example if we want to display `introduction.md` file on `/docs/introduction` url. We should do two things
+
+- add `introduction.md` file on the following path: `src/content/docs/introduction.md`
+- add introduction item inside the collection items array
+
+```ts
+prestige({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Introduction",
+          slug: "docs/introduction",
+        },
+      ],
+    },
+  ],
+});
+```
+
+## Format of a content page
+
+Prestige transforms content pages into HTML markup, under the hood it uses [unifiedjs](https://unifiedjs.com/) with
+[mdx](https://mdxjs.com/docs/) to perform transformation performantly. Currently following markdown types are supported:
+
+- MD (regular markdown)
+- MDX (markdown with JSX)
+- GFM (GitHub Flavored Markdown)
+
+For you the transformation is seamless, as long as proper file extension is provided. If you set `.mdx` file extension
+All of the three will be compiled properly. for `.md` file extension GFM and MD are supported.
+
+## Frontmatter data
+
+Besides the transforming the content page, you can define frontmatter object, that will be used by Prestige to customize metadata of a content page.
+Use yaml syntax to define the frontmatter data
+
+```md
+---
+title: Overview
+---
+```
+
+for full frontmatter options check [Frontmatter Reference](/docs/reference/frontmatter-reference)
+
+# Overview
+
+this is overview
+
+````
+
+In this case the title of the browser tab will be "Overview".
+
+## Table of content
+
+Prestige will automatically generate table of content based on content page. It uses headings (h1,h2...h6) to generate
+table of content recursively.
+
+## Code highlighting
+
+Prestige uses [prismjs](https://prismjs.com/) to highlight the codeblock.
+
+## Add unifiedjs plugins
+
+You can also add `rehype` and `remark` plugins to further transform the content. For that add plugins in
+Prestige plugin config `markdown` config
+
+```ts
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+prestige({
+  markdown: {
+    remarkPlugins: [remarkMath],
+    rehypePlugins: [rehypeKatex],
+  },
+});
+````

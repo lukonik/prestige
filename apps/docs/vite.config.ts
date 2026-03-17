@@ -12,7 +12,6 @@ import { nitro } from "nitro/vite";
 
 const config = defineConfig({
   plugins: [
-    ohImage(),
     prestige({
       title: "Prestige",
       collections: [
@@ -78,10 +77,22 @@ const config = defineConfig({
       ],
     }),
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] } }),
+    nitro({
+      rollupConfig: { external: [/^@sentry\//] },
+      baseURL: "/prestige",
+      renderer: false,
+    }),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
-    tanstackStart(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+      },
+    }),
+    ohImage({
+      outDir: ".output/public",
+    }),
     viteReact(),
   ],
 });

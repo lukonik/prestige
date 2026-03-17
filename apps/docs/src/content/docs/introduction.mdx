@@ -3,16 +3,20 @@ title: Introduction
 description: Prestige documentation page
 head:
   meta:
-    - name: 'keywords'
-      content: 'prestige, documentation, react'
+    - name: "keywords"
+      content: "prestige, documentation, react"
   links:
-    - rel: 'icon'
-      href: '/favicon.ico'
+    - rel: "icon"
+      href: "/favicon.ico"
   scripts:
-    - src: 'https://www.google-analytics.com/analytics.js'
+    - src: "https://www.google-analytics.com/analytics.js"
 ---
 
 # Introduction
+
+:::caution
+Prestige is still in active development (v0). Although the API is stable and core functionality is implemented, some breaking changes might still appear, and they might be released in patch/minor releases. We are working hard to release a stable version soon (v1). Stay tuned!
+:::
 
 Prestige is a library on top of TanStack Start that lets you build a documentation website. It takes your markdown content and transforms it into beautiful, performant TanStack route pages. On top of that, it has all the main features that will give you a fully functional documentation website out of the box. Some of the main features are:
 
@@ -35,7 +39,7 @@ Prestige is a library on top of TanStack Start that lets you build a documentati
 
 ## Why?
 
-There are already multiple documentation creation libraries out there, so let me explain why we created another one. Because there is no single one that is based on our favorite stack:
+There are already multiple documentation creation frameworks out there, so let me explain why we created another one. Because there is no single one that is based on our favorite stack:
 
 - Vite
 - Tailwind
@@ -54,33 +58,3 @@ To avoid boilerplate contributing guidelines that no one reads, I will say this:
 - Star on GitHub. This will give us huge motivation without money.
 - Test, and as soon as you find a bug, create an issue on GitHub [link](https://github.com/lukonik/prestige/issues). If you are too lazy to write about it, only a few words in the issue and a screenshot will be enough.
 - Any feature, architectural, or API change request proposal is **highly recommended**. For those who are not used to contributing to open source because they think they might say something silly: DON'T! There are no silly ideas nor silly contributions. Ideas are ideas, and we will respect all of them.
-
-## AI involvement
-
-### Doc content
-
-I hate how AI writes, so all the content is created by me (a real person). Nevertheless, English is not my primary language. I use it to fix and polish text so you can read it fluently. My prompt looks like this:
-
-> Act as an expert copyeditor. Please review the following text and fix any spelling, grammar, and punctuation errors. Polish the sentence flow for clarity, but strictly maintain my original tone, voice, and vocabulary. Do not rewrite the text, change the meaning, or add overly complex words. Please output only the corrected text. Here is the text:
-
-_If you know any better prompt, please advise._
-
-### Code content
-
-The code is written by real humans. I use AI for handling build/release/dependency stuff and their errors that are a nightmare to fix. Also, I use it for creating features that are almost like template-ready code, for example, adding a meta field to the content page where frontmatter integration already exists.
-I don't use it for (with some exceptions):
-
-- Writing unit tests. I don't know about you, but AI-generated unit tests sometimes need their own testing and explanations. Unit tests should be readable by a 5-year-old.
-
-  On top of that Unit tests should give you confidence that your code works. You can't have any when someone else wrote them for you.
-
-- Architecture decisions. It gets lost and makes my coding experience miserable, when you do something that is not mainstream.
-
-  On top of that, they are pretty expensive these days. The $20 Pro version is exhausted after almost 30 minutes of using it.
-
-For you, if you want to contribute, you can use as much AI as you want as long as it delivers.
-
-
----
-
-Okay, enough for fairy tales. Let's get started.

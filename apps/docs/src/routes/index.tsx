@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
+  Bug,
   Code2,
   FileText,
   FolderTree,
@@ -131,7 +132,7 @@ function RouteComponent() {
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-40">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
-              <Sparkles size={16} className="text-primary-500" />
+              <Bug size={16} className="text-primary-500" />
               <span className="font-medium">Still in Alpha, stay tuned</span>
             </div>
 

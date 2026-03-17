@@ -31,8 +31,8 @@ const config = defineConfig({
               label: "Guides",
               items: [
                 {
-                  label: "Core Architecture",
-                  slug: "docs/guides/core-architecture",
+                  label: "Overview",
+                  slug: "docs/guides/overview",
                 },
                 {
                   label: "Collection",

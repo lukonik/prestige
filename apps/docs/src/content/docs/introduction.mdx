@@ -1,86 +1,64 @@
 ---
 title: Introduction
-description: Prestige documentation page
+description: Learn what Prestige is and why it exists.
 head:
   meta:
-    - name: 'keywords'
-      content: 'prestige, documentation, react'
+    - name: "keywords"
+      content: "prestige, documentation, react"
   links:
-    - rel: 'icon'
-      href: '/favicon.ico'
+    - rel: "icon"
+      href: "/favicon.ico"
   scripts:
-    - src: 'https://www.google-analytics.com/analytics.js'
+    - src: "https://www.google-analytics.com/analytics.js"
 ---
 
 # Introduction
 
-Prestige is a library on top of TanStack Start that lets you build a documentation website. It takes your markdown content and transforms it into beautiful, performant TanStack route pages. On top of that, it has all the main features that will give you a fully functional documentation website out of the box. Some of the main features are:
+:::caution
+Prestige is still in active development and has not reached v1 yet. The core API is stable, but breaking changes may still land in patch or minor releases while the project matures.
+:::
+
+Prestige is a documentation framework built on top of TanStack Start. It turns your Markdown content into routed, performant documentation pages and provides the pieces you usually need to launch a complete docs site out of the box.
+
+Some of the main features are:
 
 - MD, MDX, and GFM compilation integrated out of the box. Extend capabilities via rehype and remark plugins.
-- Built on Vite, so the entire Vite ecosystem is at your disposal.
-- First-class TypeScript support. Written entirely in TypeScript.
-- First-class Tailwind CSS support. Prestige is designed with Tailwind.
+- Built on Vite, so the full Vite ecosystem is available to you.
+- First-class TypeScript support. Prestige is written entirely in TypeScript.
+- First-class Tailwind CSS support. Prestige is designed with Tailwind in mind.
 - Dark and light theme modes.
 - Multiple color schemes. All Tailwind colors are included, and you can easily add your own.
 - Algolia DocSearch integration.
-- Automatically generate sidebars based on collection content.
-- Automatically generate pages based on directory structure.
-- Collection-based architecture. Different collections can have independent navigation menus and sidebars (e.g., `/docs/*`, `/api/*`).
-- Hot reloading. Markdown changes instantly update the UI.
-- Incredibly fast. All content is statically analyzed and generated. Content routes are lazy-loaded, but the content itself is imported directly. This allows SSG to generate static HTML that is incredibly fast to deliver.
-- Type-safe routes. Because they are created as regular file-based routes, you get all the IntelliSense that TanStack Router offers.
-- Fully customizable application. Although we are opinionated about how some features should look, Prestige is a thin layer over TanStack Start. You can easily add or remove whatever you want, just like in a regular TanStack Start project.
-- Beautiful by default. We hope you'll like it.
+- Automatic sidebar generation from your collection structure.
+- Automatic page generation from your content files and directory structure.
+- Collection-based architecture. Different collections can have independent navigation menus and sidebars, such as `/docs/*` and `/api/*`.
+- Hot reloading. Markdown changes appear in the UI immediately during development.
+- Fast static analysis and generation. Content routes are lazy-loaded, while the compiled content is imported directly so SSG can produce fast static HTML.
+- Type-safe routes. Because generated pages become regular TanStack Router file routes, you get the IntelliSense and type safety that TanStack Router provides.
+- Fully customizable application. Prestige is opinionated about sensible defaults, but it remains a thin layer over TanStack Start.
+- A polished default UI.
 - And more...
 
 ## Why?
 
-There are already multiple documentation creation libraries out there, so let me explain why we created another one. Because there is no single one that is based on our favorite stack:
+There are already several documentation frameworks available. We built Prestige because we wanted one that fully embraces the stack we prefer:
 
 - Vite
 - Tailwind
 - TanStack Start
 
-Either they have partial support, or they have default support that doesn't grasp their full potential. With Prestige, we know what we are building on, so we try to maximize all the capabilities they have.
+Existing solutions often support this stack only partially, or they abstract away too much of it. Prestige stays close to the underlying tools so you can use their full capabilities.
 
 ## Goal
 
-Most of the time, documentation is created by developers. It is an additional bottleneck for us. As I'm writing this documentation, I would rather code and patch fixes instead of writing things, but I have to do it to explain how it works so you can use it or make you want to use it. So for us, the documentation shouldn't have a learning curve at all. You just add it and use it as if it were a regular web-based app. That's what we are trying to aim for. We use Vite for a nearly perfect development toolchain. Tailwind for styling that is used by humans, AIs, and probably aliens if they exist. TanStack Start, which makes writing web applications feel like home, just like the good old days.
+Documentation is usually written by developers, which means docs work competes with product work. Prestige aims to remove as much setup friction as possible. A documentation site should feel like a normal web app, not like a separate system you have to learn from scratch.
+
+That is the direction we are aiming for: familiar tooling, minimal ceremony, and a workflow that feels natural if you already enjoy working with Vite, Tailwind CSS, and TanStack Start.
 
 ## Contributing
 
-To avoid boilerplate contributing guidelines that no one reads, I will say this: this project is still in early development, so if you would like to contribute to helping this project become stable and beautiful, you can do the following:
+Prestige is still early, so feedback and contributions are especially valuable. If you want to help, here are the most useful ways to contribute:
 
-- Star on GitHub. This will give us huge motivation without money.
-- Test, and as soon as you find a bug, create an issue on GitHub [link](https://github.com/lukonik/prestige/issues). If you are too lazy to write about it, only a few words in the issue and a screenshot will be enough.
-- Any feature, architectural, or API change request proposal is **highly recommended**. For those who are not used to contributing to open source because they think they might say something silly: DON'T! There are no silly ideas nor silly contributions. Ideas are ideas, and we will respect all of them.
-
-## AI involvement
-
-### Doc content
-
-I hate how AI writes, so all the content is created by me (a real person). Nevertheless, English is not my primary language. I use it to fix and polish text so you can read it fluently. My prompt looks like this:
-
-> Act as an expert copyeditor. Please review the following text and fix any spelling, grammar, and punctuation errors. Polish the sentence flow for clarity, but strictly maintain my original tone, voice, and vocabulary. Do not rewrite the text, change the meaning, or add overly complex words. Please output only the corrected text. Here is the text:
-
-_If you know any better prompt, please advise._
-
-### Code content
-
-The code is written by real humans. I use AI for handling build/release/dependency stuff and their errors that are a nightmare to fix. Also, I use it for creating features that are almost like template-ready code, for example, adding a meta field to the content page where frontmatter integration already exists.
-I don't use it for (with some exceptions):
-
-- Writing unit tests. I don't know about you, but AI-generated unit tests sometimes need their own testing and explanations. Unit tests should be readable by a 5-year-old.
-
-  On top of that Unit tests should give you confidence that your code works. You can't have any when someone else wrote them for you.
-
-- Architecture decisions. It gets lost and makes my coding experience miserable, when you do something that is not mainstream.
-
-  On top of that, they are pretty expensive these days. The $20 Pro version is exhausted after almost 30 minutes of using it.
-
-For you, if you want to contribute, you can use as much AI as you want as long as it delivers.
-
-
----
-
-Okay, enough for fairy tales. Let's get started.
+- Star the project on GitHub.
+- Test it, and if you find a bug, open an issue on GitHub [link](https://github.com/lukonik/prestige/issues). Even a short report with a screenshot is helpful.
+- Propose features, architectural changes, or API improvements. Good open source projects get better through discussion, and thoughtful feedback is always welcome.

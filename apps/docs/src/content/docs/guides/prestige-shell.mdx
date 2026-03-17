@@ -1,17 +1,17 @@
 ---
 title: Prestige Shell Setup
-description: Guide on how to wrap your application with Prestige Shell.
+description: Wrap your app with PrestigeShell and configure shared UI.
 ---
 
 # Prestige Shell
 
-`PrestigeShell` is the core layout component that wraps your application to provide the Prestige documentation theme structure, including the header, sidebar navigation, main content area, and footer.
+`PrestigeShell` is the main layout component for a Prestige site. It wraps your application with the shared documentation UI, including the header, main content area, and footer.
 
-It seamlessly handles responsive layouts, light/dark mode theming, and integrates with your customized configuration options such as GitHub links and integrated search.
+It also handles responsive layout behavior, light and dark theme support, and configuration for features such as GitHub links and integrated search.
 
 ## Basic Setup
 
-To use `PrestigeShell`, you should add it to your root layout or root route file, typically `__root.tsx` when using `@tanstack/react-router`.
+Add `PrestigeShell` to your root layout or root route, typically `__root.tsx` when using `@tanstack/react-router`.
 
 Wrap the `<Outlet />` (or equivalent content placeholder) with `PrestigeShell`:
 
@@ -28,11 +28,11 @@ export const Route = createRootRoute({
 });
 ```
 
-This simple setup instantly adds the Prestige documentation UI around your content.
+This immediately applies the Prestige shell around your app content.
 
 ## Configuration Options
 
-You can customize the header and footer by passing `options` of type `PrestigeShellProps`.
+Customize the shell by passing an `options` object of type `PrestigeShellProps`.
 
 ```tsx
 import { Outlet, createRootRoute } from "@tanstack/react-router";
@@ -60,4 +60,4 @@ export const Route = createRootRoute({
 });
 ```
 
-For full reference check the [Prestige Shell Reference](/docs/reference/prestige-shell-reference) page.
+For the full API, see the [Prestige Shell Reference](/docs/reference/prestige-shell-reference).

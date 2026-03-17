@@ -1,0 +1,52 @@
+---
+title: create-prestige Reference
+description: Reference for the create-prestige CLI tool.
+---
+
+# `create-prestige` Reference
+
+`create-prestige` is a CLI tool to quickly set up a new Prestige project. It interactively guides you through the setup process and scaffolds a complete TanStack Start project pre-configured with the Prestige layout and Vite plugin.
+
+## Usage
+
+You can run the script using your preferred package manager. It is recommended to use the `@latest` tag to ensure you get the most up-to-date template.
+
+### npm
+
+```bash
+npx @lonik/create-prestige@latest
+```
+
+### pnpm
+
+```bash
+pnpm dlx @lonik/create-prestige@latest
+```
+
+### yarn
+
+```bash
+yarn create @lonik/prestige
+```
+
+## Interactive Prompts
+
+When you run `create-prestige`, it will prompt you for the following information:
+
+1.  **Project Name**: The name of your new project (default is `my-prestige-docs`). This name is used to create the project directory and populate the package name in `package.json` and `vite.config.ts`.
+
+After you provide the project name, the CLI tool will automatically:
+- Download the official Prestige template from the GitHub repository.
+- Configure your `package.json` and `vite.config.ts` with the provided project name.
+- Install the required dependencies using your package manager.
+
+## Next Steps
+
+Once the setup is complete, navigate into your new project directory and start the development server:
+
+```bash
+cd my-prestige-docs
+npm run dev
+```
+
+You should see the Prestige landing page locally and can start customizing your documentation content right away!

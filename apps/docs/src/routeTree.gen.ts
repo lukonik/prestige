@@ -18,6 +18,7 @@ import { Route as prestigeDocsGettingStartedRouteImport } from './routes/(presti
 import { Route as prestigeDocsReferencePrestigeShellReferenceRouteImport } from './routes/(prestige)/docs.reference.prestige-shell-reference'
 import { Route as prestigeDocsReferencePluginReferenceRouteImport } from './routes/(prestige)/docs.reference.plugin-reference'
 import { Route as prestigeDocsReferenceFrontmatterReferenceRouteImport } from './routes/(prestige)/docs.reference.frontmatter-reference'
+import { Route as prestigeDocsReferenceCreatePrestigeReferenceRouteImport } from './routes/(prestige)/docs.reference.create-prestige-reference'
 import { Route as prestigeDocsGuidesVitePluginRouteImport } from './routes/(prestige)/docs.guides.vite-plugin'
 import { Route as prestigeDocsGuidesPrestigeShellRouteImport } from './routes/(prestige)/docs.guides.prestige-shell'
 import { Route as prestigeDocsGuidesPageRouteImport } from './routes/(prestige)/docs.guides.page'
@@ -99,6 +100,18 @@ const prestigeDocsReferenceFrontmatterReferenceRoute =
         (d) => d.Route,
       ),
     )
+const prestigeDocsReferenceCreatePrestigeReferenceRoute =
+  prestigeDocsReferenceCreatePrestigeReferenceRouteImport
+    .update({
+      id: '/reference/create-prestige-reference',
+      path: '/reference/create-prestige-reference',
+      getParentRoute: () => prestigeDocsLazyRoute,
+    } as any)
+    .lazy(() =>
+      import('./routes/(prestige)/docs.reference.create-prestige-reference.lazy').then(
+        (d) => d.Route,
+      ),
+    )
 const prestigeDocsGuidesVitePluginRoute =
   prestigeDocsGuidesVitePluginRouteImport
     .update({
@@ -168,6 +181,7 @@ export interface FileRoutesByFullPath {
   '/docs/guides/page': typeof prestigeDocsGuidesPageRoute
   '/docs/guides/prestige-shell': typeof prestigeDocsGuidesPrestigeShellRoute
   '/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
+  '/docs/reference/create-prestige-reference': typeof prestigeDocsReferenceCreatePrestigeReferenceRoute
   '/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
   '/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
@@ -183,6 +197,7 @@ export interface FileRoutesByTo {
   '/docs/guides/page': typeof prestigeDocsGuidesPageRoute
   '/docs/guides/prestige-shell': typeof prestigeDocsGuidesPrestigeShellRoute
   '/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
+  '/docs/reference/create-prestige-reference': typeof prestigeDocsReferenceCreatePrestigeReferenceRoute
   '/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
   '/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
@@ -199,6 +214,7 @@ export interface FileRoutesById {
   '/(prestige)/docs/guides/page': typeof prestigeDocsGuidesPageRoute
   '/(prestige)/docs/guides/prestige-shell': typeof prestigeDocsGuidesPrestigeShellRoute
   '/(prestige)/docs/guides/vite-plugin': typeof prestigeDocsGuidesVitePluginRoute
+  '/(prestige)/docs/reference/create-prestige-reference': typeof prestigeDocsReferenceCreatePrestigeReferenceRoute
   '/(prestige)/docs/reference/frontmatter-reference': typeof prestigeDocsReferenceFrontmatterReferenceRoute
   '/(prestige)/docs/reference/plugin-reference': typeof prestigeDocsReferencePluginReferenceRoute
   '/(prestige)/docs/reference/prestige-shell-reference': typeof prestigeDocsReferencePrestigeShellReferenceRoute
@@ -216,6 +232,7 @@ export interface FileRouteTypes {
     | '/docs/guides/page'
     | '/docs/guides/prestige-shell'
     | '/docs/guides/vite-plugin'
+    | '/docs/reference/create-prestige-reference'
     | '/docs/reference/frontmatter-reference'
     | '/docs/reference/plugin-reference'
     | '/docs/reference/prestige-shell-reference'
@@ -231,6 +248,7 @@ export interface FileRouteTypes {
     | '/docs/guides/page'
     | '/docs/guides/prestige-shell'
     | '/docs/guides/vite-plugin'
+    | '/docs/reference/create-prestige-reference'
     | '/docs/reference/frontmatter-reference'
     | '/docs/reference/plugin-reference'
     | '/docs/reference/prestige-shell-reference'
@@ -246,6 +264,7 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/guides/page'
     | '/(prestige)/docs/guides/prestige-shell'
     | '/(prestige)/docs/guides/vite-plugin'
+    | '/(prestige)/docs/reference/create-prestige-reference'
     | '/(prestige)/docs/reference/frontmatter-reference'
     | '/(prestige)/docs/reference/plugin-reference'
     | '/(prestige)/docs/reference/prestige-shell-reference'
@@ -315,6 +334,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeDocsReferenceFrontmatterReferenceRouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
+    '/(prestige)/docs/reference/create-prestige-reference': {
+      id: '/(prestige)/docs/reference/create-prestige-reference'
+      path: '/reference/create-prestige-reference'
+      fullPath: '/docs/reference/create-prestige-reference'
+      preLoaderRoute: typeof prestigeDocsReferenceCreatePrestigeReferenceRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
     '/(prestige)/docs/guides/vite-plugin': {
       id: '/(prestige)/docs/guides/vite-plugin'
       path: '/guides/vite-plugin'
@@ -361,6 +387,7 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsGuidesPageRoute: typeof prestigeDocsGuidesPageRoute
   prestigeDocsGuidesPrestigeShellRoute: typeof prestigeDocsGuidesPrestigeShellRoute
   prestigeDocsGuidesVitePluginRoute: typeof prestigeDocsGuidesVitePluginRoute
+  prestigeDocsReferenceCreatePrestigeReferenceRoute: typeof prestigeDocsReferenceCreatePrestigeReferenceRoute
   prestigeDocsReferenceFrontmatterReferenceRoute: typeof prestigeDocsReferenceFrontmatterReferenceRoute
   prestigeDocsReferencePluginReferenceRoute: typeof prestigeDocsReferencePluginReferenceRoute
   prestigeDocsReferencePrestigeShellReferenceRoute: typeof prestigeDocsReferencePrestigeShellReferenceRoute
@@ -375,6 +402,8 @@ const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
   prestigeDocsGuidesPageRoute: prestigeDocsGuidesPageRoute,
   prestigeDocsGuidesPrestigeShellRoute: prestigeDocsGuidesPrestigeShellRoute,
   prestigeDocsGuidesVitePluginRoute: prestigeDocsGuidesVitePluginRoute,
+  prestigeDocsReferenceCreatePrestigeReferenceRoute:
+    prestigeDocsReferenceCreatePrestigeReferenceRoute,
   prestigeDocsReferenceFrontmatterReferenceRoute:
     prestigeDocsReferenceFrontmatterReferenceRoute,
   prestigeDocsReferencePluginReferenceRoute:

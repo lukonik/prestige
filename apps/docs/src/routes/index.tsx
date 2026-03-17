@@ -132,9 +132,7 @@ function RouteComponent() {
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Sparkles size={16} className="text-primary-500" />
-              <span className="font-medium">
-                Introducing the definitive documentation framework
-              </span>
+              <span className="font-medium">Still in Alpha, stay tuned</span>
             </div>
 
             <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-default-900 mb-8 leading-[1.1] drop-shadow-sm">
@@ -146,9 +144,9 @@ function RouteComponent() {
             </h1>
 
             <p className="text-xl lg:text-2xl text-default-600 mb-12 max-w-2xl leading-relaxed font-light">
-              Exceptional projects demand outstanding documentation. Built on:
+              <span className="px-1">A documentation framework built with</span>
               <span className="px-1 inline-flex items-center ">
-                Vite{" "}
+                Vite
                 <img className="w-5 h-5 ml-1" src="/vite.svg" alt="Vite Logo" />
                 ,
               </span>
@@ -168,9 +166,7 @@ function RouteComponent() {
                   src="/tailwindcss.svg"
                   alt="tailwind logo"
                 />
-                ,
               </span>
-              . Beautiful by default
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
@@ -210,15 +206,26 @@ function RouteComponent() {
           </div>
         </div>
 
+        {/* Quote Section */}
+        <div className="mb-40 relative z-10 py-16 px-8 rounded-3xl bg-linear-to-b from-default-100/50 to-transparent border border-default-200/50 text-center flex flex-col items-center">
+          <Sparkles className="w-8 h-8 text-primary-500 mb-6 opacity-80" />
+          <blockquote className="text-2xl lg:text-3xl leading-relaxed lg:leading-[1.6] text-default-800 font-light max-w-4xl mx-auto">
+            "Every great open-source project consists of three acts. The first
+            is writing the code. The second is testing the code. The third, and
+            hardest part, is writing the documentation. That part we call{" "}
+            <strong className="font-semibold text-primary-600">
+              The Prestige
+            </strong>
+            ."
+          </blockquote>
+        </div>
+
         {/* Features Section */}
         <div className="mt-32 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-bold text-default-900 mb-6 tracking-tight">
-              Out Of The Box Features
+              Magic Features
             </h2>
-            <p className="text-xl text-default-600 max-w-2xl mx-auto font-light leading-relaxed">
-              documentation sites without the usual boilerplate.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">

@@ -1,25 +1,24 @@
 ---
 title: Getting Started
-description: Getting Started page
+description: Create a new Prestige project and run it locally.
 ---
-
-import { Steps, StepItem } from "@lonik/prestige/ui";
 
 # Getting Started
 
-To get started, create prestige script:
+Run the project scaffolder:
 
 ```bash
 npx @lonik/create-prestige@latest
 ```
 
-follow the prompts and it will create Tanstack Start project with Prestige configuration
+Follow the prompts to create a TanStack Start project with Prestige preconfigured.
 
 ## Usage
 
-Run the dev server with `npm run dev`, and you should see the Prestige landing page with the docs navigation in the header. Navigate to the docs, and you should see the show page. Open the `showcase.mdx` file in `src/content/docs` and update some text; you should see changes instantly in the browser. In later guides, we will explore the library in depth.
+Start the development server with `npm run dev`. You should see the Prestige landing page, with the docs navigation available in the header. Open the docs section, then edit `src/content/docs/showcase.mdx`. Your changes should appear in the browser immediately.
+
+The rest of the guides explain how Prestige works in more detail.
 
 :::info
-Adding new page, might cause infinite loop or error in the rendering process. If that happens rerun the dev server (npm run dev) again and it should fix the issue.
-It will be fixed in the future.
+Adding a new page can currently trigger a development-server loop or a rendering error. If that happens, restart the dev server with `npm run dev`. This is a known issue and will be fixed in a future release.
 :::

@@ -1,21 +1,25 @@
 ---
 title: Page
+description: Define and customize a single Prestige content page.
 ---
 
 # Page
 
-A Page is a markdown file that is rendered as HTML markup by the Prestige plugin. It consists of two main parts: the content, where you define text, and the frontmatter data for page metadata customization.
+A page is a Markdown or MDX file that Prestige compiles into HTML. It has two parts:
+
+- The content body, where you write the page itself
+- The frontmatter block, where you define page metadata
 
 ## How to define a page
 
-A page should be defined inside the `src/content` folder. Each page should be attached to a specific collection to be processed. For example, if you want to have an introduction page inside the docs collection, you will add it in the `src/content/docs` folder. A page file can also be deeply nested inside the `docs` folder.
+A page must live inside `src/content`. To be processed by Prestige, it also has to be referenced by a collection item.
 
-When you add a content page in the content folder, Prestige doesn't process it automatically. The page content must be defined in the collections array as well. After that, Prestige will attach the correct URL to that content page and process it properly.
+For example, if you want an introduction page in the `docs` collection, place it in `src/content/docs`. The file can also live inside nested folders within that collection.
 
-For example, if we want to display the `introduction.md` file on the `/docs/introduction` URL, we should do two things:
+If you want `src/content/docs/introduction.md` to appear at `/docs/introduction`, you need to do two things:
 
 - Add the `introduction.md` file at the following path: `src/content/docs/introduction.md`
-- Add an introduction item inside the collection items array
+- Add a matching collection item
 
 ```ts
 prestige({
@@ -35,17 +39,20 @@ prestige({
 
 ## Format of a content page
 
-Prestige transforms content pages into HTML markup. Under the hood, it uses [unifiedjs](https://unifiedjs.com/) with [mdx](https://mdxjs.com/docs/) to perform the transformation performantly. Currently, the following markdown types are supported:
+Prestige compiles content pages into HTML using [unifiedjs](https://unifiedjs.com/) and [MDX](https://mdxjs.com/docs/). The supported input formats are:
 
 - MD (regular markdown)
 - MDX (markdown with JSX)
 - GFM (GitHub Flavored Markdown)
 
-For you, the transformation is seamless, as long as the proper file extension is provided. If you set the `.mdx` file extension, all three will be compiled properly. For the `.md` file extension, GFM and MD are supported.
+In practice, this means:
+
+- Use `.mdx` when you need JSX support
+- Use `.md` for regular Markdown or GFM content
 
 ## Frontmatter data
 
-Besides transforming the content page, you can define a frontmatter object that will be used by Prestige to customize the metadata of a content page. Use YAML syntax to define the frontmatter data:
+You can define frontmatter in YAML at the top of the file to control metadata such as the page title, description, and sidebar label:
 
 ```md
 ---
@@ -56,14 +63,14 @@ title: Overview
 
 This is an overview.
 ```
-In this case, the title of the browser tab will be "Overview".
+
+In this example, the browser tab title will use `Overview`.
 
 For full frontmatter options, check the [Frontmatter Reference](/docs/reference/frontmatter-reference).
 
-
 ## Table of contents
 
-Prestige will automatically generate a table of contents based on the content page. It uses headings (h1, h2...h6) to generate the table of contents recursively.
+Prestige automatically generates a table of contents from the page headings.
 
 ## Code highlighting
 
@@ -71,7 +78,7 @@ Prestige uses [prismjs](https://prismjs.com/) to highlight code blocks.
 
 ## Add unifiedjs plugins
 
-You can also add `rehype` and `remark` plugins to further transform the content. To do this, add the plugins in the Prestige plugin's `markdown` config:
+You can extend the content pipeline with custom `remark` and `rehype` plugins. Add them in the Prestige plugin's `markdown` config:
 
 ```ts
 import remarkMath from "remark-math";

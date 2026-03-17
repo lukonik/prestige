@@ -1,34 +1,33 @@
 ---
 title: Vite Plugin
+description: Configure the Prestige Vite plugin and understand its role.
 ---
 
 # Vite Plugin
 
-The Vite plugin is what makes the Prestige library alive. It plays a part in almost all of the processes. It takes content pages and transforms them into valid HTML markup, generates sidebars from collections, generates routes, and more.
+The Prestige Vite plugin is the build-time engine behind the library. It reads content pages, compiles them into HTML, generates sidebars from collections, creates route files, and exposes the data used by the UI.
 
-You need to define it in the `vite.config.ts` plugins array. You must add the `prestige` plugin before the `tanstack` plugin:
+Add it to the `plugins` array in `vite.config.ts`. It should appear before the TanStack Start plugin:
 
 ```ts
-...
 prestige(),
 tanstack(),
-...
 ```
 
-It requires two major fields to be defined in order to work:
+Two config fields are especially important:
 
 ## title: string
 
-The `title` field is used by default as the browser title and also as a suffix for page contents.
+The `title` field is the site title. Prestige uses it as the default browser-title suffix and as the default header title.
 
 ## collections: array
 
-The `collections` array is where you define your collections.
+The `collections` array defines your documentation areas, sidebar structure, and generated content routes.
 
 ## Generating routes
 
-When Vite runs in development mode, the Prestige plugin watches the `src/content` folder and automatically creates file routes based on the content.
+During development, the plugin watches `src/content` and regenerates file routes when relevant content changes.
 
 ## Config
 
-For the Prestige config, check the [Vite Plugin Reference](/docs/reference/plugin-reference).
+For the full config surface, see the [Vite Plugin Reference](/docs/reference/plugin-reference).

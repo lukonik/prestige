@@ -67,6 +67,10 @@ const config = defineConfig({
                   label: "Vite Plugin Reference",
                   slug: "docs/reference/plugin-reference",
                 },
+                {
+                  label: "create-prestige Reference",
+                  slug: "docs/reference/create-prestige-reference",
+                },
               ],
             },
           ],

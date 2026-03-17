@@ -5,12 +5,14 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
+import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 
 const config = defineConfig({
   plugins: [
+    ohImage(),
     prestige({
       title: "Prestige",
       collections: [

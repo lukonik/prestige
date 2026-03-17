@@ -1,49 +1,256 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
+import {
+  ArrowRight,
+  Code2,
+  FileText,
+  FolderTree,
+  Github,
+  Layers,
+  PaintBucket,
+  Palette,
+  PanelLeft,
+  RefreshCw,
+  Rocket,
+  Search,
+  ShieldCheck,
+  Sliders,
+  Sparkles,
+  SunMoon,
+  Zap,
+} from "lucide-react";
 import config from "virtual:prestige/config";
+import Logo from "../assets/logo.png?$oh";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
 });
 
+const features = [
+  {
+    title: "Markdown Power",
+    description:
+      "MD, MDX, and GFM compilation integrated out of the box. Extend capabilities via rehype and remark plugins.",
+    icon: FileText,
+  },
+  {
+    title: "Powered by Vite",
+    description:
+      "Built on Vite, so the entire Vite ecosystem is at your disposal.",
+    icon: Zap,
+  },
+  {
+    title: "TypeScript Native",
+    description:
+      "First-class TypeScript support. Written entirely in TypeScript.",
+    icon: Code2,
+  },
+  {
+    title: "Tailwind First",
+    description:
+      "First-class Tailwind CSS support. Prestige is designed with Tailwind.",
+    icon: Palette,
+  },
+  {
+    title: "Dark & Light Modes",
+    description:
+      "Dark and light theme modes perfectly balanced for readability.",
+    icon: SunMoon,
+  },
+  {
+    title: "Color Schemes",
+    description:
+      "Multiple color schemes. All Tailwind colors are included, and you can easily add your own.",
+    icon: PaintBucket,
+  },
+  {
+    title: "DocSearch Built-in",
+    description:
+      "Algolia DocSearch integration built right in for rapid information retrieval.",
+    icon: Search,
+  },
+  {
+    title: "Auto Sidebars",
+    description: "Automatically generate sidebars based on collection content.",
+    icon: PanelLeft,
+  },
+  {
+    title: "Auto Pages",
+    description: "Automatically generate pages based on directory structure.",
+    icon: FolderTree,
+  },
+  {
+    title: "Collections Architecture",
+    description:
+      "Different collections can have independent navigation menus and sidebars (e.g., /docs/*, /api/*).",
+    icon: Layers,
+  },
+  {
+    title: "Hot Reloading",
+    description:
+      "Markdown changes instantly update the UI. No waiting, no refreshing.",
+    icon: RefreshCw,
+  },
+  {
+    title: "Blazing Fast SSG",
+    description:
+      "Statically analyzed and generated HTML. Content routes are lazy-loaded, delivering incredibly fast pages.",
+    icon: Rocket,
+  },
+  {
+    title: "Type-Safe Routes",
+    description:
+      "File-based routes via TanStack Router deliver full IntelliSense and type safety.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Fully Customizable",
+    description:
+      "A thin layer over TanStack Start. Easily add or remove features like a regular project.",
+    icon: Sliders,
+  },
+  {
+    title: "Beautiful by Default",
+    description:
+      "Carefully crafted typography, spacing, and micro-interactions. We hope you'll like it.",
+    icon: Sparkles,
+  },
+];
+
 function RouteComponent() {
   return (
-    <>
-      <div className="container mx-auto flex justify-center flex-col items-center">
-        <h1 className="text-3xl lg:text-8xl font-medium leading-snug mt-2 lg:mt-10 uppercase">
-          {config.title}
-        </h1>
-        <h2 className="text-3xl lg:text-6xl font-medium leading-snug">
-          Your great project
-        </h2>
-        <div className="mt-10 flex lg:justify-start items-center justify-center gap-4">
-          <Link to="/docs/introduction">
-            <button className="rounded-full px-4 lg:px-8 bg-primary-600 text-white lg:h-14 h-12 flex items-center justify-center gap-4 cursor-pointer">
-              Introduction <ArrowRight size={20} />
-            </button>
-          </Link>
-          <a href="https://github.com/lukonik/Prestige" target="_blank" rel="noreferrer">
-            <button className="rounded-full px-4 lg:px-8  h-14 flex items-center justify-center gap-4 cursor-pointer">
-              Star on Github{" "}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-github-icon lucide-github"
-              >
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
-              </svg>
-            </button>
-          </a>
-        </div>
+    <div className="min-h-screen bg-default-50 text-default-800 font-sans selection:bg-primary-500/30 overflow-hidden relative">
+      {/* Background Ambience Elements */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-primary-400/10 blur-[120px]" />
+        <div className="absolute top-[20%] right-[-10%] w-[40%] h-[60%] rounded-full bg-primary-400/10 blur-[150px]" />
+        <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[50%] rounded-full bg-indigo-400/10 blur-[150px]" />
       </div>
-    </>
+
+      <main className="relative z-10 container mx-auto px-6 pt-32 pb-24 lg:pt-48">
+        {/* Hero Section */}
+        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-40">
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
+              <Sparkles size={16} className="text-primary-500" />
+              <span className="font-medium">Still in Alpha, stay tuned</span>
+            </div>
+
+            <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-default-900 mb-8 leading-[1.1] drop-shadow-sm">
+              Meet{" "}
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-primary-600">
+                {config.title}
+              </span>
+              .
+            </h1>
+
+            <p className="text-xl lg:text-2xl text-default-600 mb-12 max-w-2xl leading-relaxed font-light">
+              <span className="px-1">A documentation framework built with</span>
+              <span className="px-1 inline-flex items-center ">
+                Vite
+                <img className="w-5 h-5 ml-1" src="/vite.svg" alt="Vite Logo" />
+                ,
+              </span>
+              <span className="px-1 inline-flex items-center ">
+                TanStack Start
+                <img
+                  className="w-5 h-5 ml-1"
+                  src="/tanstack.png"
+                  alt="Tanstack logo"
+                />
+                ,
+              </span>
+              <span className="px-1 inline-flex items-center ">
+                and TailwindCSS
+                <img
+                  className="w-5 h-5 ml-1"
+                  src="/tailwindcss.svg"
+                  alt="tailwind logo"
+                />
+              </span>
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+              <Link to="/docs/introduction" className="w-full sm:w-auto">
+                <button className="w-full sm:w-auto rounded-full px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary-500/20 flex items-center justify-center gap-3">
+                  Get Started <ArrowRight size={18} />
+                </button>
+              </Link>
+              <a
+                href="https://github.com/lukonik/Prestige"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full sm:w-auto"
+              >
+                <button className="w-full sm:w-auto rounded-full px-8 py-4 border border-default-200 bg-white hover:bg-default-50 text-default-700 font-medium transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center gap-3">
+                  <Github size={20} />
+                  <span>Star on GitHub</span>
+                </button>
+              </a>
+            </div>
+          </div>
+
+          {/* Hero Image */}
+          <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative">
+            <div className="relative rounded-3xl overflow-hidden border border-default-200/50 bg-white/40 ring-1 ring-default-900/5 shadow-2xl group flex items-center justify-center">
+              <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
+              <div className="w-full h-[400px] lg:h-[600px] flex items-center justify-center p-8 lg:p-16">
+                <Logo
+                  alt="Prestige Logo"
+                  className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain transition-transform duration-2000 group-hover:scale-110 ease-out drop-shadow-2xl"
+                />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-default-900/5 to-transparent z-10 pointer-events-none" />
+            </div>
+            {/* Ambient Glow behind image */}
+            <div className="absolute -inset-4 bg-linear-to-br from-primary-400/30 to-primary-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
+          </div>
+        </div>
+
+        {/* Quote Section */}
+        <div className="mb-40 relative z-10 py-16 px-8 rounded-3xl bg-linear-to-b from-default-100/50 to-transparent border border-default-200/50 text-center flex flex-col items-center">
+          <Sparkles className="w-8 h-8 text-primary-500 mb-6 opacity-80" />
+          <blockquote className="text-2xl lg:text-3xl leading-relaxed lg:leading-[1.6] text-default-800 font-light max-w-4xl mx-auto">
+            "Every great open-source project consists of three acts. The first
+            is writing the code. The second is testing the code. The third, and
+            hardest part, is writing the documentation. That part we call{" "}
+            <strong className="font-semibold text-primary-600">
+              The Prestige
+            </strong>
+            ."
+          </blockquote>
+        </div>
+
+        {/* Features Section */}
+        <div className="mt-32 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl lg:text-5xl font-bold text-default-900 mb-6 tracking-tight">
+              Magic Features
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+            {features.map((feature, i) => (
+              <div
+                key={i}
+                className="group p-8 rounded-3xl border border-default-200 bg-white hover:bg-default-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 p-32 bg-linear-to-bl from-primary-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full blur-3xl translate-x-10 -translate-y-10" />
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-14 h-14 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center mb-8 text-primary-600 group-hover:bg-primary-600 group-hover:text-white group-hover:scale-110 transition-all duration-500 ease-out shadow-sm">
+                    <feature.icon size={26} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-2xl font-bold text-default-900 mb-4 tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-default-600 leading-relaxed font-light mt-auto text-lg">
+                    {feature.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </main>
+    </div>
   );
 }

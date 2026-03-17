@@ -11,6 +11,7 @@ import viteReact from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 
 const config = defineConfig({
+  base: "/prestige/",
   plugins: [
     prestige({
       title: "Prestige",

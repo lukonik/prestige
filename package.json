@@ -23,7 +23,8 @@
     "build:all": "pnpm -p build",
     "test:all": "pnpm -p test",
     "release-v": "pnpm --filter prestige release-v",
-    "docs": "pnpm run --filter docs dev"
+    "docs": "pnpm run --filter docs dev",
+    "install:template": "cd template && pnpm install --no-lockfile --ignore-workspace"
   },
   "dependencies": {
     "@semantic-release/changelog": "^6.0.3",

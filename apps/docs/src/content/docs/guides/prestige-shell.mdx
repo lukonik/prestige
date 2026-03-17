@@ -1,0 +1,63 @@
+---
+title: Prestige Shell Setup
+description: Guide on how to wrap your application with Prestige Shell.
+---
+
+# Prestige Shell
+
+`PrestigeShell` is the core layout component that wraps your application to provide the Prestige documentation theme structure, including the header, sidebar navigation, main content area, and footer.
+
+It seamlessly handles responsive layouts, light/dark mode theming, and integrates with your customized configuration options such as GitHub links and integrated search.
+
+## Basic Setup
+
+To use `PrestigeShell`, you should add it to your root layout or root route file, typically `__root.tsx` when using `@tanstack/react-router`.
+
+Wrap the `<Outlet />` (or equivalent content placeholder) with `PrestigeShell`:
+
+```tsx
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { PrestigeShell } from "@lonik/prestige/ui";
+
+export const Route = createRootRoute({
+  component: () => (
+    <PrestigeShell>
+      <Outlet />
+    </PrestigeShell>
+  ),
+});
+```
+
+This simple setup instantly adds the Prestige documentation UI around your content.
+
+## Configuration Options
+
+You can customize the header and footer by passing `options` of type `PrestigeShellProps`.
+
+```tsx
+import { Outlet, createRootRoute } from "@tanstack/react-router";
+import { PrestigeShell, type PrestigeShellProps } from "@lonik/prestige/ui";
+
+const shellOptions: PrestigeShellProps = {
+  github: "https://github.com/lukonik/prestige",
+  algolia: {
+    appId: "YOUR_APP_ID",
+    apiKey: "YOUR_SEARCH_API_KEY",
+    indices: ["prestige_docs"],
+  },
+  license: {
+    label: "MIT",
+    url: "https://opensource.org/licenses/MIT",
+  },
+};
+
+export const Route = createRootRoute({
+  component: () => (
+    <PrestigeShell options={shellOptions}>
+      <Outlet />
+    </PrestigeShell>
+  ),
+});
+```
+
+For full reference check the [Prestige Shell Reference](/docs/reference/prestige-shell-reference) page.

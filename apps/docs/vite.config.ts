@@ -37,6 +37,10 @@ const config = defineConfig({
                   slug: "docs/guides/collection",
                 },
                 {
+                  label: "Prestige Shell",
+                  slug: "docs/guides/prestige-shell",
+                },
+                {
                   label: "Page",
                   slug: "docs/guides/page",
                 },

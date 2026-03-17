@@ -18,7 +18,7 @@ export async function compileRoutes(
 
     for (const [key, links] of linksMap) {
       const onlyInternalLinks = links.filter((l) => "slug" in l);
-
+ 
       const sidebarPath = key;
       const sidebarFile = sidebarPath + ".lazy.tsx";
       generatedFiles.set(sidebarFile, createLayoutRoute(key));

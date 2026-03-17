@@ -1,13 +1,15 @@
-import config from "virtual:prestige/config";
-import { PrestigeShellProps } from "../../routes/prestige-shell";
+import {
+  LicenseOptions,
+  PrestigeShellProps,
+} from "../../routes/prestige-shell";
 
-function License() {
-  if (!config.license) {
+function License({ license }: { license: LicenseOptions | undefined }) {
+  if (!license) {
     return null;
   }
   return (
-    <a target="_blank" href={config.license.url}>
-      Released under: {config.license.label}
+    <a target="_blank" href={license.url}>
+      Released under: {license.label}
     </a>
   );
 }
@@ -21,10 +23,11 @@ function Copyright({ copyright }: Pick<PrestigeShellProps, "copyright">) {
 
 export default function Footer({
   copyright,
-}: Pick<PrestigeShellProps, "copyright">) {
+  license,
+}: Pick<PrestigeShellProps, "copyright" | "license">) {
   return (
-    <footer className="mt-10 flex items-center justify-center flex-col gap-2 px-4 border-t border-t-default-100 pt-10 bg-default-50 text-sm py-10 text-default-700">
-      <License />
+    <footer className="flex items-center justify-center flex-col gap-2 px-4 border-t border-t-default-100 pt-10 bg-default-50 text-sm py-10 text-default-700">
+      <License license={license} />
       <Copyright copyright={copyright} />
     </footer>
   );

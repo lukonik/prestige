@@ -1,5 +1,0 @@
-import { createLazyFileRoute } from "@tanstack/react-router";
-import * as contentData from "virtual:prestige/content/docs/introduction";
-import { LazyContentRoute } from "@lonik/prestige/ui";
-
-export const Route = createLazyFileRoute('/(prestige)/docs/introduction')(LazyContentRoute(contentData));

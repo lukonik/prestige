@@ -12,11 +12,9 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as prestigeDocsShowcaseRouteImport } from './routes/(prestige)/docs.showcase'
 
 const prestigeDocsLazyRouteImport = createFileRoute('/(prestige)/docs')()
-const prestigeDocsIntroductionLazyRouteImport = createFileRoute(
-  '/(prestige)/docs/introduction',
-)()
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -30,39 +28,38 @@ const prestigeDocsLazyRoute = prestigeDocsLazyRouteImport
     getParentRoute: () => rootRouteImport,
   } as any)
   .lazy(() => import('./routes/(prestige)/docs.lazy').then((d) => d.Route))
-const prestigeDocsIntroductionLazyRoute =
-  prestigeDocsIntroductionLazyRouteImport
-    .update({
-      id: '/introduction',
-      path: '/introduction',
-      getParentRoute: () => prestigeDocsLazyRoute,
-    } as any)
-    .lazy(() =>
-      import('./routes/(prestige)/docs.introduction.lazy').then((d) => d.Route),
-    )
+const prestigeDocsShowcaseRoute = prestigeDocsShowcaseRouteImport
+  .update({
+    id: '/showcase',
+    path: '/showcase',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.showcase.lazy').then((d) => d.Route),
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
+  '/docs/showcase': typeof prestigeDocsShowcaseRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
+  '/docs/showcase': typeof prestigeDocsShowcaseRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/(prestige)/docs': typeof prestigeDocsLazyRouteWithChildren
-  '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionLazyRoute
+  '/(prestige)/docs/showcase': typeof prestigeDocsShowcaseRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/docs' | '/docs/introduction'
+  fullPaths: '/' | '/docs' | '/docs/showcase'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs' | '/docs/introduction'
-  id: '__root__' | '/' | '/(prestige)/docs' | '/(prestige)/docs/introduction'
+  to: '/' | '/docs' | '/docs/showcase'
+  id: '__root__' | '/' | '/(prestige)/docs' | '/(prestige)/docs/showcase'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -86,22 +83,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof prestigeDocsLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(prestige)/docs/introduction': {
-      id: '/(prestige)/docs/introduction'
-      path: '/introduction'
-      fullPath: '/docs/introduction'
-      preLoaderRoute: typeof prestigeDocsIntroductionLazyRouteImport
+    '/(prestige)/docs/showcase': {
+      id: '/(prestige)/docs/showcase'
+      path: '/showcase'
+      fullPath: '/docs/showcase'
+      preLoaderRoute: typeof prestigeDocsShowcaseRouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
   }
 }
 
 interface prestigeDocsLazyRouteChildren {
-  prestigeDocsIntroductionLazyRoute: typeof prestigeDocsIntroductionLazyRoute
+  prestigeDocsShowcaseRoute: typeof prestigeDocsShowcaseRoute
 }
 
 const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
-  prestigeDocsIntroductionLazyRoute: prestigeDocsIntroductionLazyRoute,
+  prestigeDocsShowcaseRoute: prestigeDocsShowcaseRoute,
 }
 
 const prestigeDocsLazyRouteWithChildren =

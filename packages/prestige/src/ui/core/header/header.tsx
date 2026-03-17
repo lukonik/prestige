@@ -21,7 +21,7 @@ export default function Header({
   return (
     <header className="sticky top-0 z-40 flex h-header  border-b border-default-200 bg-default-50/80 px-4 backdrop-blur-md">
       <div className="container mx-auto flex items-center justify-between">
-        <div className="flex gap-4 items-baseline">
+        <div className="flex gap-4 items-center">
           <Link
             activeProps={{
               className: "border-default-800 text-default-800 font-medium",

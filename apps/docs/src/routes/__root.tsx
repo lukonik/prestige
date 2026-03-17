@@ -7,9 +7,11 @@ import {
   Scripts,
 } from "@tanstack/react-router";
 import config from "virtual:prestige/config";
+import HeaderLogo from "../assets/logo.png?$oh";
 import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
+  customHeaderTitle: () => <HeaderLogo alt="header logo" className="w-10 h-10" />,
   copyright: () => (
     <a
       className="underline"

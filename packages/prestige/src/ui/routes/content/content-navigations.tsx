@@ -56,8 +56,16 @@ export default function ContentNavigations({
   return (
     <div className="flex gap-6">
       <div className="lg:flex flex-row items-center gap-2 mt-2 lg:mt-8 lg:w-web-content w-full">
-        {prev && <ContentNavigation navigation={prev} />}
-        {next && <ContentNavigation navigation={next} isNext />}
+        {prev ? (
+          <ContentNavigation navigation={prev} />
+        ) : (
+          <div className="flex-1 hidden lg:block "></div>
+        )}
+        {next ? (
+          <ContentNavigation navigation={next} isNext />
+        ) : (
+          <div className="flex-1 hidden lg:block"></div>
+        )}
       </div>
       <div className="lg:w-web-table-of-content h-1"></div>
     </div>

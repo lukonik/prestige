@@ -37,6 +37,9 @@ jobs:
       - name: Build workspace package
         run: pnpm run --filter @lonik/prestige build
 
+      - name: Build site
+        run: pnpm run docs:build
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

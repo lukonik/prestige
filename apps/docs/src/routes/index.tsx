@@ -19,6 +19,7 @@ import {
   Zap,
 } from "lucide-react";
 import config from "virtual:prestige/config";
+import Logo from "../assets/logo.png?$oh";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -131,12 +132,14 @@ function RouteComponent() {
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-slate-200 mb-8 text-sm text-slate-600 shadow-sm">
               <Sparkles size={16} className="text-primary-500" />
-              <span className="font-medium">Introducing the definitive documentation framework</span>
+              <span className="font-medium">
+                Introducing the definitive documentation framework
+              </span>
             </div>
 
             <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-slate-900 mb-8 leading-[1.1] drop-shadow-sm">
               Meet{" "}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-blue-600">
+              <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-blue-600">
                 {config.title}
               </span>
               .
@@ -169,17 +172,18 @@ function RouteComponent() {
 
           {/* Hero Image */}
           <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative">
-            <div className="relative rounded-3xl overflow-hidden border border-slate-200/50 bg-white/40 ring-1 ring-slate-900/5 shadow-2xl group">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
-              <img
-                src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2400&auto=format&fit=crop"
-                alt="Abstract Light Scene"
-                className="w-full h-[400px] lg:h-[600px] object-cover transition-transform duration-[2000ms] group-hover:scale-105 ease-out"
-              />
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900/5 to-transparent z-10 pointer-events-none" />
+            <div className="relative rounded-3xl overflow-hidden border border-slate-200/50 bg-white/40 ring-1 ring-slate-900/5 shadow-2xl group flex items-center justify-center">
+              <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
+              <div className="w-full h-[400px] lg:h-[600px] flex items-center justify-center p-8 lg:p-16">
+                <Logo
+                  alt="Prestige Logo"
+                  className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain transition-transform duration-2000 group-hover:scale-110 ease-out drop-shadow-2xl"
+                />
+              </div>
+              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-slate-900/5 to-transparent z-10 pointer-events-none" />
             </div>
             {/* Ambient Glow behind image */}
-            <div className="absolute -inset-4 bg-gradient-to-br from-primary-400/30 to-blue-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
+            <div className="absolute -inset-4 bg-linear-to-br from-primary-400/30 to-blue-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
           </div>
         </div>
 
@@ -201,7 +205,7 @@ function RouteComponent() {
                 key={i}
                 className="group p-8 rounded-3xl border border-slate-200 bg-white hover:bg-slate-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
               >
-                <div className="absolute top-0 right-0 p-32 bg-gradient-to-bl from-primary-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full blur-3xl translate-x-10 -translate-y-10" />
+                <div className="absolute top-0 right-0 p-32 bg-linear-to-bl from-primary-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full blur-3xl translate-x-10 -translate-y-10" />
                 <div className="relative z-10 flex flex-col h-full">
                   <div className="w-14 h-14 rounded-full bg-primary-50 border border-primary-100 flex items-center justify-center mb-8 text-primary-600 group-hover:bg-primary-600 group-hover:text-white group-hover:scale-110 transition-all duration-500 ease-out shadow-sm">
                     <feature.icon size={26} strokeWidth={1.5} />
@@ -220,7 +224,7 @@ function RouteComponent() {
 
         {/* Footer CTA */}
         <div className="mt-40 pt-32 pb-16 border-t border-slate-200 flex flex-col items-center text-center relative">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-[1px] bg-gradient-to-r from-transparent via-primary-400/30 to-transparent" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-linear-to-r from-transparent via-primary-400/30 to-transparent" />
           <h2 className="text-4xl lg:text-6xl font-bold text-slate-900 mb-8 tracking-tight">
             Ready to break free?
           </h2>

@@ -10,6 +10,7 @@ import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
 } from "./content/content-sidebar.store";
+import { initContentWatcher } from "./content/content-watcher";
 import {
   CONTENT_VIRTUAL_ID,
   getSlugByPath,
@@ -28,7 +29,6 @@ import {
 import { genExportDefault, genExportUndefined } from "./utils/code-generation";
 import { extractVirtualId } from "./utils/file-utils";
 import { createLogger, Logger } from "./utils/logger";
-import { initContentWatcher } from "./content/content-watcher";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
@@ -78,12 +78,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       await compileRoutes(linksMap, routesDir, logger);
     },
     configureServer(server) {
-      const contentWatcher = initContentWatcher(contentDir, () => {
-        server.restart();
-      });
-      server.httpServer?.on("close", () => {
-        contentWatcher();
-      });
+      initContentWatcher(contentDir, server);
     },
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"

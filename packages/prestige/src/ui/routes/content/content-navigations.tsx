@@ -50,7 +50,6 @@ export default function ContentNavigations({
   prev: SiblingNavigationType | null | undefined;
   next: SiblingNavigationType | null | undefined;
 }) {
-  if (!prev && !next) return null;
   // width of content navigation must match with content route content width, so we manually
   // add empty div with table-of-content width and add proper gap to match the size
   return (

@@ -148,14 +148,14 @@ function RouteComponent() {
               <span className="px-1">A documentation framework built with</span>
               <span className="px-1 inline-flex items-center ">
                 Vite
-                <img className="w-5 h-5 ml-1" src="/vite.svg" alt="Vite Logo" />
+                <img className="w-5 h-5 ml-1" src="/prestige/vite.svg" alt="Vite Logo" />
                 ,
               </span>
               <span className="px-1 inline-flex items-center ">
                 TanStack Start
                 <img
                   className="w-5 h-5 ml-1"
-                  src="/tanstack.png"
+                  src="/prestige/tanstack.png"
                   alt="Tanstack logo"
                 />
                 ,
@@ -164,7 +164,7 @@ function RouteComponent() {
                 and TailwindCSS
                 <img
                   className="w-5 h-5 ml-1"
-                  src="/tailwindcss.svg"
+                  src="/prestige/tailwindcss.svg"
                   alt="tailwind logo"
                 />
               </span>

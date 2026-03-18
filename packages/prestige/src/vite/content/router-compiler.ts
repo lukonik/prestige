@@ -1,5 +1,5 @@
 import { mkdir, readdir, readFile, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { join } from "pathe";
 import { SidebarLinkType } from "../core/content/content.types";
 import { Logger } from "../utils/logger";
 
@@ -18,7 +18,7 @@ export async function compileRoutes(
 
     for (const [key, links] of linksMap) {
       const onlyInternalLinks = links.filter((l) => "slug" in l);
- 
+
       const sidebarPath = key;
       const sidebarFile = sidebarPath + ".lazy.tsx";
       generatedFiles.set(sidebarFile, createLayoutRoute(key));

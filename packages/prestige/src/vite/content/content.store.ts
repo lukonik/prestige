@@ -1,6 +1,5 @@
-import { join } from "node:path";
 import { pathToFileURL } from "node:url";
-import { parse, relative } from "pathe";
+import { join, parse, relative } from "pathe";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
 import {

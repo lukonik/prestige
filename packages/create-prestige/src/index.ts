@@ -2,8 +2,8 @@
 import { cancel, intro, isCancel, outro, spinner, text } from "@clack/prompts";
 import { downloadTemplate } from "giget";
 import fs from "node:fs/promises";
-import path from "node:path";
 import { installDependencies } from "nypm";
+import path from "pathe";
 import pc from "picocolors";
 
 async function main() {
@@ -68,7 +68,7 @@ async function main() {
       let viteConfig = await fs.readFile(viteConfigPath, "utf-8");
       viteConfig = viteConfig.replace(
         /__PROJECT_TITLE__/g,
-        projectName as string
+        projectName as string,
       );
       await fs.writeFile(viteConfigPath, viteConfig);
     }
@@ -84,7 +84,7 @@ async function main() {
       pkg.name = projectName as string;
       await fs.writeFile(packageJsonPath, JSON.stringify(pkg, null, 2));
     }
-    
+
     s.stop("Project configured");
   } catch (err) {
     s.stop("Failed to configure project");

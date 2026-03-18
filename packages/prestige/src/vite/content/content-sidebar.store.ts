@@ -1,6 +1,5 @@
 import { readdir } from "node:fs/promises";
-import { basename } from "node:path";
-import { join } from "pathe";
+import { basename, join } from "pathe";
 import {
   Collection,
   CollectionGroup,
@@ -17,9 +16,9 @@ import {
 } from "../core/content/content.types";
 import { PrestigeError } from "../utils/errors";
 import { pathExists } from "../utils/file-utils";
+import { Logger } from "../utils/logger";
 import { compileFrontmatter } from "./content-compiler";
 import { getFileBySlug } from "./content.store";
-import { Logger } from "../utils/logger";
 
 export const SIDEBAR_VIRTUAL_ID = "virtual:prestige/sidebar/";
 

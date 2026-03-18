@@ -19,7 +19,6 @@ import {
   Zap,
 } from "lucide-react";
 import config from "virtual:prestige/config";
-import Logo from "../assets/logo.png?$oh";
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,
@@ -126,16 +125,11 @@ function RouteComponent() {
         <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[50%] rounded-full bg-indigo-400/10 blur-[150px]" />
       </div>
 
-      <main className="relative z-10 container mx-auto px-6 pt-32 pb-24 lg:pt-48">
+      <main className="relative z-10 container mx-auto px-6 pt-32 pb-24 lg:pt-30">
         {/* Hero Section */}
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-40">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
-              <Sparkles size={16} className="text-primary-500" />
-              <span className="font-medium">Still in Alpha, stay tuned</span>
-            </div>
-
-            <h1 className="text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-default-900 mb-8 leading-[1.1] drop-shadow-sm">
+            <h1 className="mx-auto text-5xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-default-900 mb-8 leading-[1.1] drop-shadow-sm">
               Meet{" "}
               <span className="text-transparent bg-clip-text bg-linear-to-r from-primary-600 to-primary-600">
                 {config.title}
@@ -143,7 +137,7 @@ function RouteComponent() {
               .
             </h1>
 
-            <p className="text-xl lg:text-2xl text-default-600 mb-12 max-w-2xl leading-relaxed font-light">
+            <p className="text-xl lg:text-2xl text-default-600 mb-12 max-w-2xl leading-relaxed font-light text-center mx-auto">
               <span className="px-1">A documentation framework built with</span>
               <span className="px-1 inline-flex items-center ">
                 Vite
@@ -169,7 +163,7 @@ function RouteComponent() {
               </span>
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mx-auto">
               <Link to="/docs/showcase" className="w-full sm:w-auto">
                 <button className="w-full sm:w-auto rounded-full px-8 py-4 bg-primary-600 hover:bg-primary-700 text-white font-semibold transition-all hover:scale-105 active:scale-95 shadow-xl shadow-primary-500/20 flex items-center justify-center gap-3">
                   Get Started <ArrowRight size={18} />
@@ -188,43 +182,13 @@ function RouteComponent() {
               </a>
             </div>
           </div>
-
-          {/* Hero Image */}
-          <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative">
-            <div className="relative rounded-3xl overflow-hidden border border-default-200/50 bg-white/40 ring-1 ring-default-900/5 shadow-2xl group flex items-center justify-center">
-              <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
-              <div className="w-full h-[400px] lg:h-[600px] flex items-center justify-center p-8 lg:p-16">
-                <Logo
-                  alt="Prestige Logo"
-                  className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain transition-transform duration-2000 group-hover:scale-110 ease-out drop-shadow-2xl"
-                />
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-default-900/5 to-transparent z-10 pointer-events-none" />
-            </div>
-            {/* Ambient Glow behind image */}
-            <div className="absolute -inset-4 bg-linear-to-br from-primary-400/30 to-primary-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
-          </div>
-        </div>
-
-        {/* Quote Section */}
-        <div className="mb-40 relative z-10 py-16 px-8 rounded-3xl bg-linear-to-b from-default-100/50 to-transparent border border-default-200/50 text-center flex flex-col items-center">
-          <Sparkles className="w-8 h-8 text-primary-500 mb-6 opacity-80" />
-          <blockquote className="text-2xl lg:text-3xl leading-relaxed lg:leading-[1.6] text-default-800 font-light max-w-4xl mx-auto">
-            "Every great open-source project consists of three acts. The first
-            is writing the code. The second is testing the code. The third, and
-            hardest part, is writing the documentation. That part we call{" "}
-            <strong className="font-semibold text-primary-600">
-              The Prestige
-            </strong>
-            ."
-          </blockquote>
         </div>
 
         {/* Features Section */}
         <div className="mt-32 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-bold text-default-900 mb-6 tracking-tight">
-              Magic Features
+              Features
             </h2>
           </div>
 

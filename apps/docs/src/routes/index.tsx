@@ -127,10 +127,10 @@ function RouteComponent() {
         <div className="absolute bottom-[-20%] left-[20%] w-[60%] h-[50%] rounded-full bg-indigo-400/10 blur-[150px]" />
       </div>
 
-      <main className="relative z-10 container mx-auto px-6 pt-32 pb-24 lg:pt-48">
+      <main className="relative z-10 container mx-auto  pt-6 pb-24 lg:pt-20 lg:mb-10">
         {/* Hero Section */}
-        <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24 mb-40">
-          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2">
+          <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left px-6">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Bug size={16} className="text-primary-500" />
               <span className="font-medium">Still in Alpha, stay tuned</span>
@@ -148,7 +148,11 @@ function RouteComponent() {
               <span className="px-1">A documentation framework built with</span>
               <span className="px-1 inline-flex items-center ">
                 Vite
-                <img className="w-5 h-5 ml-1" src="/prestige/vite.svg" alt="Vite Logo" />
+                <img
+                  className="w-5 h-5 ml-1"
+                  src="/prestige/vite.svg"
+                  alt="Vite Logo"
+                />
                 ,
               </span>
               <span className="px-1 inline-flex items-center ">
@@ -192,23 +196,23 @@ function RouteComponent() {
 
           {/* Hero Image */}
           <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative">
-            <div className="relative rounded-3xl overflow-hidden border border-default-200/50 bg-white/40 ring-1 ring-default-900/5 shadow-2xl group flex items-center justify-center">
-              <div className="absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
-              <div className="w-full h-[400px] lg:h-[600px] flex items-center justify-center p-8 lg:p-16">
+            <div className="relative lg:rounded-3xl overflow-hidden lg:border lg:border-default-200/50 lg:bg-white/40 lg:ring-1 lg:ring-default-900/5 lg:shadow-2xl group flex items-center justify-center">
+              <div className="lg:block hidden absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
+              <div className="w-full h-[350px] lg:h-150 flex items-center justify-center lg:p-16">
                 <Logo
                   alt="Prestige Logo"
-                  className="w-full max-w-[320px] lg:max-w-[400px] h-auto object-contain transition-transform duration-2000 group-hover:scale-110 ease-out drop-shadow-2xl"
+                  className="w-full max-w-[250px] lg:max-w-100 h-auto object-contain transition-transform duration-2000 group-hover:scale-110 ease-out drop-shadow-2xl"
                 />
               </div>
               <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-default-900/5 to-transparent z-10 pointer-events-none" />
             </div>
             {/* Ambient Glow behind image */}
-            <div className="absolute -inset-4 bg-linear-to-br from-primary-400/30 to-primary-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
+            <div className=" absolute -inset-4 bg-linear-to-br from-primary-400/30 to-primary-400/30 blur-3xl rounded-[3rem] -z-10 opacity-60" />
           </div>
         </div>
 
         {/* Quote Section */}
-        <div className="mb-40 relative z-10 py-16 px-8 rounded-3xl bg-linear-to-b from-default-100/50 to-transparent border border-default-200/50 text-center flex flex-col items-center">
+        <div className="lg:mb-40 relative z-10 py-16 px-8 rounded-3xl bg-linear-to-b from-default-100/50 to-transparent border border-default-200/50 text-center flex flex-col items-center">
           <Sparkles className="w-8 h-8 text-primary-500 mb-6 opacity-80" />
           <blockquote className="text-2xl lg:text-3xl leading-relaxed lg:leading-[1.6] text-default-800 font-light max-w-4xl mx-auto">
             "Every great open-source project consists of three acts. The first
@@ -222,14 +226,14 @@ function RouteComponent() {
         </div>
 
         {/* Features Section */}
-        <div className="mt-32 relative z-10">
+        <div className="lg:mt-32 mt-10 relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-4xl lg:text-5xl font-bold text-default-900 mb-6 tracking-tight">
               Magic Features
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr px-6">
             {features.map((feature, i) => (
               <div
                 key={i}

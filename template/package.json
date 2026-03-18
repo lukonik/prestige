@@ -27,7 +27,7 @@
     "tailwindcss": "^4.2.1"
   },
   "devDependencies": {
-    "@lonik/oh-image": "^3.1.0",
+    "@lonik/oh-image": "@latest",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/devtools-vite": "latest",
     "@testing-library/dom": "^10.4.1",

@@ -11,7 +11,9 @@ import HeaderLogo from "../assets/logo.png?$oh";
 import appCss from "../styles.css?url";
 
 const options: PrestigeShellProps = {
-  customHeaderTitle: () => <HeaderLogo alt="header logo" className="w-10 h-10" />,
+  customHeaderTitle: () => (
+    <HeaderLogo alt="header logo" className="w-10 h-10" />
+  ),
   copyright: () => (
     <a
       className="underline"
@@ -27,6 +29,11 @@ const options: PrestigeShellProps = {
     url: "https://opensource.org/licenses/MIT",
   },
   github: "https://github.com/lukonik/prestige",
+  algolia: {
+    appId: "IYIAYOLJHX",
+    apiKey: "137a443b7b9b637b8b76b11a2c82c15e",
+    indices: ["prestigeprestige"],
+  },
 };
 
 export const Route = createRootRoute({

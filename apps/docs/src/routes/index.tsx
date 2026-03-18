@@ -129,7 +129,7 @@ function RouteComponent() {
 
       <main className="relative z-10 container mx-auto  pt-6 pb-24 lg:pt-20 lg:mb-10">
         {/* Hero Section */}
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 lg:h-auto h-[50vh]">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 lg:min-h-auto min-h-[50vh]">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left px-6">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Bug size={16} className="text-primary-500" />

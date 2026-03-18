@@ -129,7 +129,7 @@ function RouteComponent() {
 
       <main className="relative z-10 container mx-auto  pt-6 pb-24 lg:pt-20 lg:mb-10">
         {/* Hero Section */}
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 h-[50vh]">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left px-6">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Bug size={16} className="text-primary-500" />
@@ -195,7 +195,7 @@ function RouteComponent() {
           </div>
 
           {/* Hero Image */}
-          <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative">
+          <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative hidden lg:block">
             <div className="relative lg:rounded-3xl overflow-hidden lg:border lg:border-default-200/50 lg:bg-white/40 lg:ring-1 lg:ring-default-900/5 lg:shadow-2xl group flex items-center justify-center">
               <div className="lg:block hidden absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
               <div className="w-full h-[350px] lg:h-150 flex items-center justify-center lg:p-16">

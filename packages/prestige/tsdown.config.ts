@@ -18,7 +18,6 @@ export default defineConfig({
   skipNodeModulesBundle: true,
   external: [
     "picocolors",
-    "node:path",
     "node:fs/promises",
     "node:url",
     /^virtual:.*/,

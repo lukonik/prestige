@@ -12,7 +12,7 @@
 
 Prestige is a documentation framework Built on Tanstack Start,Vite,Tailwind and React
 
-For more information, please visit our [official website](https://github.com/lukonik/prestige).
+For more information, please visit our [official website](https://lukonik.github.io/prestige/).
 
 ## Usage
 

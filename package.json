@@ -2,7 +2,17 @@
   "name": "root",
   "private": true,
   "description": "",
-  "keywords": [],
+  "keywords": [
+    "prestige",
+    "documentation",
+    "static-site-generator",
+    "markdown",
+    "mdx",
+    "react",
+    "tanstack-start",
+    "tanstack-router",
+    "vite"
+  ],
   "license": "ISC",
   "author": "",
   "repository": {

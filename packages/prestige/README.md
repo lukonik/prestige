@@ -1,29 +1,25 @@
-# react-components-starter
+<p align="center">
+  <img src="logo.png" alt="Prestige Logo" width="150" />
+</p>
 
-A starter for creating a React component library.
+<h1 align="center">Prestige</h1>
 
-## Development
+<p align="center">
+  <a href="https://www.npmjs.com/package/@lonik/prestige">
+    <img src="https://img.shields.io/npm/v/@lonik/prestige.svg" alt="NPM Version" />
+  </a>
+</p>
 
-- Install dependencies:
+Prestige is a documentation framework Built on Tanstack Start,Vite,Tailwind and React
 
-```bash
-npm install
-```
+For more information, please visit our [official website](https://github.com/lukonik/prestige).
 
-- Run the playground:
+## Usage
 
-```bash
-npm run play
-```
-
-- Run the unit tests:
-
-```bash
-npm run test
-```
-
-- Build the library:
+To get started quickly, you can bootstrap a new project using the `create-prestige` script:
 
 ```bash
-npm run build
+npx create-prestige@latest my-docs
+# or
+pnpm create prestige@latest my-docs
 ```

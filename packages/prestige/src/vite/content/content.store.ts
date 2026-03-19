@@ -9,6 +9,7 @@ import {
 import { compileMarkdown } from "./content-compiler";
 
 import { PrestigeError } from "../utils/errors";
+import { Logger } from "../utils/logger";
 import { compileFrontmatter } from "./content-compiler";
 
 export const CONTENT_VIRTUAL_ID = "virtual:prestige/content/";
@@ -78,6 +79,7 @@ export async function resolveContent(
   id: string,
   linksMap: Map<string, SidebarLinkType[]>,
   contentDir: string,
+  logger: Logger,
 ) {
   const slug = id.replace(CONTENT_VIRTUAL_ID, "").replace("\0", "");
   const base = slug.split("/")[0] as string;
@@ -87,7 +89,17 @@ export async function resolveContent(
     slug,
     contentDir,
   );
-  let resolvedCode = code;
+
+  if (error) {
+    logger.error(
+      `\n🚨 Compile Error\n` +
+        `File: ${error.file || "Unknown file"}\n` +
+        `Message: ${error.message || String(error)}\n` +
+        (error.snippet ? `\n${error.snippet}\n` : ""),
+    );
+  }
+
+  let resolvedCode = code || "";
 
   resolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
   resolvedCode += `\n export const prev = ${JSON.stringify(prev)}\n`;

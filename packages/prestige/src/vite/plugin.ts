@@ -114,7 +114,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       }
       if (id.includes(CONTENT_VIRTUAL_ID)) {
         logger.debug(`Loading content virtual module: ${id}`);
-        return await resolveContent(id, linksMap, contentDir);
+        return await resolveContent(id, linksMap, contentDir, logger);
       }
       if (id.includes(COLLECTION_VIRTUAL_ID)) {
         logger.debug(`Loading collection virtual module: ${id}`);

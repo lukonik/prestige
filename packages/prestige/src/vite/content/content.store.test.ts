@@ -1,17 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import {
-  CONTENT_VIRTUAL_ID,
-  resolveSiblings,
-  resolveMarkdown,
-  resolveContent,
-  getPathBySlug,
-  getFileBySlug,
-  getVirtualModuleIdsForFile,
-  getSlugByPath,
-} from "./content.store";
 import { glob } from "tinyglobby";
 import { read } from "to-vfile";
-import { compileMarkdown, compileFrontmatter } from "./content-compiler";
+import { beforeEach, describe, expect, it, vi } from "vitest";
+import { compileFrontmatter, compileMarkdown } from "./content-compiler";
+import {
+  CONTENT_VIRTUAL_ID,
+  getFileBySlug,
+  getPathBySlug,
+  getSlugByPath,
+  getVirtualModuleIdsForFile,
+  resolveContent,
+  resolveMarkdown,
+  resolveSiblings,
+} from "./content.store";
 
 vi.mock("tinyglobby", () => ({
   glob: vi.fn(),
@@ -24,6 +24,14 @@ vi.mock("to-vfile", () => ({
 vi.mock("./content-compiler", () => ({
   compileMarkdown: vi.fn(),
   compileFrontmatter: vi.fn(),
+}));
+
+vi.mock("../utils/logger", () => ({
+  default: {
+    error: vi.fn(),
+    warn: vi.fn(),
+    info: vi.fn(),
+  }
 }));
 
 describe("content.store", () => {

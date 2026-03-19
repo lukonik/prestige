@@ -239,14 +239,22 @@ export async function compileMarkdown(
 
     // 2. Ensure the file path is explicitly propagated to the error object
     let filePath = error.file || "";
-    if (!filePath && content && typeof content === "object" && "path" in content) {
+    if (
+      !filePath &&
+      content &&
+      typeof content === "object" &&
+      "path" in content
+    ) {
       filePath = content.path as string;
     }
 
     // 3. Generate a visual code snippet for the UI
     let snippet = "";
     if (error.line && content) {
-      const text = typeof content === "string" ? content : String((content as any).value || content);
+      const text =
+        typeof content === "string"
+          ? content
+          : String((content as any).value || content);
       const lines = text.split("\n");
       const errorLineIdx = error.line - 1; // 0-indexed
 
@@ -268,8 +276,6 @@ export async function compileMarkdown(
       snippet = snippetLines.join("\n");
     }
 
-    console.error("EEERRROOOR IS ", error);
-    
     // 4. Return a plain object so JSON.stringify serializes properties correctly
     const plainError = {
       message: error.message || String(error),

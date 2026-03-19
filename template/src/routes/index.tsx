@@ -175,7 +175,7 @@ function RouteComponent() {
                 rel="noreferrer"
                 className="w-full sm:w-auto"
               >
-                <button className="w-full sm:w-auto rounded-full px-8 py-4 border border-default-200 bg-white hover:bg-default-50 text-default-700 font-medium transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center gap-3">
+                <button className="w-full sm:w-auto rounded-full px-8 py-4 border border-default-200 bg-default-50 hover:bg-default-50 text-default-700 font-medium transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center gap-3">
                   <Github size={20} />
                   <span>Star on GitHub</span>
                 </button>
@@ -196,7 +196,7 @@ function RouteComponent() {
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="group p-8 rounded-3xl border border-default-200 bg-white hover:bg-default-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
+                className="group p-8 rounded-3xl border border-default-200 bg-default-50 hover:bg-default-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 p-32 bg-linear-to-bl from-primary-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full blur-3xl translate-x-10 -translate-y-10" />
                 <div className="relative z-10 flex flex-col h-full">

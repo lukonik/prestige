@@ -70,8 +70,8 @@ export async function resolveMarkdown(slug: string, contentDir: string) {
   const baseUrl = pathToFileURL(filePath).href;
   const file = await read(filePath);
   const frontmatter = await compileFrontmatter(file);
-  const { code, toc } = await compileMarkdown(file, baseUrl);
-  return { code, toc, frontmatter };
+  const { data, error } = await compileMarkdown(file, baseUrl);
+  return { code: data?.code, toc: data?.toc, frontmatter, error };
 }
 
 export async function resolveContent(
@@ -83,7 +83,10 @@ export async function resolveContent(
   const base = slug.split("/")[0] as string;
 
   const { prev, next } = resolveSiblings(base, slug, linksMap);
-  const { toc, code, frontmatter } = await resolveMarkdown(slug, contentDir);
+  const { toc, code, frontmatter, error } = await resolveMarkdown(
+    slug,
+    contentDir,
+  );
   let resolvedCode = code;
 
   resolvedCode += `\n export const toc = ${JSON.stringify(toc)}\n`;
@@ -92,6 +95,7 @@ export async function resolveContent(
   resolvedCode += `\n export const frontmatter = ${JSON.stringify(
     frontmatter,
   )}\n`;
+  resolvedCode += `\n export const error = ${JSON.stringify(error)}\n`;
   return resolvedCode;
 }
 

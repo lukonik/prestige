@@ -1,4 +1,6 @@
 import { compile } from "@mdx-js/mdx";
+import matter from "gray-matter";
+import { h } from "hastscript";
 import rehypePrism from "rehype-prism-plus";
 import rehypeSlug from "rehype-slug";
 import remarkDirective from "remark-directive";
@@ -6,13 +8,10 @@ import remarkFlexibleToc, { TocItem } from "remark-flexible-toc";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkGfm from "remark-gfm";
 import { PluggableList } from "unified";
-import { Compatible, VFile } from "vfile";
-import matter from "gray-matter";
-import { PrestigeConfig } from "../config/config.types";
-
-import { h } from "hastscript";
 import type { Node } from "unist";
 import { visit } from "unist-util-visit";
+import { Compatible, VFile } from "vfile";
+import { PrestigeConfig } from "../config/config.types";
 
 export default function remarkAdmonitions() {
   return (tree: Node) => {
@@ -162,11 +161,7 @@ export default function remarkAdmonitions() {
           data: {
             hName: "section",
             hProperties: {
-              className: [
-                "[&>p]:mt-0",
-                "[&>p]:mb-2",
-                "[&>p:last-child]:mb-0",
-              ],
+              className: ["[&>p]:mt-0", "[&>p]:mb-2", "[&>p:last-child]:mb-0"],
             },
           },
           children: node.children,
@@ -199,32 +194,94 @@ export async function compileMarkdown(
   content: Readonly<Compatible>,
   baseUrl: string,
   options?: PrestigeConfig["markdown"],
-) {
-  const toc: TocItem[] = [];
+): Promise<{
+  data: { code: string; toc: TocItem[] } | null;
+  error: null | any;
+}> {
+  try {
+    const toc: TocItem[] = [];
 
-  const rehypePlugins: PluggableList = [
-    ...(options?.rehypePlugins ?? []),
-    rehypeSlug,
-    [rehypePrism, { options: { showLineNumbers: false } }],
-    rehypeAddNotProseToPre,
-  ];
+    const rehypePlugins: PluggableList = [
+      ...(options?.rehypePlugins ?? []),
+      rehypeSlug,
+      [rehypePrism, { options: { showLineNumbers: false } }],
+      rehypeAddNotProseToPre,
+    ];
 
-  const remarkPlugins: PluggableList = [
-    ...(options?.remarkPlugins ?? []),
-    remarkFrontmatter,
-    [remarkGfm, options?.gfmOptions || {}],
-    remarkDirective,
-    remarkAdmonitions,
-    [remarkFlexibleToc, { tocRef: toc }],
-  ];
+    const remarkPlugins: PluggableList = [
+      ...(options?.remarkPlugins ?? []),
+      remarkFrontmatter,
+      [remarkGfm, options?.gfmOptions || {}],
+      remarkDirective,
+      remarkAdmonitions,
+      [remarkFlexibleToc, { tocRef: toc }],
+    ];
+    const code = await compile(content, {
+      outputFormat: "program",
+      rehypePlugins,
+      remarkPlugins,
+      baseUrl: baseUrl,
+    });
+    return { data: { code: String(code), toc }, error: null };
+  } catch (error: any) {
+    // 1. Fallback regex to extract coordinates from MDX JSX errors
+    if (!error.line && error.reason) {
+      const match = error.reason.match(/\((\d+):(\d+)-(\d+):(\d+)\)$/);
+      if (match) {
+        error.line = parseInt(match[1], 10);
+        error.column = parseInt(match[2], 10);
+        error.place = {
+          start: { line: error.line, column: error.column },
+          end: { line: parseInt(match[3], 10), column: parseInt(match[4], 10) },
+        };
+      }
+    }
 
-  const code = await compile(content, {
-    outputFormat: "program",
-    rehypePlugins,
-    remarkPlugins,
-    baseUrl: baseUrl,
-  });
-  return { code: String(code), toc };
+    // 2. Ensure the file path is explicitly propagated to the error object
+    let filePath = error.file || "";
+    if (!filePath && content && typeof content === "object" && "path" in content) {
+      filePath = content.path as string;
+    }
+
+    // 3. Generate a visual code snippet for the UI
+    let snippet = "";
+    if (error.line && content) {
+      const text = typeof content === "string" ? content : String((content as any).value || content);
+      const lines = text.split("\n");
+      const errorLineIdx = error.line - 1; // 0-indexed
+
+      const startLineIdx = Math.max(0, errorLineIdx - 2);
+      const endLineIdx = Math.min(lines.length - 1, errorLineIdx + 2);
+
+      const snippetLines = [];
+      for (let i = startLineIdx; i <= endLineIdx; i++) {
+        const isErrorLine = i === errorLineIdx;
+        const lineNumber = String(i + 1).padStart(3, " ");
+        const prefix = isErrorLine ? "> " : "  ";
+        snippetLines.push(`${prefix}${lineNumber} | ${lines[i]}`);
+
+        if (isErrorLine && error.column) {
+          const padding = Math.max(0, error.column - 1);
+          snippetLines.push(`      | ${" ".repeat(padding)}^`);
+        }
+      }
+      snippet = snippetLines.join("\n");
+    }
+
+    console.error("EEERRROOOR IS ", error);
+    
+    // 4. Return a plain object so JSON.stringify serializes properties correctly
+    const plainError = {
+      message: error.message || String(error),
+      reason: error.reason,
+      line: error.line,
+      column: error.column,
+      file: filePath,
+      snippet: snippet,
+    };
+
+    return { data: null, error: plainError };
+  }
 }
 
 export async function compileFrontmatter(vFile: VFile) {

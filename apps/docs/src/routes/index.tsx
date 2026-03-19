@@ -129,7 +129,7 @@ function RouteComponent() {
 
       <main className="relative z-10 container mx-auto  pt-6 pb-24 lg:pt-20 lg:mb-10">
         {/* Hero Section */}
-        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 lg:min-h-auto min-h-[50vh]">
+        <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 lg:mb-10 lg:min-h-auto min-h-[50vh]">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left px-6">
             <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Bug size={16} className="text-primary-500" />
@@ -186,7 +186,7 @@ function RouteComponent() {
                 rel="noreferrer"
                 className="w-full sm:w-auto"
               >
-                <button className="w-full sm:w-auto rounded-full px-8 py-4 border border-default-200 bg-white hover:bg-default-50 text-default-700 font-medium transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center gap-3">
+                <button className="w-full sm:w-auto rounded-full px-8 py-4 border border-default-200 bg-defualt-50 hover:bg-default-50 text-default-700 font-medium transition-all hover:scale-105 active:scale-95 shadow-sm flex items-center justify-center gap-3">
                   <Github size={20} />
                   <span>Star on GitHub</span>
                 </button>
@@ -196,7 +196,7 @@ function RouteComponent() {
 
           {/* Hero Image */}
           <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative hidden lg:block">
-            <div className="relative lg:rounded-3xl overflow-hidden lg:border lg:border-default-200/50 lg:bg-white/40 lg:ring-1 lg:ring-default-900/5 lg:shadow-2xl group flex items-center justify-center">
+            <div className="relative lg:rounded-3xl overflow-hidden lg:border lg:border-default-200/50 lg:bg-default-50/50 lg:ring-1 lg:ring-default-900/5 lg:shadow-2xl group flex items-center justify-center">
               <div className="lg:block hidden absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
               <div className="w-full h-[350px] lg:h-150 flex items-center justify-center lg:p-16">
                 <Logo
@@ -237,7 +237,7 @@ function RouteComponent() {
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="group p-8 rounded-3xl border border-default-200 bg-white hover:bg-default-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
+                className="group p-8 rounded-3xl border border-default-200 bg-default-50 hover:bg-default-50/80 transition-all duration-500 flex flex-col h-full hover:border-primary-200 hover:shadow-xl hover:shadow-primary-600/5 relative overflow-hidden"
               >
                 <div className="absolute top-0 right-0 p-32 bg-linear-to-bl from-primary-400/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-full blur-3xl translate-x-10 -translate-y-10" />
                 <div className="relative z-10 flex flex-col h-full">

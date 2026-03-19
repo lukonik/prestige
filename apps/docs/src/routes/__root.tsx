@@ -10,6 +10,21 @@ import config from "virtual:prestige/config";
 import HeaderLogo from "../assets/logo.png?$oh";
 import appCss from "../styles.css?url";
 
+const socialImageUrl = "https://lukonik.github.io/prestige/logo.png";
+const socialImageAlt = "Prestige logo";
+const siteKeywords = [
+  "prestige",
+  "documentation framework",
+  "docs",
+  "mdx",
+  "markdown",
+  "react",
+  "tanstack start",
+  "tanstack router",
+  "vite",
+  "tailwind css",
+].join(", ");
+
 const options: PrestigeShellProps = {
   customHeaderTitle: () => (
     <HeaderLogo alt="header logo" className="w-10 h-10" />
@@ -42,6 +57,15 @@ export const Route = createRootRoute({
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: config.title },
+      { name: "robots", content: "index, follow" },
+      { name: "keywords", content: siteKeywords },
+      { property: "og:site_name", content: config.title },
+      { property: "og:locale", content: "en_US" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:image", content: socialImageUrl },
+      { property: "og:image:alt", content: socialImageAlt },
+      { name: "twitter:image", content: socialImageUrl },
+      { name: "twitter:image:alt", content: socialImageAlt },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

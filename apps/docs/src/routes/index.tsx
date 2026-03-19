@@ -22,7 +22,25 @@ import {
 import config from "virtual:prestige/config";
 import Logo from "../assets/logo.png?$oh";
 
+const homeTitle = `${config.title} | Documentation framework for TanStack Start`;
+const homeDescription =
+  "Prestige is a documentation framework for TanStack Start with MDX, Vite, Tailwind CSS, DocSearch, and static generation built in.";
+const homeUrl = "https://lukonik.github.io/prestige/";
+
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: homeTitle },
+      { name: "description", content: homeDescription },
+      { property: "og:title", content: homeTitle },
+      { property: "og:description", content: homeDescription },
+      { property: "og:type", content: "website" },
+      { name: "twitter:title", content: homeTitle },
+      { name: "twitter:description", content: homeDescription },
+      ...(homeUrl ? [{ property: "og:url", content: homeUrl }] : []),
+    ],
+    links: homeUrl ? [{ rel: "canonical", href: homeUrl }] : undefined,
+  }),
   component: RouteComponent,
 });
 

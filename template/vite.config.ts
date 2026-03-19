@@ -36,6 +36,7 @@ const config = defineConfig({
       prerender: {
         enabled: true,
       },
+      sitemap: { enabled: true, host: "https://example.com/" },
     }),
     viteReact(),
   ],

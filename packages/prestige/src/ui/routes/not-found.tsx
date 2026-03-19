@@ -1,4 +1,4 @@
-export function PrestigeNotFound() {
+export function PrestigeNotFoundComponent() {
   return (
     <div className="w-full h-full flex justify-center pt-15   lg:pt-30 ">
       <div className="flex flex-col gap-3 items-center">

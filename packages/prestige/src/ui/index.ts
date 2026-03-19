@@ -20,8 +20,8 @@ export { default as Header } from "./core/header/header";
 export { PrestigePage, type PrestigePageProps } from "./core/prestige-page";
 export { CollectionRoute } from "./routes/collection/collection.route";
 export { ContentRoute, LazyContentRoute } from "./routes/content/content.route";
-export { PrestigeNotFound } from "./routes/not-found";
-export { PrestigeError } from "./routes/prestige-error";
+export { PrestigeNotFoundComponent } from "./routes/not-found";
+export { PrestigeErrorComponent } from "./routes/prestige-error";
 export {
   PrestigeShell,
   type PrestigeShellProps

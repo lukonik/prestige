@@ -1,6 +1,6 @@
 import { ErrorComponentProps } from "@tanstack/react-router";
 
-export function PrestigeError({ error }: ErrorComponentProps) {
+export function PrestigeErrorComponent({ error }: ErrorComponentProps) {
   if (!import.meta.env.DEV) {
     return (
       <div className="text-xl my-10 font-bold text-red-500">

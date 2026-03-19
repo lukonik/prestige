@@ -1,21 +1,27 @@
+import { type AnyRouteMatch } from "@tanstack/react-router";
 import { FunctionComponent } from "react";
 import { TocItem } from "remark-flexible-toc";
 import config from "virtual:prestige/config";
 import { ContentFrontmatterType } from "../../../vite/core/content/content.types";
 import { PrestigePage } from "../../core/prestige-page";
-import { type AnyRouteMatch } from "@tanstack/react-router";
 function resolveContentData(inlineData: any) {
   return inlineData as {
     toc: TocItem[];
     default: FunctionComponent;
     frontmatter: ContentFrontmatterType;
+    error: Error | undefined;
   };
 }
 
 export function ContentRoute(inlineData: any): any {
-  const { frontmatter } = resolveContentData(inlineData);
+  const { frontmatter, error } = resolveContentData(inlineData);
 
   return {
+    beforeLoad: () => {
+      if (error) {
+        throw error;
+      }
+    },
     head: () => {
       const metas: Array<
         | { name?: string; content?: string; title?: string }

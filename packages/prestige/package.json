@@ -89,6 +89,7 @@
     "unist-util-visit": "^5.1.0",
     "vfile": "^6.0.3",
     "vfile-matter": "^5.0.1",
+    "vfile-message": "^4.0.3",
     "vite-tsconfig-paths": "catalog:",
     "yaml": "^2.8.2"
   },

@@ -1,14 +1,18 @@
+import {
+  PrestigeErrorComponent,
+  PrestigeNotFoundComponent,
+} from "@lonik/prestige/ui";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
-import { PrestigeNotFound } from "@lonik/prestige/ui";
 
 export function getRouter() {
   const router = createTanStackRouter({
     routeTree,
-    defaultNotFoundComponent: PrestigeNotFound,
+    defaultNotFoundComponent: PrestigeNotFoundComponent,
     scrollRestoration: true,
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
+    defaultErrorComponent: (err) => <PrestigeErrorComponent {...err} />,
   });
 
   return router;

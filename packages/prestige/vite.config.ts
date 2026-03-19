@@ -20,7 +20,6 @@ export default defineConfig(({ mode }) => {
       ohImage(),
       prestige({
         title: "Prestige",
-        enableDebugLog: true,
         collections: [
           {
             id: "testfolder",

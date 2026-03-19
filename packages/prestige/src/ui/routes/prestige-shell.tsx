@@ -38,7 +38,7 @@ export function PrestigeShell({
       <main className="min-h-[calc(100vh-var(--spacing-header))]">
         {children}
       </main>
-      <Footer copyright={options?.copyright} />
+      <Footer license={options?.license} copyright={options?.copyright} />
     </ThemeProvider>
   );
 }

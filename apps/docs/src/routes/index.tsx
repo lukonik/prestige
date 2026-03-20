@@ -149,7 +149,7 @@ function RouteComponent() {
         {/* Hero Section */}
         <div className="flex flex-col-reverse lg:flex-row items-center gap-16 lg:gap-24 mb-2 lg:mb-10 lg:min-h-auto min-h-[50vh]">
           <div className="flex-1 flex flex-col items-center lg:items-start text-center lg:text-left px-6">
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-default border border-default-200 mb-8 text-sm text-default-600 shadow-sm">
               <Bug size={16} className="text-primary-500" />
               <span className="font-medium">Still in Alpha, stay tuned</span>
             </div>
@@ -215,7 +215,7 @@ function RouteComponent() {
           {/* Hero Image */}
           <div className="flex-1 w-full max-w-xl lg:max-w-2xl relative hidden lg:block">
             <div className="relative lg:rounded-3xl overflow-hidden lg:border lg:border-default-200/50 lg:bg-default-50/50 lg:ring-1 lg:ring-default-900/5 lg:shadow-2xl group flex items-center justify-center">
-              <div className="lg:block hidden absolute inset-0 bg-linear-to-br from-white/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
+              <div className="lg:block hidden absolute inset-0 bg-linear-to-br from-default/40 to-transparent pointer-events-none z-10 mix-blend-overlay" />
               <div className="w-full h-[350px] lg:h-150 flex items-center justify-center lg:p-16">
                 <Logo
                   alt="Prestige Logo"

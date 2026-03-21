@@ -14,20 +14,7 @@ const config = defineConfig({
     ohImage({
       outDir: ".output/public",
     }),
-    prestige({
-      title: "__PROJECT_TITLE__",
-      collections: [
-        {
-          id: "docs",
-          items: [
-            {
-              label: "Showcase",
-              slug: "docs/showcase",
-            },
-          ],
-        },
-      ],
-    }),
+    prestige(),
     devtools(),
     nitro({ rollupConfig: { external: [/^@sentry\//] }, renderer: false }),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),

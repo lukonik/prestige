@@ -9,10 +9,12 @@ A collection is one of the main building blocks in Prestige. It defines a docume
 
 ## Definition
 
-You define collections in the Prestige Vite plugin config. The plugin expects an array of collection objects. Each collection usually represents a separate area of the site, such as `docs` or `api`, with its own sidebar and its own top-level navigation entry.
+You define collections in `prestige.config.ts`. The plugin expects an array of collection objects. Each collection usually represents a separate area of the site, such as `docs` or `api`, with its own sidebar and its own top-level navigation entry.
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",
@@ -119,7 +121,9 @@ Nested collection items. These can be internal links, external links, or more gr
 #### example
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",
@@ -173,7 +177,9 @@ Directory relative to the current collection root.
 ##### example
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",

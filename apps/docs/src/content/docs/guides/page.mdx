@@ -22,7 +22,9 @@ If you want `src/content/docs/introduction.md` to appear at `/docs/introduction`
 - Add a matching collection item
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",
@@ -81,10 +83,11 @@ Prestige uses [prismjs](https://prismjs.com/) to highlight code blocks.
 You can extend the content pipeline with custom `remark` and `rehype` plugins. Add them in the Prestige plugin's `markdown` config:
 
 ```ts
+import { defineConfig } from "@lonik/prestige/vite";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 
-prestige({
+export default defineConfig({
   markdown: {
     remarkPlugins: [remarkMath],
     rehypePlugins: [rehypeKatex],

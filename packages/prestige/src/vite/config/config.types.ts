@@ -4,6 +4,27 @@ import { PluggableList } from "unified";
 import { z } from "zod";
 import { CollectionsSchema } from "../core/content/content.types";
 
+export const AlgoliaOptionsSchema = z.object({
+  appId: z.string().describe("Algolia application ID"),
+  apiKey: z.string().describe("Algolia search-only API key"),
+  indices: z.array(z.string()).describe("Algolia indices"),
+});
+
+export const LicenseOptionsSchema = z.object({
+  label: z.string().describe("License label"),
+  url: z.string().describe("License URL"),
+});
+
+export const PrestigeShellPropsSchema = z
+  .object({
+    github: z.string().optional().describe("GitHub repository URL"),
+    algolia: AlgoliaOptionsSchema.optional().describe(
+      "Algolia DocSearch configuration",
+    ),
+    license: LicenseOptionsSchema.optional().describe("Footer license metadata"),
+  })
+  .describe("Serializable PrestigeShell options");
+
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("Title of the website"),
   disableLog: z
@@ -17,6 +38,7 @@ export const PrestigeConfigSchema = z.object({
     .default(false)
     .describe("Enable debug log, default is false"),
   collections: CollectionsSchema,
+  prestigeShellProps: PrestigeShellPropsSchema.optional(),
   markdown: z
     .object({
       gfmOptions: z
@@ -48,3 +70,6 @@ export const PrestigeConfigSchema = z.object({
 
 export type PrestigeConfigInput = z.input<typeof PrestigeConfigSchema>;
 export type PrestigeConfig = z.infer<typeof PrestigeConfigSchema>;
+export type PrestigeSerializableShellProps = z.infer<
+  typeof PrestigeShellPropsSchema
+>;

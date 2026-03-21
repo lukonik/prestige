@@ -14,6 +14,22 @@ prestige(),
 tanstack(),
 ```
 
+Then create `prestige.config.ts` in the project root and export a typed config:
+
+```ts
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  title: "Prestige",
+  collections: [
+    {
+      id: "docs",
+      items: [{ label: "Introduction", slug: "docs/introduction" }],
+    },
+  ],
+});
+```
+
 Two config fields are especially important:
 
 ## title: string

@@ -2,7 +2,7 @@ import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
 import { EnvironmentModuleNode, type Plugin } from "vite";
 import { resolvePrestigeConfig } from "./config/config";
-import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
+import { PrestigeConfig } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
 import { resolveContentLinks } from "./content/content-links";
@@ -32,7 +32,7 @@ import { createLogger, Logger } from "./utils/logger";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
-export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
+export default function prestige(): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
@@ -46,9 +46,12 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
-      const { config: loadedConfig } = await resolvePrestigeConfig(
-        inlineConfig,
+      const { config: loadedConfig, fullDocsDir } = await resolvePrestigeConfig(
         resolvedConfig.root,
+        {
+          command: resolvedConfig.command,
+          mode: resolvedConfig.mode,
+        },
       );
 
       config = loadedConfig;
@@ -57,7 +60,7 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
         debug: config.enableDebugLog,
       });
 
-      contentDir = join(resolvedConfig.root, "src/content");
+      contentDir = fullDocsDir;
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
       collections = config.collections ?? [];
 

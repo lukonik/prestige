@@ -17,7 +17,6 @@ function initWatcher(
     onChange();
   }, UPDATE_INTERVAL);
   const onFileChange = (file: string) => {
-    console.log("CHANGIING ", file);
     if (!isDocsMatcher(file)) {
       return;
     }
@@ -43,9 +42,9 @@ export function initContentWatcher(
   onChange: () => void,
 ) {
   const contentPath = join(contentDir, "**/*.{md,mdx}");
-  const clear = initWatcher(
+  initWatcher(
     contentPath,
-    ["add", "unlink", "change"],
+    ["add", "unlink"],
     server,
     onChange,
     1000,

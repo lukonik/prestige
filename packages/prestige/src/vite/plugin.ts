@@ -1,6 +1,10 @@
 import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
-import { EnvironmentModuleNode, type Plugin } from "vite";
+import {
+  EnvironmentModuleNode,
+  type Plugin,
+  type ViteDevServer,
+} from "vite";
 import { resolvePrestigeConfig } from "./config/config";
 import { PrestigeConfig } from "./config/config.types";
 
@@ -16,7 +20,6 @@ import {
 } from "./content/content-watcher";
 import {
   CONTENT_VIRTUAL_ID,
-  getSlugByPath,
   resolveContent,
 } from "./content/content.store";
 import { compileRoutes } from "./content/router-compiler";
@@ -49,11 +52,56 @@ export default function prestige(): Plugin {
   let root: string;
   let command: "build" | "serve";
   let mode: string;
+  let devServer: ViteDevServer | undefined;
+
+  function isPrestigeVirtualModuleId(id: string | null) {
+    if (!id) {
+      return false;
+    }
+
+    return (
+      id === `\0${CONFIG_VIRTUAL_ID}` ||
+      id === `\0${COLLECTION_VIRTUAL_ID}` ||
+      id.startsWith(`\0${CONTENT_VIRTUAL_ID}`) ||
+      id.startsWith(`\0${SIDEBAR_VIRTUAL_ID}`)
+    );
+  }
+
+  function invalidatePrestigeModules(
+    server: ViteDevServer,
+    timestamp: number = Date.now(),
+  ) {
+    for (const environment of Object.values(server.environments)) {
+      const invalidatedModules = new Set<EnvironmentModuleNode>();
+
+      for (const module of environment.moduleGraph.idToModuleMap.values()) {
+        if (!isPrestigeVirtualModuleId(module.id)) {
+          continue;
+        }
+
+        environment.moduleGraph.invalidateModule(
+          module,
+          invalidatedModules,
+          timestamp,
+          true,
+        );
+      }
+    }
+  }
+
+  async function refreshAndReload(timestamp: number = Date.now()) {
+    if (!devServer) {
+      return;
+    }
+
+    await refresh();
+    invalidatePrestigeModules(devServer, timestamp);
+    devServer.ws.send({ type: "full-reload" });
+  }
 
   async function refresh() {
     const {
       config: loadedConfig,
-      fullDocsDir,
       configPath: localConfigPath,
     } = await resolvePrestigeConfig(root, {
       command: command,
@@ -110,14 +158,13 @@ export default function prestige(): Plugin {
       await refresh();
     },
     configureServer(server) {
+      devServer = server;
+
       initContentWatcher(contentDir, server, async () => {
-        await refresh();
-        server.ws.send({ type: "full-reload" });
+        await refreshAndReload();
       });
       initConfigChangeWatcher(configPath, server, async () => {
-        await refresh();
-        console.log(linksMap);
-        server.ws.send({ type: "full-reload" });
+        await refreshAndReload();
       });
     },
     resolveId(id) {
@@ -178,23 +225,17 @@ export default function prestige(): Plugin {
       if (type !== "update" || !isDocsMatcher(file)) {
         return;
       }
-      console.log("CHANGED!!");
-      logger.debug(`Invalidating module ${file}...`);
-      const invalidatedModules = new Set<EnvironmentModuleNode>();
-      const slug = getSlugByPath(file, contentDir);
-      const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
-      const module =
-        this.environment.moduleGraph.getModuleById(virtualModuleId);
-      if (module) {
-        this.environment.moduleGraph.invalidateModule(
-          module,
-          invalidatedModules,
-          timestamp,
-          true,
-        );
-        logger.debug(`Reloading application...`);
-        this.environment.hot.send({ type: "full-reload" });
+
+      logger.debug(`Refreshing Prestige modules for ${file}...`);
+      await refresh();
+
+      if (devServer) {
+        invalidatePrestigeModules(devServer, timestamp);
+        logger.debug("Reloading application...");
+        devServer.ws.send({ type: "full-reload" });
       }
+
+      return [];
     },
   };
 }

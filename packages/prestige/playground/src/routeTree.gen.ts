@@ -17,6 +17,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as prestigeDocsVitePluginRouteImport } from './routes/(prestige)/docs.vite-plugin'
 import { Route as prestigeDocsTypescriptRouteImport } from './routes/(prestige)/docs.typescript'
 import { Route as prestigeDocsThemerRouteImport } from './routes/(prestige)/docs.themer'
+import { Route as prestigeDocsTest8RouteImport } from './routes/(prestige)/docs.test-8'
 import { Route as prestigeDocsTest7RouteImport } from './routes/(prestige)/docs.test-7'
 import { Route as prestigeDocsTest6RouteImport } from './routes/(prestige)/docs.test-6'
 import { Route as prestigeDocsTest5RouteImport } from './routes/(prestige)/docs.test-5'
@@ -108,6 +109,15 @@ const prestigeDocsThemerRoute = prestigeDocsThemerRouteImport
   } as any)
   .lazy(() =>
     import('./routes/(prestige)/docs.themer.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest8Route = prestigeDocsTest8RouteImport
+  .update({
+    id: '/test-8',
+    path: '/test-8',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-8.lazy').then((d) => d.Route),
   )
 const prestigeDocsTest7Route = prestigeDocsTest7RouteImport
   .update({
@@ -322,6 +332,7 @@ export interface FileRoutesByFullPath {
   '/docs/test-5': typeof prestigeDocsTest5Route
   '/docs/test-6': typeof prestigeDocsTest6Route
   '/docs/test-7': typeof prestigeDocsTest7Route
+  '/docs/test-8': typeof prestigeDocsTest8Route
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -353,6 +364,7 @@ export interface FileRoutesByTo {
   '/docs/test-5': typeof prestigeDocsTest5Route
   '/docs/test-6': typeof prestigeDocsTest6Route
   '/docs/test-7': typeof prestigeDocsTest7Route
+  '/docs/test-8': typeof prestigeDocsTest8Route
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -385,6 +397,7 @@ export interface FileRoutesById {
   '/(prestige)/docs/test-5': typeof prestigeDocsTest5Route
   '/(prestige)/docs/test-6': typeof prestigeDocsTest6Route
   '/(prestige)/docs/test-7': typeof prestigeDocsTest7Route
+  '/(prestige)/docs/test-8': typeof prestigeDocsTest8Route
   '/(prestige)/docs/themer': typeof prestigeDocsThemerRoute
   '/(prestige)/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/(prestige)/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -418,6 +431,7 @@ export interface FileRouteTypes {
     | '/docs/test-5'
     | '/docs/test-6'
     | '/docs/test-7'
+    | '/docs/test-8'
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
@@ -449,6 +463,7 @@ export interface FileRouteTypes {
     | '/docs/test-5'
     | '/docs/test-6'
     | '/docs/test-7'
+    | '/docs/test-8'
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
@@ -480,6 +495,7 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/test-5'
     | '/(prestige)/docs/test-6'
     | '/(prestige)/docs/test-7'
+    | '/(prestige)/docs/test-8'
     | '/(prestige)/docs/themer'
     | '/(prestige)/docs/typescript'
     | '/(prestige)/docs/vite-plugin'
@@ -567,6 +583,13 @@ declare module '@tanstack/react-router' {
       path: '/themer'
       fullPath: '/docs/themer'
       preLoaderRoute: typeof prestigeDocsThemerRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-8': {
+      id: '/(prestige)/docs/test-8'
+      path: '/test-8'
+      fullPath: '/docs/test-8'
+      preLoaderRoute: typeof prestigeDocsTest8RouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
     '/(prestige)/docs/test-7': {
@@ -734,6 +757,7 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsTest5Route: typeof prestigeDocsTest5Route
   prestigeDocsTest6Route: typeof prestigeDocsTest6Route
   prestigeDocsTest7Route: typeof prestigeDocsTest7Route
+  prestigeDocsTest8Route: typeof prestigeDocsTest8Route
   prestigeDocsThemerRoute: typeof prestigeDocsThemerRoute
   prestigeDocsTypescriptRoute: typeof prestigeDocsTypescriptRoute
   prestigeDocsVitePluginRoute: typeof prestigeDocsVitePluginRoute
@@ -757,6 +781,7 @@ const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
   prestigeDocsTest5Route: prestigeDocsTest5Route,
   prestigeDocsTest6Route: prestigeDocsTest6Route,
   prestigeDocsTest7Route: prestigeDocsTest7Route,
+  prestigeDocsTest8Route: prestigeDocsTest8Route,
   prestigeDocsThemerRoute: prestigeDocsThemerRoute,
   prestigeDocsTypescriptRoute: prestigeDocsTypescriptRoute,
   prestigeDocsVitePluginRoute: prestigeDocsVitePluginRoute,

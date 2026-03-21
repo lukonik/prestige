@@ -29,6 +29,10 @@ export default defineConfig({
           slug: "docs/showcase",
         },
         {
+          label: "Test 8",
+          slug: "docs/test-8",
+        },
+        {
           label: "Test 7",
           slug: "docs/test-7",
         },

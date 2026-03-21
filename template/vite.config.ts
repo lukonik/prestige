@@ -11,7 +11,7 @@ import viteReact from "@vitejs/plugin-react";
 const config = defineConfig({
   plugins: [
     ohImage({
-      outDir: ".output/public",
+      outDir: "dist/client",
     }),
     prestige(),
     devtools(),

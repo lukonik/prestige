@@ -24,7 +24,7 @@ const config = defineConfig({
       sitemap: { enabled: true, host: "https://lukonik.github.io/prestige/" },
     }),
     ohImage({
-      outDir: ".output/public",
+      outDir: "dist/client",
     }),
     viteReact(),
   ],

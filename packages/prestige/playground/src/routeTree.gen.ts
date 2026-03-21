@@ -17,6 +17,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as prestigeDocsVitePluginRouteImport } from './routes/(prestige)/docs.vite-plugin'
 import { Route as prestigeDocsTypescriptRouteImport } from './routes/(prestige)/docs.typescript'
 import { Route as prestigeDocsThemerRouteImport } from './routes/(prestige)/docs.themer'
+import { Route as prestigeDocsTest7RouteImport } from './routes/(prestige)/docs.test-7'
+import { Route as prestigeDocsTest6RouteImport } from './routes/(prestige)/docs.test-6'
+import { Route as prestigeDocsTest5RouteImport } from './routes/(prestige)/docs.test-5'
+import { Route as prestigeDocsTest4RouteImport } from './routes/(prestige)/docs.test-4'
+import { Route as prestigeDocsTest3RouteImport } from './routes/(prestige)/docs.test-3'
+import { Route as prestigeDocsTest2RouteImport } from './routes/(prestige)/docs.test-2'
 import { Route as prestigeDocsShowcaseRouteImport } from './routes/(prestige)/docs.showcase'
 import { Route as prestigeDocsIntroductionRouteImport } from './routes/(prestige)/docs.introduction'
 import { Route as prestigeDocsInstallationRouteImport } from './routes/(prestige)/docs.installation'
@@ -102,6 +108,60 @@ const prestigeDocsThemerRoute = prestigeDocsThemerRouteImport
   } as any)
   .lazy(() =>
     import('./routes/(prestige)/docs.themer.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest7Route = prestigeDocsTest7RouteImport
+  .update({
+    id: '/test-7',
+    path: '/test-7',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-7.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest6Route = prestigeDocsTest6RouteImport
+  .update({
+    id: '/test-6',
+    path: '/test-6',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-6.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest5Route = prestigeDocsTest5RouteImport
+  .update({
+    id: '/test-5',
+    path: '/test-5',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-5.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest4Route = prestigeDocsTest4RouteImport
+  .update({
+    id: '/test-4',
+    path: '/test-4',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-4.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest3Route = prestigeDocsTest3RouteImport
+  .update({
+    id: '/test-3',
+    path: '/test-3',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-3.lazy').then((d) => d.Route),
+  )
+const prestigeDocsTest2Route = prestigeDocsTest2RouteImport
+  .update({
+    id: '/test-2',
+    path: '/test-2',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.test-2.lazy').then((d) => d.Route),
   )
 const prestigeDocsShowcaseRoute = prestigeDocsShowcaseRouteImport
   .update({
@@ -256,6 +316,12 @@ export interface FileRoutesByFullPath {
   '/docs/installation': typeof prestigeDocsInstallationRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/showcase': typeof prestigeDocsShowcaseRoute
+  '/docs/test-2': typeof prestigeDocsTest2Route
+  '/docs/test-3': typeof prestigeDocsTest3Route
+  '/docs/test-4': typeof prestigeDocsTest4Route
+  '/docs/test-5': typeof prestigeDocsTest5Route
+  '/docs/test-6': typeof prestigeDocsTest6Route
+  '/docs/test-7': typeof prestigeDocsTest7Route
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -281,6 +347,12 @@ export interface FileRoutesByTo {
   '/docs/installation': typeof prestigeDocsInstallationRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/showcase': typeof prestigeDocsShowcaseRoute
+  '/docs/test-2': typeof prestigeDocsTest2Route
+  '/docs/test-3': typeof prestigeDocsTest3Route
+  '/docs/test-4': typeof prestigeDocsTest4Route
+  '/docs/test-5': typeof prestigeDocsTest5Route
+  '/docs/test-6': typeof prestigeDocsTest6Route
+  '/docs/test-7': typeof prestigeDocsTest7Route
   '/docs/themer': typeof prestigeDocsThemerRoute
   '/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -307,6 +379,12 @@ export interface FileRoutesById {
   '/(prestige)/docs/installation': typeof prestigeDocsInstallationRoute
   '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/(prestige)/docs/showcase': typeof prestigeDocsShowcaseRoute
+  '/(prestige)/docs/test-2': typeof prestigeDocsTest2Route
+  '/(prestige)/docs/test-3': typeof prestigeDocsTest3Route
+  '/(prestige)/docs/test-4': typeof prestigeDocsTest4Route
+  '/(prestige)/docs/test-5': typeof prestigeDocsTest5Route
+  '/(prestige)/docs/test-6': typeof prestigeDocsTest6Route
+  '/(prestige)/docs/test-7': typeof prestigeDocsTest7Route
   '/(prestige)/docs/themer': typeof prestigeDocsThemerRoute
   '/(prestige)/docs/typescript': typeof prestigeDocsTypescriptRoute
   '/(prestige)/docs/vite-plugin': typeof prestigeDocsVitePluginRoute
@@ -334,6 +412,12 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/introduction'
     | '/docs/showcase'
+    | '/docs/test-2'
+    | '/docs/test-3'
+    | '/docs/test-4'
+    | '/docs/test-5'
+    | '/docs/test-6'
+    | '/docs/test-7'
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
@@ -359,6 +443,12 @@ export interface FileRouteTypes {
     | '/docs/installation'
     | '/docs/introduction'
     | '/docs/showcase'
+    | '/docs/test-2'
+    | '/docs/test-3'
+    | '/docs/test-4'
+    | '/docs/test-5'
+    | '/docs/test-6'
+    | '/docs/test-7'
     | '/docs/themer'
     | '/docs/typescript'
     | '/docs/vite-plugin'
@@ -384,6 +474,12 @@ export interface FileRouteTypes {
     | '/(prestige)/docs/installation'
     | '/(prestige)/docs/introduction'
     | '/(prestige)/docs/showcase'
+    | '/(prestige)/docs/test-2'
+    | '/(prestige)/docs/test-3'
+    | '/(prestige)/docs/test-4'
+    | '/(prestige)/docs/test-5'
+    | '/(prestige)/docs/test-6'
+    | '/(prestige)/docs/test-7'
     | '/(prestige)/docs/themer'
     | '/(prestige)/docs/typescript'
     | '/(prestige)/docs/vite-plugin'
@@ -471,6 +567,48 @@ declare module '@tanstack/react-router' {
       path: '/themer'
       fullPath: '/docs/themer'
       preLoaderRoute: typeof prestigeDocsThemerRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-7': {
+      id: '/(prestige)/docs/test-7'
+      path: '/test-7'
+      fullPath: '/docs/test-7'
+      preLoaderRoute: typeof prestigeDocsTest7RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-6': {
+      id: '/(prestige)/docs/test-6'
+      path: '/test-6'
+      fullPath: '/docs/test-6'
+      preLoaderRoute: typeof prestigeDocsTest6RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-5': {
+      id: '/(prestige)/docs/test-5'
+      path: '/test-5'
+      fullPath: '/docs/test-5'
+      preLoaderRoute: typeof prestigeDocsTest5RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-4': {
+      id: '/(prestige)/docs/test-4'
+      path: '/test-4'
+      fullPath: '/docs/test-4'
+      preLoaderRoute: typeof prestigeDocsTest4RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-3': {
+      id: '/(prestige)/docs/test-3'
+      path: '/test-3'
+      fullPath: '/docs/test-3'
+      preLoaderRoute: typeof prestigeDocsTest3RouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
+    }
+    '/(prestige)/docs/test-2': {
+      id: '/(prestige)/docs/test-2'
+      path: '/test-2'
+      fullPath: '/docs/test-2'
+      preLoaderRoute: typeof prestigeDocsTest2RouteImport
       parentRoute: typeof prestigeDocsLazyRoute
     }
     '/(prestige)/docs/showcase': {
@@ -590,6 +728,12 @@ interface prestigeDocsLazyRouteChildren {
   prestigeDocsInstallationRoute: typeof prestigeDocsInstallationRoute
   prestigeDocsIntroductionRoute: typeof prestigeDocsIntroductionRoute
   prestigeDocsShowcaseRoute: typeof prestigeDocsShowcaseRoute
+  prestigeDocsTest2Route: typeof prestigeDocsTest2Route
+  prestigeDocsTest3Route: typeof prestigeDocsTest3Route
+  prestigeDocsTest4Route: typeof prestigeDocsTest4Route
+  prestigeDocsTest5Route: typeof prestigeDocsTest5Route
+  prestigeDocsTest6Route: typeof prestigeDocsTest6Route
+  prestigeDocsTest7Route: typeof prestigeDocsTest7Route
   prestigeDocsThemerRoute: typeof prestigeDocsThemerRoute
   prestigeDocsTypescriptRoute: typeof prestigeDocsTypescriptRoute
   prestigeDocsVitePluginRoute: typeof prestigeDocsVitePluginRoute
@@ -607,6 +751,12 @@ const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
   prestigeDocsInstallationRoute: prestigeDocsInstallationRoute,
   prestigeDocsIntroductionRoute: prestigeDocsIntroductionRoute,
   prestigeDocsShowcaseRoute: prestigeDocsShowcaseRoute,
+  prestigeDocsTest2Route: prestigeDocsTest2Route,
+  prestigeDocsTest3Route: prestigeDocsTest3Route,
+  prestigeDocsTest4Route: prestigeDocsTest4Route,
+  prestigeDocsTest5Route: prestigeDocsTest5Route,
+  prestigeDocsTest6Route: prestigeDocsTest6Route,
+  prestigeDocsTest7Route: prestigeDocsTest7Route,
   prestigeDocsThemerRoute: prestigeDocsThemerRoute,
   prestigeDocsTypescriptRoute: prestigeDocsTypescriptRoute,
   prestigeDocsVitePluginRoute: prestigeDocsVitePluginRoute,

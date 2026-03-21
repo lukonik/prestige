@@ -37,15 +37,17 @@ function initWatcher(
   };
 }
 
-export function initContentWatcher(contentDir: string, server: ViteDevServer) {
+export function initContentWatcher(
+  contentDir: string,
+  server: ViteDevServer,
+  onChange: () => void,
+) {
   const contentPath = join(contentDir, "**/*.{md,mdx}");
   const clear = initWatcher(
     contentPath,
     ["add", "unlink", "change"],
     server,
-    () => {
-      server.restart();
-    },
+    onChange,
     1000,
   );
 }

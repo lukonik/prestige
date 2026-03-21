@@ -46,11 +46,49 @@ export default function prestige(): Plugin {
   let logger: Logger;
   let configPath: string;
   let routesDir: string;
+  let root: string;
+  let command: "build" | "serve";
+  let mode: string;
+
+  async function refresh() {
+    const {
+      config: loadedConfig,
+      fullDocsDir,
+      configPath: localConfigPath,
+    } = await resolvePrestigeConfig(root, {
+      command: command,
+      mode: mode,
+    });
+    configPath = localConfigPath;
+    config = loadedConfig;
+    logger = createLogger({
+      disabled: config.disableLog,
+      debug: config.enableDebugLog,
+    });
+
+    collections = config.collections ?? [];
+
+    logger.debug("Resolving sidebars...");
+    sidebarsMap = await resolveSidebars(collections, contentDir, logger);
+
+    logger.debug("Resolving content links...");
+    linksMap = resolveContentLinks(sidebarsMap);
+
+    logger.debug("Resolving collection navigations....");
+    collectionNavigations = resolveCollectionNavigations(collections, linksMap);
+    routesDir = join(root, "src", "routes");
+
+    logger.debug("Compiling routes...");
+    await compileRoutes(linksMap, routesDir, logger);
+  }
 
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
+      root = resolvedConfig.root;
+      command = resolvedConfig.command;
+      mode = resolvedConfig.mode;
       const {
         config: loadedConfig,
         fullDocsDir,
@@ -68,28 +106,18 @@ export default function prestige(): Plugin {
 
       contentDir = fullDocsDir;
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
-      collections = config.collections ?? [];
 
-      logger.debug("Resolving sidebars...");
-      sidebarsMap = await resolveSidebars(collections, contentDir, logger);
-
-      logger.debug("Resolving content links...");
-      linksMap = resolveContentLinks(sidebarsMap);
-
-      logger.debug("Resolving collection navigations....");
-      collectionNavigations = resolveCollectionNavigations(
-        collections,
-        linksMap,
-      );
-      routesDir = join(resolvedConfig.root, "src", "routes");
-
-      logger.debug("Compiling routes...");
-      await compileRoutes(linksMap, routesDir, logger);
+      await refresh();
     },
     configureServer(server) {
-      initContentWatcher(contentDir, server);
+      initContentWatcher(contentDir, server, async () => {
+        await refresh();
+        server.ws.send({ type: "full-reload" });
+      });
       initConfigChangeWatcher(configPath, server, async () => {
-        await compileRoutes(linksMap, routesDir, logger);
+        await refresh();
+        console.log(linksMap);
+        server.ws.send({ type: "full-reload" });
       });
     },
     resolveId(id) {

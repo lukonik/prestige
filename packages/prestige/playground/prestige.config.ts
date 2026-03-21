@@ -5,7 +5,7 @@ export default defineConfig({
   github: "https://github.eqweqweqweqwecom/lukonik/prestige",
   license: {
     label: "MIT",
-    url: "https://op123123qweqeqweeqeqqweqqweqwewqeqweqweqqweqwewqeqeqqweqweqensource.oreweg/licensqweqwees/MIT",
+    url: "https://op123123qweqeqweeqeqqweqqweqweqqweqeqweqqwewqeqweqweqqweqwewqeqeqqweqweqensource.oreweg/licensqweqwees/MIT",
   },
   collections: [
     {
@@ -27,6 +27,30 @@ export default defineConfig({
         {
           label: "Showcase",
           slug: "docs/showcase",
+        },
+        {
+          label: "Test 7",
+          slug: "docs/test-7",
+        },
+        {
+          label: "Test 6",
+          slug: "docs/test-6",
+        },
+        {
+          label: "Test 5",
+          slug: "docs/test-5",
+        },
+        {
+          label: "Test 4",
+          slug: "docs/test-4",
+        },
+        {
+          label: "Test 3",
+          slug: "docs/test-3",
+        },
+        {
+          label: "Test 2",
+          slug: "docs/test-2",
         },
         {
           label: "Themer",

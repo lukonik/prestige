@@ -40,10 +40,12 @@ jobs:
       - name: Build site
         run: pnpm run docs:build
 
-      - name: Upload Pages artifact
+      - name: Upload prerendered client artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./apps/docs/.output/public
+          # TanStack Start prerenders static HTML into dist/client.
+          # .output/public only contains copied public assets and image outputs.
+          path: ./apps/docs/dist/client
 
   deploy:
     needs: build

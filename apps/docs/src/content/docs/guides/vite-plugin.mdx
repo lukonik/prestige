@@ -10,7 +10,9 @@ The Prestige Vite plugin is the build-time engine behind the library. It reads c
 Add it to the `plugins` array in `vite.config.ts`. It should appear before the TanStack Start plugin:
 
 ```ts
-prestige(),
+prestige({
+  enableDebugLog: false,
+}),
 tanstack(),
 ```
 

@@ -38,7 +38,12 @@ import { createLogger, Logger } from "./utils/logger";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
-export default function prestige(): Plugin {
+export interface PrestigePluginOptions {
+  disableLog?: boolean;
+  enableDebugLog?: boolean;
+}
+
+export default function prestige(options: PrestigePluginOptions = {}): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
@@ -53,6 +58,10 @@ export default function prestige(): Plugin {
   let command: "build" | "serve";
   let mode: string;
   let devServer: ViteDevServer | undefined;
+  const loggerOptions = {
+    disabled: options.disableLog ?? false,
+    debug: options.enableDebugLog ?? false,
+  };
 
   function isPrestigeVirtualModuleId(id: string | null) {
     if (!id) {
@@ -109,10 +118,7 @@ export default function prestige(): Plugin {
     });
     configPath = localConfigPath;
     config = loadedConfig;
-    logger = createLogger({
-      disabled: config.disableLog,
-      debug: config.enableDebugLog,
-    });
+    logger = createLogger(loggerOptions);
 
     collections = config.collections ?? [];
 
@@ -147,10 +153,7 @@ export default function prestige(): Plugin {
       });
       configPath = localConfigPath;
       config = loadedConfig;
-      logger = createLogger({
-        disabled: config.disableLog,
-        debug: config.enableDebugLog,
-      });
+      logger = createLogger(loggerOptions);
 
       contentDir = fullDocsDir;
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));

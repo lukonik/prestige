@@ -48,6 +48,17 @@ describe("CONFIG", () => {
 
       expect(defineConfig(config)).toBe(config);
     });
+
+    it("should reject logger options in prestige config", () => {
+      expect(() => {
+        validateConfig({
+          ...minimalConfig(),
+          disableLog: true,
+        } as any);
+      }).toThrowError(
+        "The disableLog option is no longer read from prestige.config.ts. Move it to prestige({ ... }) in vite.config.ts instead.",
+      );
+    });
   });
 
   describe("resolvePrestigeConfig", () => {

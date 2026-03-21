@@ -8,6 +8,19 @@ description: Reference for the Prestige Vite plugin configuration.
 The Prestige Vite plugin is the build-time entry point for the library. It validates your config, reads content from `src/content`, builds sidebars and collection navigation, generates route files, and exposes virtual modules consumed by the UI.
 
 ```ts
+import { prestige } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  plugins: [
+    prestige({
+      disableLog: false,
+      enableDebugLog: false,
+    }),
+  ],
+});
+```
+
+```ts
 import { defineConfig } from "@lonik/prestige/vite";
 
 export default defineConfig({
@@ -23,13 +36,7 @@ export default defineConfig({
 
 Add `prestige()` to `vite.config.ts`, then put the actual Prestige config in `prestige.config.ts`.
 
-## Config file
-
-### `title`
-
-Type: `string`
-
-Required site title. Prestige uses it as the default header title and as the suffix for page titles.
+## Vite plugin options
 
 ### `disableLog`
 
@@ -42,6 +49,14 @@ Optional. Disables Prestige logger output. Default: `false`.
 Type: `boolean`
 
 Optional. Enables verbose debug logging. Default: `false`.
+
+## Config file
+
+### `title`
+
+Type: `string`
+
+Required site title. Prestige uses it as the default header title and as the suffix for page titles.
 
 ### `collections`
 

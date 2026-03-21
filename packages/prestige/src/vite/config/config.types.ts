@@ -17,21 +17,11 @@ export const LicenseOptionsSchema = z.object({
 
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("Title of the website"),
-  disableLog: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe("Disable logger, default is false"),
   github: z.string().optional().describe("GitHub repository URL"),
   algolia: AlgoliaOptionsSchema.optional().describe(
     "Algolia DocSearch configuration",
   ),
   license: LicenseOptionsSchema.optional().describe("Footer license metadata"),
-  enableDebugLog: z
-    .boolean()
-    .optional()
-    .default(false)
-    .describe("Enable debug log, default is false"),
   collections: CollectionsSchema,
 
   markdown: z

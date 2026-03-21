@@ -100,8 +100,6 @@ declare module "virtual:prestige/config" {
 
   interface PrestigeConfig {
     title: string;
-    disableLog: boolean;
-    enableDebugLog: boolean;
     collections: unknown[];
     prestigeShellProps?: PrestigeShellProps;
     markdown?: {

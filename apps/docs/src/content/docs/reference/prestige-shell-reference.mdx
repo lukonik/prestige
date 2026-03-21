@@ -31,7 +31,7 @@ Required page content rendered inside the shell's `<main>` element.
 
 Type: [`PrestigeShellProps`](#prestigeshellprops)
 
-Optional shell configuration for header and footer customization.
+Optional runtime shell configuration for render-based customization.
 
 ## PrestigeShellProps
 
@@ -51,19 +51,19 @@ Optional render function for custom footer copyright content.
 
 Type: `string`
 
-Optional GitHub URL shown in the header.
+Optional GitHub URL shown in the header. This can be configured in `prestige.config.ts` through `prestigeShellProps`.
 
 ### `algolia`
 
 Type: [`AlgoliaOptions`](#algoliaoptions)
 
-Optional Algolia DocSearch configuration. When omitted, the search UI is not rendered.
+Optional Algolia DocSearch configuration. When omitted, the search UI is not rendered. This can be configured in `prestige.config.ts` through `prestigeShellProps`.
 
 ### `license`
 
 Type: [`LicenseOptions`](#licenseoptions)
 
-Optional license metadata for footer display.
+Optional license metadata for footer display. This can be configured in `prestige.config.ts` through `prestigeShellProps`.
 
 ## AlgoliaOptions
 
@@ -102,6 +102,7 @@ Required URL for the license target.
 ## Notes
 
 - `customHeaderTitle` and `copyright` are render functions, not plain strings.
+- `github`, `algolia`, and `license` can be read from `prestige.config.ts` automatically.
 - If `github` is omitted, the GitHub icon is hidden.
 - If `algolia` is omitted, the search trigger is hidden.
 - The shell already wraps content in `ThemeProvider`, so it should be mounted once at the app root.

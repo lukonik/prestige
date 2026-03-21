@@ -3,7 +3,6 @@ import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
-import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -18,80 +17,7 @@ export default defineConfig(({ mode }) => {
       Inspect(),
       tsconfigPaths(),
       ohImage(),
-      prestige({
-        title: "Prestige",
-        collections: [
-          {
-            id: "testfolder",
-            items: [
-              {
-                label: "sub",
-                autogenerate: { directory: "testfolder/sub" },
-              },
-            ],
-          },
-          {
-            id: "docs",
-            items: [
-              {
-                label: "Introduction",
-                slug: "docs/introduction",
-              },
-              {
-                label: "Showcase",
-                slug: "docs/showcase",
-              },
-              {
-                label: "Themer",
-                slug: "docs/themer",
-              },
-              {
-                label: "Installation",
-                slug: "docs/installation",
-              },
-              { label: "Typescript", slug: "docs/typescript" },
-              {
-                label: "Google",
-                link: "https://www.google.com",
-              },
-              { label: "Vite Plugin", slug: "docs/vite-plugin" },
-              {
-                label: "Loaders",
-                collapsed: true,
-                items: [
-                  { label: "Overview", slug: "docs/image/loaders/overview" },
-                  { label: "Cloudflare", link: "/docs/loaders/cloudflare" },
-                  { label: "Cloudinary", slug: "docs/loaders/cloudinary" },
-                  { label: "Contentful", link: "/docs/loaders/contentful" },
-                  { label: "Imgproxy", link: "/docs/loaders/imgproxy" },
-                  { label: "Kontent", link: "/docs/loaders/kontent" },
-                  { label: "Netlify", link: "/docs/loaders/netlify" },
-                  { label: "Wordpress", link: "/docs/loaders/wordpress" },
-                  {
-                    label: "Custom Loader",
-                    slug: "docs/loaders/custom-loader",
-                  },
-                ],
-              },
-              {
-                label: "Auto",
-                autogenerate: { directory: "docs/auto" },
-              },
-            ],
-          },
-
-          {
-            id: "api",
-            label: "API",
-            items: [
-              {
-                label: "Prestige",
-                slug: "api/prestige",
-              },
-            ],
-          },
-        ],
-      }),
+      prestige(),
       ...(!isTest
         ? [
             tanstackStart({
@@ -100,8 +26,6 @@ export default defineConfig(({ mode }) => {
                 crawlLinks: false,
               },
             }),
-            // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
-            nitro({ preset: "bun", renderer: false }),
           ]
         : []),
       tailwindcss(),

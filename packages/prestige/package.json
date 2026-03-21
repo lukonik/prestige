@@ -124,7 +124,6 @@
     "@vitest/coverage-v8": "^4.0.18",
     "bumpp": "catalog:",
     "memfs": "^4.56.10",
-    "nitro": "catalog:",
     "publint": "^0.3.17",
     "react": "catalog:",
     "react-dom": "catalog:",

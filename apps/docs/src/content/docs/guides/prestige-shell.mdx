@@ -32,23 +32,37 @@ This immediately applies the Prestige shell around your app content.
 
 ## Configuration Options
 
-Customize the shell by passing an `options` object of type `PrestigeShellProps`.
+Put serializable shell options such as `github`, `algolia`, and `license` into `prestige.config.ts`. Keep render props like `customHeaderTitle` and `copyright` on `PrestigeShell`.
+
+```ts
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  title: "Prestige",
+  prestigeShellProps: {
+    github: "https://github.com/lukonik/prestige",
+    algolia: {
+      appId: "YOUR_APP_ID",
+      apiKey: "YOUR_SEARCH_API_KEY",
+      indices: ["prestige_docs"],
+    },
+    license: {
+      label: "MIT",
+      url: "https://opensource.org/licenses/MIT",
+    },
+  },
+  collections: [],
+});
+```
+
+Pass only runtime render functions through the `options` prop:
 
 ```tsx
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { PrestigeShell, type PrestigeShellProps } from "@lonik/prestige/ui";
 
 const shellOptions: PrestigeShellProps = {
-  github: "https://github.com/lukonik/prestige",
-  algolia: {
-    appId: "YOUR_APP_ID",
-    apiKey: "YOUR_SEARCH_API_KEY",
-    indices: ["prestige_docs"],
-  },
-  license: {
-    label: "MIT",
-    url: "https://opensource.org/licenses/MIT",
-  },
+  copyright: () => <span>Built with Prestige</span>,
 };
 
 export const Route = createRootRoute({

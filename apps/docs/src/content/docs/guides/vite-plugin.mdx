@@ -10,9 +10,32 @@ The Prestige Vite plugin is the build-time engine behind the library. It reads c
 Add it to the `plugins` array in `vite.config.ts`. It should appear before the TanStack Start plugin:
 
 ```ts
-prestige(),
+prestige({
+  enableDebugLog: false,
+}),
 tanstack(),
 ```
+
+Then create `prestige.config.ts` in the project root and export a typed config:
+
+```ts
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  title: "Prestige",
+  collections: [
+    {
+      id: "docs",
+      items: [{ label: "Introduction", slug: "docs/introduction" }],
+    },
+  ],
+});
+```
+
+Keep the responsibilities split:
+
+- `vite.config.ts` registers `prestige()` and its plugin-only options.
+- `prestige.config.ts` defines the site title, collections, and markdown behavior.
 
 Two config fields are especially important:
 
@@ -30,4 +53,6 @@ During development, the plugin watches `src/content` and regenerates file routes
 
 ## Config
 
-For the full config surface, see the [Vite Plugin Reference](/docs/reference/plugin-reference).
+For the full plugin surface, see the [Vite Plugin Reference](/docs/reference/plugin-reference).
+
+For the config file itself, see [Prestige Config](/docs/guides/prestige-config) and [Prestige Config Reference](/docs/reference/prestige-config-reference).

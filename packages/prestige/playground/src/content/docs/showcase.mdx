@@ -9,24 +9,25 @@ on your documentation website.
 
 ## Definition
 
-You define collections in the Prestige vite plugin config. It expects an array of collections. Each collection will
+You define collections in `prestige.config.ts`. It expects an array of collections. Each collection will
 represent a separate page area with a separate navigation link in the top header, which will navigate to a separate page with its own
 sidebar. For example, you can have two collections for your project: one for `docs` and one for `api`.
 
 ```ts
-    ...
-        prestige({
-            collections:[{
-                id:'docs',
-                items:[...]
-            },
-                {
-                    id:'api',
-                    items:[...]
-                }
-            ]
-        })
-    ...
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  collections: [
+    {
+      id: "docs",
+      items: [...],
+    },
+    {
+      id: "api",
+      items: [...],
+    },
+  ],
+});
 ```
 
 Think of each collection as a sidebar of the page structure. Because a sidebar is a UI element, a collection is more general-purpose, so that's why we call it a collection.
@@ -122,7 +123,9 @@ It can be either an InternalCollectionLink, an ExternalCollectionLink, or a Side
 #### example
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",
@@ -173,9 +176,20 @@ The directory to use for generation.
 ##### example
 
 ```ts
-prestige({
-  label: "Guides",
-  autogenerate: { directory: "guides" },
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Guides",
+          autogenerate: { directory: "guides" },
+        },
+      ],
+    },
+  ],
 });
 
 // the generated output might look like this

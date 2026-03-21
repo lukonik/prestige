@@ -81,10 +81,36 @@ declare module "virtual:prestige/collection-all" {
 }
 
 declare module "virtual:prestige/config" {
+  interface AlgoliaOptions {
+    appId: string;
+    apiKey: string;
+    indices: string[];
+  }
+
+  interface LicenseOptions {
+    label: string;
+    url: string;
+  }
+
+  interface PrestigeShellProps {
+    github?: string;
+    algolia?: AlgoliaOptions;
+    license?: LicenseOptions;
+  }
+
   interface PrestigeConfig {
-    favicon?: string;
     title: string;
-    description: string;
+    collections: unknown[];
+    prestigeShellProps?: PrestigeShellProps;
+    markdown?: {
+      gfmOptions?: unknown;
+      rehypePlugins?: unknown;
+      remarkPlugins?: unknown;
+      remarkFlexibleToc?: unknown;
+      rehypeSlug?: {
+        prefix?: string;
+      };
+    };
   }
   const config: PrestigeConfig;
   export default config;

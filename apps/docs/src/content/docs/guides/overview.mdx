@@ -46,7 +46,9 @@ Prestige does not generate routes for every file inside `src/content` automatica
 A collection maps a content directory to navigation and generated routes. For example, a `docs` collection reads from `src/content/docs`:
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",
@@ -109,7 +111,9 @@ You can still add your own routes outside the generated directory. If you want a
 Then add an external collection link for that route:
 
 ```ts
-prestige({
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
   collections: [
     {
       id: "docs",

@@ -1,8 +1,12 @@
 import { join } from "pathe";
 import picomatch, { type Matcher } from "picomatch";
-import { EnvironmentModuleNode, type Plugin } from "vite";
+import {
+  EnvironmentModuleNode,
+  type Plugin,
+  type ViteDevServer,
+} from "vite";
 import { resolvePrestigeConfig } from "./config/config";
-import { PrestigeConfig, PrestigeConfigInput } from "./config/config.types";
+import { PrestigeConfig } from "./config/config.types";
 
 import { genObjectFromValues } from "knitwork";
 import { resolveContentLinks } from "./content/content-links";
@@ -10,10 +14,12 @@ import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
 } from "./content/content-sidebar.store";
-import { initContentWatcher } from "./content/content-watcher";
+import {
+  initConfigChangeWatcher,
+  initContentWatcher,
+} from "./content/content-watcher";
 import {
   CONTENT_VIRTUAL_ID,
-  getSlugByPath,
   resolveContent,
 } from "./content/content.store";
 import { compileRoutes } from "./content/router-compiler";
@@ -32,7 +38,12 @@ import { createLogger, Logger } from "./utils/logger";
 
 export const CONFIG_VIRTUAL_ID = "virtual:prestige/config";
 
-export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
+export interface PrestigePluginOptions {
+  disableLog?: boolean;
+  enableDebugLog?: boolean;
+}
+
+export default function prestige(options: PrestigePluginOptions = {}): Plugin {
   let config: PrestigeConfig;
   let contentDir: string;
   let isDocsMatcher: Matcher;
@@ -41,44 +52,123 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
   let logger: Logger;
+  let configPath: string;
+  let routesDir: string;
+  let root: string;
+  let command: "build" | "serve";
+  let mode: string;
+  let devServer: ViteDevServer | undefined;
+  const loggerOptions = {
+    disabled: options.disableLog ?? false,
+    debug: options.enableDebugLog ?? false,
+  };
+
+  function isPrestigeVirtualModuleId(id: string | null) {
+    if (!id) {
+      return false;
+    }
+
+    return (
+      id === `\0${CONFIG_VIRTUAL_ID}` ||
+      id === `\0${COLLECTION_VIRTUAL_ID}` ||
+      id.startsWith(`\0${CONTENT_VIRTUAL_ID}`) ||
+      id.startsWith(`\0${SIDEBAR_VIRTUAL_ID}`)
+    );
+  }
+
+  function invalidatePrestigeModules(
+    server: ViteDevServer,
+    timestamp: number = Date.now(),
+  ) {
+    for (const environment of Object.values(server.environments)) {
+      const invalidatedModules = new Set<EnvironmentModuleNode>();
+
+      for (const module of environment.moduleGraph.idToModuleMap.values()) {
+        if (!isPrestigeVirtualModuleId(module.id)) {
+          continue;
+        }
+
+        environment.moduleGraph.invalidateModule(
+          module,
+          invalidatedModules,
+          timestamp,
+          true,
+        );
+      }
+    }
+  }
+
+  async function refreshAndReload(timestamp: number = Date.now()) {
+    if (!devServer) {
+      return;
+    }
+
+    await refresh();
+    invalidatePrestigeModules(devServer, timestamp);
+    devServer.ws.send({ type: "full-reload" });
+  }
+
+  async function refresh() {
+    const {
+      config: loadedConfig,
+      configPath: localConfigPath,
+    } = await resolvePrestigeConfig(root, {
+      command: command,
+      mode: mode,
+    });
+    configPath = localConfigPath;
+    config = loadedConfig;
+    logger = createLogger(loggerOptions);
+
+    collections = config.collections ?? [];
+
+    logger.debug("Resolving sidebars...");
+    sidebarsMap = await resolveSidebars(collections, contentDir, logger);
+
+    logger.debug("Resolving content links...");
+    linksMap = resolveContentLinks(sidebarsMap);
+
+    logger.debug("Resolving collection navigations....");
+    collectionNavigations = resolveCollectionNavigations(collections, linksMap);
+    routesDir = join(root, "src", "routes");
+
+    logger.debug("Compiling routes...");
+    await compileRoutes(linksMap, routesDir, logger);
+  }
 
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
-      const { config: loadedConfig } = await resolvePrestigeConfig(
-        inlineConfig,
-        resolvedConfig.root,
-      );
-
-      config = loadedConfig;
-      logger = createLogger({
-        disabled: config.disableLog,
-        debug: config.enableDebugLog,
+      root = resolvedConfig.root;
+      command = resolvedConfig.command;
+      mode = resolvedConfig.mode;
+      const {
+        config: loadedConfig,
+        fullDocsDir,
+        configPath: localConfigPath,
+      } = await resolvePrestigeConfig(resolvedConfig.root, {
+        command: resolvedConfig.command,
+        mode: resolvedConfig.mode,
       });
+      configPath = localConfigPath;
+      config = loadedConfig;
+      logger = createLogger(loggerOptions);
 
-      contentDir = join(resolvedConfig.root, "src/content");
+      contentDir = fullDocsDir;
       isDocsMatcher = picomatch(join(contentDir, "**/*.{md,mdx}"));
-      collections = config.collections ?? [];
 
-      logger.debug("Resolving sidebars...");
-      sidebarsMap = await resolveSidebars(collections, contentDir, logger);
-
-      logger.debug("Resolving content links...");
-      linksMap = resolveContentLinks(sidebarsMap);
-
-      logger.debug("Resolving collection navigations....");
-      collectionNavigations = resolveCollectionNavigations(
-        collections,
-        linksMap,
-      );
-      const routesDir = join(resolvedConfig.root, "src", "routes");
-
-      logger.debug("Compiling routes...");
-      await compileRoutes(linksMap, routesDir, logger);
+      await refresh();
     },
     configureServer(server) {
-      initContentWatcher(contentDir, server);
+      devServer = server;
+
+      initContentWatcher(contentDir, server, async () => {
+        await refreshAndReload();
+      });
+      initConfigChangeWatcher(configPath, server, async () => {
+        await refreshAndReload();
+      });
     },
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"
@@ -138,22 +228,17 @@ export default function prestige(inlineConfig?: PrestigeConfigInput): Plugin {
       if (type !== "update" || !isDocsMatcher(file)) {
         return;
       }
-      logger.debug(`Invalidating module ${file}...`);
-      const invalidatedModules = new Set<EnvironmentModuleNode>();
-      const slug = getSlugByPath(file, contentDir);
-      const virtualModuleId = `\0${CONTENT_VIRTUAL_ID}${slug}`;
-      const module =
-        this.environment.moduleGraph.getModuleById(virtualModuleId);
-      if (module) {
-        this.environment.moduleGraph.invalidateModule(
-          module,
-          invalidatedModules,
-          timestamp,
-          true,
-        );
-        logger.debug(`Reloading application...`);
-        this.environment.hot.send({ type: "full-reload" });
+
+      logger.debug(`Refreshing Prestige modules for ${file}...`);
+      await refresh();
+
+      if (devServer) {
+        invalidatePrestigeModules(devServer, timestamp);
+        logger.debug("Reloading application...");
+        devServer.ws.send({ type: "full-reload" });
       }
+
+      return [];
     },
   };
 }

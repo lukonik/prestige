@@ -55,22 +55,22 @@ async function main() {
     process.exit(1);
   }
 
-  // Update vite.config.ts with the project name
+  // Update config files with the project name
   s.start("Configuring project");
   try {
-    const viteConfigPath = path.join(projectDir, "vite.config.ts");
-    const viteConfigExists = await fs
-      .access(viteConfigPath)
+    const prestigeConfigPath = path.join(projectDir, "prestige.config.ts");
+    const prestigeConfigExists = await fs
+      .access(prestigeConfigPath)
       .then(() => true)
       .catch(() => false);
 
-    if (viteConfigExists) {
-      let viteConfig = await fs.readFile(viteConfigPath, "utf-8");
-      viteConfig = viteConfig.replace(
+    if (prestigeConfigExists) {
+      let prestigeConfig = await fs.readFile(prestigeConfigPath, "utf-8");
+      prestigeConfig = prestigeConfig.replace(
         /__PROJECT_TITLE__/g,
         projectName as string,
       );
-      await fs.writeFile(viteConfigPath, viteConfig);
+      await fs.writeFile(prestigeConfigPath, prestigeConfig);
     }
 
     const packageJsonPath = path.join(projectDir, "package.json");

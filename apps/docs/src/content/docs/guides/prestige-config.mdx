@@ -1,0 +1,136 @@
+---
+title: Prestige Config
+description: Learn how to structure `prestige.config.ts` and what it controls.
+---
+
+# Prestige Config
+
+`prestige.config.ts` is the main configuration file for a Prestige site. It describes your documentation structure and the content pipeline settings that the Vite plugin uses at build and dev time.
+
+The file lives at the app root:
+
+```txt
+my-app/
+  prestige.config.ts
+  vite.config.ts
+  src/
+    content/
+```
+
+Use `vite.config.ts` for plugin registration and dev-server behavior. Use `prestige.config.ts` for site structure and content-specific configuration.
+
+## Basic example
+
+```ts
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  title: "Prestige",
+  collections: [
+    {
+      id: "docs",
+      items: [
+        {
+          label: "Introduction",
+          slug: "docs/introduction",
+        },
+      ],
+    },
+  ],
+});
+```
+
+This file is loaded by the Prestige Vite plugin. Prestige validates it, resolves your collections, and generates the routes and navigation data used by the UI.
+
+## What belongs here
+
+`prestige.config.ts` is where you define:
+
+- The site title.
+- The collection tree that drives sidebars and generated routes.
+- Markdown compiler options for your content.
+
+The Vite plugin options do not belong here. For example, `disableLog` and `enableDebugLog` should be passed to `prestige()` in `vite.config.ts`.
+
+## Relationship to `src/content`
+
+Prestige reads Markdown and MDX files from `src/content`. The config file decides which parts of that content become part of the site.
+
+For example, this collection:
+
+```ts
+export default defineConfig({
+  collections: [
+    {
+      id: "docs",
+      items: [
+        "docs/introduction",
+        "docs/getting-started",
+      ],
+    },
+  ],
+});
+```
+
+works with content files such as:
+
+```txt
+src/content/docs/introduction.mdx
+src/content/docs/getting-started.mdx
+```
+
+Only pages referenced from collections are turned into generated content routes.
+
+## Relationship to `vite.config.ts`
+
+The two config files have different jobs:
+
+- `vite.config.ts` registers the Prestige plugin with Vite.
+- `prestige.config.ts` provides the content model consumed by that plugin.
+
+For example:
+
+```ts
+import { prestige } from "@lonik/prestige/vite";
+import { defineConfig } from "vite";
+
+export default defineConfig({
+  plugins: [
+    prestige({
+      enableDebugLog: false,
+    }),
+  ],
+});
+```
+
+Then in `prestige.config.ts`:
+
+```ts
+import { defineConfig } from "@lonik/prestige/vite";
+
+export default defineConfig({
+  title: "Prestige",
+  collections: [
+    {
+      id: "docs",
+      items: ["docs/introduction"],
+    },
+  ],
+});
+```
+
+## Common workflow
+
+When adding a new documentation area, the usual flow is:
+
+1. Add content files under `src/content`.
+2. Register those files inside `collections` in `prestige.config.ts`.
+3. Let Prestige regenerate the corresponding routes and sidebar data.
+
+If you skip step 2, the page exists on disk but will not become part of the generated site structure.
+
+## Next steps
+
+- For collection design, see [Collection](/docs/guides/collection).
+- For Vite plugin setup, see [Vite Plugin](/docs/guides/vite-plugin).
+- For the exact config surface, see [Prestige Config Reference](/docs/reference/prestige-config-reference).

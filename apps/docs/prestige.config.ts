@@ -34,6 +34,10 @@ export default defineConfig({
               slug: "docs/guides/overview",
             },
             {
+              label: "Prestige Config",
+              slug: "docs/guides/prestige-config",
+            },
+            {
               label: "Collection",
               slug: "docs/guides/collection",
             },
@@ -61,6 +65,10 @@ export default defineConfig({
             {
               label: "Prestige Shell Reference",
               slug: "docs/reference/prestige-shell-reference",
+            },
+            {
+              label: "Prestige Config Reference",
+              slug: "docs/reference/prestige-config-reference",
             },
             {
               label: "Vite Plugin Reference",

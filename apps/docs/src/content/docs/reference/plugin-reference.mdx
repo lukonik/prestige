@@ -24,17 +24,11 @@ export default defineConfig({
 import { defineConfig } from "@lonik/prestige/vite";
 
 export default defineConfig({
-  title: "Prestige",
-  collections: [
-    {
-      id: "docs",
-      items: ["docs/introduction"],
-    },
-  ],
+  // prestige.config.ts
 });
 ```
 
-Add `prestige()` to `vite.config.ts`, then put the actual Prestige config in `prestige.config.ts`.
+Add `prestige()` to `vite.config.ts`, then put the actual site config in `prestige.config.ts`.
 
 ## Vite plugin options
 
@@ -50,171 +44,10 @@ Type: `boolean`
 
 Optional. Enables verbose debug logging. Default: `false`.
 
-## Config file
-
-### `title`
-
-Type: `string`
-
-Required site title. Prestige uses it as the default header title and as the suffix for page titles.
-
-### `collections`
-
-Type: [`Collection[]`](#collection)
-
-Required collection definitions. Collections drive route generation, sidebars, and header navigation.
-
-### `markdown`
-
-Type: [`MarkdownOptions`](#markdownoptions)
-
-Optional markdown pipeline configuration. Use it to extend remark and rehype behavior.
-
-## Collection
-
-Collections describe a top-level documentation area such as `docs` or `api`.
-
-### `id`
-
-Type: `string`
-
-Required collection identifier. It must match the root folder inside `src/content`, for example `docs` for `src/content/docs`.
-
-### `items`
-
-Type: [`CollectionItem[]`](#collectionitem)
-
-Required sidebar tree for the collection. The same structure is used to build sibling navigation and generated content routes.
-
-### `label`
-
-Type: `string`
-
-Optional display label for the header navigation. If omitted, Prestige falls back to `id`.
-
-### `defaultLink`
-
-Type: `string`
-
-Optional default link for the collection header entry. If omitted, Prestige uses the first internal content link it can resolve.
-
-## CollectionItem
-
-`CollectionItem` is a union type. Each item in `collections[].items` can be one of the following shapes.
-
-### InternalCollectionLink
-
-Use this for content pages inside `src/content`.
-
-#### `slug`
-
-Type: `string`
-
-Content slug relative to `src/content` without a leading or trailing slash, for example `docs/introduction`. Prestige resolves `.md` and `.mdx` files automatically.
-
-#### `label`
-
-Type: `string`
-
-Optional display label for the sidebar item. If omitted, Prestige tries the page frontmatter `label`, then falls back to the slug basename.
-
-You can also use the string shorthand form:
-
-```ts
-items: ["docs/introduction", "docs/getting-started"];
-```
-
-In that form, the string value is treated as the `slug`.
-
-### ExternalCollectionLink
-
-Use this for existing app routes or fully external URLs.
-
-#### `label`
-
-Type: `string`
-
-Required display label for the link.
-
-#### `link`
-
-Type: `string`
-
-Required target URL or path. This can point to an internal app route like `/about` or to an external URL like `https://react.dev`.
-
-### CollectionGroup
-
-Use this to group items in the sidebar without creating its own route.
-
-#### `label`
-
-Type: `string`
-
-Required group heading.
-
-#### `items`
-
-Type: [`CollectionItem[]`](#collectionitem)
-
-Optional nested group contents. Groups can be nested recursively.
-
-#### `collapsed`
-
-Type: `boolean`
-
-Optional. When `true`, the group starts collapsed in the sidebar.
-
-#### `autogenerate`
-
-Type: [`AutogenerateOptions`](#autogenerateoptions)
-
-Optional automatic group generation from a content directory. If both `items` and `autogenerate` are set, Prestige uses `items` and warns.
-
-## AutogenerateOptions
-
-### `directory`
-
-Type: `string`
-
-Directory relative to `src/content`. Prestige scans it recursively, creates nested groups from folders, and creates internal links from `.md` and `.mdx` files.
-
-## MarkdownOptions
-
-The `markdown` object controls the markdown compiler pipeline used for page content.
-
-### `gfmOptions`
-
-Type: `RemarkGfmOptions`
-
-Optional options passed directly to `remark-gfm`. Use this to customize GitHub Flavored Markdown behavior.
-
-### `rehypePlugins`
-
-Type: `PluggableList`
-
-Optional extra rehype plugins added before Prestige's built-in rehype plugins.
-
-### `remarkPlugins`
-
-Type: `PluggableList`
-
-Optional extra remark plugins added before Prestige's built-in remark plugins.
-
-### `remarkFlexibleToc`
-
-Type: `FlexibleTocOptions`
-
-Optional options type reserved for `remark-flexible-toc`.
-
-### `rehypeSlug`
-
-Type: `{ prefix?: string }`
-
-Optional options type reserved for `rehype-slug`.
+For the config file surface, see [Prestige Config Reference](/docs/reference/prestige-config-reference).
 
 ## Notes
 
-- Prestige reads from `<root>/prestige.config.ts`.
-- Prestige requires a `src/content` directory in the app root.
-- Internal content routes are generated only for internal `slug` items that appear in collections.
-- `defaultLink` may point to an internal or external target, but only collections with a resolved default link appear in the top header navigation.
+- Prestige plugin options belong in `vite.config.ts`.
+- Site structure and markdown options belong in `prestige.config.ts`.
+- `disableLog` and `enableDebugLog` are plugin options, not `prestige.config.ts` fields.

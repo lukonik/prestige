@@ -15,16 +15,6 @@ export const LicenseOptionsSchema = z.object({
   url: z.string().describe("License URL"),
 });
 
-export const PrestigeShellPropsSchema = z
-  .object({
-    github: z.string().optional().describe("GitHub repository URL"),
-    algolia: AlgoliaOptionsSchema.optional().describe(
-      "Algolia DocSearch configuration",
-    ),
-    license: LicenseOptionsSchema.optional().describe("Footer license metadata"),
-  })
-  .describe("Serializable PrestigeShell options");
-
 export const PrestigeConfigSchema = z.object({
   title: z.string().describe("Title of the website"),
   disableLog: z
@@ -32,13 +22,18 @@ export const PrestigeConfigSchema = z.object({
     .optional()
     .default(false)
     .describe("Disable logger, default is false"),
+  github: z.string().optional().describe("GitHub repository URL"),
+  algolia: AlgoliaOptionsSchema.optional().describe(
+    "Algolia DocSearch configuration",
+  ),
+  license: LicenseOptionsSchema.optional().describe("Footer license metadata"),
   enableDebugLog: z
     .boolean()
     .optional()
     .default(false)
     .describe("Enable debug log, default is false"),
   collections: CollectionsSchema,
-  prestigeShellProps: PrestigeShellPropsSchema.optional(),
+
   markdown: z
     .object({
       gfmOptions: z
@@ -70,6 +65,3 @@ export const PrestigeConfigSchema = z.object({
 
 export type PrestigeConfigInput = z.input<typeof PrestigeConfigSchema>;
 export type PrestigeConfig = z.infer<typeof PrestigeConfigSchema>;
-export type PrestigeSerializableShellProps = z.infer<
-  typeof PrestigeShellPropsSchema
->;

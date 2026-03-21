@@ -2,12 +2,10 @@ import { defineConfig } from "../src/vite";
 
 export default defineConfig({
   title: "Prestige",
-  prestigeShellProps: {
-    github: "https://github.com/lukonik/prestige",
-    license: {
-      label: "MIT",
-      url: "https://opensource.org/licenses/MIT",
-    },
+  github: "https://github.eqweqweqweqwecom/lukonik/prestige",
+  license: {
+    label: "MIT",
+    url: "https://op123123qweqeqweeqeqqweqqweqwewqeqweqweqqweqwewqeqeqqweqweqensource.oreweg/licensqweqwees/MIT",
   },
   collections: [
     {

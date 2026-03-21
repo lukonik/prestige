@@ -10,7 +10,10 @@ import {
   resolveSidebars,
   SIDEBAR_VIRTUAL_ID,
 } from "./content/content-sidebar.store";
-import { initContentWatcher } from "./content/content-watcher";
+import {
+  initConfigChangeWatcher,
+  initContentWatcher,
+} from "./content/content-watcher";
 import {
   CONTENT_VIRTUAL_ID,
   getSlugByPath,
@@ -41,19 +44,22 @@ export default function prestige(): Plugin {
   let collectionNavigations: string;
   let sidebarsMap: Map<string, SidebarType>;
   let logger: Logger;
+  let configPath: string;
+  let routesDir: string;
 
   return {
     name: "vite-plugin-prestige",
     enforce: "pre",
     async configResolved(resolvedConfig) {
-      const { config: loadedConfig, fullDocsDir } = await resolvePrestigeConfig(
-        resolvedConfig.root,
-        {
-          command: resolvedConfig.command,
-          mode: resolvedConfig.mode,
-        },
-      );
-
+      const {
+        config: loadedConfig,
+        fullDocsDir,
+        configPath: localConfigPath,
+      } = await resolvePrestigeConfig(resolvedConfig.root, {
+        command: resolvedConfig.command,
+        mode: resolvedConfig.mode,
+      });
+      configPath = localConfigPath;
       config = loadedConfig;
       logger = createLogger({
         disabled: config.disableLog,
@@ -75,13 +81,16 @@ export default function prestige(): Plugin {
         collections,
         linksMap,
       );
-      const routesDir = join(resolvedConfig.root, "src", "routes");
+      routesDir = join(resolvedConfig.root, "src", "routes");
 
       logger.debug("Compiling routes...");
       await compileRoutes(linksMap, routesDir, logger);
     },
     configureServer(server) {
       initContentWatcher(contentDir, server);
+      initConfigChangeWatcher(configPath, server, async () => {
+        await compileRoutes(linksMap, routesDir, logger);
+      });
     },
     resolveId(id) {
       // even though the import will be import * from "virtual:prestige/docs/introduction"
@@ -141,6 +150,7 @@ export default function prestige(): Plugin {
       if (type !== "update" || !isDocsMatcher(file)) {
         return;
       }
+      console.log("CHANGED!!");
       logger.debug(`Invalidating module ${file}...`);
       const invalidatedModules = new Set<EnvironmentModuleNode>();
       const slug = getSlugByPath(file, contentDir);

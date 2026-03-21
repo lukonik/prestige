@@ -3,7 +3,6 @@ import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
-import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import Inspect from "vite-plugin-inspect";
 import tsconfigPaths from "vite-tsconfig-paths";
@@ -27,8 +26,6 @@ export default defineConfig(({ mode }) => {
                 crawlLinks: false,
               },
             }),
-            // Let TanStack Start own SSR rendering instead of falling back to playground/index.html.
-            nitro({ preset: "bun", renderer: false }),
           ]
         : []),
       tailwindcss(),

@@ -8,7 +8,6 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
-import { nitro } from "nitro/vite";
 const config = defineConfig({
   plugins: [
     ohImage({
@@ -16,7 +15,6 @@ const config = defineConfig({
     }),
     prestige(),
     devtools(),
-    nitro({ rollupConfig: { external: [/^@sentry\//] }, renderer: false }),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
     tanstackStart({

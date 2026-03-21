@@ -92,16 +92,12 @@ declare module "virtual:prestige/config" {
     url: string;
   }
 
-  interface PrestigeShellProps {
-    github?: string;
-    algolia?: AlgoliaOptions;
-    license?: LicenseOptions;
-  }
-
   interface PrestigeConfig {
     title: string;
     collections: unknown[];
-    prestigeShellProps?: PrestigeShellProps;
+    github?: string;
+    algolia?: AlgoliaOptions;
+    license?: LicenseOptions;
     markdown?: {
       gfmOptions?: unknown;
       rehypePlugins?: unknown;

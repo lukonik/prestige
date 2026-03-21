@@ -3,7 +3,6 @@ import { ReactNode } from "react";
 import config from "virtual:prestige/config";
 import Footer from "../core/footer/footer";
 import Header from "../core/header/header";
-
 type RenderNode = () => ReactNode;
 
 export interface AlgoliaOptions {
@@ -15,12 +14,8 @@ export interface LicenseOptions {
   label: string;
   url: string;
 }
-export interface PrestigeSerializableShellProps {
-  github?: string | undefined;
-  algolia?: AlgoliaOptions | undefined;
-  license?: LicenseOptions | undefined;
-}
-export interface PrestigeShellProps extends PrestigeSerializableShellProps {
+
+export interface PrestigeShellProps {
   customHeaderTitle?: RenderNode | undefined;
   copyright?: RenderNode | undefined;
 }
@@ -31,25 +26,17 @@ export function PrestigeShell({
   children: ReactNode;
   options?: PrestigeShellProps;
 }) {
-  const resolvedOptions: PrestigeShellProps = {
-    ...config.prestigeShellProps,
-    ...options,
-  };
-
   return (
     <ThemeProvider attribute="data-theme" defaultTheme="system">
       <Header
-        algolia={resolvedOptions.algolia}
-        customHeaderTitle={resolvedOptions.customHeaderTitle}
-        {...resolvedOptions}
+        algolia={config.algolia}
+        customHeaderTitle={options?.customHeaderTitle}
+        github={config.github}
       />
       <main className="min-h-[calc(100vh-var(--spacing-header))]">
         {children}
       </main>
-      <Footer
-        license={resolvedOptions.license}
-        copyright={resolvedOptions.copyright}
-      />
+      <Footer license={config.license} copyright={options?.copyright} />
     </ThemeProvider>
   );
 }

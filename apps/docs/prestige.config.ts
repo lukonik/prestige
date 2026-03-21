@@ -2,17 +2,15 @@ import { defineConfig } from "@lonik/prestige/vite";
 
 export default defineConfig({
   title: "Prestige",
-  prestigeShellProps: {
-    license: {
-      label: "MIT",
-      url: "https://opensource.org/licenses/MIT",
-    },
-    github: "https://github.com/lukonik/prestige",
-    algolia: {
-      appId: "IYIAYOLJHX",
-      apiKey: "137a443b7b9b637b8b76b11a2c82c15e",
-      indices: ["prestigeprestige"],
-    },
+  license: {
+    label: "MIT",
+    url: "https://opensource.org/licenses/MIT",
+  },
+  github: "https://github.com/lukonik/prestige",
+  algolia: {
+    appId: "IYIAYOLJHX",
+    apiKey: "137a443b7b9b637b8b76b11a2c82c15e",
+    indices: ["prestigeprestige"],
   },
   collections: [
     {

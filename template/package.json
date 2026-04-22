@@ -12,7 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@lonik/prestige": "workspace:^",
+    "@lonik/prestige": "latest",
     "@tailwindcss/vite": "^4.2.1",
     "@tanstack/react-devtools": "0.9.6",
     "@tanstack/react-router": "^1.162.4",

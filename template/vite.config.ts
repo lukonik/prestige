@@ -5,14 +5,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
-import { ohImage } from "@lonik/oh-image/plugin";
 import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 const config = defineConfig({
   plugins: [
-    ohImage({
-      outDir: "dist/client",
-    }),
     prestige(),
     devtools(),
     tsconfigPaths({ projects: ["./tsconfig.json"] }),

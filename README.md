@@ -19,7 +19,5 @@ For more information, please visit our [official website](https://lukonik.github
 To get started quickly, you can bootstrap a new project using the `create-prestige` script:
 
 ```bash
-npx create-prestige@latest my-docs
-# or
-pnpm create prestige@latest my-docs
+npx @lonik/create-prestige@latest
 ```

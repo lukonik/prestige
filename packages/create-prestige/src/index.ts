@@ -82,6 +82,12 @@ async function main() {
     if (packageJsonExists) {
       const pkg = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"));
       pkg.name = projectName as string;
+
+      // Replace workspace dependency with latest (or you can inject the current CLI version)
+      if (pkg.dependencies && pkg.dependencies["@lonik/prestige"]?.startsWith("workspace:")) {
+        pkg.dependencies["@lonik/prestige"] = "latest";
+      }
+
       await fs.writeFile(packageJsonPath, JSON.stringify(pkg, null, 2));
     }
 

@@ -53,7 +53,6 @@
     "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
-    "@base-ui/react": "^1.2.0",
     "@docsearch/css": "^4.6.0",
     "@docsearch/react": "^4.6.0",
     "@lonik/themer": "^0.5.2",

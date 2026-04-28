@@ -31,7 +31,7 @@ Required page content rendered inside the shell's `<main>` element.
 
 Type: [`PrestigeShellProps`](#prestigeshellprops)
 
-Optional runtime shell configuration for render-based customization.
+Optional runtime shell configuration.
 
 ## PrestigeShellProps
 
@@ -46,6 +46,18 @@ Optional render function that replaces the default header title text.
 Type: `() => ReactNode`
 
 Optional render function for custom footer copyright content.
+
+### `beforeHeaderLinks`
+
+Type: [`PrestigeHeaderLink[]`](#prestigeheaderlink)
+
+Optional links rendered before the generated collection links in the header.
+
+### `afterHeaderLinks`
+
+Type: [`PrestigeHeaderLink[]`](#prestigeheaderlink)
+
+Optional links rendered after the generated collection links in the header.
 
 ### `github`
 
@@ -64,6 +76,20 @@ Optional Algolia DocSearch configuration. When omitted, the search UI is not ren
 Type: [`LicenseOptions`](#licenseoptions)
 
 Optional license metadata for footer display. This can be configured in `prestige.config.ts` through `prestigeShellProps`.
+
+## PrestigeHeaderLink
+
+### `to`
+
+Type: `string`
+
+Required TanStack Router link target.
+
+### `label`
+
+Type: `string | ReactNode`
+
+Required link label.
 
 ## AlgoliaOptions
 
@@ -102,6 +128,7 @@ Required URL for the license target.
 ## Notes
 
 - `customHeaderTitle` and `copyright` are render functions, not plain strings.
+- `beforeHeaderLinks` and `afterHeaderLinks` are arrays of `{ to, label }` links.
 - `github`, `algolia`, and `license` can be read from `prestige.config.ts` automatically.
 - If `github` is omitted, the GitHub icon is hidden.
 - If `algolia` is omitted, the search trigger is hidden.

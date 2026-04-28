@@ -1,22 +1,60 @@
 import { Link, useLocation } from "@tanstack/react-router";
 import collections from "virtual:prestige/collection-all";
 import config from "virtual:prestige/config";
-import { PrestigeShellProps } from "../../routes/prestige-shell";
+import type {
+  AlgoliaOptions,
+  PrestigeHeaderLink,
+  PrestigeShellProps,
+} from "../../routes/prestige-shell";
 import { GitHub } from "../github/github";
 import { Search } from "../search/search";
 import { Theme } from "../theme/theme";
 
+const headerLinkClassName =
+  "border-b-2 text-sm rounded hover:bg-default-100 active:bg-default-200 capitalize";
+const headerLinkInactiveClassName = "border-b-transparent text-default-500";
+const headerLinkActiveClassName =
+  "border-default-800 text-default-800 font-medium";
+
 export type HeaderProps = Pick<
   PrestigeShellProps,
-  "customHeaderTitle" | "algolia" | "github"
->;
+  "customHeaderTitle" | "beforeHeaderLinks" | "afterHeaderLinks"
+> & { algolia: AlgoliaOptions | undefined; github: string | undefined };
 
 export default function Header({
   customHeaderTitle,
   algolia,
   github,
+  beforeHeaderLinks,
+  afterHeaderLinks,
 }: HeaderProps) {
   const location = useLocation();
+
+  const isHeaderLinkActive = (to: string) => {
+    const path = to.split(/[?#]/)[0];
+
+    return (
+      location.pathname === path ||
+      (path !== "/" && location.pathname.startsWith(`${path}/`))
+    );
+  };
+
+  const renderHeaderLinks = (links: PrestigeHeaderLink[] | undefined) =>
+    links?.map((link, index) => {
+      const isActive = isHeaderLinkActive(link.to);
+
+      return (
+        <Link
+          key={`${link.to}-${index}`}
+          to={link.to as any}
+          className={`${headerLinkClassName} ${
+            isActive ? headerLinkActiveClassName : headerLinkInactiveClassName
+          }`}
+        >
+          {link.label}
+        </Link>
+      );
+    });
 
   return (
     <header className="sticky top-0 z-40 flex h-header  border-b border-default-200 bg-default-50/80 px-4 backdrop-blur-md">
@@ -35,6 +73,7 @@ export default function Header({
               <span>{config.title}</span>
             )}
           </Link>
+          {renderHeaderLinks(beforeHeaderLinks)}
           {collections.map((collection) => {
             const isActive =
               location.pathname === `/${collection.id}` ||
@@ -44,16 +83,17 @@ export default function Header({
               <Link
                 key={collection.id}
                 to={`/${collection.defaultLink}` as any}
-                className={`border-b-2 text-sm rounded hover:bg-default-100 active:bg-default-200 capitalize ${
+                className={`${headerLinkClassName} ${
                   isActive
-                    ? "border-default-800 text-default-800 font-medium"
-                    : "border-b-transparent text-default-500"
+                    ? headerLinkActiveClassName
+                    : headerLinkInactiveClassName
                 }`}
               >
                 {collection.label}
               </Link>
             );
           })}
+          {renderHeaderLinks(afterHeaderLinks)}
         </div>
         <div className="flex items-center gap-2">
           <Search algolia={algolia} />

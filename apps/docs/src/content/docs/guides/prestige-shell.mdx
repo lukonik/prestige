@@ -32,7 +32,7 @@ This immediately applies the Prestige shell around your app content.
 
 ## Configuration Options
 
-Put serializable shell options such as `github`, `algolia`, and `license` into `prestige.config.ts`. Keep render props like `customHeaderTitle` and `copyright` on `PrestigeShell`.
+Put serializable shell options such as `github`, `algolia`, and `license` into `prestige.config.ts`. Keep runtime options like `customHeaderTitle`, `beforeHeaderLinks`, `afterHeaderLinks`, and `copyright` on `PrestigeShell`.
 
 ```ts
 import { defineConfig } from "@lonik/prestige/vite";
@@ -55,13 +55,14 @@ export default defineConfig({
 });
 ```
 
-Pass only runtime render functions through the `options` prop:
+Pass runtime header and footer customizations through the `options` prop:
 
 ```tsx
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { PrestigeShell, type PrestigeShellProps } from "@lonik/prestige/ui";
 
 const shellOptions: PrestigeShellProps = {
+  beforeHeaderLinks: [{ to: "/changelog", label: "Changelog" }],
   copyright: () => <span>Built with Prestige</span>,
 };
 

@@ -1,5 +1,5 @@
 import { ThemeProvider } from "@lonik/themer";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import config from "virtual:prestige/config";
 import Footer from "../core/footer/footer";
 import Header from "../core/header/header";
@@ -14,10 +14,16 @@ export interface LicenseOptions {
   label: string;
   url: string;
 }
+export interface PrestigeHeaderLink {
+  to: string;
+  label: string | ReactNode;
+}
 
 export interface PrestigeShellProps {
   customHeaderTitle?: RenderNode | undefined;
   copyright?: RenderNode | undefined;
+  beforeHeaderLinks?: PrestigeHeaderLink[] | undefined;
+  afterHeaderLinks?: PrestigeHeaderLink[] | undefined;
 }
 export function PrestigeShell({
   children,
@@ -30,6 +36,8 @@ export function PrestigeShell({
     <ThemeProvider attribute="data-theme" defaultTheme="system">
       <Header
         algolia={config.algolia}
+        afterHeaderLinks={options?.afterHeaderLinks}
+        beforeHeaderLinks={options?.beforeHeaderLinks}
         customHeaderTitle={options?.customHeaderTitle}
         github={config.github}
       />

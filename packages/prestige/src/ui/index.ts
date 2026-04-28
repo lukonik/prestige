@@ -24,6 +24,6 @@ export { PrestigeNotFoundComponent } from "./routes/not-found";
 export { PrestigeErrorComponent } from "./routes/prestige-error";
 export {
   PrestigeShell,
+  type PrestigeHeaderLink,
   type PrestigeShellProps
 } from "./routes/prestige-shell";
-

@@ -5,8 +5,8 @@
 <h1 align="center">Prestige</h1>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/@lonik/prestige">
-    <img src="https://img.shields.io/npm/v/@lonik/prestige.svg" alt="NPM Version" />
+  <a href="https://www.npmjs.com/package/@prestigia/docs">
+    <img src="https://img.shields.io/npm/v/@prestigia/docs.svg" alt="NPM Version" />
   </a>
 </p>
 
@@ -16,8 +16,8 @@ For more information, please visit our [official website](https://lukonik.github
 
 ## Usage
 
-To get started quickly, you can bootstrap a new project using the `create-prestige` script:
+To get started quickly, bootstrap a new project with the Prestigia CLI:
 
 ```bash
-npx @lonik/create-prestige@latest
+npx @prestigia/cli@latest
 ```

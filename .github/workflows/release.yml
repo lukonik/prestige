@@ -36,7 +36,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build packages
-        # CHANGED: Run build recursively from the root so both create-prestige and prestige are built
+        # Build both publishable packages before releasing them.
         run: pnpm -r run build
 
       - name: Release packages

@@ -1,4 +1,4 @@
-import { PrestigeNotFoundComponent } from "@lonik/prestige/ui";
+import { PrestigeNotFoundComponent } from "@prestigia/docs/ui";
 import { createRouter as createTanStackRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 

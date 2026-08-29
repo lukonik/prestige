@@ -10,7 +10,7 @@ This page introduces the main concepts behind Prestige. Once you understand thes
 
 ## Content directory
 
-Prestige reads documentation content from `<root>/src/content`. The `@lonik/create-prestige` scaffold creates this directory for you.
+Prestige reads documentation content from `<root>/src/content`. The `@prestigia/cli` scaffold creates this directory for you.
 
 Anything outside `src/content` is ignored by Prestige's content pipeline.
 
@@ -46,7 +46,7 @@ Prestige does not generate routes for every file inside `src/content` automatica
 A collection maps a content directory to navigation and generated routes. For example, a `docs` collection reads from `src/content/docs`:
 
 ```ts
-import { defineConfig } from "@lonik/prestige/vite";
+import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
   collections: [
@@ -111,7 +111,7 @@ You can still add your own routes outside the generated directory. If you want a
 Then add an external collection link for that route:
 
 ```ts
-import { defineConfig } from "@lonik/prestige/vite";
+import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
   collections: [
@@ -131,7 +131,7 @@ export default defineConfig({
 :::note
 The structure of `(prestige)` may change in future releases. In practice, you should treat it the same way you treat `routeTree.gen.ts`: generated, useful, but not meant for manual edits.
 
-`@lonik/create-prestige` also marks these files as read-only in VS Code, just like `routeTree.gen.ts`.
+`@prestigia/cli` also marks these files as read-only in VS Code, just like `routeTree.gen.ts`.
 :::
 
 ## Prestige Vite Plugin

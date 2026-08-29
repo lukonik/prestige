@@ -7,7 +7,7 @@ import path from "pathe";
 import pc from "picocolors";
 
 async function main() {
-  intro(pc.inverse(" create-prestige "));
+  intro(pc.inverse(" prestigia "));
 
   const projectName = await text({
     message: "What is your project named?",
@@ -84,8 +84,8 @@ async function main() {
       pkg.name = projectName as string;
 
       // Replace workspace dependency with latest (or you can inject the current CLI version)
-      if (pkg.dependencies && pkg.dependencies["@lonik/prestige"]?.startsWith("workspace:")) {
-        pkg.dependencies["@lonik/prestige"] = "latest";
+      if (pkg.dependencies && pkg.dependencies["@prestigia/docs"]?.startsWith("workspace:")) {
+        pkg.dependencies["@prestigia/docs"] = "latest";
       }
 
       await fs.writeFile(packageJsonPath, JSON.stringify(pkg, null, 2));

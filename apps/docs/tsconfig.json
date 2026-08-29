@@ -11,7 +11,7 @@
     },
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "types": [
-      "@lonik/prestige/client",
+      "@prestigia/docs/client",
       "@lonik/oh-image/client",
       "vite/client"
     ],

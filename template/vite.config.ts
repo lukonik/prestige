@@ -1,4 +1,4 @@
-import { prestige } from "@lonik/prestige/vite";
+import { prestige } from "@prestigia/docs/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { defineConfig } from "vite";
 

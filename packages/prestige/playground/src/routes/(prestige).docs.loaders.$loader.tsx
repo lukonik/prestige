@@ -1,4 +1,4 @@
-import { Aside, Code, PrestigePage } from "@lonik/prestige/ui";
+import { Aside, Code, PrestigePage } from "@prestigia/docs/ui";
 import { createFileRoute } from "@tanstack/react-router";
 import { loaders } from "../loaders/loaders";
 

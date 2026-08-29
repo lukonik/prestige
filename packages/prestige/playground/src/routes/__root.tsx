@@ -1,4 +1,4 @@
-import { PrestigeShell, PrestigeShellProps } from "@lonik/prestige/ui";
+import { PrestigeShell, PrestigeShellProps } from "@prestigia/docs/ui";
 import {
   createRootRoute,
   HeadContent,

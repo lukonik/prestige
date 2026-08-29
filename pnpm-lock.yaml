@@ -108,7 +108,7 @@ importers:
 
   apps/docs:
     dependencies:
-      '@lonik/prestige':
+      '@prestigia/docs':
         specifier: workspace:*
         version: link:../../packages/prestige
       '@tailwindcss/vite':

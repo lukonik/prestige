@@ -1,4 +1,4 @@
-import { defineConfig } from "@lonik/prestige/vite";
+import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
   title: "Prestige",
@@ -73,7 +73,7 @@ export default defineConfig({
               slug: "docs/reference/plugin-reference",
             },
             {
-              label: "create-prestige Reference",
+              label: "Prestigia CLI Reference",
               slug: "docs/reference/create-prestige-reference",
             },
           ],

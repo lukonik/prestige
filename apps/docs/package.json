@@ -12,7 +12,7 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "@lonik/prestige": "workspace:*",
+    "@prestigia/docs": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@tanstack/query-core": "catalog:",
     "@tanstack/react-devtools": "catalog:",

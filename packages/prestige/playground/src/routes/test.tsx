@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Steps, StepItem } from "@lonik/prestige/ui";
+import { Steps, StepItem } from "@prestigia/docs/ui";
 
 export const Route = createFileRoute("/test")({
   component: RouteComponent,

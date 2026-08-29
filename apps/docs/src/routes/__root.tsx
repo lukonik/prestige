@@ -1,5 +1,5 @@
-import type { PrestigeShellProps } from "@lonik/prestige/ui";
-import { PrestigeShell } from "@lonik/prestige/ui";
+import type { PrestigeShellProps } from "@prestigia/docs/ui";
+import { PrestigeShell } from "@prestigia/docs/ui";
 import {
   createRootRoute,
   HeadContent,

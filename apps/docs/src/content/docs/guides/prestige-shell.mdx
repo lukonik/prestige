@@ -17,7 +17,7 @@ Wrap the `<Outlet />` (or equivalent content placeholder) with `PrestigeShell`:
 
 ```tsx
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { PrestigeShell } from "@lonik/prestige/ui";
+import { PrestigeShell } from "@prestigia/docs/ui";
 
 export const Route = createRootRoute({
   component: () => (
@@ -35,7 +35,7 @@ This immediately applies the Prestige shell around your app content.
 Put serializable shell options such as `github`, `algolia`, and `license` into `prestige.config.ts`. Keep runtime options like `customHeaderTitle`, `beforeHeaderLinks`, `afterHeaderLinks`, and `copyright` on `PrestigeShell`.
 
 ```ts
-import { defineConfig } from "@lonik/prestige/vite";
+import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
   title: "Prestige",
@@ -59,7 +59,7 @@ Pass runtime header and footer customizations through the `options` prop:
 
 ```tsx
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { PrestigeShell, type PrestigeShellProps } from "@lonik/prestige/ui";
+import { PrestigeShell, type PrestigeShellProps } from "@prestigia/docs/ui";
 
 const shellOptions: PrestigeShellProps = {
   beforeHeaderLinks: [{ to: "/changelog", label: "Changelog" }],

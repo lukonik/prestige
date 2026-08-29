@@ -82,7 +82,7 @@ function createLayoutRoute(id: string) {
     `
 import { createLazyFileRoute } from '@tanstack/react-router';
 import sidebar from "virtual:prestige/sidebar/${id}";
-import { CollectionRoute } from "@lonik/prestige/ui";
+import { CollectionRoute } from "@prestigia/docs/ui";
 
 export const Route = createLazyFileRoute('/(prestige)/${id}')(CollectionRoute(sidebar, "${id}"));
 `.trim() + "\n"
@@ -94,7 +94,7 @@ function createContentHeadRoute(slug: string) {
     `
 import { createFileRoute } from "@tanstack/react-router";
 import * as contentData from "virtual:prestige/content/${slug}";
-import { ContentRoute } from "@lonik/prestige/ui";
+import { ContentRoute } from "@prestigia/docs/ui";
 
 export const Route = createFileRoute('/(prestige)/${slug}')(ContentRoute(contentData));
 `.trim() + "\n"
@@ -106,7 +106,7 @@ function createContentRoute(slug: string) {
     `
 import { createLazyFileRoute } from "@tanstack/react-router";
 import * as contentData from "virtual:prestige/content/${slug}";
-import { LazyContentRoute } from "@lonik/prestige/ui";
+import { LazyContentRoute } from "@prestigia/docs/ui";
 
 export const Route = createLazyFileRoute('/(prestige)/${slug}')(LazyContentRoute(contentData));
 `.trim() + "\n"

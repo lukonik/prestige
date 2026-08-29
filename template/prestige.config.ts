@@ -1,4 +1,4 @@
-import { defineConfig } from "@lonik/prestige/vite";
+import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
   title: "__PROJECT_TITLE__",

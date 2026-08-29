@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router';
 import sidebar from "virtual:prestige/sidebar/api";
-import { CollectionRoute } from "@lonik/prestige/ui";
+import { CollectionRoute } from "@prestigia/docs/ui";
 
 export const Route = createLazyFileRoute('/(prestige)/api')(CollectionRoute(sidebar, "api"));

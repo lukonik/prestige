@@ -1,5 +1,7 @@
 import { Await, Link, createFileRoute } from "@tanstack/react-router";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { getDocsSnapshot, getDocuments } from "#/features/docs/docs.functions";
 import { docTopics, docsSearchSchema } from "#/features/docs/docs.schema";
 
@@ -47,7 +49,7 @@ function DocumentationIndex() {
       <form className="filters" action="/" method="get">
         <label>
           <span>Search documentation</span>
-          <input
+          <Input
             defaultValue={search.q}
             name="q"
             placeholder="Try “skills” or “release”"
@@ -64,7 +66,7 @@ function DocumentationIndex() {
             ))}
           </select>
         </label>
-        <button type="submit">Apply filters</button>
+        <Button type="submit">Apply filters</Button>
       </form>
 
       <section aria-labelledby="results-heading" className="results">

@@ -1,10 +1,37 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Geist Variable", sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
 
 :root {
+  --background: #f4f1e9;
+  --foreground: #1a211d;
+  --primary: #254b34;
+  --primary-foreground: #fff;
+  --muted: #ebe8df;
+  --muted-foreground: #5e665f;
+  --border: #d6d2c7;
+  --input: #c7c4ba;
+  --ring: #557a62;
   color: #1a211d;
   background: #f4f1e9;
   font-family:
-    Inter,
+    "Geist Variable",
     ui-sans-serif,
     system-ui,
     -apple-system,

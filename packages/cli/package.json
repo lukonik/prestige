@@ -44,7 +44,7 @@
   "scripts": {
     "build": "tsdown",
     "clean": "premove dist",
-    "test:build": "publint --strict && attw --pack --profile esm-only .",
+    "test:build": "publint --strict --pack=false && attw --pack --profile esm-only .",
     "test:eslint": "eslint --concurrency=auto src tests tsdown.config.ts",
     "test:lib": "vitest run",
     "test:types": "tsc --noEmit"

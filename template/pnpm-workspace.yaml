@@ -1,0 +1,6 @@
+allowBuilds:
+  esbuild: false
+  unrs-resolver: false
+
+minimumReleaseAgeExclude:
+  - zod@4.5.2

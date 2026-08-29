@@ -1,84 +1,44 @@
 import "@tanstack/react-start/server-only";
 
-import type { Doc, DocSummary, DocTopic } from "./docs.schema";
+import { allDocs } from "content-collections";
 
-const documents: Array<Doc> = [
-  {
-    slug: "overview",
-    title: "Prestigia overview",
-    description:
-      "Understand the repository layout, package boundaries, and shared conventions.",
-    topic: "package",
-    sections: [
-      {
-        id: "workspace",
-        title: "Workspace",
-        paragraphs: [
-          "Prestigia is a pnpm and Nx workspace. Publishable libraries live in packages, while deployable products live in apps.",
-          "Shared dependency versions are declared in the root pnpm catalog so every project resolves the same toolchain.",
-        ],
-      },
-      {
-        id: "quality",
-        title: "Quality gates",
-        paragraphs: [
-          "Formatting, ESLint, TypeScript, package tests, and production builds are orchestrated from the workspace root.",
-          "Run the narrow project checks while iterating, then run the root CI command before merging.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "agent-skills",
-    title: "Versioned Agent Skills",
-    description:
-      "Author, validate, and publish reusable instructions with the documentation package.",
-    topic: "skill",
-    sections: [
-      {
-        id: "source",
-        title: "Skill sources",
-        paragraphs: [
-          "Skill source files live under packages/docs/skills. Each skill owns a SKILL.md entry point and may include focused supporting resources.",
-          "Source checks keep generated skill artifacts synchronized with their versioned inputs.",
-        ],
-      },
-      {
-        id: "validation",
-        title: "Validation",
-        paragraphs: [
-          "Use the workspace skill validation commands to check structure and stale artifacts before publishing.",
-          "Keep instructions scoped, operational, and explicit about any required tools or environment boundaries.",
-        ],
-      },
-    ],
-  },
-  {
-    slug: "release-workflow",
-    title: "Release workflow",
-    description:
-      "Prepare package changes, changesets, builds, and publication from one workflow.",
-    topic: "workflow",
-    sections: [
-      {
-        id: "changesets",
-        title: "Changesets",
-        paragraphs: [
-          "Add a changeset for every user-visible package change and describe the released behavior in product language.",
-          "Versioning updates package versions and changelogs before the publish command builds every package.",
-        ],
-      },
-      {
-        id: "verification",
-        title: "Verification",
-        paragraphs: [
-          "The CI workflow checks formatting, types, lint rules, library tests, package metadata, and production output.",
-          "A successful production build is required because it also verifies server and client environment boundaries for this app.",
-        ],
-      },
-    ],
-  },
-];
+import type { Doc, DocSection, DocSummary, DocTopic } from "./docs.schema";
+
+function toId(title: string): string {
+  return title
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function parseSections(content: string): Array<DocSection> {
+  const sections: Array<DocSection> = [];
+  let currentSection: DocSection | undefined;
+
+  for (const block of content.trim().split(/\n\s*\n/)) {
+    if (block.startsWith("## ")) {
+      const title = block.slice(3).trim();
+      currentSection = { id: toId(title), title, paragraphs: [] };
+      sections.push(currentSection);
+      continue;
+    }
+
+    if (currentSection) currentSection.paragraphs.push(block.trim());
+  }
+
+  return sections;
+}
+
+const documents: Array<Doc> = allDocs
+  .slice()
+  .sort((left, right) => left.order - right.order)
+  .map((document) => ({
+    slug: document._meta.path,
+    title: document.title,
+    description: document.description,
+    topic: document.topic,
+    sections: parseSections(document.content),
+  }));
 
 export function listDocuments(input: {
   query: string;

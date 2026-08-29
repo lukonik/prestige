@@ -131,6 +131,7 @@ importers:
         specifier: "catalog:"
         version: 4.1.11(@types/node@26.4.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
 
+<<<<<<< HEAD
   apps/demo:
     dependencies:
       "@tanstack/react-router":
@@ -180,6 +181,8 @@ importers:
         specifier: "catalog:"
         version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0)
 
+=======
+>>>>>>> main
   apps/docs:
     dependencies:
       "@tanstack/react-router":

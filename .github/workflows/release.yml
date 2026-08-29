@@ -43,5 +43,4 @@ jobs:
         # CHANGED: Removed working-directory so semantic-release runs at the root
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }} # CHANGED: setup-node specifically looks for NODE_AUTH_TOKEN
         run: pnpm exec semantic-release

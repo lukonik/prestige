@@ -39,6 +39,12 @@ jobs:
         # Build both publishable packages before releasing them.
         run: pnpm -r run build
 
+      - name: Validate Agent Skills
+        run: pnpm skills:validate
+
+      - name: Verify Agent Skills in npm tarball
+        run: pnpm skills:pack
+
       - name: Release packages
         # CHANGED: Removed working-directory so semantic-release runs at the root
         env:

@@ -15,7 +15,14 @@
   },
   "files": [
     "dist",
-    "src/themes"
+    "src/themes",
+    "skills",
+    "!skills/_artifacts"
+  ],
+  "keywords": [
+    "documentation",
+    "agent-skills",
+    "tanstack-intent"
   ],
   "type": "module",
   "types": "./dist/client.d.ts",
@@ -51,6 +58,10 @@
     "play:preview": "vite preview",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
+    "skills:validate": "intent validate --check",
+    "skills:stale": "intent stale",
+    "skills:sources": "node ../../scripts/check-skill-source-changes.mjs",
+    "skills:pack": "node ../../scripts/check-package-skills.mjs",
     "release": "bumpp && pnpm publish",
     "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
@@ -107,6 +118,7 @@
     "@semantic-release/exec": "catalog:",
     "@semantic-release/git": "catalog:",
     "@tailwindcss/vite": "catalog:",
+    "@tanstack/intent": "0.3.7",
     "@tanstack/react-devtools": "catalog:",
     "@tanstack/react-router": "catalog:",
     "@tanstack/react-router-devtools": "catalog:",

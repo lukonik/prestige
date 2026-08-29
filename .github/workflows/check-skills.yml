@@ -1,0 +1,75 @@
+# intent-workflow-version: 3
+
+name: Check Skills
+
+on:
+  pull_request:
+    paths:
+      - "packages/prestige/skills/**"
+      - "packages/prestige/package.json"
+      - "apps/docs/src/content/docs/**"
+      - "packages/prestige/src/**"
+      - "scripts/check-skill-source-changes.mjs"
+      - "scripts/check-package-skills.mjs"
+      - "pnpm-lock.yaml"
+  release:
+    types: [published]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate and package Agent Skills
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate skills
+        run: pnpm skills:validate
+
+      - name: Check referenced source reviews
+        run: pnpm skills:sources -- "origin/${{ github.base_ref }}" "${{ github.sha }}"
+
+      - name: Verify npm tarball contents
+        run: pnpm skills:pack
+
+  stale:
+    name: Report conservative stale signals
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "lts/*"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check for stale skills
+        run: pnpm skills:stale

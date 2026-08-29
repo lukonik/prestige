@@ -3,25 +3,39 @@ linkWorkspacePackages: true
 preferWorkspacePackages: true
 
 packages:
+  - apps/*
   - packages/*
 
 catalog:
+  "@tanstack/react-router": ^1.170.32
+  "@tanstack/react-start": ^1.168.49
+  "@tanstack/router-cli": ^1.167.33
   "@arethetypeswrong/cli": ^0.18.5
   "@changesets/changelog-github": ^1.0.0
   "@changesets/cli": ^3.0.1
   "@tanstack/eslint-config": ^0.4.0
   "@tanstack/intent": 0.3.7
   "@types/node": ^26.4.0
+  "@types/react": ^19.2.0
+  "@types/react-dom": ^19.2.0
+  "@vitejs/plugin-react": ^6.1.1
   eslint: ^10.9.1
   nx: 23.1.2
   pkg-pr-new: 0.0.88
   premove: ^4.0.0
   prettier: ^3.9.6
   publint: ^0.3.24
+  react: ^19.2.8
+  react-dom: ^19.2.8
   tsdown: ^0.22.14
   typescript: 6.0.2
+  vite: ^8.2.2
   vitest: ^4.1.11
+  zod: ^4.5.2
 
 allowBuilds:
   nx: true
   unrs-resolver: false
+
+minimumReleaseAgeExclude:
+  - zod@4.5.2

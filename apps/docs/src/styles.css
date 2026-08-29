@@ -9,3 +9,124 @@
   --font-sans: 'Inter', sans-serif;
   --font-mono: 'Geist Mono', monospace;
 }
+
+.progress-page {
+  min-height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  background: #020617;
+}
+
+.progress-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  min-height: 100dvh;
+  padding: 2rem;
+  overflow: hidden;
+  color: #f8fafc;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 45%, rgb(37 99 235 / 18%), transparent 35%),
+    linear-gradient(145deg, #020617 0%, #0f172a 100%);
+  isolation: isolate;
+}
+
+.progress-overlay::before {
+  position: absolute;
+  inset: 1.25rem;
+  z-index: -1;
+  border: 1px solid rgb(148 163 184 / 14%);
+  border-radius: 1.5rem;
+  content: '';
+}
+
+.progress-overlay__glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: min(36rem, 80vw);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: rgb(59 130 246 / 8%);
+  filter: blur(80px);
+  transform: translate(-50%, -50%);
+}
+
+.progress-overlay__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 48rem;
+}
+
+.progress-overlay__eyebrow {
+  margin-bottom: 1.5rem;
+  color: #60a5fa;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.progress-overlay h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 9vw, 6.5rem);
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 0.95;
+  text-wrap: balance;
+}
+
+.progress-overlay p {
+  margin: 1.5rem 0 0;
+  color: #94a3b8;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  letter-spacing: 0.02em;
+}
+
+.progress-overlay__indicator {
+  display: flex;
+  gap: 0.45rem;
+  margin-top: 2.5rem;
+}
+
+.progress-overlay__indicator span {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: #3b82f6;
+  animation: progress-pulse 1.4s ease-in-out infinite;
+}
+
+.progress-overlay__indicator span:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.progress-overlay__indicator span:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes progress-pulse {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-0.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress-overlay__indicator span {
+    animation: none;
+    opacity: 0.75;
+  }
+}

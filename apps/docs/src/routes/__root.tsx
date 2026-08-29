@@ -1,13 +1,9 @@
-import type { PrestigeShellProps } from "@prestigia/docs/ui";
-import { PrestigeShell } from "@prestigia/docs/ui";
 import {
   createRootRoute,
   HeadContent,
-  Outlet,
   Scripts,
 } from "@tanstack/react-router";
 import config from "virtual:prestige/config";
-import HeaderLogo from "../assets/logo.png?$oh";
 import appCss from "../styles.css?url";
 
 const socialImageUrl = "https://lukonik.github.io/prestigia/logo.png";
@@ -25,21 +21,23 @@ const siteKeywords = [
   "tailwind css",
 ].join(", ");
 
-const options: PrestigeShellProps = {
-  customHeaderTitle: () => (
-    <HeaderLogo alt="header logo" className="w-10 h-10" />
-  ),
-  copyright: () => (
-    <a
-      className="underline"
-      href="https://github.com/lukonik/Prestige"
-      target="_blank"
-      rel="norefferer"
-    >
-      Built with Prestige 🎩
-    </a>
-  ),
-};
+function WebsiteProgressOverlay() {
+  return (
+    <main className="progress-overlay" aria-labelledby="progress-title">
+      <div className="progress-overlay__glow" aria-hidden="true" />
+      <section className="progress-overlay__content">
+        <span className="progress-overlay__eyebrow">Prestigia</span>
+        <h1 id="progress-title">Website is in progress</h1>
+        <p>Stay tuned.</p>
+        <div className="progress-overlay__indicator" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+      </section>
+    </main>
+  );
+}
 
 export const Route = createRootRoute({
   head: () => ({
@@ -67,10 +65,8 @@ export const Route = createRootRoute({
       <head>
         <HeadContent />
       </head>
-      <body>
-        <PrestigeShell options={options}>
-          <Outlet />
-        </PrestigeShell>
+      <body className="progress-page">
+        <WebsiteProgressOverlay />
         <Scripts />
       </body>
     </html>

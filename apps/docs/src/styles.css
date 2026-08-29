@@ -55,13 +55,18 @@ select {
 
 .brand {
   display: inline-flex;
-  align-items: baseline;
-  gap: 0.45rem;
+  align-items: center;
+  gap: 0.5rem;
   color: #15221a;
   font-family: Georgia, "Times New Roman", serif;
   font-size: 1.35rem;
   font-weight: 700;
   text-decoration: none;
+}
+
+.brand-logo {
+  height: 1.75rem;
+  width: auto;
 }
 
 .brand span {

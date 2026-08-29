@@ -6,7 +6,7 @@ export default defineConfig({
     label: "MIT",
     url: "https://opensource.org/licenses/MIT",
   },
-  github: "https://github.com/lukonik/prestige",
+  github: "https://github.com/lukonik/prestigia",
   collections: [
     {
       id: "docs",

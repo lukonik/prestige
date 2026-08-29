@@ -2,6 +2,15 @@
   "name": "@prestigia/cli",
   "version": "0.7.0",
   "description": "Scaffold a Prestige application",
+  "homepage": "https://github.com/lukonik/prestigia#readme",
+  "bugs": {
+    "url": "https://github.com/lukonik/prestigia/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukonik/prestigia.git",
+    "directory": "packages/create-prestige"
+  },
   "author": "Luka Onikadze",
   "license": "MIT",
   "bin": {

@@ -9,7 +9,7 @@ import tailwindcss from "@tailwindcss/vite";
 import viteReact from "@vitejs/plugin-react";
 
 const config = defineConfig({
-  base: "/prestige/",
+  base: "/prestigia/",
   resolve: {
     tsconfigPaths: true,
   },
@@ -22,7 +22,7 @@ const config = defineConfig({
         enabled: true,
         crawlLinks: true,
       },
-      sitemap: { enabled: true, host: "https://lukonik.github.io/prestige/" },
+      sitemap: { enabled: true, host: "https://lukonik.github.io/prestigia/" },
     }),
     ohImage({
       outDir: "dist/client",

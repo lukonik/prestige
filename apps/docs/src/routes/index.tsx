@@ -24,7 +24,7 @@ import Logo from "../assets/logo.png?$oh";
 const homeTitle = `${config.title} | Documentation framework for TanStack Start`;
 const homeDescription =
   "Prestige is a documentation framework for TanStack Start with MDX, Vite, Tailwind CSS, DocSearch, and static generation built in.";
-const homeUrl = "https://lukonik.github.io/prestige/";
+const homeUrl = "https://lukonik.github.io/prestigia/";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -167,7 +167,7 @@ function RouteComponent() {
                 Vite
                 <img
                   className="w-5 h-5 ml-1"
-                  src="/prestige/vite.svg"
+                  src="/prestigia/vite.svg"
                   alt="Vite Logo"
                 />
                 ,
@@ -176,7 +176,7 @@ function RouteComponent() {
                 TanStack Start
                 <img
                   className="w-5 h-5 ml-1"
-                  src="/prestige/tanstack.png"
+                  src="/prestigia/tanstack.png"
                   alt="Tanstack logo"
                 />
                 ,
@@ -185,7 +185,7 @@ function RouteComponent() {
                 and TailwindCSS
                 <img
                   className="w-5 h-5 ml-1"
-                  src="/prestige/tailwindcss.svg"
+                  src="/prestigia/tailwindcss.svg"
                   alt="tailwind logo"
                 />
               </span>

@@ -2,15 +2,16 @@
   "name": "@prestigia/docs",
   "version": "0.0.3",
   "description": "Static Site Generator for Tanstack Start",
-  "homepage": "https://github.com/lukonik/prestige#readme",
+  "homepage": "https://github.com/lukonik/prestigia#readme",
   "bugs": {
-    "url": "https://github.com/lukonik/prestige/issues"
+    "url": "https://github.com/lukonik/prestigia/issues"
   },
   "license": "MIT",
   "author": "Luka Onikadze",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukonik/prestige.git"
+    "url": "git+https://github.com/lukonik/prestigia.git",
+    "directory": "packages/prestige"
   },
   "files": [
     "dist",

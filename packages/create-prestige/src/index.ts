@@ -43,7 +43,7 @@ async function main() {
     }
 
     // Download template from GitHub using giget
-    await downloadTemplate("github:lukonik/prestige/template", {
+    await downloadTemplate("github:lukonik/prestigia/template", {
       dir: projectDir,
       force: true,
     });

@@ -17,7 +17,7 @@
   "author": "",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lukonik/prestige.git"
+    "url": "git+https://github.com/lukonik/prestigia.git"
   },
   "scripts": {
     "dev": "pnpm run --filter @prestigia/docs dev",

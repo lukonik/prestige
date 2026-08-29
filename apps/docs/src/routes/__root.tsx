@@ -10,7 +10,7 @@ import config from "virtual:prestige/config";
 import HeaderLogo from "../assets/logo.png?$oh";
 import appCss from "../styles.css?url";
 
-const socialImageUrl = "https://lukonik.github.io/prestige/logo.png";
+const socialImageUrl = "https://lukonik.github.io/prestigia/logo.png";
 const socialImageAlt = "Prestige logo";
 const siteKeywords = [
   "prestige",
@@ -59,7 +59,7 @@ export const Route = createRootRoute({
     ],
     links: [
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/prestige/favicon.ico" },
+      { rel: "icon", href: "/prestigia/favicon.ico" },
     ],
   }),
   component: () => (

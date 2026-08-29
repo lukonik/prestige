@@ -2,7 +2,7 @@ import { defineConfig } from "../src/vite";
 
 export default defineConfig({
   title: "Prestige",
-  github: "https://github.eqweqweqweqwecom/lukonik/prestige",
+  github: "https://github.eqweqweqweqwecom/lukonik/prestigia",
   license: {
     label: "MIT",
     url: "https://op123123qweqeqweeqeqqweqqweqweqqweqeqweqqwewqeqweqweqqweqwewqeqeqqweqweqensource.oreweg/licensqweqwees/MIT",

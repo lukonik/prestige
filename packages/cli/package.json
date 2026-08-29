@@ -35,7 +35,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukonik/prestigia.git",
-    "directory": "packages/create-prestige"
+    "directory": "packages/cli"
   },
   "homepage": "https://github.com/lukonik/prestigia#readme",
   "bugs": {

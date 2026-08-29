@@ -5,10 +5,10 @@ name: Check Skills
 on:
   pull_request:
     paths:
-      - "packages/prestige/skills/**"
-      - "packages/prestige/package.json"
+      - "packages/docs/skills/**"
+      - "packages/docs/package.json"
       - "docs/agent-skills.md"
-      - "packages/prestige/README.md"
+      - "packages/docs/README.md"
       - "scripts/check-skill-source-changes.mjs"
       - "scripts/check-package-skills.mjs"
       - "pnpm-lock.yaml"

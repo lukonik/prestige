@@ -1,18 +1,18 @@
 {
   "library_version": "0.0.3",
   "skills": {
-    "prestige-core": {
+    "prestigia-core": {
       "sources_sha": {
         "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf",
-        "lukonik/prestigia:packages/prestige/README.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
+        "lukonik/prestigia:packages/docs/README.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }
     },
-    "prestige-core/content-authoring": {
+    "prestigia-core/content-authoring": {
       "sources_sha": {
         "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }
     },
-    "prestige-core/shell-customization": {
+    "prestigia-core/shell-customization": {
       "sources_sha": {
         "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }

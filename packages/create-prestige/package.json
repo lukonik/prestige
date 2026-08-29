@@ -1,43 +1,52 @@
 {
   "name": "@prestigia/cli",
   "version": "0.7.0",
-  "description": "Scaffold a Prestige application",
-  "homepage": "https://github.com/lukonik/prestigia#readme",
-  "bugs": {
-    "url": "https://github.com/lukonik/prestigia/issues"
+  "description": "Prestigia command-line package.",
+  "license": "MIT",
+  "author": "Luka Onikadze",
+  "type": "module",
+  "sideEffects": false,
+  "bin": {
+    "prestigia": "./dist/index.js"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukonik/prestigia.git",
     "directory": "packages/create-prestige"
   },
-  "author": "Luka Onikadze",
-  "license": "MIT",
-  "bin": {
-    "prestigia": "./dist/index.mjs"
+  "homepage": "https://github.com/lukonik/prestigia#readme",
+  "bugs": {
+    "url": "https://github.com/lukonik/prestigia/issues"
   },
-  "publishConfig": {
-    "access": "public",
-    "provenance": true
-  },
-  "type": "module",
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch",
-    "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
-  },
-  "dependencies": {
-    "@clack/prompts": "^1.7.0",
-    "giget": "^3.3.1",
-    "magicast": "^0.5.4",
-    "nypm": "^0.6.9",
-    "pathe": "catalog:",
-    "picocolors": "^1.1.1"
-  },
-  "devDependencies": {
-    "@types/node": "catalog:",
-    "bumpp": "catalog:",
-    "tsdown": "catalog:",
-    "typescript": "catalog:"
+    "clean": "premove dist",
+    "test:build": "publint --strict && attw --pack --profile esm-only .",
+    "test:eslint": "eslint --concurrency=auto src tests tsdown.config.ts",
+    "test:lib": "vitest run",
+    "test:types": "tsc --noEmit"
   }
 }

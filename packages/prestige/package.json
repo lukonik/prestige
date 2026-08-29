@@ -1,21 +1,26 @@
 {
   "name": "@prestigia/docs",
   "version": "0.0.3",
-  "description": "Static Site Generator for Tanstack Start",
-  "homepage": "https://github.com/lukonik/prestigia#readme",
-  "bugs": {
-    "url": "https://github.com/lukonik/prestigia/issues"
-  },
+  "description": "Prestigia documentation package and versioned Agent Skills.",
   "license": "MIT",
   "author": "Luka Onikadze",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lukonik/prestigia.git",
-    "directory": "packages/prestige"
+  "type": "module",
+  "sideEffects": false,
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist",
-    "src/themes",
+    "README.md",
+    "LICENSE",
     "skills",
     "!skills/_artifacts"
   ],
@@ -24,127 +29,35 @@
     "agent-skills",
     "tanstack-intent"
   ],
-  "type": "module",
-  "types": "./dist/client.d.ts",
-  "exports": {
-    "./ui": {
-      "types": "./dist/ui.d.ts",
-      "import": "./dist/ui.js",
-      "default": "./dist/ui.js"
-    },
-    "./vite": {
-      "types": "./dist/vite.d.ts",
-      "import": "./dist/vite.js",
-      "default": "./dist/vite.js"
-    },
-    "./themes/*": {
-      "style": "./src/themes/*",
-      "default": "./src/themes/*"
-    },
-    "./package.json": "./package.json",
-    "./client": {
-      "types": "./dist/client.d.ts"
-    }
+  "engines": {
+    "node": ">=20"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukonik/prestigia.git",
+    "directory": "packages/prestige"
+  },
+  "homepage": "https://github.com/lukonik/prestigia#readme",
+  "bugs": {
+    "url": "https://github.com/lukonik/prestigia/issues"
+  },
   "scripts": {
     "build": "tsdown",
-    "dev": "tsdown --watch",
-    "play": "vite",
-    "play:build": "vite build",
-    "play:preview": "vite preview",
-    "test": "vitest",
-    "typecheck": "tsc --noEmit",
-    "skills:validate": "intent validate --check",
-    "skills:stale": "intent stale",
-    "skills:sources": "node ../../scripts/check-skill-source-changes.mjs",
+    "clean": "premove dist",
     "skills:pack": "node ../../scripts/check-package-skills.mjs",
-    "release": "bumpp && pnpm publish",
-    "release-v": "bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
-  },
-  "dependencies": {
-    "@lonik/themer": "^0.5.4",
-    "@mdx-js/mdx": "^3.1.1",
-    "@mdx-js/react": "^3.1.1",
-    "@mdx-js/rollup": "^3.1.1",
-    "@tailwindcss/typography": "catalog:",
-    "chokidar": "^5.0.0",
-    "clsx": "^2.1.1",
-    "debounce": "^3.0.0",
-    "gray-matter": "^4.0.3",
-    "hastscript": "9.0.1",
-    "knitwork": "^1.3.0",
-    "lucide-react": "catalog:",
-    "pathe": "catalog:",
-    "picocolors": "^1.1.1",
-    "picomatch": "^4.0.7",
-    "prism-react-renderer": "^2.4.1",
-    "rehype-prism-plus": "^2.0.2",
-    "rehype-slug": "^6.0.0",
-    "rehype-stringify": "^10.0.1",
-    "remark-directive": "^4.0.0",
-    "remark-flexible-toc": "^1.2.7",
-    "remark-frontmatter": "^5.0.0",
-    "remark-gfm": "^4.0.1",
-    "remark-mdx-frontmatter": "^5.2.0",
-    "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.1.2",
-    "remark-toc": "^9.0.0",
-    "tinyglobby": "^0.2.17",
-    "to-vfile": "^8.0.0",
-    "unified": "^11.0.5",
-    "unist-util-visit": "^5.1.0",
-    "vfile": "^6.0.3",
-    "vfile-matter": "^5.0.1",
-    "vfile-message": "^4.0.3",
-    "yaml": "^2.9.0"
-  },
-  "peerDependencies": {
-    "@tailwindcss/vite": "^4.0.0",
-    "@tanstack/react-router": ">=1.0.0",
-    "@tanstack/react-start": ">=1.0.0",
-    "react": "^18.2.0 || ^19.0.0",
-    "react-dom": "^18.2.0 || ^19.0.0",
-    "tailwindcss": "^4.0.0",
-    "vite": "^6.0.0 || ^7.0.0 || ^8.0.0",
-    "zod": "^4.3.6"
+    "skills:sources": "node ../../scripts/check-skill-source-changes.mjs",
+    "skills:stale": "intent stale",
+    "skills:validate": "intent validate --check",
+    "test:build": "publint --strict && attw --pack --profile esm-only .",
+    "test:eslint": "eslint --concurrency=auto src tests tsdown.config.ts",
+    "test:lib": "vitest run",
+    "test:types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@arethetypeswrong/core": "^0.18.5",
-    "@lonik/oh-image": "^3.3.0",
-    "@semantic-release/exec": "catalog:",
-    "@semantic-release/git": "catalog:",
-    "@tailwindcss/vite": "catalog:",
-    "@tanstack/intent": "0.3.7",
-    "@tanstack/react-devtools": "catalog:",
-    "@tanstack/react-router": "catalog:",
-    "@tanstack/react-router-devtools": "catalog:",
-    "@tanstack/react-start": "catalog:",
-    "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "catalog:",
-    "@types/picomatch": "^4.0.3",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "@types/unist": "^3.0.3",
-    "@vitejs/plugin-react": "catalog:",
-    "@vitest/browser-playwright": "^4.1.11",
-    "@vitest/coverage-v8": "^4.1.11",
-    "bumpp": "catalog:",
-    "memfs": "^4.68.1",
-    "publint": "^0.3.24",
-    "react": "catalog:",
-    "react-dom": "catalog:",
-    "semantic-release": "catalog:",
-    "sharp": "^0.35.4",
-    "tailwindcss": "catalog:",
-    "tsdown": "catalog:",
-    "typescript": "catalog:",
-    "vite": "catalog:",
-    "vite-plugin-inspect": "^12.0.2",
-    "vitest": "catalog:",
-    "vitest-browser-react": "^2.2.0"
+    "@tanstack/intent": "catalog:"
   }
 }

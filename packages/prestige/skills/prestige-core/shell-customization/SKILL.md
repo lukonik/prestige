@@ -1,20 +1,21 @@
 ---
 name: shell-customization
 description: >
-  Mount and customize PrestigeShell in a TanStack Start root route. Load for HeadContent, Scripts, Outlet, customHeaderTitle, beforeHeaderLinks, afterHeaderLinks, copyright, GitHub links, Algolia search, licensing, theme behavior, or shared documentation layout.
+  Preserve the Prestige v0.0.3 shell contract during the rebuild. Load for HeadContent, Scripts, Outlet, customHeaderTitle, beforeHeaderLinks, afterHeaderLinks, copyright, GitHub links, Algolia search, licensing, theme behavior, or shared documentation layout.
 metadata:
   type: sub-skill
-  library: '@prestigia/docs'
+  library: "@prestigia/docs"
   library_version: 0.0.3
 requires:
   - prestige-core
 sources:
-  - lukonik/prestigia:apps/docs/src/content/docs/guides/prestige-shell.mdx
-  - lukonik/prestigia:apps/docs/src/content/docs/reference/prestige-shell-reference.mdx
-  - lukonik/prestigia:packages/prestige/src/ui/routes/prestige-shell.tsx
+  - lukonik/prestigia:docs/agent-skills.md
 ---
 
 # Prestige Shell Customization
+
+> Rebuild status: this is versioned contract guidance for reimplementation;
+> the current placeholder package does not yet export `PrestigeShell`.
 
 Read `prestige-core/SKILL.md` first if the Vite plugin and `prestige.config.ts` are not already configured.
 

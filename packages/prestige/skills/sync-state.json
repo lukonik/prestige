@@ -3,29 +3,18 @@
   "skills": {
     "prestige-core": {
       "sources_sha": {
-        "lukonik/prestigia:apps/docs/src/content/docs/getting-started.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/overview.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/prestige-config.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/vite-plugin.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/reference/plugin-reference.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/reference/prestige-config-reference.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:packages/prestige/src/vite/config/config.types.ts": "df38332508944dd00fe80f64d71b5a61c50b69dc"
+        "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf",
+        "lukonik/prestigia:packages/prestige/README.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }
     },
     "prestige-core/content-authoring": {
       "sources_sha": {
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/collection.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/page.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/reference/frontmatter-reference.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/reference/prestige-config-reference.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:packages/prestige/src/vite/core/content/content.types.ts": "df38332508944dd00fe80f64d71b5a61c50b69dc"
+        "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }
     },
     "prestige-core/shell-customization": {
       "sources_sha": {
-        "lukonik/prestigia:apps/docs/src/content/docs/guides/prestige-shell.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:apps/docs/src/content/docs/reference/prestige-shell-reference.mdx": "df38332508944dd00fe80f64d71b5a61c50b69dc",
-        "lukonik/prestigia:packages/prestige/src/ui/routes/prestige-shell.tsx": "df38332508944dd00fe80f64d71b5a61c50b69dc"
+        "lukonik/prestigia:docs/agent-skills.md": "dbcbd9b5a04aed88688e7296aea0ae8ad0854fbf"
       }
     }
   }

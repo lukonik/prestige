@@ -43,7 +43,9 @@ try {
   rmSync(npmCache, { recursive: true, force: true });
 }
 const packResult = JSON.parse(packOutput);
-const packedFiles = new Set(packResult[0]?.files?.map((file) => file.path) ?? []);
+const packedFiles = new Set(
+  packResult[0]?.files?.map((file) => file.path) ?? [],
+);
 const missingSkills = expectedSkills.filter((skill) => !packedFiles.has(skill));
 
 if (missingSkills.length > 0) {
@@ -51,5 +53,7 @@ if (missingSkills.length > 0) {
   for (const skill of missingSkills) console.error(`- ${skill}`);
   process.exitCode = 1;
 } else {
-  console.log(`npm tarball includes all ${expectedSkills.length} Agent Skills.`);
+  console.log(
+    `npm tarball includes all ${expectedSkills.length} Agent Skills.`,
+  );
 }

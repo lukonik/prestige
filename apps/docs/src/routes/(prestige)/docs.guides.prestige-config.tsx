@@ -1,5 +1,0 @@
-import { createFileRoute } from "@tanstack/react-router";
-import * as contentData from "virtual:prestige/content/docs/guides/prestige-config";
-import { ContentRoute } from "@prestigia/docs/ui";
-
-export const Route = createFileRoute('/(prestige)/docs/guides/prestige-config')(ContentRoute(contentData));

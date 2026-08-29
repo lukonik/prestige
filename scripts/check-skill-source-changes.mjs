@@ -149,7 +149,9 @@ for (const packageDirectory of packageDirectories) {
 }
 
 if (staleSkills.length > 0) {
-  console.error("Referenced documentation changed without a recorded skill review:\n");
+  console.error(
+    "Referenced documentation changed without a recorded skill review:\n",
+  );
   for (const { skillPath, changedSources } of staleSkills) {
     console.error(`- ${skillPath}`);
     for (const changedSource of changedSources) {
@@ -161,5 +163,7 @@ if (staleSkills.length > 0) {
   );
   process.exitCode = 1;
 } else {
-  console.log("Referenced documentation changes have corresponding skill review records.");
+  console.log(
+    "Referenced documentation changes have corresponding skill review records.",
+  );
 }

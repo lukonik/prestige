@@ -1,22 +1,21 @@
 ---
 name: content-authoring
 description: >
-  Author Prestige Markdown or MDX pages and model navigation with collections. Load for src/content, page frontmatter, internal slugs, external links, nested groups, autogenerate, sidebar labels, sibling navigation, or generated content routes.
+  Preserve the Prestige v0.0.3 Markdown, MDX, and collection contract during the rebuild. Load for src/content, page frontmatter, internal slugs, external links, nested groups, autogenerate, sidebar labels, sibling navigation, or generated content routes.
 metadata:
   type: sub-skill
-  library: '@prestigia/docs'
+  library: "@prestigia/docs"
   library_version: 0.0.3
 requires:
   - prestige-core
 sources:
-  - lukonik/prestigia:apps/docs/src/content/docs/guides/collection.mdx
-  - lukonik/prestigia:apps/docs/src/content/docs/guides/page.mdx
-  - lukonik/prestigia:apps/docs/src/content/docs/reference/frontmatter-reference.mdx
-  - lukonik/prestigia:apps/docs/src/content/docs/reference/prestige-config-reference.mdx
-  - lukonik/prestigia:packages/prestige/src/vite/core/content/content.types.ts
+  - lukonik/prestigia:docs/agent-skills.md
 ---
 
 # Prestige Content Authoring
+
+> Rebuild status: this is versioned contract guidance for reimplementation;
+> the current placeholder package does not yet compile content routes.
 
 Read `prestige-core/SKILL.md` first if the plugin and app-root config are not already installed.
 
@@ -41,7 +40,9 @@ export default defineConfig({
 
 ```md
 <!-- src/content/docs/quick-start.mdx -->
+
 ---
+
 title: Quick start
 description: Install and configure the project.
 label: Start here

@@ -1,43 +1,49 @@
 name: Release
+
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
   release:
-    name: Release
+    name: Version or publish
+    if: github.repository_owner == 'lukonik'
     runs-on: ubuntu-latest
     permissions:
       contents: write
-      issues: write
-      pull-requests: write
       id-token: write
+      pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          persist-credentials: false
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "lts/*"
-          cache: "pnpm"
-          registry-url: "https://registry.npmjs.org" # REQUIRED: Tells setup-node to create an .npmrc file
+          node-version-file: .node-version
+          cache: pnpm
+
+      - name: Install npm with trusted-publishing support
+        run: npm install --global npm@11
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build packages
-        # Build both publishable packages before releasing them.
-        run: pnpm -r run build
+      - name: Run all checks
+        run: pnpm test:ci
 
       - name: Validate Agent Skills
         run: pnpm skills:validate
@@ -45,8 +51,12 @@ jobs:
       - name: Verify Agent Skills in npm tarball
         run: pnpm skills:pack
 
-      - name: Release packages
-        # CHANGED: Removed working-directory so semantic-release runs at the root
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: pnpm exec semantic-release
+      - name: Create version pull request or publish packages
+        id: changesets
+        uses: changesets/action@v2.1.1
+        with:
+          version-script: pnpm changeset:version
+          publish-script: pnpm changeset:publish
+          commit-message: "chore: version packages"
+          pr-title: "chore: version packages"
+          create-github-releases: true

@@ -1,34 +1,13 @@
-import { copyFileSync } from "node:fs";
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: {
-    index: "./src/index.ts",
-    vite: "./src/vite/index.ts",
-    ui: "./src/ui/index.ts",
-  },
+  entry: ["./src/index.ts"],
+  format: ["esm"],
   platform: "neutral",
-  exports: false,
+  target: "es2022",
+  fixedExtension: false,
   dts: true,
+  clean: true,
   sourcemap: true,
-  publint: true,
-  attw: {
-    profile: "esm-only",
-  },
-  skipNodeModulesBundle: true,
-  external: [
-    "picocolors",
-    "node:fs/promises",
-    "node:url",
-    /^virtual:.*/,
-  ],
-  plugins: [
-    {
-      name: "copy-files",
-      writeBundle() {
-        copyFileSync("src/client.d.ts", "dist/client.d.ts");
-        copyFileSync("README.md", "dist/README.md");
-      },
-    },
-  ],
+  failOnWarn: "ci-only",
 });

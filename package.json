@@ -1,47 +1,39 @@
 {
-  "name": "root",
+  "name": "prestigia",
   "private": true,
-  "description": "",
-  "keywords": [
-    "prestige",
-    "documentation",
-    "static-site-generator",
-    "markdown",
-    "mdx",
-    "react",
-    "tanstack-start",
-    "tanstack-router",
-    "vite"
-  ],
-  "license": "ISC",
-  "author": "",
+  "version": "0.0.0",
+  "type": "module",
+  "description": "TypeScript packages maintained with TanStack Config conventions.",
+  "license": "MIT",
+  "author": "Luka Onikadze",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/lukonik/prestigia.git"
   },
+  "packageManager": "pnpm@11.24.0",
+  "engines": {
+    "node": ">=24.11.0",
+    "pnpm": ">=11.24.0"
+  },
   "scripts": {
-    "dev": "pnpm run --filter @prestigia/docs dev",
-    "play": "pnpm run --filter @prestigia/docs play",
-    "play:build": "pnpm run --filter @prestigia/docs play:build",
-    "play:preview": "pnpm run --filter @prestigia/docs play:preview",
-    "build": "pnpm run --filter @prestigia/docs build",
-    "docs:publish": "pnpm --filter @prestigia/docs publish",
-    "cli:publish": "pnpm --filter @prestigia/cli publish",
-    "test": "pnpm run --filter @prestigia/docs test",
-    "coverage": "pnpm run --filter @prestigia/docs test --coverage",
-    "typecheck": "pnpm run --filter @prestigia/docs typecheck",
-    "prepare": "husky",
-    "build:all": "pnpm -p build",
-    "test:all": "pnpm -p test",
-    "skills:validate": "pnpm --filter @prestigia/docs skills:validate",
-    "skills:stale": "pnpm --filter @prestigia/docs skills:stale",
-    "skills:sources": "node scripts/check-skill-source-changes.mjs",
+    "build": "nx affected --target=build",
+    "build:all": "nx run-many --target=build",
+    "changeset": "changeset",
+    "changeset:publish": "pnpm build:all && changeset publish",
+    "changeset:version": "changeset version && pnpm install --no-frozen-lockfile && pnpm format",
+    "clean": "nx run-many --target=clean",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "nx affected --target=test:eslint",
+    "preview": "pnpm build:all && pkg-pr-new publish --pnpm --compact './packages/*' --no-template",
     "skills:pack": "pnpm --filter @prestigia/docs skills:pack",
-    "release-v": "pnpm --filter @prestigia/docs release-v",
-    "docs": "pnpm run --filter docs dev",
-    "install:template": "cd template && pnpm install --no-lockfile --ignore-workspace",
-    "empty:release": "git commit --allow-empty -m \"fix: trigger release\"",
-    "docs:build": "pnpm run --filter docs build"
+    "skills:sources": "node scripts/check-skill-source-changes.mjs",
+    "skills:stale": "pnpm --filter @prestigia/docs skills:stale",
+    "skills:validate": "pnpm --filter @prestigia/docs skills:validate",
+    "test": "pnpm test:ci",
+    "test:ci": "pnpm format:check && nx run-many --targets=test:eslint,test:types,test:lib,build,test:build",
+    "test:pr": "pnpm format:check && nx affected --targets=test:eslint,test:types,test:lib,build,test:build",
+    "typecheck": "nx affected --target=test:types"
   },
   "intent": {
     "skills": [
@@ -51,16 +43,21 @@
       "*#experimental-*"
     ]
   },
-  "dependencies": {
-    "@semantic-release/changelog": "^7.0.0",
-    "@semantic-release/exec": "catalog:",
-    "@semantic-release/git": "catalog:",
-    "semantic-release": "catalog:"
-  },
   "devDependencies": {
-    "husky": "^9.1.7",
-    "lint-staged": "^17.4.1"
-  },
-  "packageManager": "pnpm@11.24.0",
-  "version": "0.1.4"
+    "@arethetypeswrong/cli": "catalog:",
+    "@changesets/changelog-github": "catalog:",
+    "@changesets/cli": "catalog:",
+    "@tanstack/eslint-config": "catalog:",
+    "@tanstack/intent": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "nx": "catalog:",
+    "pkg-pr-new": "catalog:",
+    "premove": "catalog:",
+    "prettier": "catalog:",
+    "publint": "catalog:",
+    "tsdown": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
 }

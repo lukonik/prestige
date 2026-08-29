@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "defaultBase": "main",
+  "useInferencePlugins": false,
+  "analytics": false,
+  "parallel": 5,
+  "tui": {
+    "enabled": false
+  },
+  "namedInputs": {
+    "sharedGlobals": [
+      "{workspaceRoot}/.node-version",
+      "{workspaceRoot}/eslint.config.js",
+      "{workspaceRoot}/package.json",
+      "{workspaceRoot}/pnpm-lock.yaml",
+      "{workspaceRoot}/pnpm-workspace.yaml",
+      "{workspaceRoot}/tsconfig.json"
+    ],
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/tests/**/*",
+      "!{projectRoot}/**/*.test.*",
+      "!{projectRoot}/vitest.config.*"
+    ]
+  },
+  "targetDefaults": {
+    "test:eslint": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "test:types": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "test:lib": {
+      "cache": true,
+      "inputs": ["default"],
+      "outputs": ["{projectRoot}/coverage"]
+    },
+    "skills:validate": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "skills:pack": {
+      "cache": true,
+      "dependsOn": ["build"],
+      "inputs": [
+        "{projectRoot}/dist/**/*",
+        "{projectRoot}/package.json",
+        "{projectRoot}/skills/**/*"
+      ]
+    },
+    "build": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production"],
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "test:build": {
+      "cache": true,
+      "dependsOn": ["build"],
+      "inputs": [
+        "{projectRoot}/dist/**/*",
+        "{projectRoot}/package.json",
+        "{projectRoot}/README.md"
+      ]
+    }
+  }
+}

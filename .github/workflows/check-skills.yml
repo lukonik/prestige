@@ -7,8 +7,8 @@ on:
     paths:
       - "packages/prestige/skills/**"
       - "packages/prestige/package.json"
-      - "apps/docs/src/content/docs/**"
-      - "packages/prestige/src/**"
+      - "docs/agent-skills.md"
+      - "packages/prestige/README.md"
       - "scripts/check-skill-source-changes.mjs"
       - "scripts/check-package-skills.mjs"
       - "pnpm-lock.yaml"
@@ -26,17 +26,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "lts/*"
+          node-version-file: .node-version
           cache: "pnpm"
 
       - name: Install dependencies
@@ -57,15 +57,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: "lts/*"
+          node-version-file: .node-version
           cache: "pnpm"
 
       - name: Install dependencies

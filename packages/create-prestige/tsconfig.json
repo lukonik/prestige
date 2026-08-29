@@ -1,12 +1,7 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "lib": ["es2023", "DOM"],
-    "moduleDetection": "force",
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "strict": true
+    "rootDir": "."
   },
-  "include": ["src"]
+  "include": ["src", "tests", "tsdown.config.ts"]
 }

@@ -131,6 +131,55 @@ importers:
         specifier: "catalog:"
         version: 4.1.11(@types/node@26.4.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
 
+  apps/demo:
+    dependencies:
+      "@tanstack/react-router":
+        specifier: "catalog:"
+        version: 1.170.32(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      "@tanstack/react-start":
+        specifier: "catalog:"
+        version: 1.168.49(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(rolldown@1.2.6)(supports-color@7.2.0)(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
+      react:
+        specifier: "catalog:"
+        version: 19.2.8
+      react-dom:
+        specifier: "catalog:"
+        version: 19.2.8(react@19.2.8)
+      zod:
+        specifier: "catalog:"
+        version: 4.5.2
+    devDependencies:
+      "@tanstack/eslint-config":
+        specifier: "catalog:"
+        version: 0.4.0(@typescript-eslint/utils@8.68.0(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.2))(eslint@10.9.1(jiti@2.7.0)(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.2)
+      "@tanstack/router-cli":
+        specifier: "catalog:"
+        version: 1.167.33(supports-color@7.2.0)
+      "@types/node":
+        specifier: "catalog:"
+        version: 26.4.0
+      "@types/react":
+        specifier: "catalog:"
+        version: 19.2.18
+      "@types/react-dom":
+        specifier: "catalog:"
+        version: 19.2.5(@types/react@19.2.18)
+      "@vitejs/plugin-react":
+        specifier: "catalog:"
+        version: 6.1.1(vite@8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0))
+      eslint:
+        specifier: "catalog:"
+        version: 10.9.1(jiti@2.7.0)(supports-color@7.2.0)
+      prettier:
+        specifier: "catalog:"
+        version: 3.9.6
+      typescript:
+        specifier: "catalog:"
+        version: 6.0.2
+      vite:
+        specifier: "catalog:"
+        version: 8.2.2(@types/node@26.4.0)(jiti@2.7.0)(yaml@2.9.0)
+
   apps/docs:
     dependencies:
       "@tanstack/react-router":

@@ -2,7 +2,7 @@
 
 `@prestigia/docs` ships Agent Skills in its npm tarball. The guidance is
 versioned with the package so an agent can load instructions that match the
-Prestige v0.0.3 contract.
+Prestigia v0.0.3 contract.
 
 The repository is currently a clean-slate package shell. These skills preserve
 the previous contract as a rebuild reference; they do not claim that the Vite,
@@ -30,9 +30,9 @@ Discovery is not trust. Configure the packages that may surface guidance:
 
 ```sh
 pnpm dlx @tanstack/intent@latest list
-pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core
-pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core/content-authoring
-pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core/shell-customization
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestigia-core
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestigia-core/content-authoring
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestigia-core/shell-customization
 ```
 
 Load only the narrowest guidance for the current task. During the rebuild,

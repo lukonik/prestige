@@ -21,7 +21,7 @@ The two existing npm identities and their published versions were retained:
 - `pkg-pr-new` for installable pull-request previews
 - Changesets for reviewed version intent, changelogs, and releases
 - npm trusted publishing through GitHub OIDC; no npm token is referenced
-- versioned Prestige Agent Skills, validated and included in the npm tarball
+- versioned Prestigia Agent Skills, validated and included in the npm tarball
 
 The current TanStack guidance recommends `tsdown` for future TypeScript package
 builds. `@tanstack/vite-config` is therefore not installed; it remains a legacy

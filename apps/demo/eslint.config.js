@@ -15,6 +15,10 @@ export default [
     },
   },
   {
-    ignores: ["eslint.config.js", "src/routeTree.gen.ts"],
+    ignores: [
+      ".content-collections/**",
+      "eslint.config.js",
+      "src/routeTree.gen.ts",
+    ],
   },
 ];

@@ -1,0 +1,222 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "@fontsource-variable/geist";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-heading: var(--font-sans);
+  --font-sans: "Geist Variable", sans-serif;
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+}
+
+:root {
+  --background: oklch(0.985 0.006 95);
+  --foreground: oklch(0.18 0.015 145);
+  --card: oklch(1 0 0);
+  --card-foreground: var(--foreground);
+  --primary: oklch(0.36 0.08 150);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.94 0.012 95);
+  --secondary-foreground: var(--foreground);
+  --muted: oklch(0.95 0.008 95);
+  --muted-foreground: oklch(0.48 0.02 145);
+  --accent: oklch(0.92 0.03 145);
+  --accent-foreground: var(--foreground);
+  --destructive: oklch(0.58 0.22 27);
+  --border: oklch(0.87 0.01 95);
+  --input: oklch(0.87 0.01 95);
+  --ring: oklch(0.55 0.07 150);
+  --radius: 0.625rem;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    min-width: 20rem;
+    margin: 0;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+  }
+}
+
+.site-header,
+.site-footer,
+.page-shell {
+  width: min(72rem, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.site-header {
+  display: flex;
+  min-height: 4.5rem;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+
+.site-header a,
+.site-footer,
+.back-link,
+aside nav a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+
+.site-header .brand {
+  color: var(--foreground);
+  font-weight: 700;
+}
+
+.site-footer {
+  padding-block: 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+}
+
+.page-shell {
+  min-height: calc(100vh - 9rem);
+  padding-block: clamp(4rem, 10vw, 7rem);
+}
+
+.hero {
+  max-width: 48rem;
+}
+
+.eyebrow {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+h1 {
+  margin: 0.5rem 0 1.25rem;
+  font-size: clamp(2.7rem, 7vw, 5.5rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.hero > p:last-of-type,
+.document-content header > p:last-child {
+  max-width: 42rem;
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+
+.documents {
+  margin-top: 5rem;
+}
+
+.documents h2 {
+  margin-bottom: 1.25rem;
+  font-size: 1.5rem;
+}
+
+.document-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.document-card {
+  display: flex;
+  min-height: 13rem;
+  flex-direction: column;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+
+.document-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.document-card p {
+  color: var(--muted-foreground);
+  line-height: 1.6;
+}
+
+.document-card a {
+  margin-top: auto;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.document-layout {
+  display: grid;
+  grid-template-columns: 12rem minmax(0, 46rem);
+  gap: clamp(3rem, 8vw, 7rem);
+}
+
+.document-layout aside {
+  position: sticky;
+  top: 2rem;
+  align-self: start;
+}
+
+.back-link {
+  display: block;
+  margin-bottom: 2rem;
+}
+
+aside nav {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.document-content section {
+  padding-top: 2rem;
+}
+
+.document-content h2 {
+  font-size: 1.5rem;
+}
+
+.document-content section p {
+  color: var(--muted-foreground);
+  line-height: 1.8;
+}
+
+@media (max-width: 48rem) {
+  .document-grid,
+  .document-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .document-layout aside {
+    position: static;
+  }
+}

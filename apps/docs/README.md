@@ -4,6 +4,10 @@ A TanStack Start application for the Prestigia documentation. It uses
 file-based TanStack Router routes, validated search state, loaders, and typed
 server functions.
 
+Documentation sources live in `content/docs` and are validated and generated
+by Content Collections. Interface primitives live in `src/components/ui` and
+use the Shadcn `base-nova` style backed by Base UI.
+
 ```bash
 pnpm --filter @prestigia/docs-app dev
 ```

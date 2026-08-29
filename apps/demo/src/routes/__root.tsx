@@ -28,6 +28,10 @@ export const Route = createRootRoute({
     ],
     links: [
       {
+        rel: "icon",
+        href: "/logo.png",
+      },
+      {
         rel: "stylesheet",
         href: appCss,
       },
@@ -43,6 +47,7 @@ function RootLayout() {
     <>
       <header className="site-header">
         <Link className="brand" to="/" search={{ q: "", topic: "all" }}>
+          <img src="/logo.png" alt="Prestigia" className="brand-logo" />
           Prestigia
           <span>Demo</span>
         </Link>

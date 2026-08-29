@@ -33,11 +33,23 @@
     "prepare": "husky",
     "build:all": "pnpm -p build",
     "test:all": "pnpm -p test",
+    "skills:validate": "pnpm --filter @prestigia/docs skills:validate",
+    "skills:stale": "pnpm --filter @prestigia/docs skills:stale",
+    "skills:sources": "node scripts/check-skill-source-changes.mjs",
+    "skills:pack": "pnpm --filter @prestigia/docs skills:pack",
     "release-v": "pnpm --filter @prestigia/docs release-v",
     "docs": "pnpm run --filter docs dev",
     "install:template": "cd template && pnpm install --no-lockfile --ignore-workspace",
     "empty:release": "git commit --allow-empty -m \"fix: trigger release\"",
     "docs:build": "pnpm run --filter docs build"
+  },
+  "intent": {
+    "skills": [
+      "workspace:@prestigia/docs"
+    ],
+    "exclude": [
+      "*#experimental-*"
+    ]
   },
   "dependencies": {
     "@semantic-release/changelog": "^7.0.0",

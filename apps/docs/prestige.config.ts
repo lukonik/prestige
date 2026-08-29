@@ -25,6 +25,10 @@ export default defineConfig({
           slug: "docs/getting-started",
         },
         {
+          label: "Agent Skills",
+          slug: "docs/agent-skills",
+        },
+        {
           label: "Guides",
           items: [
             {

@@ -1,0 +1,68 @@
+---
+title: Agent Skills
+description: Discover and selectively load versioned Prestige guidance with TanStack Intent.
+---
+
+# Agent Skills
+
+`@prestigia/docs` ships Agent Skills in its npm tarball. The guidance is versioned with the package, so an agent can load instructions that match the installed Prestige API instead of relying on unrelated or outdated context.
+
+## Trust installed guidance explicitly
+
+TanStack Intent discovers package metadata and static files from installed dependencies. It does not import or execute a discovered package's entry point, binary, lifecycle script, or other package code while scanning and loading skills.
+
+Discovery is not trust. Configure the packages that may surface guidance in your app's `package.json`:
+
+```json
+{
+  "intent": {
+    "skills": ["@prestigia/docs", "@tanstack/*"],
+    "exclude": ["@tanstack/*devtools*", "*#experimental-*"]
+  }
+}
+```
+
+`intent.skills` is a package and source allowlist. `intent.exclude` removes packages or individual skills after that allowlist is applied. Avoid `"*"` unless you intentionally trust every discovered source.
+
+## Discover, then load for the task
+
+List the permitted catalog from the project root:
+
+```bash
+pnpm dlx @tanstack/intent@latest list
+```
+
+Load only the guidance that matches the current work:
+
+```bash
+# Initial setup, Vite, and prestige.config.ts
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core
+
+# Pages, frontmatter, collections, and navigation
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core/content-authoring
+
+# PrestigeShell and root-layout customization
+pnpm dlx @tanstack/intent@latest load @prestigia/docs#prestige-core/shell-customization
+```
+
+The root skill routes between concerns. Do not load every skill by default; add another only when the task crosses that boundary.
+
+## Editor guidance and hooks
+
+Run `intent install` if you want Intent to add a managed skill-loading block to a supported agent configuration. Supported hooks can also make the catalog visible and observe a load command.
+
+These integrations are conveniences, not a security boundary. A hook cannot prove that a load succeeded, that the selected skill matched the task, or that an agent followed the guidance. The explicit allowlist and exclusions remain the policy boundary, and code review remains responsible for the resulting changes.
+
+## Maintainer checks
+
+Skills live in `packages/prestige/skills` beside the package and reference the documentation and source files from which their advice is derived.
+
+```bash
+pnpm skills:validate
+pnpm skills:stale
+pnpm skills:pack
+```
+
+CI validates the Agent Skills format and verifies that every `SKILL.md` is present in the npm dry-run tarball. When a referenced documentation or source file changes, CI requires the affected skill to be reviewed. Update the skill if its guidance changed; otherwise update its entry in `skills/sync-state.json` to record the no-content-change review.
+
+The stale signal is intentionally conservative: a changed source means “review this skill,” not “this guidance is definitely wrong.”

@@ -13,6 +13,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as prestigeDocsAgentSkillsRouteImport } from './routes/(prestige)/docs.agent-skills'
 import { Route as prestigeDocsGettingStartedRouteImport } from './routes/(prestige)/docs.getting-started'
 import { Route as prestigeDocsIntroductionRouteImport } from './routes/(prestige)/docs.introduction'
 import { Route as prestigeDocsGuidesCollectionRouteImport } from './routes/(prestige)/docs.guides.collection'
@@ -46,6 +47,15 @@ const prestigeDocsLazyRoute = prestigeDocsLazyRouteImport
     getParentRoute: () => rootRouteImport,
   } as any)
   .lazy(() => import('./routes/(prestige)/docs.lazy').then((d) => d.Route))
+const prestigeDocsAgentSkillsRoute = prestigeDocsAgentSkillsRouteImport
+  .update({
+    id: '/agent-skills',
+    path: '/agent-skills',
+    getParentRoute: () => prestigeDocsLazyRoute,
+  } as any)
+  .lazy(() =>
+    import('./routes/(prestige)/docs.agent-skills.lazy').then((d) => d.Route),
+  )
 const prestigeDocsGettingStartedRoute = prestigeDocsGettingStartedRouteImport
   .update({
     id: '/getting-started',
@@ -199,6 +209,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/docs': typeof prestigeDocsLazyRouteWithChildren
+  '/docs/agent-skills': typeof prestigeDocsAgentSkillsRoute
   '/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/guides/collection': typeof prestigeDocsGuidesCollectionRoute
@@ -217,6 +228,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/docs': typeof prestigeDocsLazyRouteWithChildren
+  '/docs/agent-skills': typeof prestigeDocsAgentSkillsRoute
   '/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/docs/guides/collection': typeof prestigeDocsGuidesCollectionRoute
@@ -236,6 +248,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/(prestige)/docs': typeof prestigeDocsLazyRouteWithChildren
+  '/(prestige)/docs/agent-skills': typeof prestigeDocsAgentSkillsRoute
   '/(prestige)/docs/getting-started': typeof prestigeDocsGettingStartedRoute
   '/(prestige)/docs/introduction': typeof prestigeDocsIntroductionRoute
   '/(prestige)/docs/guides/collection': typeof prestigeDocsGuidesCollectionRoute
@@ -256,6 +269,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/docs'
+    | '/docs/agent-skills'
     | '/docs/getting-started'
     | '/docs/introduction'
     | '/docs/guides/collection'
@@ -274,6 +288,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/docs'
+    | '/docs/agent-skills'
     | '/docs/getting-started'
     | '/docs/introduction'
     | '/docs/guides/collection'
@@ -292,6 +307,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/(prestige)/docs'
+    | '/(prestige)/docs/agent-skills'
     | '/(prestige)/docs/getting-started'
     | '/(prestige)/docs/introduction'
     | '/(prestige)/docs/guides/collection'
@@ -335,6 +351,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/docs'
       preLoaderRoute: typeof prestigeDocsLazyRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(prestige)/docs/agent-skills': {
+      id: '/(prestige)/docs/agent-skills'
+      path: '/agent-skills'
+      fullPath: '/docs/agent-skills'
+      preLoaderRoute: typeof prestigeDocsAgentSkillsRouteImport
+      parentRoute: typeof prestigeDocsLazyRoute
     }
     '/(prestige)/docs/getting-started': {
       id: '/(prestige)/docs/getting-started'
@@ -431,6 +454,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface prestigeDocsLazyRouteChildren {
+  prestigeDocsAgentSkillsRoute: typeof prestigeDocsAgentSkillsRoute
   prestigeDocsGettingStartedRoute: typeof prestigeDocsGettingStartedRoute
   prestigeDocsIntroductionRoute: typeof prestigeDocsIntroductionRoute
   prestigeDocsGuidesCollectionRoute: typeof prestigeDocsGuidesCollectionRoute
@@ -447,6 +471,7 @@ interface prestigeDocsLazyRouteChildren {
 }
 
 const prestigeDocsLazyRouteChildren: prestigeDocsLazyRouteChildren = {
+  prestigeDocsAgentSkillsRoute: prestigeDocsAgentSkillsRoute,
   prestigeDocsGettingStartedRoute: prestigeDocsGettingStartedRoute,
   prestigeDocsIntroductionRoute: prestigeDocsIntroductionRoute,
   prestigeDocsGuidesCollectionRoute: prestigeDocsGuidesCollectionRoute,

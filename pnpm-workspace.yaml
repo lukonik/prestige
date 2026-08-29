@@ -13,6 +13,7 @@ catalog:
   "@arethetypeswrong/cli": ^0.18.5
   "@changesets/changelog-github": ^1.0.0
   "@changesets/cli": ^3.0.1
+  "@tailwindcss/vite": ^4.0.0
   "@tanstack/eslint-config": ^0.4.0
   "@tanstack/intent": 0.3.7
   "@types/node": ^26.4.0
@@ -27,6 +28,7 @@ catalog:
   publint: ^0.3.24
   react: ^19.2.8
   react-dom: ^19.2.8
+  tailwindcss: ^4.0.0
   tsdown: ^0.22.14
   typescript: 6.0.2
   vite: ^8.2.2

@@ -10,6 +10,7 @@ catalog:
   "@changesets/changelog-github": ^1.0.0
   "@changesets/cli": ^3.0.1
   "@tanstack/eslint-config": ^0.4.0
+  "@tanstack/intent": 0.3.7
   "@types/node": ^26.4.0
   eslint: ^10.9.1
   nx: 23.1.2

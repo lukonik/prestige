@@ -26,16 +26,29 @@
     "format:check": "prettier --check .",
     "lint": "nx affected --target=test:eslint",
     "preview": "pnpm build:all && pkg-pr-new publish --pnpm --compact './packages/*' --no-template",
+    "skills:pack": "pnpm --filter @prestigia/docs skills:pack",
+    "skills:sources": "node scripts/check-skill-source-changes.mjs",
+    "skills:stale": "pnpm --filter @prestigia/docs skills:stale",
+    "skills:validate": "pnpm --filter @prestigia/docs skills:validate",
     "test": "pnpm test:ci",
     "test:ci": "pnpm format:check && nx run-many --targets=test:eslint,test:types,test:lib,build,test:build",
     "test:pr": "pnpm format:check && nx affected --targets=test:eslint,test:types,test:lib,build,test:build",
     "typecheck": "nx affected --target=test:types"
+  },
+  "intent": {
+    "skills": [
+      "workspace:@prestigia/docs"
+    ],
+    "exclude": [
+      "*#experimental-*"
+    ]
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
     "@changesets/changelog-github": "catalog:",
     "@changesets/cli": "catalog:",
     "@tanstack/eslint-config": "catalog:",
+    "@tanstack/intent": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "nx": "catalog:",

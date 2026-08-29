@@ -18,6 +18,9 @@ catalogs:
     "@tanstack/eslint-config":
       specifier: ^0.4.0
       version: 0.4.0
+    "@tanstack/intent":
+      specifier: 0.3.7
+      version: 0.3.7
     "@types/node":
       specifier: ^26.4.0
       version: 26.4.0
@@ -64,6 +67,9 @@ importers:
       "@tanstack/eslint-config":
         specifier: "catalog:"
         version: 0.4.0(@typescript-eslint/utils@8.68.0(eslint@10.9.1(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.2))(eslint@10.9.1(supports-color@7.2.0))(supports-color@7.2.0)(typescript@6.0.2)
+      "@tanstack/intent":
+        specifier: "catalog:"
+        version: 0.3.7
       "@types/node":
         specifier: "catalog:"
         version: 26.4.0
@@ -97,7 +103,11 @@ importers:
 
   packages/create-prestige: {}
 
-  packages/prestige: {}
+  packages/prestige:
+    devDependencies:
+      "@tanstack/intent":
+        specifier: "catalog:"
+        version: 0.3.7
 
 packages:
   "@andrewbranch/untar.js@1.0.4":
@@ -751,6 +761,13 @@ packages:
     engines: { node: ">=18" }
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
+
+  "@tanstack/intent@0.3.7":
+    resolution:
+      {
+        integrity: sha512-119d81v2JpdFtvLlX8C7Kmx0zqaNUnY4iTyd5Q8rVyE7sVCnuBYIS/NNCa8T6Ni0bdVkcOVDl1zdz78Oz2dfAg==,
+      }
+    hasBin: true
 
   "@tybys/wasm-util@0.10.3":
     resolution:
@@ -1488,6 +1505,13 @@ packages:
         integrity: sha512-tjwM5exMg6BGRI+kNmTntNsvdZS1X8BFYS6tnJ2hdH0kVxM6/eVZ2xy+FqStSWvYmtfFMDLIxurorHwDKfDz5Q==,
       }
     engines: { node: ">=18" }
+
+  cac@6.7.14:
+    resolution:
+      {
+        integrity: sha512-b6Ilus+c3RrdDk+JhLKUAQfzzgLEPy6wcXqS7f/xe1EETvsDP6GORG7SFuOs6cID5YkqchW/LXZbX5bc8j7ZcQ==,
+      }
+    engines: { node: ">=8" }
 
   cac@7.0.0:
     resolution:
@@ -3940,6 +3964,14 @@ snapshots:
       - supports-color
       - typescript
 
+  "@tanstack/intent@0.3.7":
+    dependencies:
+      cac: 6.7.14
+      jsonc-parser: 3.3.1
+      semver: 7.8.5
+      std-env: 4.2.0
+      yaml: 2.9.0
+
   "@tybys/wasm-util@0.10.3":
     dependencies:
       tslib: 2.8.1
@@ -4323,6 +4355,8 @@ snapshots:
   bundle-name@4.1.0:
     dependencies:
       run-applescript: 7.0.0
+
+  cac@6.7.14: {}
 
   cac@7.0.0: {}
 

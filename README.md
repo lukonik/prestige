@@ -21,6 +21,7 @@ The two existing npm identities and their published versions were retained:
 - `pkg-pr-new` for installable pull-request previews
 - Changesets for reviewed version intent, changelogs, and releases
 - npm trusted publishing through GitHub OIDC; no npm token is referenced
+- versioned Prestige Agent Skills, validated and included in the npm tarball
 
 The current TanStack guidance recommends `tsdown` for future TypeScript package
 builds. `@tanstack/vite-config` is therefore not installed; it remains a legacy
@@ -42,6 +43,9 @@ pnpm build         # affected packages only
 pnpm build:all     # every package
 pnpm changeset     # record release intent in a pull request
 pnpm preview       # build and publish pkg-pr-new previews
+pnpm skills:validate
+pnpm skills:pack
+pnpm skills:stale
 ```
 
 Nx discovers package targets from each package's scripts. Cache inputs,

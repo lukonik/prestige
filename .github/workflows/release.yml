@@ -45,6 +45,12 @@ jobs:
       - name: Run all checks
         run: pnpm test:ci
 
+      - name: Validate Agent Skills
+        run: pnpm skills:validate
+
+      - name: Verify Agent Skills in npm tarball
+        run: pnpm skills:pack
+
       - name: Create version pull request or publish packages
         id: changesets
         uses: changesets/action@v2.1.1

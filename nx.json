@@ -38,6 +38,19 @@
       "inputs": ["default"],
       "outputs": ["{projectRoot}/coverage"]
     },
+    "skills:validate": {
+      "cache": true,
+      "inputs": ["default"]
+    },
+    "skills:pack": {
+      "cache": true,
+      "dependsOn": ["build"],
+      "inputs": [
+        "{projectRoot}/dist/**/*",
+        "{projectRoot}/package.json",
+        "{projectRoot}/skills/**/*"
+      ]
+    },
     "build": {
       "cache": true,
       "dependsOn": ["^build"],

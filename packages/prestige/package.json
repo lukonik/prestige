@@ -1,7 +1,7 @@
 {
   "name": "@prestigia/docs",
   "version": "0.0.3",
-  "description": "Prestigia documentation package.",
+  "description": "Prestigia documentation package and versioned Agent Skills.",
   "license": "MIT",
   "author": "Luka Onikadze",
   "type": "module",
@@ -20,7 +20,14 @@
   "files": [
     "dist",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "skills",
+    "!skills/_artifacts"
+  ],
+  "keywords": [
+    "documentation",
+    "agent-skills",
+    "tanstack-intent"
   ],
   "engines": {
     "node": ">=20"
@@ -41,9 +48,16 @@
   "scripts": {
     "build": "tsdown",
     "clean": "premove dist",
+    "skills:pack": "node ../../scripts/check-package-skills.mjs",
+    "skills:sources": "node ../../scripts/check-skill-source-changes.mjs",
+    "skills:stale": "intent stale",
+    "skills:validate": "intent validate --check",
     "test:build": "publint --strict && attw --pack --profile esm-only .",
     "test:eslint": "eslint --concurrency=auto src tests tsdown.config.ts",
     "test:lib": "vitest run",
     "test:types": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tanstack/intent": "catalog:"
   }
 }

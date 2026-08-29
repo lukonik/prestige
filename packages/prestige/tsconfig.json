@@ -1,20 +1,7 @@
 {
-  "extends": "@tsconfig/strictest/tsconfig.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "esnext",
-    "jsx": "react-jsx",
-    "lib": ["es2023", "DOM"],
-    "moduleDetection": "force",
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "types": ["./src/client.d.ts", "vite/client"],
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "paths": {
-      "@prestigia/docs/ui": ["./src/ui/index.ts"],
-      "@prestigia/docs/vite": ["./src/vite/index.ts"]
-    }
+    "rootDir": "."
   },
-  "include": ["src", "playground"]
+  "include": ["src", "tests", "tsdown.config.ts"]
 }

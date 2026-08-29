@@ -1,118 +1,15 @@
 #!/usr/bin/env node
-import { cancel, intro, isCancel, outro, spinner, text } from "@clack/prompts";
-import { downloadTemplate } from "giget";
-import fs from "node:fs/promises";
-import { installDependencies } from "nypm";
-import path from "pathe";
-import pc from "picocolors";
 
-async function main() {
-  intro(pc.inverse(" prestigia "));
+import { pathToFileURL } from "node:url";
 
-  const projectName = await text({
-    message: "What is your project named?",
-    placeholder: "my-prestige-docs",
-    defaultValue: "my-prestige-docs",
-  });
+export const packageName = "@prestigia/cli";
 
-  if (isCancel(projectName)) {
-    cancel("Operation cancelled.");
-    process.exit(0);
-  }
-
-  const cwd = process.cwd();
-  const projectDir = path.resolve(cwd, projectName as string);
-
-  const s = spinner();
-
-  s.start(`Creating project in ${projectDir}`);
-
-  try {
-    // Check if directory already exists and is not empty
-    const dirExists = await fs
-      .access(projectDir)
-      .then(() => true)
-      .catch(() => false);
-
-    if (dirExists) {
-      const files = await fs.readdir(projectDir);
-      if (files.length > 0) {
-        cancel(`Directory ${projectDir} is not empty.`);
-        process.exit(1);
-      }
-    }
-
-    // Download template from GitHub using giget
-    await downloadTemplate("github:lukonik/prestigia/template", {
-      dir: projectDir,
-      force: true,
-    });
-
-    s.stop(`Created project directory`);
-  } catch (err) {
-    s.stop("Failed to create project");
-    console.error(err);
-    process.exit(1);
-  }
-
-  // Update config files with the project name
-  s.start("Configuring project");
-  try {
-    const prestigeConfigPath = path.join(projectDir, "prestige.config.ts");
-    const prestigeConfigExists = await fs
-      .access(prestigeConfigPath)
-      .then(() => true)
-      .catch(() => false);
-
-    if (prestigeConfigExists) {
-      let prestigeConfig = await fs.readFile(prestigeConfigPath, "utf-8");
-      prestigeConfig = prestigeConfig.replace(
-        /__PROJECT_TITLE__/g,
-        projectName as string,
-      );
-      await fs.writeFile(prestigeConfigPath, prestigeConfig);
-    }
-
-    const packageJsonPath = path.join(projectDir, "package.json");
-    const packageJsonExists = await fs
-      .access(packageJsonPath)
-      .then(() => true)
-      .catch(() => false);
-
-    if (packageJsonExists) {
-      const pkg = JSON.parse(await fs.readFile(packageJsonPath, "utf-8"));
-      pkg.name = projectName as string;
-
-      // Replace workspace dependency with latest (or you can inject the current CLI version)
-      if (pkg.dependencies && pkg.dependencies["@prestigia/docs"]?.startsWith("workspace:")) {
-        pkg.dependencies["@prestigia/docs"] = "latest";
-      }
-
-      await fs.writeFile(packageJsonPath, JSON.stringify(pkg, null, 2));
-    }
-
-    s.stop("Project configured");
-  } catch (err) {
-    s.stop("Failed to configure project");
-    console.error(err);
-  }
-
-  // Install dependencies
-  s.start("Installing dependencies...");
-  try {
-    await installDependencies({ cwd: projectDir });
-    s.stop("Successfully installed dependencies!");
-  } catch (err) {
-    s.stop(
-      "Failed to install dependencies. Please run your package manager's install command manually.",
-    );
-    console.error(err);
-  }
-
-  outro(pc.green("✔ Prestige project is ready!"));
-  console.log("\nNext steps:");
-  console.log(`  cd ${projectName}`);
-  console.log(`  npm run dev (or yarn/pnpm equivalent)\n`);
+export function main(): string {
+  return "The Prestigia CLI is ready for its new implementation.";
 }
 
-main().catch(console.error);
+const entry = process.argv[1];
+
+if (entry && import.meta.url === pathToFileURL(entry).href) {
+  console.log(main());
+}

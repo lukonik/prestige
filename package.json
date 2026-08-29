@@ -39,22 +39,15 @@
     "docs:build": "pnpm run --filter docs build"
   },
   "dependencies": {
-    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/changelog": "^7.0.0",
     "@semantic-release/exec": "catalog:",
     "@semantic-release/git": "catalog:",
-    "D": "^1.0.0",
     "semantic-release": "catalog:"
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7"
+    "lint-staged": "^17.4.1"
   },
-  "packageManager": "pnpm@10.20.0",
-  "version": "0.1.4",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "lightningcss"
-    ]
-  }
+  "packageManager": "pnpm@11.24.0",
+  "version": "0.1.4"
 }

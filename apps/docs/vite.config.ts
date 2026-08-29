@@ -1,7 +1,6 @@
 import { prestige } from "@lonik/prestige/vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { defineConfig } from "vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 
@@ -11,10 +10,12 @@ import viteReact from "@vitejs/plugin-react";
 
 const config = defineConfig({
   base: "/prestige/",
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     prestige(),
     devtools(),
-    tsconfigPaths({ projects: ["./tsconfig.json"] }),
     tailwindcss(),
     tanstackStart({
       prerender: {

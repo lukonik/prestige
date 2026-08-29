@@ -5,7 +5,6 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import Inspect from "vite-plugin-inspect";
-import tsconfigPaths from "vite-tsconfig-paths";
 import { prestige } from "./src/vite";
 
 export default defineConfig(({ mode }) => {
@@ -13,13 +12,15 @@ export default defineConfig(({ mode }) => {
 
   return {
     root: "./playground",
+    resolve: {
+      tsconfigPaths: true,
+    },
     plugins: [
       Inspect(),
-      tsconfigPaths(),
-      ohImage(),
-      prestige(),
       ...(!isTest
         ? [
+            ohImage(),
+            prestige(),
             tanstackStart({
               prerender: {
                 enabled: false,

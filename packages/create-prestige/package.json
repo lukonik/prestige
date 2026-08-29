@@ -14,10 +14,10 @@
     "release-v": "pnpm run build && bumpp minor --no-commit --no-tag --no-push --no-git-checks && pnpm publish --registry http://localhost:4873 --no-git-checks"
   },
   "dependencies": {
-    "@clack/prompts": "^0.9.0",
-    "giget": "^3.1.2",
-    "magicast": "^0.3.5",
-    "nypm": "^0.6.5",
+    "@clack/prompts": "^1.7.0",
+    "giget": "^3.3.1",
+    "magicast": "^0.5.4",
+    "nypm": "^0.6.9",
     "pathe": "catalog:",
     "picocolors": "^1.1.1"
   },

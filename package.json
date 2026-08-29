@@ -22,6 +22,8 @@
     "changeset:publish": "pnpm build:all && changeset publish",
     "changeset:version": "changeset version && pnpm install --no-frozen-lockfile && pnpm format",
     "clean": "nx run-many --target=clean",
+    "demo:dev": "pnpm --filter @prestigia/demo-app dev",
+    "docs:dev": "pnpm --filter @prestigia/docs-app dev",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "nx affected --target=test:eslint",

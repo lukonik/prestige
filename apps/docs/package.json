@@ -23,6 +23,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@tailwindcss/vite": "catalog:",
     "@tanstack/eslint-config": "catalog:",
     "@tanstack/router-cli": "catalog:",
     "@types/node": "catalog:",
@@ -31,6 +32,7 @@
     "@vitejs/plugin-react": "catalog:",
     "eslint": "catalog:",
     "prettier": "catalog:",
+    "tailwindcss": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

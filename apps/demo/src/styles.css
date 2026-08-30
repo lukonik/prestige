@@ -67,7 +67,8 @@ select {
 
 .site-header,
 .site-footer,
-.page-shell {
+.page-shell,
+.prestigia-doc {
   width: min(72rem, calc(100% - 2rem));
   margin-inline: auto;
 }
@@ -120,7 +121,8 @@ select {
   color: #1a211d;
 }
 
-.page-shell {
+.page-shell,
+.prestigia-doc {
   min-height: calc(100vh - 10rem);
   padding-block: 5rem;
 }
@@ -281,7 +283,7 @@ select {
   font-weight: 400;
 }
 
-.document-page {
+.prestigia-doc {
   max-width: 52rem;
 }
 
@@ -337,7 +339,8 @@ select {
     display: none;
   }
 
-  .page-shell {
+  .page-shell,
+  .prestigia-doc {
     padding-block: 3.5rem;
   }
 

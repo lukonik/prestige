@@ -62,10 +62,12 @@
     "@tanstack/markdown": "catalog:"
   },
   "peerDependencies": {
+    "@tanstack/react-router": ">=1.168.0",
     "react": ">=18"
   },
   "devDependencies": {
     "@tanstack/intent": "catalog:",
+    "@tanstack/react-router": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "react": "catalog:",

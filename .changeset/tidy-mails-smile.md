@@ -2,4 +2,5 @@
 "@prestigia/docs": minor
 ---
 
-Add a configurable Article component powered by TanStack Markdown and TanStack Highlight.
+Add configurable Markdown rendering with `Article`, plus a `Doc` page and
+`createDocRoute` helper that own slug loading, metadata, and content rendering.

@@ -45,6 +45,18 @@ function getWorkspaceTemplateDirectory(): string {
   return path.resolve(currentModuleDirectory, "../../../template");
 }
 
+async function getPackageVersion(): Promise<string> {
+  const currentModuleDirectory = path.dirname(fileURLToPath(import.meta.url));
+  const packageJson = JSON.parse(
+    await readFile(
+      path.resolve(currentModuleDirectory, "../package.json"),
+      "utf8",
+    ),
+  ) as { version: string };
+
+  return packageJson.version;
+}
+
 async function pathExists(filePath: string): Promise<boolean> {
   try {
     await access(filePath);
@@ -131,6 +143,14 @@ export async function createProject(
   ) as Record<string, unknown>;
 
   packageJson.name = toPackageName(path.basename(destination));
+
+  const dependencies = packageJson.dependencies as
+    Record<string, string> | undefined;
+
+  if (dependencies?.["@prestigia/docs"]) {
+    dependencies["@prestigia/docs"] = `^${await getPackageVersion()}`;
+  }
+
   await writeFile(
     packageJsonPath,
     `${JSON.stringify(packageJson, undefined, 2)}\n`,

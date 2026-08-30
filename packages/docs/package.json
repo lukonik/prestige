@@ -61,6 +61,7 @@
     "@tanstack/intent": "catalog:"
   },
   "dependencies": {
+    "@tanstack/highlight": "catalog:",
     "@tanstack/markdown": "catalog:"
   }
 }

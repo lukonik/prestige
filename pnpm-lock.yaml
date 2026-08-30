@@ -33,6 +33,9 @@ catalogs:
     '@tanstack/eslint-config':
       specifier: ^0.4.0
       version: 0.4.0
+    '@tanstack/highlight':
+      specifier: ^0.0.10
+      version: 0.0.10
     '@tanstack/intent':
       specifier: 0.3.7
       version: 0.3.7
@@ -176,6 +179,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: 'catalog:'
         version: 5.3.0
+      '@tanstack/highlight':
+        specifier: 'catalog:'
+        version: 0.0.10
       '@tanstack/markdown':
         specifier: 'catalog:'
         version: 0.0.13(react@19.2.8)
@@ -261,6 +267,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: 'catalog:'
         version: 5.3.0
+      '@tanstack/highlight':
+        specifier: 'catalog:'
+        version: 0.0.10
       '@tanstack/markdown':
         specifier: 'catalog:'
         version: 0.0.13(react@19.2.8)
@@ -340,12 +349,15 @@ importers:
 
   packages/cli:
     dependencies:
-      '@tanstack/markdown':
+      '@tanstack/highlight':
         specifier: 'catalog:'
-        version: 0.0.13(react@19.2.8)
+        version: 0.0.10
 
   packages/docs:
     dependencies:
+      '@tanstack/highlight':
+        specifier: 'catalog:'
+        version: 0.0.10
       '@tanstack/markdown':
         specifier: 'catalog:'
         version: 0.0.13(react@19.2.8)
@@ -1265,6 +1277,10 @@ packages:
     engines: {node: '>=18'}
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
+
+  '@tanstack/highlight@0.0.10':
+    resolution: {integrity: sha512-RNWn4BYgroDnHSdWduHVUN3hXM5OZUVwynuY2Fwh4el2hVy0woe9XZBZ5IIxC50h1y8SEYkBipS+cPgdzRc7Zg==}
+    engines: {node: '>=18'}
 
   '@tanstack/history@1.162.1':
     resolution: {integrity: sha512-DR9t6lfLVdrjgCwpglrR9DR7Ok8/HlXjcOE+goWXF3zyuLUO/ug7vMbSFxTqrQTtbRghJfyhmIZ0S6LhPIy44w==}
@@ -5129,6 +5145,8 @@ snapshots:
       - eslint-import-resolver-node
       - supports-color
       - typescript
+
+  '@tanstack/highlight@0.0.10': {}
 
   '@tanstack/history@1.162.1': {}
 

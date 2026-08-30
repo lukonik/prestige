@@ -44,6 +44,7 @@ catalog:
   vitest: ^4.1.11
   zod: ^4.5.2
   '@tanstack/markdown': ^0.0.13
+  '@tanstack/highlight': ^0.0.10
 
 allowBuilds:
   esbuild: false

@@ -48,5 +48,8 @@
     "test:eslint": "eslint --concurrency=auto src tests tsdown.config.ts",
     "test:lib": "vitest run",
     "test:types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@tanstack/highlight": "catalog:"
   }
 }

@@ -43,6 +43,7 @@ catalog:
   vite: ^8.2.2
   vitest: ^4.1.11
   zod: ^4.5.2
+  '@tanstack/markdown': ^0.0.13
 
 allowBuilds:
   esbuild: false

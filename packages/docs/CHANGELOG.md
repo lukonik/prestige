@@ -1,5 +1,12 @@
 # @prestigia/docs
 
+## 0.9.0
+
+### Minor Changes
+
+- [#155](https://github.com/lukonik/prestigia/pull/155) [`7f8fa2c`](https://github.com/lukonik/prestigia/commit/7f8fa2c6a5f77e79c373a038341dc5c8be849956) - Add configurable Markdown rendering with `Article`, plus a `Doc` page and
+  `createDocRoute` helper that own slug loading, metadata, and content rendering.
+
 ## 0.8.0
 
 ### Minor Changes

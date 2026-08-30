@@ -352,6 +352,9 @@ importers:
       '@tanstack/intent':
         specifier: 'catalog:'
         version: 0.3.7
+      '@tanstack/react-router':
+        specifier: 'catalog:'
+        version: 1.170.32(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.18

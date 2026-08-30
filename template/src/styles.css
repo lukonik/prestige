@@ -69,7 +69,8 @@
 
 .site-header,
 .site-footer,
-.page-shell {
+.page-shell,
+.prestigia-doc {
   width: min(72rem, calc(100% - 2rem));
   margin-inline: auto;
 }
@@ -101,7 +102,8 @@ aside nav a {
   font-size: 0.8rem;
 }
 
-.page-shell {
+.page-shell,
+.prestigia-doc {
   min-height: calc(100vh - 9rem);
   padding-block: clamp(4rem, 10vw, 7rem);
 }
@@ -175,16 +177,8 @@ h1 {
   font-weight: 600;
 }
 
-.document-layout {
-  display: grid;
-  grid-template-columns: 12rem minmax(0, 46rem);
-  gap: clamp(3rem, 8vw, 7rem);
-}
-
-.document-layout aside {
-  position: sticky;
-  top: 2rem;
-  align-self: start;
+.prestigia-doc {
+  max-width: 52rem;
 }
 
 .back-link {
@@ -192,31 +186,37 @@ h1 {
   margin-bottom: 2rem;
 }
 
-aside nav {
-  display: grid;
-  gap: 0.75rem;
+.document-content header {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
 }
 
-.document-content section {
+.document-content .prestigia-article h2 {
   padding-top: 2rem;
-}
-
-.document-content h2 {
   font-size: 1.5rem;
+  scroll-margin-top: 2rem;
 }
 
-.document-content section p {
+.document-content .prestigia-article p,
+.document-content .prestigia-article li {
   color: var(--muted-foreground);
   line-height: 1.8;
 }
 
+.document-content .prestigia-article pre {
+  overflow-x: auto;
+  padding: 1.25rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
 @media (max-width: 48rem) {
-  .document-grid,
-  .document-layout {
+  .document-grid {
     grid-template-columns: 1fr;
   }
 
-  .document-layout aside {
-    position: static;
+  .page-shell,
+  .prestigia-doc {
+    padding-block: 3.5rem;
   }
 }

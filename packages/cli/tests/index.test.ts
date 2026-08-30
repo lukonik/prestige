@@ -22,15 +22,21 @@ describe("@prestigia/cli", () => {
 
   it("creates a renamed project from the bundled template", async () => {
     const cwd = await mkdtemp(path.join(tmpdir(), "prestigia-cli-"));
+    const cliPackageJson = JSON.parse(
+      await readFile(new URL("../package.json", import.meta.url), "utf8"),
+    ) as { version: string };
     const destination = await createProject({
       cwd,
       directory: "My Docs",
     });
     const generatedPackageJson = JSON.parse(
       await readFile(path.join(destination, "package.json"), "utf8"),
-    ) as { name: string };
+    ) as { dependencies: Record<string, string>; name: string };
 
     expect(generatedPackageJson.name).toBe("my-docs");
+    expect(generatedPackageJson.dependencies["@prestigia/docs"]).toBe(
+      `^${cliPackageJson.version}`,
+    );
     await expect(
       readFile(path.join(destination, ".gitignore"), "utf8"),
     ).resolves.toContain(".content-collections");

@@ -1,6 +1,6 @@
 {
   "name": "@prestigia/cli",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "Prestigia command-line package.",
   "license": "MIT",
   "author": "Luka Onikadze",

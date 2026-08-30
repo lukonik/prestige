@@ -16,3 +16,7 @@ Shared dependency versions are declared in the root pnpm catalog so every projec
 Formatting, ESLint, TypeScript, package tests, and production builds are orchestrated from the workspace root.
 
 Run the narrow project checks while iterating, then run the root CI command before merging.
+
+```shell
+pnpm test:ci
+```

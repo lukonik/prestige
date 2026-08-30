@@ -16,24 +16,14 @@ export const docSlugSchema = z.object({
   slug: z.string().trim().min(1).max(80),
 });
 
-export const docSearchSchema = z.object({
-  section: z.string().trim().max(80).catch("").default(""),
-});
-
 export type DocTopic = (typeof docTopics)[number];
 
-export type DocSection = {
-  id: string;
-  title: string;
-  paragraphs: Array<string>;
-};
-
 export type Doc = {
+  content: string;
   slug: string;
   title: string;
   description: string;
   topic: Exclude<DocTopic, "all">;
-  sections: Array<DocSection>;
 };
 
-export type DocSummary = Omit<Doc, "sections">;
+export type DocSummary = Omit<Doc, "content">;

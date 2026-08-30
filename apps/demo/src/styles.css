@@ -281,49 +281,16 @@ select {
   font-weight: 400;
 }
 
-.document-layout {
-  display: grid;
-  grid-template-columns: 13rem minmax(0, 46rem);
-  gap: clamp(3rem, 8vw, 8rem);
-  justify-content: start;
-}
-
-.table-of-contents {
-  position: sticky;
-  top: 2rem;
-  align-self: start;
+.document-page {
+  max-width: 52rem;
 }
 
 .back-link {
   display: block;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
   color: #596159;
   font-size: 0.82rem;
   text-decoration: none;
-}
-
-.table-of-contents > p {
-  color: #767b75;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.table-of-contents nav {
-  display: grid;
-  gap: 0.65rem;
-}
-
-.table-of-contents nav a {
-  color: #646b65;
-  font-size: 0.87rem;
-  text-decoration: none;
-}
-
-.table-of-contents nav a[aria-current="location"] {
-  color: #7a4d2d;
-  font-weight: 700;
 }
 
 .document-content header {
@@ -336,21 +303,26 @@ select {
   font-size: clamp(2.8rem, 6vw, 4.8rem);
 }
 
-.document-content section {
+.document-content .prestigia-article h2 {
   padding-top: 3rem;
-  scroll-margin-top: 2rem;
-}
-
-.document-content section h2 {
   font-family: Georgia, "Times New Roman", serif;
   font-size: 2rem;
   font-weight: 400;
+  scroll-margin-top: 2rem;
 }
 
-.document-content section p {
+.document-content .prestigia-article p,
+.document-content .prestigia-article li {
   color: #424943;
   font-size: 1.02rem;
   line-height: 1.8;
+}
+
+.document-content .prestigia-article pre {
+  overflow-x: auto;
+  padding: 1.25rem;
+  border: 1px solid #cbc8be;
+  border-radius: 0.7rem;
 }
 
 .site-footer {
@@ -369,8 +341,7 @@ select {
     padding-block: 3.5rem;
   }
 
-  .filters,
-  .document-layout {
+  .filters {
     grid-template-columns: 1fr;
   }
 
@@ -382,12 +353,6 @@ select {
     align-items: start;
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .table-of-contents {
-    position: static;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #cbc8be;
   }
 
   .back-link {

@@ -33,9 +33,15 @@ catalogs:
     '@tanstack/eslint-config':
       specifier: ^0.4.0
       version: 0.4.0
+    '@tanstack/highlight':
+      specifier: ^0.0.10
+      version: 0.0.10
     '@tanstack/intent':
       specifier: 0.3.7
       version: 0.3.7
+    '@tanstack/markdown':
+      specifier: ^0.0.13
+      version: 0.0.13
     '@tanstack/react-router':
       specifier: ^1.170.32
       version: 1.170.32
@@ -173,6 +179,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: 'catalog:'
         version: 5.3.0
+      '@prestigia/docs':
+        specifier: workspace:*
+        version: link:../../packages/docs
       '@tanstack/react-router':
         specifier: 'catalog:'
         version: 1.170.32(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
@@ -332,10 +341,29 @@ importers:
   packages/cli: {}
 
   packages/docs:
+    dependencies:
+      '@tanstack/highlight':
+        specifier: 'catalog:'
+        version: 0.0.10
+      '@tanstack/markdown':
+        specifier: 'catalog:'
+        version: 0.0.13(react@19.2.8)
     devDependencies:
       '@tanstack/intent':
         specifier: 'catalog:'
         version: 0.3.7
+      '@types/react':
+        specifier: 'catalog:'
+        version: 19.2.18
+      '@types/react-dom':
+        specifier: 'catalog:'
+        version: 19.2.5(@types/react@19.2.18)
+      react:
+        specifier: 'catalog:'
+        version: 19.2.8
+      react-dom:
+        specifier: 'catalog:'
+        version: 19.2.8(react@19.2.8)
 
 packages:
 
@@ -1249,6 +1277,10 @@ packages:
     peerDependencies:
       eslint: ^9.0.0 || ^10.0.0
 
+  '@tanstack/highlight@0.0.10':
+    resolution: {integrity: sha512-RNWn4BYgroDnHSdWduHVUN3hXM5OZUVwynuY2Fwh4el2hVy0woe9XZBZ5IIxC50h1y8SEYkBipS+cPgdzRc7Zg==}
+    engines: {node: '>=18'}
+
   '@tanstack/history@1.162.1':
     resolution: {integrity: sha512-DR9t6lfLVdrjgCwpglrR9DR7Ok8/HlXjcOE+goWXF3zyuLUO/ug7vMbSFxTqrQTtbRghJfyhmIZ0S6LhPIy44w==}
     engines: {node: '>=20.19'}
@@ -1256,6 +1288,17 @@ packages:
   '@tanstack/intent@0.3.7':
     resolution: {integrity: sha512-119d81v2JpdFtvLlX8C7Kmx0zqaNUnY4iTyd5Q8rVyE7sVCnuBYIS/NNCa8T6Ni0bdVkcOVDl1zdz78Oz2dfAg==}
     hasBin: true
+
+  '@tanstack/markdown@0.0.13':
+    resolution: {integrity: sha512-ZSQP2ulBvlPzdpZeRheBJnaELo7e4ET/D/XrfgweHyqhhLMN5vUJJAUl7ufSRd7GlfO/vwdzjKPh0E0JwqJkDA==}
+    peerDependencies:
+      octane: '>=0.1.12'
+      react: '>=18'
+    peerDependenciesMeta:
+      octane:
+        optional: true
+      react:
+        optional: true
 
   '@tanstack/react-router@1.170.32':
     resolution: {integrity: sha512-SIpxvaTKco100a5ZR3ePmArbhtm3XOx+w1dpGYY9gxHDta4iXSKDdQuhLonwJbIMkVJsU1rwXf0UDHMrF/1snw==}
@@ -5102,6 +5145,8 @@ snapshots:
       - supports-color
       - typescript
 
+  '@tanstack/highlight@0.0.10': {}
+
   '@tanstack/history@1.162.1': {}
 
   '@tanstack/intent@0.3.7':
@@ -5111,6 +5156,10 @@ snapshots:
       semver: 7.8.5
       std-env: 4.2.0
       yaml: 2.9.0
+
+  '@tanstack/markdown@0.0.13(react@19.2.8)':
+    optionalDependencies:
+      react: 19.2.8
 
   '@tanstack/react-router@1.170.32(react-dom@19.2.8(react@19.2.8))(react@19.2.8)':
     dependencies:

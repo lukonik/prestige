@@ -105,7 +105,6 @@ function DocumentationIndex() {
                 <Link
                   className="text-link"
                   params={{ slug: document.slug }}
-                  search={{ section: "" }}
                   to="/docs/$slug"
                 >
                   Read document <span aria-hidden="true">→</span>

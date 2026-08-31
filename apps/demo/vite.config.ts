@@ -8,7 +8,18 @@ import viteReact from "@vitejs/plugin-react";
 
 const config = defineConfig({
   resolve: { tsconfigPaths: true },
-  plugins: [contentCollections(), tailwindcss(), tanstackStart(), viteReact()],
+  plugins: [
+    contentCollections(),
+    tailwindcss(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+        filter: ({ path }) => !/[?#]/u.test(path),
+      },
+    }),
+    viteReact(),
+  ],
 });
 
 export default config;

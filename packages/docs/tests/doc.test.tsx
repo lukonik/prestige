@@ -1,5 +1,5 @@
 import { renderToStaticMarkup } from "react-dom/server";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { Doc, createDocHead, createDocRoute } from "../src/doc.js";
 
@@ -64,17 +64,20 @@ describe("createDocHead", () => {
 });
 
 describe("createDocRoute", () => {
-  it("loads by slug and owns the route metadata", async () => {
-    const getDocument = vi.fn().mockResolvedValue(document);
-    const options = createDocRoute({ getDocument, siteName: "Acme" });
-
-    await expect(
-      options.loader({ params: { slug: "getting-started" } }),
-    ).resolves.toBe(document);
-    expect(getDocument).toHaveBeenCalledWith({
-      data: { slug: "getting-started" },
+  it("selects a static document by its Content Collections path", () => {
+    const routeDocument = {
+      ...document,
+      _meta: { path: "getting-started" },
+    };
+    const options = createDocRoute({
+      documents: [routeDocument],
+      siteName: "Acme",
     });
-    expect(options.head({ loaderData: document })).toEqual({
+
+    expect(options.loader({ params: { slug: "getting-started" } })).toBe(
+      routeDocument,
+    );
+    expect(options.head({ loaderData: routeDocument })).toEqual({
       meta: [
         { title: "Getting started · Acme" },
         {
@@ -83,7 +86,7 @@ describe("createDocRoute", () => {
         },
       ],
     });
-    expect(options.ssr).toBe(true);
+    expect(options).not.toHaveProperty("ssr");
     expect(options.component).toBeTypeOf("function");
   });
 });

@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsRouteImport } from './routes/docs'
 import { Route as DocsSlugRouteImport } from './routes/docs.$slug'
 
 const IndexRoute = IndexRouteImport.update({
@@ -17,36 +18,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsSlugRoute = DocsSlugRouteImport.update({
-  id: '/docs/$slug',
-  path: '/docs/$slug',
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
   getParentRoute: () => rootRouteImport,
+} as any)
+const DocsSlugRoute = DocsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DocsRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
   '/docs/$slug': typeof DocsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
   '/docs/$slug': typeof DocsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
   '/docs/$slug': typeof DocsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/docs/$slug'
+  fullPaths: '/' | '/docs' | '/docs/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/docs/$slug'
-  id: '__root__' | '/' | '/docs/$slug'
+  to: '/' | '/docs' | '/docs/$slug'
+  id: '__root__' | '/' | '/docs' | '/docs/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  DocsSlugRoute: typeof DocsSlugRoute
+  DocsRoute: typeof DocsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -58,19 +67,36 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/docs/$slug': {
       id: '/docs/$slug'
-      path: '/docs/$slug'
+      path: '/$slug'
       fullPath: '/docs/$slug'
       preLoaderRoute: typeof DocsSlugRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof DocsRoute
     }
   }
 }
 
+interface DocsRouteChildren {
+  DocsSlugRoute: typeof DocsSlugRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsSlugRoute: DocsSlugRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  DocsSlugRoute: DocsSlugRoute,
+  DocsRoute: DocsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,12 +1,51 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute, notFound } from "@tanstack/react-router";
+import { allDocs } from "content-collections";
 
-import { getDocument } from "#/features/docs/docs.functions";
-import { docSearchSchema } from "#/features/docs/docs.schema";
+function toId(title: string): string {
+  return title
+    .toLocaleLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+type DocSection = {
+  id: string;
+  title: string;
+  paragraphs: Array<string>;
+};
+
+function parseSections(content: string) {
+  const sections: Array<DocSection> = [];
+  let currentSection: DocSection | undefined;
+
+  for (const block of content.trim().split(/\n\s*\n/)) {
+    if (block.startsWith("## ")) {
+      const title = block.slice(3).trim();
+      currentSection = { id: toId(title), title, paragraphs: [] };
+      sections.push(currentSection);
+      continue;
+    }
+
+    if (currentSection) currentSection.paragraphs.push(block.trim());
+  }
+
+  return sections;
+}
 
 export const Route = createFileRoute("/docs/$slug")({
-  ssr: true,
-  validateSearch: docSearchSchema,
-  loader: ({ params }) => getDocument({ data: { slug: params.slug } }),
+  loader: ({ params }) => {
+    const document = allDocs.find(
+      (candidate) => candidate._meta.path === params.slug,
+    );
+
+    if (!document) throw notFound();
+
+    return {
+      ...document,
+      slug: document._meta.path,
+      sections: parseSections(document.content),
+    };
+  },
   head: ({ loaderData }) => ({
     meta: [
       { title: `${loaderData?.title ?? "Documentation"} · Prestigia` },
@@ -20,7 +59,6 @@ export const Route = createFileRoute("/docs/$slug")({
 
 function DocumentPage() {
   const document = Route.useLoaderData();
-  const { section: activeSection } = Route.useSearch();
 
   return (
     <main className="page-shell document-layout">
@@ -32,13 +70,9 @@ function DocumentPage() {
         <nav aria-label="On this page">
           {document.sections.map((section) => (
             <Link
-              aria-current={
-                activeSection === section.id ? "location" : undefined
-              }
               hash={section.id}
               key={section.id}
               params={{ slug: document.slug }}
-              search={{ section: section.id }}
               to="/docs/$slug"
             >
               {section.title}

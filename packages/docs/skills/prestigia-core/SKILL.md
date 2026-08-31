@@ -1,7 +1,7 @@
 ---
 name: prestigia-core
 description: >
-  Use the current @prestigia/docs Article, Doc, and createDocRoute APIs or preserve the former v0.0.3 TanStack Start and Vite contract while rebuilding the package. Load for Markdown or document-route rendering, prestigia(), defineConfig(), prestigia.config.ts, src/content, generated (prestigia) routes, plugin ordering, or initial project structure; load a narrower sub-skill for content authoring or shell customization.
+  Build SSG-first Prestigia sites with the current @prestigia/docs Article, Doc, Docs, Sidebar, createDocRoute, and createDocsRoute APIs or preserve the former v0.0.3 TanStack Start and Vite contract while rebuilding the package. Load for Markdown, static document-route rendering, documentation sidebars, Content Collections, prestigia(), defineConfig(), prestigia.config.ts, src/content, generated (prestigia) routes, plugin ordering, or initial project structure; load a narrower sub-skill for content authoring or shell customization.
 metadata:
   type: core
   library: "@prestigia/docs"
@@ -13,13 +13,22 @@ sources:
 
 # Prestigia Core
 
-> Rebuild status: `Article`, `Doc`, and `createDocRoute` are current package
-> exports. The Vite plugin, configuration, generated routes, and application
-> shell guidance below preserve the former v0.0.3 contract as implementation
-> guidance; verify those exports exist before treating them as currently
-> available.
+> Rebuild status: `Article`, `Doc`, `Docs`, `createDocRoute`, and
+> `createDocsRoute` are current package exports. The Vite plugin,
+> configuration, generated routes, and application shell guidance below
+> preserve the former v0.0.3 contract as implementation guidance; verify
+> those exports exist before treating them as currently available.
 
 Prestigia is a documentation framework layered onto TanStack Start. Its Vite plugin reads Markdown and MDX from `src/content`, validates `prestigia.config.ts`, builds navigation, and generates TanStack Router files under `src/routes/(prestigia)`.
+
+## SSG-First Contract
+
+Prestigia documentation sites are static by default. Import Content
+Collections' `allDocs` directly, derive navigation at module/build time, and
+enable TanStack Start prerendering. Do not introduce `createServerFn`,
+server-only document stores, or forced `ssr: true` route options for standard
+documentation. If an application needs runtime SSR later, its owner adds that
+capability outside the Prestigia helpers.
 
 ## Render an Article
 
@@ -52,30 +61,54 @@ Customize the rendering boundary instead of preprocessing the Markdown:
 ## Create a Document Route
 
 Use `createDocRoute` as the options argument to TanStack Router's required
-`createFileRoute` call. The document server function must accept
-`{ data: { slug } }` and return `title`, `description`, and Markdown `content`.
+`createFileRoute` call. Pass the static Content Collections documents
+directly; each document supplies `title`, `description`, Markdown `content`,
+and `_meta.path`.
 
 ```tsx
 import { createDocRoute } from "@prestigia/docs";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { getDocument } from "@/features/docs/docs.functions";
+import { allDocs } from "content-collections";
 
 export const Route = createFileRoute("/docs/$slug")(
-  createDocRoute({ getDocument }),
+  createDocRoute({ documents: allDocs }),
 );
 ```
 
-The helper enables SSR, loads by route slug, creates title and description
-metadata, and renders `Doc`. Configure the default page through `docProps`,
-use `siteName` or `fallbackTitle` for metadata, or pass `render` for a custom
-page boundary. Use `Doc` directly when routing is owned elsewhere.
+The helper selects by `_meta.path`, creates title and description metadata,
+and renders `Doc`. It does not force SSR. Configure the default page through
+`docProps`, use `siteName` or `fallbackTitle` for metadata, or pass `render`
+for a custom page boundary. Use `Doc` directly when routing is owned elsewhere.
+
+## Create the Documentation Layout Route
+
+Add a `docs.tsx` file route next to `docs.$slug.tsx` when all document pages
+should share a sidebar. TanStack Router nests the slug route below this parent
+without changing its `/docs/$slug` URL.
+
+```tsx
+import { createDocsRoute, mapDocumentsToSidebar } from "@prestigia/docs";
+import { createFileRoute } from "@tanstack/react-router";
+import { allDocs } from "content-collections";
+
+const sidebar = mapDocumentsToSidebar(allDocs);
+
+export const Route = createFileRoute("/docs")(createDocsRoute({ sidebar }));
+```
+
+`createDocsRoute` renders `Docs`, marks the current entry, uses TanStack
+Router links for internal destinations, and places the child route in its
+outlet. `mapDocumentsToSidebar` converts Content Collections documents using
+`_meta.path` and `title` into link items and can group them with `groupBy`. The
+recursive `Sidebar` component and its `SidebarItem` types are exported from
+`@prestigia/docs`; use its `renderLink` prop when a layout is owned outside
+`createDocsRoute`.
 
 ## Load the Narrowest Guidance
 
 | Current task                                                             | Load                                          |
 | ------------------------------------------------------------------------ | --------------------------------------------- |
-| Render Markdown or create a document slug route                          | This skill only                               |
+| Render Markdown or create documentation and document routes              | This skill only                               |
 | Install Prestigia, register plugins, or edit `prestigia.config.ts`       | This skill only                               |
 | Add pages, frontmatter, collections, groups, or autogenerated navigation | `prestigia-core/content-authoring/SKILL.md`   |
 | Mount or customize `PrestigiaShell`, header links, search, or footer     | `prestigia-core/shell-customization/SKILL.md` |
@@ -95,7 +128,18 @@ import viteReact from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [prestigia(), tailwindcss(), tanstackStart(), viteReact()],
+  plugins: [
+    prestigia(),
+    tailwindcss(),
+    tanstackStart({
+      prerender: {
+        enabled: true,
+        crawlLinks: true,
+        filter: ({ path }) => !/[?#]/u.test(path),
+      },
+    }),
+    viteReact(),
+  ],
 });
 ```
 

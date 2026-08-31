@@ -1,22 +1,21 @@
-import { Await, Link, createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { allDocs } from "content-collections";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { getDocsSnapshot, getDocuments } from "#/features/docs/docs.functions";
 import { docTopics, docsSearchSchema } from "#/features/docs/docs.schema";
 
-export const Route = createFileRoute("/")({
-  ssr: true,
-  validateSearch: docsSearchSchema,
-  loaderDeps: ({ search }) => ({ query: search.q, topic: search.topic }),
-  loader: async ({ deps }) => {
-    const documents = await getDocuments({ data: deps });
+const documents = allDocs
+  .slice()
+  .sort((left, right) => left.order - right.order);
+const sectionCount = documents.reduce(
+  (total, document) =>
+    total + (document.content.match(/^##\s+/gm)?.length ?? 0),
+  0,
+);
 
-    return {
-      documents,
-      snapshot: getDocsSnapshot(),
-    };
-  },
+export const Route = createFileRoute("/")({
+  validateSearch: docsSearchSchema,
   head: () => ({
     meta: [
       { title: "Prestigia Demo" },
@@ -27,13 +26,23 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-  pendingComponent: IndexPending,
   component: DocumentationIndex,
 });
 
 function DocumentationIndex() {
   const search = Route.useSearch();
-  const { documents, snapshot } = Route.useLoaderData();
+  const query = search.q.toLocaleLowerCase();
+  const filteredDocuments = documents
+    .filter(
+      (document) => search.topic === "all" || document.topic === search.topic,
+    )
+    .filter((document) => {
+      if (!query) return true;
+
+      return [document.title, document.description, document.topic].some(
+        (value) => value.toLocaleLowerCase().includes(query),
+      );
+    });
 
   return (
     <main className="page-shell">
@@ -74,37 +83,26 @@ function DocumentationIndex() {
           <div>
             <p className="eyebrow">Index</p>
             <h2 id="results-heading">
-              {documents.length === 1
+              {filteredDocuments.length === 1
                 ? "1 document"
-                : `${documents.length} documents`}
+                : `${filteredDocuments.length} documents`}
             </h2>
           </div>
-          <Await
-            fallback={<span className="snapshot">Refreshing index…</span>}
-            promise={snapshot}
-          >
-            {(value) => (
-              <span className="snapshot">
-                {value.sections} sections · refreshed{" "}
-                {new Date(value.generatedAt).toLocaleTimeString([], {
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </span>
-            )}
-          </Await>
+          <span className="snapshot">
+            {sectionCount} sections · generated at build time
+          </span>
         </div>
 
-        {documents.length ? (
+        {filteredDocuments.length ? (
           <div className="document-grid">
-            {documents.map((document) => (
-              <article className="document-card" key={document.slug}>
+            {filteredDocuments.map((document) => (
+              <article className="document-card" key={document._meta.path}>
                 <span className="topic">{document.topic}</span>
                 <h3>{document.title}</h3>
                 <p>{document.description}</p>
                 <Link
                   className="text-link"
-                  params={{ slug: document.slug }}
+                  params={{ slug: document._meta.path }}
                   to="/docs/$slug"
                 >
                   Read document <span aria-hidden="true">→</span>
@@ -121,15 +119,6 @@ function DocumentationIndex() {
           </div>
         )}
       </section>
-    </main>
-  );
-}
-
-function IndexPending() {
-  return (
-    <main className="page-shell empty-state">
-      <p className="eyebrow">Loading</p>
-      <h1>Preparing the documentation index…</h1>
     </main>
   );
 }

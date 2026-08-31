@@ -7,10 +7,23 @@ export {
   defaultArticleThemeCss,
 } from "./article.js";
 export type { ArticleMarkdownOptions, ArticleProps } from "./article.js";
+export { mapDocumentsToSidebar, Sidebar } from "./sidebar.js";
+export type {
+  MapDocumentsToSidebarOptions,
+  SidebarDocument,
+  SidebarGroupItem,
+  SidebarItem,
+  SidebarLinkItem,
+  SidebarLinkRenderState,
+  SidebarProps,
+} from "./sidebar.js";
 export { createDocHead, createDocRoute, Doc } from "./doc.js";
 export type {
   CreateDocRouteOptions,
   DocDocument,
   DocHeadOptions,
   DocProps,
+  DocRouteDocument,
 } from "./doc.js";
+export { createDocsRoute, Docs } from "./docs.js";
+export type { CreateDocsRouteOptions, DocsProps } from "./docs.js";

@@ -1,6 +1,16 @@
 /** The npm package name retained while Prestigia is rebuilt. */
 export const packageName = "@prestigia/docs";
 
+export { resolvePrestigiaSidebar } from "./config.js";
+export type {
+  PrestigiaSidebarAutogenerateItem,
+  PrestigiaSidebarConfigItem,
+  PrestigiaSidebarGroupItem,
+  PrestigiaSidebarLinkItem,
+  PrestigiaSidebarSlugItem,
+  ResolvePrestigiaSidebarOptions,
+} from "./config.js";
+
 export {
   Article,
   defaultArticleHighlighter,

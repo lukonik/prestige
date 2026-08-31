@@ -20,6 +20,7 @@ export default defineConfig({
     "../../template/package.json",
     "../../template/pnpm-lock.yaml",
     "../../template/pnpm-workspace.yaml",
+    "../../template/prestigia.config.ts",
     "../../template/tsconfig.json",
     "../../template/tsr.config.json",
     "../../template/vite.config.ts",

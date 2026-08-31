@@ -1,7 +1,7 @@
-import { createDocsRoute, mapDocumentsToSidebar } from "@prestigia/docs";
+import { createDocsRoute } from "@prestigia/docs";
 import { createFileRoute } from "@tanstack/react-router";
-import { allDocs } from "content-collections";
+import config from "virtual:prestigia/config";
 
-const sidebar = mapDocumentsToSidebar(allDocs);
-
-export const Route = createFileRoute("/docs")(createDocsRoute({ sidebar }));
+export const Route = createFileRoute("/docs")(
+  createDocsRoute({ sidebar: config.sidebar }),
+);

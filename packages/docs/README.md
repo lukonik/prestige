@@ -37,22 +37,68 @@ and description metadata, and renders through `Doc` and `Article`. Use its
 `docProps`, metadata options, or `render` callback when a project needs custom
 page chrome.
 
-Add a `/docs` parent file route when document pages should share a recursive
-sidebar. The sibling `docs.$slug.tsx` route is then nested beneath it while
-keeping the URL `/docs/$slug`:
+Register the Prestigia plugin after Content Collections. It loads and watches
+`prestigia.config.ts`, then exposes configuration merged with the generated
+`allDocs` collection through `virtual:prestigia/config`:
 
-```tsx
-import { createDocsRoute, mapDocumentsToSidebar } from "@prestigia/docs";
-import { createFileRoute } from "@tanstack/react-router";
-import { allDocs } from "content-collections";
+```ts
+// vite.config.ts
+import contentCollections from "@content-collections/vite";
+import { prestigia } from "@prestigia/docs/vite";
+import { defineConfig } from "vite";
 
-const sidebar = mapDocumentsToSidebar(allDocs);
-
-export const Route = createFileRoute("/docs")(createDocsRoute({ sidebar }));
+export default defineConfig({
+  plugins: [contentCollections(), prestigia()],
+});
 ```
 
-`mapDocumentsToSidebar` reads Content Collections `_meta.path` values,
-converts documents to link items, and optionally groups them with `groupBy`.
+```ts
+// prestigia.config.ts
+import { defineConfig } from "@prestigia/docs/vite";
+
+export default defineConfig({
+  sidebar: [
+    "overview",
+    {
+      label: "Guides",
+      collapsed: false,
+      items: [{ autogenerate: { directory: "guides" } }],
+    },
+    { label: "Status", link: "/status" },
+  ],
+});
+```
+
+Sidebar entries support document slug strings, `{ slug, label? }` objects,
+links, recursive groups, and directory autogeneration. Document entries use
+their Content Collections titles unless a label overrides them. If `sidebar`
+is omitted, navigation is generated from the full collection.
+
+Add a `/docs` parent file route and pass the resolved virtual sidebar to
+`createDocsRoute`. The sibling `docs.$slug.tsx` route is nested beneath it
+while keeping the URL `/docs/$slug`:
+
+```tsx
+import { createDocsRoute } from "@prestigia/docs";
+import { createFileRoute } from "@tanstack/react-router";
+import config from "virtual:prestigia/config";
+
+export const Route = createFileRoute("/docs")(
+  createDocsRoute({ sidebar: config.sidebar }),
+);
+```
+
+Declare the generated module once in your application (the CLI template
+includes this as `src/prestigia-env.d.ts`):
+
+```ts
+declare module "virtual:prestigia/config" {
+  import type { ResolvedPrestigiaConfig } from "@prestigia/docs/vite";
+  const config: ResolvedPrestigiaConfig;
+  export default config;
+}
+```
+
 `Docs` composes the router outlet with the `Sidebar` exported by this package
 and uses TanStack Router links internally.
 
@@ -62,6 +108,6 @@ path is emitted once. Runtime SSR is an application-level opt-in, not a
 Prestigia route-helper behavior.
 
 The package also ships versioned Agent Skills under `skills/`. They preserve
-the previous v0.0.3 API guidance as an explicit rebuild reference; they do not
-mean the placeholder package currently implements the documented Vite or UI
-surfaces. See [`../../docs/agent-skills.md`](../../docs/agent-skills.md).
+the broader v0.0.3 API guidance as an explicit rebuild reference; verify
+individual exports before relying on surfaces beyond the current package
+README. See [`../../docs/agent-skills.md`](../../docs/agent-skills.md).

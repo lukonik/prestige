@@ -264,6 +264,9 @@ importers:
       '@fontsource-variable/geist':
         specifier: 'catalog:'
         version: 5.3.0
+      '@prestigia/docs':
+        specifier: workspace:*
+        version: link:../../packages/docs
       '@tanstack/react-router':
         specifier: 'catalog:'
         version: 1.170.32(react-dom@19.2.8(react@19.2.8))(react@19.2.8)

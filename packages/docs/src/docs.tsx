@@ -33,16 +33,20 @@ export function Docs({
   sidebarProps,
   ...layoutProps
 }: DocsProps) {
+  const layoutClassName =
+    "prestigia-docs min-h-[calc(100svh-4rem)] lg:grid lg:grid-cols-[18rem_minmax(0,1fr)] xl:grid-cols-[20rem_minmax(0,1fr)]";
   const resolvedClassName = className
-    ? `prestigia-docs ${className}`
-    : "prestigia-docs";
+    ? `${layoutClassName} ${className}`
+    : layoutClassName;
 
   return (
     <div {...layoutProps} className={resolvedClassName}>
-      <aside className="prestigia-docs-sidebar">
+      <aside className="prestigia-docs-sidebar border-b bg-background px-4 py-6 lg:sticky lg:top-16 lg:h-[calc(100svh-4rem)] lg:overflow-y-auto lg:border-r lg:border-b-0 lg:px-6 lg:py-10">
         <Sidebar currentHref={currentHref} {...sidebarProps} items={sidebar} />
       </aside>
-      <div className="prestigia-docs-content">{children ?? <Outlet />}</div>
+      <div className="prestigia-docs-content min-w-0">
+        {children ?? <Outlet />}
+      </div>
     </div>
   );
 }

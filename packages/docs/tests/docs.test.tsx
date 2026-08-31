@@ -31,8 +31,9 @@ describe("Docs", () => {
       </Docs>,
     );
 
-    expect(markup).toContain('<div class="prestigia-docs page-shell">');
-    expect(markup).toContain('class="prestigia-docs-sidebar"');
+    expect(markup).toContain('<div class="prestigia-docs');
+    expect(markup).toContain("page-shell");
+    expect(markup).toContain('class="prestigia-docs-sidebar');
     expect(markup).toContain('aria-current="page"');
     expect(markup).toContain("Document content");
   });

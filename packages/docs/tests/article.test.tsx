@@ -15,8 +15,9 @@ describe("Article", () => {
     );
 
     expect(markup).toContain(
-      '<article aria-label="Guide" class="prestigia-article docs-prose">',
+      '<article aria-label="Guide" class="prestigia-article',
     );
+    expect(markup).toContain("docs-prose");
     expect(markup).toContain('<h2 id="getting-started">Getting started</h2>');
     expect(markup).toContain("Read the <strong>guide</strong>.");
   });

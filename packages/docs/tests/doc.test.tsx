@@ -19,9 +19,11 @@ describe("Doc", () => {
       />,
     );
 
-    expect(markup).toContain('<main class="prestigia-doc page-shell">');
-    expect(markup).toContain('<a class="back-link" href="/">');
-    expect(markup).toContain('<h1 id="document-title">Getting started</h1>');
+    expect(markup).toContain('<main class="prestigia-doc');
+    expect(markup).toContain("page-shell");
+    expect(markup).toContain('<a class="back-link');
+    expect(markup).toContain('href="/">← All documentation</a>');
+    expect(markup).toContain('id="document-title">Getting started</h1>');
     expect(markup).toContain('<h2 id="install">Install</h2>');
   });
 

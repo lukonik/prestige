@@ -43,22 +43,38 @@ export function Doc<TDocument extends DocDocument>({
   indexLabel = "← All documentation",
   ...mainProps
 }: DocProps<TDocument>) {
+  const docClassName =
+    "prestigia-doc mx-auto w-full max-w-3xl px-6 py-12 lg:px-10 lg:py-16";
   const resolvedClassName = className
-    ? `prestigia-doc ${className}`
-    : "prestigia-doc";
+    ? `${docClassName} ${className}`
+    : docClassName;
 
   return (
     <main {...mainProps} className={resolvedClassName}>
       {indexHref ? (
-        <a className="back-link" href={indexHref}>
+        <a
+          className="back-link mb-10 inline-flex text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          href={indexHref}
+        >
           {indexLabel}
         </a>
       ) : null}
       <div className="document-content">
-        <header>
-          {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-          <h1 id="document-title">{document.title}</h1>
-          <p>{document.description}</p>
+        <header className="border-b pb-8">
+          {eyebrow ? (
+            <p className="eyebrow mb-3 text-sm font-medium text-muted-foreground">
+              {eyebrow}
+            </p>
+          ) : null}
+          <h1
+            className="text-4xl font-semibold tracking-tight text-balance sm:text-5xl"
+            id="document-title"
+          >
+            {document.title}
+          </h1>
+          <p className="mt-4 max-w-2xl text-lg leading-8 text-muted-foreground">
+            {document.description}
+          </p>
         </header>
         <Article
           aria-labelledby="document-title"

@@ -1,11 +1,11 @@
 ---
 name: prestigia-core
 description: >
-  Build SSG-first Prestigia sites with the current @prestigia/docs Article, Doc, Docs, Sidebar, createDocRoute, and createDocsRoute APIs or preserve the former v0.0.3 TanStack Start and Vite contract while rebuilding the package. Load for Markdown, static document-route rendering, documentation sidebars, Content Collections, prestigia(), defineConfig(), prestigia.config.ts, src/content, generated (prestigia) routes, plugin ordering, or initial project structure; load a narrower sub-skill for content authoring or shell customization.
+  Build SSG-first Prestigia sites with the current @prestigia/docs rendering, route, sidebar, and Vite config APIs, or preserve the former generated-route and shell contract while rebuilding the package. Load for Markdown, static document-route rendering, documentation sidebars, Content Collections, prestigia(), defineConfig(), prestigia.config.ts, virtual:prestigia/config, plugin ordering, or initial project structure; load a narrower sub-skill for content authoring or shell customization.
 metadata:
   type: core
   library: "@prestigia/docs"
-  library_version: 0.0.3
+  library_version: 0.8.0
 sources:
   - lukonik/prestigia:docs/agent-skills.md
   - lukonik/prestigia:packages/docs/README.md
@@ -13,13 +13,17 @@ sources:
 
 # Prestigia Core
 
-> Rebuild status: `Article`, `Doc`, `Docs`, `createDocRoute`, and
-> `createDocsRoute` are current package exports. The Vite plugin,
-> configuration, generated routes, and application shell guidance below
+> Rebuild status: `Article`, `Doc`, `Docs`, `createDocRoute`,
+> `createDocsRoute`, `prestigia`, and Prestigia config/sidebar resolution are
+> current package exports. Generated routes and application shell guidance
 > preserve the former v0.0.3 contract as implementation guidance; verify
 > those exports exist before treating them as currently available.
 
-Prestigia is a documentation framework layered onto TanStack Start. Its Vite plugin reads Markdown and MDX from `src/content`, validates `prestigia.config.ts`, builds navigation, and generates TanStack Router files under `src/routes/(prestigia)`.
+Prestigia is a documentation framework layered onto TanStack Start. Its
+current Vite plugin loads and watches `prestigia.config.ts`, then exposes
+configuration merged with Content Collections' generated `allDocs` through
+`virtual:prestigia/config`. It does not currently generate content or route
+files.
 
 ## SSG-First Contract
 
@@ -87,22 +91,21 @@ should share a sidebar. TanStack Router nests the slug route below this parent
 without changing its `/docs/$slug` URL.
 
 ```tsx
-import { createDocsRoute, mapDocumentsToSidebar } from "@prestigia/docs";
+import { createDocsRoute } from "@prestigia/docs";
 import { createFileRoute } from "@tanstack/react-router";
-import { allDocs } from "content-collections";
+import config from "virtual:prestigia/config";
 
-const sidebar = mapDocumentsToSidebar(allDocs);
-
-export const Route = createFileRoute("/docs")(createDocsRoute({ sidebar }));
+export const Route = createFileRoute("/docs")(
+  createDocsRoute({ sidebar: config.sidebar }),
+);
 ```
 
 `createDocsRoute` renders `Docs`, marks the current entry, uses TanStack
 Router links for internal destinations, and places the child route in its
-outlet. `mapDocumentsToSidebar` converts Content Collections documents using
-`_meta.path` and `title` into link items and can group them with `groupBy`. The
-recursive `Sidebar` component and its `SidebarItem` types are exported from
-`@prestigia/docs`; use its `renderLink` prop when a layout is owned outside
-`createDocsRoute`.
+outlet. The virtual config resolves authored navigation against Content
+Collections titles and paths. The recursive `Sidebar` component and its
+`SidebarItem` types are exported from `@prestigia/docs`; use its `renderLink`
+prop when a layout is owned outside `createDocsRoute`.
 
 ## Load the Narrowest Guidance
 
@@ -117,10 +120,12 @@ Do not load both sub-skills unless the task changes both content structure and t
 
 ## Minimum Setup
 
-Register `prestigia()` before the TanStack Start plugin. Keep the React plugin after TanStack Start.
+Register Content Collections before `prestigia()`, and register `prestigia()`
+before the TanStack Start plugin. Keep the React plugin after TanStack Start.
 
 ```ts
 // vite.config.ts
+import contentCollections from "@content-collections/vite";
 import { prestigia } from "@prestigia/docs/vite";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -129,6 +134,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [
+    contentCollections(),
     prestigia(),
     tailwindcss(),
     tanstackStart({
@@ -150,18 +156,18 @@ Create the required app-root config and content directory:
 import { defineConfig } from "@prestigia/docs/vite";
 
 export default defineConfig({
-  title: "My documentation",
-  collections: [
+  sidebar: [
+    "introduction",
     {
-      id: "docs",
-      items: [{ label: "Introduction", slug: "docs/introduction" }],
+      label: "Guides",
+      items: [{ autogenerate: { directory: "guides" } }],
     },
   ],
 });
 ```
 
 ```md
-<!-- src/content/docs/introduction.mdx -->
+<!-- content/docs/introduction.md -->
 
 ---
 
@@ -171,32 +177,47 @@ title: Introduction
 # Introduction
 ```
 
+The application must include an ambient declaration for
+`virtual:prestigia/config`; the CLI template provides
+`src/prestigia-env.d.ts`.
+
 ## Configuration Boundaries
 
-- Put `disableLog` and `enableDebugLog` on `prestigia()` in `vite.config.ts`.
-- Put `title`, `github`, `algolia`, `license`, `collections`, and `markdown` in `prestigia.config.ts`.
-- `src/content` is fixed relative to the Vite app root. A collection `id` must match its top-level content directory.
-- A content file becomes a generated route only when a collection item references it or an `autogenerate` group discovers it.
-- Treat `src/routes/(prestigia)` exactly like `routeTree.gen.ts`: generated output that may be replaced.
+- `prestigia()` accepts the optional config file location; authored navigation
+  belongs in `prestigia.config.ts`.
+- Register and configure Content Collections separately. The virtual module
+  imports its generated `allDocs` export instead of reparsing frontmatter.
+- Sidebar entries support slug strings, `{ slug, label? }` objects, links,
+  recursive groups, collapsed groups, and directory autogeneration.
+- Document-backed entries inherit their label from Content Collections unless
+  configuration overrides it. Unknown configured slugs fail clearly.
+- Omitting `sidebar` generates filesystem-shaped navigation from all documents.
 
 ## Common Mistakes
 
-### Registering Prestigia after TanStack Start
+### Registering Prestigia before Content Collections or after TanStack Start
 
-Prestigia must compile content and routes before TanStack Start consumes the route tree. Keep `prestigia()` earlier in the Vite plugin list.
+Content Collections must provide `allDocs` for the virtual module, and TanStack
+Start must consume the resolved module. Keep the order shown in Minimum Setup.
 
 ### Putting site config on `prestigia()`
 
-`prestigia()` accepts only logging options. Site structure and Markdown pipeline options belong in `prestigia.config.ts`.
+`prestigia()` only selects how the config file is loaded. Site structure
+belongs in `prestigia.config.ts`.
 
-### Editing generated route files
+### Importing the authored config directly in a route
 
-Changes under `src/routes/(prestigia)` are not durable. Change the source Markdown, collection config, or shell instead.
+Import `virtual:prestigia/config`, not `prestigia.config.ts`. The virtual module
+contains the sidebar resolved against current Content Collections documents
+and updates when the config or one of its imported dependencies changes.
 
-### Creating an unregistered page
+### Expecting the plugin to generate document routes
 
-A Markdown file on disk is not enough. Add its slug to a collection or place it below a configured `autogenerate.directory`.
+The current plugin resolves navigation only. Keep the `/docs/$slug` route and
+its direct `allDocs` import; use `createDocRoute` for the current route helper.
 
 ## Version
 
-Targets `@prestigia/docs` v0.0.3.
+Targets the current `@prestigia/docs` v0.8.0 rendering, route-helper, and Vite
+config APIs. Explicitly marked generated-route and shell guidance preserves the
+former v0.0.3 contract.

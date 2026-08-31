@@ -46,6 +46,9 @@ describe("@prestigia/cli", () => {
     await expect(
       readFile(path.join(destination, "content-collections.ts"), "utf8"),
     ).resolves.toContain("defineCollection");
+    await expect(
+      readFile(path.join(destination, "prestigia.config.ts"), "utf8"),
+    ).resolves.toContain("defineConfig");
   });
 
   it("refuses to overwrite a non-empty destination", async () => {

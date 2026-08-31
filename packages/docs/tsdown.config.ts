@@ -1,13 +1,27 @@
 import { defineConfig } from "tsdown";
 
-export default defineConfig({
-  entry: ["./src/index.ts"],
+import type { UserConfig } from "tsdown";
+
+const sharedConfig = {
   format: ["esm"],
-  platform: "neutral",
   target: "es2022",
   fixedExtension: false,
   dts: true,
-  clean: true,
   sourcemap: true,
   failOnWarn: "ci-only",
-});
+} satisfies UserConfig;
+
+export default defineConfig([
+  {
+    ...sharedConfig,
+    entry: ["./src/index.ts"],
+    platform: "neutral",
+    clean: true,
+  },
+  {
+    ...sharedConfig,
+    entry: ["./src/vite.ts"],
+    platform: "node",
+    clean: false,
+  },
+]);

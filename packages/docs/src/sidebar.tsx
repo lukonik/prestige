@@ -117,11 +117,13 @@ function SidebarGroup({
 
   return (
     <details
-      className="prestigia-sidebar-group"
+      className="prestigia-sidebar-group group"
       onToggle={(event) => setOpen(event.currentTarget.open)}
       open={open}
     >
-      <summary className="prestigia-sidebar-group-label">{group.label}</summary>
+      <summary className="prestigia-sidebar-group-label flex cursor-pointer list-none items-center justify-between rounded-md px-2.5 py-1.5 text-sm font-medium text-foreground transition-colors after:text-muted-foreground after:transition-transform after:content-['›'] hover:bg-accent group-open:after:rotate-90 [&::-webkit-details-marker]:hidden">
+        {group.label}
+      </summary>
       <SidebarItems
         currentHref={currentHref}
         depth={depth + 1}
@@ -138,8 +140,13 @@ function SidebarItems({
   items,
   renderLink,
 }: SidebarItemsProps) {
+  const listClassName =
+    depth === 0
+      ? "prestigia-sidebar-list space-y-3"
+      : "prestigia-sidebar-list mt-1 ml-2 space-y-1 border-l pl-3";
+
   return (
-    <ul className="prestigia-sidebar-list" data-depth={depth}>
+    <ul className={listClassName} data-depth={depth}>
       {items.map((item, index) => {
         const key = item.id ?? (item.type === "link" ? item.href : index);
 
@@ -158,7 +165,8 @@ function SidebarItems({
 
         const state = {
           active: currentHref === item.href,
-          className: "prestigia-sidebar-link",
+          className:
+            "prestigia-sidebar-link block rounded-md px-2.5 py-1.5 text-sm text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground data-active:bg-accent data-active:font-medium data-active:text-accent-foreground",
         } satisfies SidebarLinkRenderState;
 
         return (
@@ -235,9 +243,10 @@ export function Sidebar({
   renderLink,
   ...navProps
 }: SidebarProps) {
+  const sidebarClassName = "prestigia-sidebar mx-auto w-full max-w-sm lg:mx-0";
   const resolvedClassName = className
-    ? `prestigia-sidebar ${className}`
-    : "prestigia-sidebar";
+    ? `${sidebarClassName} ${className}`
+    : sidebarClassName;
 
   return (
     <nav {...navProps} aria-label={ariaLabel} className={resolvedClassName}>

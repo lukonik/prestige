@@ -1,8 +1,10 @@
 import { createDocRoute } from "@prestigia/docs";
 import { createFileRoute } from "@tanstack/react-router";
-
-import { getDocument } from "#/features/docs/docs.functions";
+import { allDocs } from "content-collections";
 
 export const Route = createFileRoute("/docs/$slug")(
-  createDocRoute({ getDocument }),
+  createDocRoute({
+    documents: allDocs,
+    docProps: { indexHref: false },
+  }),
 );

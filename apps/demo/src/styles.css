@@ -287,6 +287,66 @@ select {
   max-width: 52rem;
 }
 
+.prestigia-docs {
+  display: grid;
+  grid-template-columns: 16rem minmax(0, 1fr);
+  width: min(72rem, calc(100% - 2rem));
+  min-height: calc(100vh - 10rem);
+  margin-inline: auto;
+}
+
+.prestigia-docs-sidebar {
+  padding-block: 3rem;
+  border-right: 1px solid #d6d2c7;
+}
+
+.prestigia-sidebar {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.prestigia-sidebar-list {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.prestigia-sidebar-list[data-depth]:not([data-depth="0"]) {
+  margin-top: 0.35rem;
+  padding-left: 0.8rem;
+  border-left: 1px solid #d6d2c7;
+}
+
+.prestigia-sidebar-group-label,
+.prestigia-sidebar-link {
+  display: block;
+  padding: 0.45rem 0.65rem;
+  border-radius: 0.4rem;
+  color: #596159;
+  font-size: 0.875rem;
+}
+
+.prestigia-sidebar-group-label {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.prestigia-sidebar-link {
+  text-decoration: none;
+}
+
+.prestigia-sidebar-link:hover,
+.prestigia-sidebar-link[data-active] {
+  color: #173923;
+  background: #ebe8df;
+}
+
+.prestigia-docs-content {
+  min-width: 0;
+}
+
 .back-link {
   display: block;
   margin-bottom: 2.5rem;
@@ -342,6 +402,20 @@ select {
   .page-shell,
   .prestigia-doc {
     padding-block: 3.5rem;
+  }
+
+  .prestigia-docs {
+    grid-template-columns: 1fr;
+  }
+
+  .prestigia-docs-sidebar {
+    padding-block: 2rem 0;
+    border-right: 0;
+    border-bottom: 1px solid #d6d2c7;
+  }
+
+  .prestigia-sidebar {
+    position: static;
   }
 
   .filters {

@@ -1,17 +1,17 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
+import { allDocs } from "content-collections";
 
 import { Button } from "@/components/ui/button";
-import { getDocuments } from "@/features/docs/docs.functions";
+
+const documents = allDocs
+  .slice()
+  .sort((left, right) => left.order - right.order);
 
 export const Route = createFileRoute("/")({
-  ssr: true,
-  loader: () => getDocuments(),
   component: DocumentationIndex,
 });
 
 function DocumentationIndex() {
-  const documents = Route.useLoaderData();
-
   return (
     <main className="page-shell">
       <section className="hero">
@@ -33,10 +33,10 @@ function DocumentationIndex() {
         <h2 id="documents-heading">Documents</h2>
         <div className="document-grid">
           {documents.map((document) => (
-            <article className="document-card" key={document.slug}>
+            <article className="document-card" key={document._meta.path}>
               <h3>{document.title}</h3>
               <p>{document.description}</p>
-              <Link params={{ slug: document.slug }} to="/docs/$slug">
+              <Link params={{ slug: document._meta.path }} to="/docs/$slug">
                 Read document <span aria-hidden="true">→</span>
               </Link>
             </article>

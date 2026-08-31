@@ -10,3 +10,11 @@ Before editing files for a substantial task:
 - Treat editor hooks as workflow assistance only. The `intent.skills` allowlist and `intent.exclude` rules in `package.json` decide which installed packages may surface guidance.
 
 <!-- intent-skills:end -->
+
+## Architecture
+
+- This documentation site is SSG-first. Import `allDocs` from
+  `content-collections` and derive routes, indexes, and navigation at build
+  time.
+- Do not add server functions, server-only content stores, or forced SSR for
+  documentation. Runtime SSR is an explicit application-level extension.

@@ -1,4 +1,4 @@
-import { useLoaderData } from "@tanstack/react-router";
+import { notFound, useLoaderData } from "@tanstack/react-router";
 
 import { Article } from "./article.js";
 
@@ -13,6 +13,10 @@ export type DocDocument = {
   description: string;
   title: string;
 };
+
+/** A static document with a Content Collections path or explicit slug. */
+export type DocRouteDocument = DocDocument &
+  ({ _meta: { path: string } } | { slug: string });
 
 export interface DocProps<
   TDocument extends DocDocument = DocDocument,
@@ -93,17 +97,13 @@ export function createDocHead<TDocument extends DocDocument>(
   };
 }
 
-type GetDocument<TDocument extends DocDocument> = (options: {
-  data: { slug: string };
-}) => Promise<TDocument> | TDocument;
-
 export interface CreateDocRouteOptions<
-  TDocument extends DocDocument = DocDocument,
+  TDocument extends DocRouteDocument = DocRouteDocument,
 > extends DocHeadOptions {
   /** Props used by the default {@link Doc} renderer. */
   docProps?: Omit<DocProps<TDocument>, "document">;
-  /** A server function that loads one document by slug. */
-  getDocument: GetDocument<TDocument>;
+  /** Static Content Collections documents bundled at build time. */
+  documents: ReadonlyArray<TDocument>;
   /** Replace the default {@link Doc} renderer. */
   render?: (document: TDocument) => ReactNode;
 }
@@ -121,13 +121,13 @@ type DocHeadContext<TDocument extends DocDocument> = {
  *
  * @example
  * export const Route = createFileRoute("/docs/$slug")(
- *   createDocRoute({ getDocument }),
+ *   createDocRoute({ documents: allDocs }),
  * );
  */
-export function createDocRoute<TDocument extends DocDocument>({
+export function createDocRoute<TDocument extends DocRouteDocument>({
   docProps,
+  documents,
   fallbackTitle,
-  getDocument,
   render,
   siteName,
 }: CreateDocRouteOptions<TDocument>) {
@@ -142,9 +142,18 @@ export function createDocRoute<TDocument extends DocDocument>({
   }
 
   return {
-    ssr: true as const,
-    loader: ({ params }: DocLoaderContext) =>
-      getDocument({ data: { slug: params.slug } }),
+    loader: ({ params }: DocLoaderContext) => {
+      const document = documents.find((candidate) => {
+        const slug =
+          "slug" in candidate ? candidate.slug : candidate._meta.path;
+
+        return slug === params.slug;
+      });
+
+      if (!document) throw notFound();
+
+      return document;
+    },
     head: ({ loaderData }: DocHeadContext<TDocument>) =>
       createDocHead(loaderData, { fallbackTitle, siteName }),
     component: DocRouteComponent,
